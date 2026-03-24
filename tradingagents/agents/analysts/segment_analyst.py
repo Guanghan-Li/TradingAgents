@@ -15,16 +15,34 @@ def _extract_segment_payload(report: str) -> dict:
     if not report:
         return {}
 
-    match = re.search(r"```json\s*(\{.*?\})\s*```", report, re.DOTALL)
-    if not match:
-        return {}
+    # Prefer fenced JSON payloads (supports ```json, ```JSON, and unlabeled ```).
+    for match in re.finditer(
+        r"```(?:\s*([A-Za-z]+))?\s*(\{.*?\})\s*```",
+        report,
+        re.DOTALL,
+    ):
+        label = (match.group(1) or "").strip().lower()
+        if label and label != "json":
+            continue
+        try:
+            payload = json.loads(match.group(2))
+        except json.JSONDecodeError:
+            continue
+        if isinstance(payload, dict):
+            return payload
 
-    try:
-        payload = json.loads(match.group(1))
-    except json.JSONDecodeError:
-        return {}
+    # Fallback: tolerate raw JSON object embedded in body text.
+    decoder = json.JSONDecoder()
+    for brace_match in re.finditer(r"\{", report):
+        candidate = report[brace_match.start() :].lstrip()
+        try:
+            payload, _ = decoder.raw_decode(candidate)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(payload, dict):
+            return payload
 
-    return payload if isinstance(payload, dict) else {}
+    return {}
 
 
 def _build_segment_data(ticker: str, analysis_date: str, report: str) -> dict:

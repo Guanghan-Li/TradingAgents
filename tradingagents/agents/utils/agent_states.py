@@ -1,4 +1,4 @@
-from typing import Annotated, Sequence
+from typing import Annotated, Any, Sequence
 from datetime import date, timedelta, datetime
 from typing_extensions import TypedDict, Optional
 from langchain_openai import ChatOpenAI
@@ -47,6 +47,21 @@ class RiskDebateState(TypedDict):
     count: Annotated[int, "Length of the current conversation"]  # Conversation length
 
 
+class SegmentDataState(TypedDict):
+    business_unit_decomposition: Annotated[
+        list[dict[str, Any]],
+        "Structured list of major business units and their roles",
+    ]
+    segment_economics: Annotated[
+        dict[str, Any],
+        "Structured economics summary such as margin profile and cyclicality",
+    ]
+    value_driver_map: Annotated[
+        list[dict[str, Any]],
+        "Structured list mapping drivers to impacted segments and directionality",
+    ]
+
+
 class AgentState(MessagesState):
     company_of_interest: Annotated[str, "Company that we are interested in trading"]
     trade_date: Annotated[str, "What date we are trading at"]
@@ -60,6 +75,11 @@ class AgentState(MessagesState):
         str, "Report from the News Researcher of current world affairs"
     ]
     fundamentals_report: Annotated[str, "Report from the Fundamentals Researcher"]
+    segment_report: Annotated[str, "Report from the Segment Analyst"]
+    segment_data: Annotated[
+        SegmentDataState,
+        "Structured segment analysis output for downstream consumption",
+    ]
 
     # researcher team discussion step
     investment_debate_state: Annotated[

@@ -363,3 +363,46 @@ profit pool, and Wearables is a smaller but defensible ecosystem layer.
         ],
     }
     assert output["messages"] == [result]
+
+
+def test_extract_segment_payload_tolerates_common_model_json_variants():
+    from tradingagents.agents.analysts.segment_analyst import _extract_segment_payload
+
+    expected = {
+        "business_unit_decomposition": [{"segment": "Services"}],
+        "segment_economics": {"margin_profile": {"Services": "high"}},
+        "value_driver_map": [{"driver": "pricing"}],
+    }
+
+    uppercase_fence = """
+```JSON
+{"business_unit_decomposition":[{"segment":"Services"}],"segment_economics":{"margin_profile":{"Services":"high"}},"value_driver_map":[{"driver":"pricing"}]}
+```
+"""
+    plain_fence = """
+```
+{"business_unit_decomposition":[{"segment":"Services"}],"segment_economics":{"margin_profile":{"Services":"high"}},"value_driver_map":[{"driver":"pricing"}]}
+```
+"""
+    raw_json = """
+Narrative intro before payload.
+{"business_unit_decomposition":[{"segment":"Services"}],"segment_economics":{"margin_profile":{"Services":"high"}},"value_driver_map":[{"driver":"pricing"}]}
+Tail note after payload.
+"""
+
+    assert _extract_segment_payload(uppercase_fence) == expected
+    assert _extract_segment_payload(plain_fence) == expected
+    assert _extract_segment_payload(raw_json) == expected
+
+
+def test_propagator_initial_state_seeds_segment_defaults():
+    from tradingagents.graph.propagation import Propagator
+
+    state = Propagator().create_initial_state("AAPL", "2026-03-24")
+
+    assert state["segment_report"] == ""
+    assert state["segment_data"] == {
+        "business_unit_decomposition": [],
+        "segment_economics": {},
+        "value_driver_map": [],
+    }

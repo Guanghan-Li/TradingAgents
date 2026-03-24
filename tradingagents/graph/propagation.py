@@ -49,6 +49,12 @@ class Propagator:
             ),
             "market_report": "",
             "fundamentals_report": "",
+            "segment_report": "",
+            "segment_data": {
+                "business_unit_decomposition": [],
+                "segment_economics": {},
+                "value_driver_map": [],
+            },
             "sentiment_report": "",
             "news_report": "",
         }
