@@ -51,6 +51,8 @@ class Propagator:
             "fundamentals_report": "",
             "segment_report": "",
             "segment_data": {
+                "ticker": "",
+                "analysis_date": "",
                 "business_unit_decomposition": [],
                 "segment_economics": {},
                 "value_driver_map": [],

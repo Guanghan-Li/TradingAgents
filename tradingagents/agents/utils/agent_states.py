@@ -48,6 +48,8 @@ class RiskDebateState(TypedDict):
 
 
 class SegmentDataState(TypedDict):
+    ticker: Annotated[str, "Instrument ticker analyzed for segment conclusions"]
+    analysis_date: Annotated[str, "Trade date associated with the segment analysis"]
     business_unit_decomposition: Annotated[
         list[dict[str, Any]],
         "Structured list of major business units and their roles",

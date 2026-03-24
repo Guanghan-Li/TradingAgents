@@ -402,6 +402,8 @@ def test_propagator_initial_state_seeds_segment_defaults():
 
     assert state["segment_report"] == ""
     assert state["segment_data"] == {
+        "ticker": "",
+        "analysis_date": "",
         "business_unit_decomposition": [],
         "segment_economics": {},
         "value_driver_map": [],
