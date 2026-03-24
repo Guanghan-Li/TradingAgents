@@ -37,6 +37,9 @@ from tradingagents.agents.utils.agent_utils import (
     get_segment_fundamentals,
     get_segment_income_statement,
     get_segment_news,
+    get_scenario_fundamentals,
+    get_scenario_news,
+    get_catalyst_calendar,
 )
 
 from .conditional_logic import ConditionalLogic
@@ -65,6 +68,7 @@ class TradingAgentsGraph:
         "news",
         "fundamentals",
         "segment",
+        "scenario",
         "macro",
         "bull_researcher",
         "bear_researcher",
@@ -321,6 +325,14 @@ class TradingAgentsGraph:
                     get_segment_fundamentals,
                     get_segment_income_statement,
                     get_segment_news,
+                ]
+            ),
+            "scenario": ToolNode(
+                [
+                    # Scenario and catalyst mapping tools
+                    get_scenario_fundamentals,
+                    get_scenario_news,
+                    get_catalyst_calendar,
                 ]
             ),
         }

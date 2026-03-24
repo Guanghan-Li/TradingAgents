@@ -28,6 +28,11 @@ from tradingagents.agents.utils.segment_tools import (
     get_segment_income_statement,
     get_segment_news,
 )
+from tradingagents.agents.utils.scenario_tools import (
+    get_catalyst_calendar,
+    get_scenario_fundamentals,
+    get_scenario_news,
+)
 
 
 __all__ = [
@@ -43,9 +48,12 @@ __all__ = [
     "get_indicators",
     "get_insider_transactions",
     "get_news",
+    "get_catalyst_calendar",
     "get_segment_fundamentals",
     "get_segment_income_statement",
     "get_segment_news",
+    "get_scenario_fundamentals",
+    "get_scenario_news",
     "get_stock_data",
     "get_yield_curve",
 ]

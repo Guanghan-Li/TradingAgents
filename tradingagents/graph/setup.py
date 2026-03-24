@@ -45,6 +45,7 @@ class GraphSetup:
             "fundamentals", self.quick_thinking_llm
         )
         self.segment_analyst_llm = self._get_role_llm("segment", self.quick_thinking_llm)
+        self.scenario_analyst_llm = self._get_role_llm("scenario", self.quick_thinking_llm)
         self.macro_analyst_llm = self._get_role_llm("macro", self.quick_thinking_llm)
         self.bull_researcher_llm = self._get_role_llm(
             "bull_researcher", self.quick_thinking_llm
@@ -102,6 +103,7 @@ class GraphSetup:
                 - "news": News analyst
                 - "fundamentals": Fundamentals analyst
                 - "segment": Segment analyst
+                - "scenario": Scenario and catalyst analyst
                 - "macro": Macro analyst
         """
         if len(selected_analysts) == 0:
@@ -149,6 +151,13 @@ class GraphSetup:
             analyst_nodes["macro"] = create_macro_analyst(self.macro_analyst_llm)
             delete_nodes["macro"] = create_msg_delete()
             tool_nodes["macro"] = self.tool_nodes["macro"]
+
+        if "scenario" in selected_analysts:
+            analyst_nodes["scenario"] = create_scenario_catalyst_analyst(
+                self.scenario_analyst_llm
+            )
+            delete_nodes["scenario"] = create_msg_delete()
+            tool_nodes["scenario"] = self.tool_nodes["scenario"]
 
         # Create researcher and manager nodes
         bull_researcher_node = create_bull_researcher(

@@ -64,6 +64,26 @@ class SegmentDataState(TypedDict):
     ]
 
 
+class ScenarioCatalystDataState(TypedDict):
+    ticker: Annotated[str, "Instrument ticker analyzed for scenario/catalyst conclusions"]
+    analysis_date: Annotated[
+        str,
+        "Trade date associated with the scenario/catalyst analysis",
+    ]
+    scenario_map: Annotated[
+        list[dict[str, Any]],
+        "Structured bull/base/bear scenario map with probability and thesis details",
+    ]
+    dated_catalyst_map: Annotated[
+        list[dict[str, Any]],
+        "Structured list of dated catalysts linked to scenario outcomes",
+    ]
+    invalidation_triggers: Annotated[
+        list[dict[str, Any]],
+        "Structured list of thesis invalidation triggers and evidence to monitor",
+    ]
+
+
 class AgentState(MessagesState):
     company_of_interest: Annotated[str, "Company that we are interested in trading"]
     trade_date: Annotated[str, "What date we are trading at"]
@@ -81,6 +101,14 @@ class AgentState(MessagesState):
     segment_data: Annotated[
         SegmentDataState,
         "Structured segment analysis output for downstream consumption",
+    ]
+    scenario_catalyst_report: Annotated[
+        str,
+        "Report from the Scenario and Catalyst Analyst",
+    ]
+    scenario_catalyst_data: Annotated[
+        ScenarioCatalystDataState,
+        "Structured scenario and catalyst analysis output for downstream consumption",
     ]
 
     # researcher team discussion step

@@ -57,6 +57,14 @@ class Propagator:
                 "segment_economics": {},
                 "value_driver_map": [],
             },
+            "scenario_catalyst_report": "",
+            "scenario_catalyst_data": {
+                "ticker": "",
+                "analysis_date": "",
+                "scenario_map": [],
+                "dated_catalyst_map": [],
+                "invalidation_triggers": [],
+            },
             "sentiment_report": "",
             "news_report": "",
         }
