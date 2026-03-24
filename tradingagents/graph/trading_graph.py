@@ -34,6 +34,9 @@ from tradingagents.agents.utils.agent_utils import (
     get_insider_transactions,
     get_global_news,
     get_yield_curve,
+    get_segment_fundamentals,
+    get_segment_income_statement,
+    get_segment_news,
 )
 
 from .conditional_logic import ConditionalLogic
@@ -61,6 +64,7 @@ class TradingAgentsGraph:
         "social",
         "news",
         "fundamentals",
+        "segment",
         "macro",
         "bull_researcher",
         "bear_researcher",
@@ -311,6 +315,14 @@ class TradingAgentsGraph:
                     get_fed_calendar,
                 ]
             ),
+            "segment": ToolNode(
+                [
+                    # Segment and business-mix analysis tools
+                    get_segment_fundamentals,
+                    get_segment_income_statement,
+                    get_segment_news,
+                ]
+            ),
         }
 
     def propagate(self, company_name, trade_date):
@@ -357,6 +369,8 @@ class TradingAgentsGraph:
             "sentiment_report": final_state["sentiment_report"],
             "news_report": final_state["news_report"],
             "fundamentals_report": final_state["fundamentals_report"],
+            "segment_report": final_state.get("segment_report", ""),
+            "segment_data": final_state.get("segment_data", {}),
             "macro_report": final_state.get("macro_report", ""),
             "investment_debate_state": {
                 "bull_history": final_state["investment_debate_state"]["bull_history"],

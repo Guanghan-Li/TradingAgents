@@ -23,6 +23,11 @@ from tradingagents.agents.utils.macro_data_tools import (
     get_fed_calendar,
     get_yield_curve,
 )
+from tradingagents.agents.utils.segment_tools import (
+    get_segment_fundamentals,
+    get_segment_income_statement,
+    get_segment_news,
+)
 
 
 __all__ = [
@@ -38,6 +43,9 @@ __all__ = [
     "get_indicators",
     "get_insider_transactions",
     "get_news",
+    "get_segment_fundamentals",
+    "get_segment_income_statement",
+    "get_segment_news",
     "get_stock_data",
     "get_yield_curve",
 ]
