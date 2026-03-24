@@ -238,7 +238,59 @@ def test_segment_analyst_returns_structured_segment_data(monkeypatch):
     from tradingagents.agents.analysts.segment_analyst import create_segment_analyst
 
     result = DummyResult(
-        content="Segment outlook with product-line and geography detail.",
+        content="""## Segment Summary
+
+Apple's iPhone remains the primary demand engine, Services is the highest-quality
+profit pool, and Wearables is a smaller but defensible ecosystem layer.
+
+```json
+{
+  "business_unit_decomposition": [
+    {
+      "segment": "iPhone",
+      "revenue_share_pct": 52,
+      "growth_trend": "stable",
+      "strategic_role": "core hardware platform"
+    },
+    {
+      "segment": "Services",
+      "revenue_share_pct": 23,
+      "growth_trend": "expanding",
+      "strategic_role": "high-margin recurring engine"
+    }
+  ],
+  "segment_economics": {
+    "margin_profile": {
+      "iPhone": "mid-margin, scale-driven",
+      "Services": "high-margin recurring"
+    },
+    "capital_intensity": {
+      "iPhone": "high",
+      "Services": "low"
+    },
+    "cyclicality": {
+      "iPhone": "medium",
+      "Services": "low"
+    }
+  },
+  "value_driver_map": [
+    {
+      "driver": "AI-enabled upgrade cycle",
+      "impacted_segments": ["iPhone"],
+      "direction": "upside",
+      "horizon": "6-12m",
+      "evidence": "on-device feature expansion supports ASP and volume"
+    },
+    {
+      "driver": "App Store regulatory pressure",
+      "impacted_segments": ["Services"],
+      "direction": "downside",
+      "horizon": "12-24m",
+      "evidence": "potential take-rate compression in key regions"
+    }
+  ]
+}
+```""",
         tool_calls=[],
     )
     llm = DummyLLM(result)
@@ -265,7 +317,49 @@ def test_segment_analyst_returns_structured_segment_data(monkeypatch):
     assert output["segment_data"] == {
         "ticker": "AAPL",
         "analysis_date": "2026-03-24",
-        "has_report": True,
-        "report": result.content,
+        "business_unit_decomposition": [
+            {
+                "segment": "iPhone",
+                "revenue_share_pct": 52,
+                "growth_trend": "stable",
+                "strategic_role": "core hardware platform",
+            },
+            {
+                "segment": "Services",
+                "revenue_share_pct": 23,
+                "growth_trend": "expanding",
+                "strategic_role": "high-margin recurring engine",
+            },
+        ],
+        "segment_economics": {
+            "margin_profile": {
+                "iPhone": "mid-margin, scale-driven",
+                "Services": "high-margin recurring",
+            },
+            "capital_intensity": {
+                "iPhone": "high",
+                "Services": "low",
+            },
+            "cyclicality": {
+                "iPhone": "medium",
+                "Services": "low",
+            },
+        },
+        "value_driver_map": [
+            {
+                "driver": "AI-enabled upgrade cycle",
+                "impacted_segments": ["iPhone"],
+                "direction": "upside",
+                "horizon": "6-12m",
+                "evidence": "on-device feature expansion supports ASP and volume",
+            },
+            {
+                "driver": "App Store regulatory pressure",
+                "impacted_segments": ["Services"],
+                "direction": "downside",
+                "horizon": "12-24m",
+                "evidence": "potential take-rate compression in key regions",
+            },
+        ],
     }
     assert output["messages"] == [result]

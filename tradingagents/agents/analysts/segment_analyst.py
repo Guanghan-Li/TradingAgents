@@ -1,3 +1,6 @@
+import json
+import re
+
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 from tradingagents.agents.utils.agent_utils import (
@@ -8,12 +11,41 @@ from tradingagents.agents.utils.agent_utils import (
 )
 
 
+def _extract_segment_payload(report: str) -> dict:
+    if not report:
+        return {}
+
+    match = re.search(r"```json\s*(\{.*?\})\s*```", report, re.DOTALL)
+    if not match:
+        return {}
+
+    try:
+        payload = json.loads(match.group(1))
+    except json.JSONDecodeError:
+        return {}
+
+    return payload if isinstance(payload, dict) else {}
+
+
 def _build_segment_data(ticker: str, analysis_date: str, report: str) -> dict:
+    payload = _extract_segment_payload(report)
+    business_unit_decomposition = payload.get("business_unit_decomposition", [])
+    segment_economics = payload.get("segment_economics", {})
+    value_driver_map = payload.get("value_driver_map", [])
+
+    if not isinstance(business_unit_decomposition, list):
+        business_unit_decomposition = []
+    if not isinstance(segment_economics, dict):
+        segment_economics = {}
+    if not isinstance(value_driver_map, list):
+        value_driver_map = []
+
     return {
         "ticker": ticker,
         "analysis_date": analysis_date,
-        "has_report": bool(report),
-        "report": report,
+        "business_unit_decomposition": business_unit_decomposition,
+        "segment_economics": segment_economics,
+        "value_driver_map": value_driver_map,
     }
 
 
@@ -35,7 +67,15 @@ def create_segment_analyst(llm):
             "`get_segment_income_statement` to infer segment-level margin direction from reported trends, "
             "and `get_segment_news` to identify demand, pricing, and competitive catalysts for key segments. "
             "Deliver a concise segment-by-segment view, highlight concentration risks, and append a Markdown "
-            "table that maps each major segment to growth outlook, margin trend, and trading implication."
+            "table that maps each major segment to growth outlook, margin trend, and trading implication. "
+            "Your response must contain two parts: "
+            "(1) a Markdown narrative summary and table, followed by "
+            "(2) a fenced JSON block (```json ... ```) with exactly these top-level keys: "
+            "`business_unit_decomposition` (list of objects with `segment`, `revenue_share_pct`, "
+            "`growth_trend`, `strategic_role`), `segment_economics` (object summarizing margin profile, "
+            "capital intensity, cyclicality), and `value_driver_map` (list of objects with `driver`, "
+            "`impacted_segments`, `direction`, `horizon`, `evidence`). "
+            "If data is unavailable, still include all keys using empty lists/objects."
         )
 
         prompt = ChatPromptTemplate.from_messages(
