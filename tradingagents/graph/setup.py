@@ -7,6 +7,7 @@ from langgraph.prebuilt import ToolNode
 
 from tradingagents.agents import *
 from tradingagents.agents.utils.agent_states import AgentState
+from tradingagents.agents.managers.chief_analyst import create_chief_analyst
 
 from .conditional_logic import ConditionalLogic
 
@@ -84,6 +85,9 @@ class GraphSetup:
         )
         self.portfolio_manager_llm = self._get_role_llm(
             "portfolio_manager", self.deep_thinking_llm
+        )
+        self.chief_analyst_llm = self._get_role_llm(
+            "chief_analyst", self.deep_thinking_llm
         )
 
     def _get_role_llm(self, role: str, fallback_llm: ChatOpenAI):
@@ -220,6 +224,7 @@ class GraphSetup:
         portfolio_manager_node = create_portfolio_manager(
             self.portfolio_manager_llm, self.portfolio_manager_memory
         )
+        chief_analyst_node = create_chief_analyst(self.chief_analyst_llm)
 
         # Create workflow
         workflow = StateGraph(AgentState)
@@ -242,6 +247,7 @@ class GraphSetup:
         workflow.add_node("Neutral Analyst", neutral_analyst)
         workflow.add_node("Conservative Analyst", conservative_analyst)
         workflow.add_node("Portfolio Manager", portfolio_manager_node)
+        workflow.add_node("Chief Analyst", chief_analyst_node)
 
         # Define edges
         # Start with the first analyst
@@ -316,7 +322,8 @@ class GraphSetup:
             },
         )
 
-        workflow.add_edge("Portfolio Manager", END)
+        workflow.add_edge("Portfolio Manager", "Chief Analyst")
+        workflow.add_edge("Chief Analyst", END)
 
         # Compile and return
         return workflow.compile()

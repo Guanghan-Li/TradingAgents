@@ -92,10 +92,14 @@ class PositionSizingData(TypedDict):
 
 
 class ChiefAnalystData(TypedDict):
-    action: str
-    summary: str
-    thesis: str
-    confidence: str
+    ticker: str
+    analysis_date: str
+    verdict: dict[str, str]
+    fair_value: dict[str, str]
+    catalysts: list[dict[str, str]]
+    execution: dict[str, str]
+    tail_risk: dict[str, Any]
+    variant_perception: dict[str, list[str]]
 
 
 def make_default_valuation_data() -> ValuationData:
@@ -147,12 +151,37 @@ def make_default_position_sizing_data() -> PositionSizingData:
     }
 
 
-def make_default_chief_analyst_data() -> ChiefAnalystData:
+def build_chief_analyst_data_defaults(
+    ticker: str = "",
+    analysis_date: str = "",
+) -> ChiefAnalystData:
     return {
-        "action": "",
-        "summary": "",
-        "thesis": "",
-        "confidence": "",
+        "ticker": ticker,
+        "analysis_date": analysis_date,
+        "verdict": {
+            "rating": "",
+            "summary": "",
+            "thesis": "",
+        },
+        "fair_value": {
+            "bull_case": "",
+            "base_case": "",
+            "bear_case": "",
+        },
+        "catalysts": [],
+        "execution": {
+            "research_plan": "",
+            "trader_plan": "",
+            "portfolio_manager_guidance": "",
+        },
+        "tail_risk": {
+            "risk_summary": "",
+            "invalidation_triggers": [],
+        },
+        "variant_perception": {
+            "business_segments": [],
+            "value_drivers": [],
+        },
     }
 
 
@@ -162,7 +191,7 @@ def make_default_structured_stock_underwriting_state() -> dict[str, Any]:
         "segment_data": make_default_segment_data(),
         "scenario_catalyst_data": make_default_scenario_catalyst_data(),
         "position_sizing_data": make_default_position_sizing_data(),
-        "chief_analyst_data": make_default_chief_analyst_data(),
+        "chief_analyst_data": build_chief_analyst_data_defaults(),
     }
 
 
@@ -191,6 +220,10 @@ class AgentState(MessagesState):
     position_sizing_report: Annotated[
         str,
         "Report from the Position Sizing Analyst",
+    ]
+    chief_analyst_report: Annotated[
+        str,
+        "Concise final summary report from the Chief Analyst",
     ]
     valuation_data: Annotated[
         ValuationData, "Structured valuation underwriting output"

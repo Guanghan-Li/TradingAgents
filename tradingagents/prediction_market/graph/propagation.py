@@ -1,40 +1,40 @@
-# TradingAgents/graph/propagation.py
+# TradingAgents/prediction_market/graph/propagation.py
 
 from typing import Dict, Any, List, Optional
-from tradingagents.agents.utils.agent_states import (
-    AgentState,
-    InvestDebateState,
-    RiskDebateState,
-    make_default_structured_stock_underwriting_state,
+from tradingagents.prediction_market.agents.utils.pm_agent_states import (
+    PMAgentState,
+    PMInvestDebateState,
+    PMRiskDebateState,
 )
 
 
-class Propagator:
-    """Handles state initialization and propagation through the graph."""
+class PMPropagator:
+    """Handles state initialization and propagation through the prediction market graph."""
 
     def __init__(self, max_recur_limit=100):
         """Initialize with configuration parameters."""
         self.max_recur_limit = max_recur_limit
 
     def create_initial_state(
-        self, company_name: str, trade_date: str
+        self, market_id: str, trade_date: str, market_question: str = ""
     ) -> Dict[str, Any]:
-        """Create the initial state for the agent graph."""
+        """Create the initial state for the prediction market agent graph."""
         return {
-            "messages": [("human", company_name)],
-            "company_of_interest": company_name,
+            "messages": [("human", market_question or market_id)],
+            "market_id": market_id,
+            "market_question": market_question,
             "trade_date": str(trade_date),
-            "investment_debate_state": InvestDebateState(
+            "investment_debate_state": PMInvestDebateState(
                 {
-                    "bull_history": "",
-                    "bear_history": "",
+                    "yes_history": "",
+                    "no_history": "",
                     "history": "",
                     "current_response": "",
                     "judge_decision": "",
                     "count": 0,
                 }
             ),
-            "risk_debate_state": RiskDebateState(
+            "risk_debate_state": PMRiskDebateState(
                 {
                     "aggressive_history": "",
                     "conservative_history": "",
@@ -48,17 +48,10 @@ class Propagator:
                     "count": 0,
                 }
             ),
-            "market_report": "",
-            "fundamentals_report": "",
+            "event_report": "",
+            "odds_report": "",
+            "information_report": "",
             "sentiment_report": "",
-            "news_report": "",
-            "factor_rules_report": "",
-            "macro_report": "",
-            "segment_report": "",
-            "scenario_catalyst_report": "",
-            "position_sizing_report": "",
-            "chief_analyst_report": "",
-            **make_default_structured_stock_underwriting_state(),
         }
 
     def get_graph_args(self, callbacks: Optional[List] = None) -> Dict[str, Any]:

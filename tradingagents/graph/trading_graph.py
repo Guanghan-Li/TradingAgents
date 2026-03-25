@@ -65,6 +65,7 @@ class TradingAgentsGraph:
         "neutral_analyst",
         "conservative_analyst",
         "portfolio_manager",
+        "chief_analyst",
     }
     QUICK_THINKING_ROLES = {
         "market",
@@ -87,6 +88,7 @@ class TradingAgentsGraph:
     DEEP_THINKING_ROLES = {
         "research_manager",
         "portfolio_manager",
+        "chief_analyst",
     }
 
     def __init__(
@@ -371,15 +373,11 @@ class TradingAgentsGraph:
 
         if self.debug:
             # Debug mode with tracing
-            trace = []
+            final_state = init_agent_state
             for chunk in self.graph.stream(init_agent_state, **args):
-                if len(chunk["messages"]) == 0:
-                    pass
-                else:
+                final_state = chunk
+                if len(chunk["messages"]) > 0:
                     chunk["messages"][-1].pretty_print()
-                    trace.append(chunk)
-
-            final_state = trace[-1]
         else:
             # Standard mode without tracing
             final_state = self.graph.invoke(init_agent_state, **args)
@@ -410,6 +408,8 @@ class TradingAgentsGraph:
             "scenario_catalyst_data": final_state.get("scenario_catalyst_data", {}),
             "position_sizing_report": final_state.get("position_sizing_report", ""),
             "position_sizing_data": final_state.get("position_sizing_data", {}),
+            "chief_analyst_report": final_state.get("chief_analyst_report", ""),
+            "chief_analyst_data": final_state.get("chief_analyst_data", {}),
             "investment_debate_state": {
                 "bull_history": final_state["investment_debate_state"]["bull_history"],
                 "bear_history": final_state["investment_debate_state"]["bear_history"],
