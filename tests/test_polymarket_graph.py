@@ -18,12 +18,12 @@ def test_prediction_market_graph_initializes_polymarket_context(monkeypatch, tmp
     config["results_dir"] = str(tmp_path / "results")
 
     graph = PredictionMarketGraph(
-        selected_analysts=["market"],
+        selected_analysts=["event", "odds"],
         config=config,
         debug=True,
     )
 
     assert graph.product == "polymarket"
-    assert graph.selected_analysts == ["market"]
+    assert graph.selected_analysts == ["event", "odds"]
     assert graph.config["market_type"] == "polymarket"
-    assert set(graph.tool_nodes) == {"market", "news"}
+    assert set(graph.tool_nodes) == {"event", "odds", "information", "sentiment"}

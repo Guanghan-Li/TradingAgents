@@ -1191,26 +1191,58 @@ def run_analysis():
 
 def run_polymarket_analysis():
     config = PM_DEFAULT_CONFIG.copy()
-    config["results_dir"] = DEFAULT_CONFIG["results_dir"]
-
-    stats_handler = StatsCallbackHandler()
-    market_input = get_polymarket_market_input()
+    market_id, market_question = get_market_id()
     analysis_date = get_analysis_date()
+    selected_analysts = select_pm_analysts()
+    selected_research_depth = select_research_depth()
+    selected_llm_provider, backend_url = select_llm_provider()
+    selected_shallow_thinker = select_shallow_thinking_agent(selected_llm_provider)
+    selected_deep_thinker = select_deep_thinking_agent(selected_llm_provider)
+
+    config["results_dir"] = DEFAULT_CONFIG["results_dir"]
+    config["max_debate_rounds"] = selected_research_depth
+    config["max_risk_discuss_rounds"] = selected_research_depth
+    config["quick_think_llm"] = selected_shallow_thinker
+    config["deep_think_llm"] = selected_deep_thinker
+    config["backend_url"] = backend_url
+    config["llm_provider"] = selected_llm_provider.lower()
+
+    provider_lower = selected_llm_provider.lower()
+    if provider_lower == "google":
+        config["google_thinking_level"] = ask_gemini_thinking_config()
+    elif provider_lower == "openai":
+        config["openai_reasoning_effort"] = ask_openai_reasoning_effort()
+    elif provider_lower == "anthropic":
+        config["anthropic_effort"] = ask_anthropic_effort()
 
     graph = PredictionMarketGraph(
-        selected_analysts=["market", "news"],
+        selected_analysts=[analyst.value for analyst in selected_analysts],
         config=config,
-        debug=True,
-        callbacks=[stats_handler],
+        debug=False,
     )
 
     console.print(
-        f"[green]Initialized Polymarket analysis[/green] for {market_input} on {analysis_date}"
+        f"[green]Running Polymarket analysis[/green] for market {market_id} on {analysis_date}"
+    )
+    if market_question:
+        console.print(f"[dim]{market_question}[/dim]")
+
+    final_state, decision = graph.propagate(
+        market_id,
+        analysis_date,
+        market_question=market_question,
+    )
+
+    console.print(
+        f"[green]Polymarket decision[/green]: {decision}"
     )
     return {
-        "market_input": market_input,
+        "market_id": market_id,
+        "market_question": market_question,
         "analysis_date": analysis_date,
         "graph": graph,
+        "final_state": final_state,
+        "decision": decision,
     }
 
 

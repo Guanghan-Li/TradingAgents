@@ -1,4 +1,6 @@
 from enum import Enum
+from typing import List, Optional, Dict
+from pydantic import BaseModel
 
 
 class AnalysisMode(str, Enum):
@@ -11,3 +13,10 @@ class AnalystType(str, Enum):
     SOCIAL = "social"
     NEWS = "news"
     FUNDAMENTALS = "fundamentals"
+
+
+class PMAnalystType(str, Enum):
+    EVENT = "event"
+    ODDS = "odds"
+    INFORMATION = "information"
+    SENTIMENT = "sentiment"
