@@ -47,9 +47,10 @@ def _extract_article_data(article: dict) -> dict:
 
 
 def get_news_yfinance(
-    ticker: str,
-    start_date: str,
-    end_date: str,
+    ticker: str | None = None,
+    start_date: str | None = None,
+    end_date: str | None = None,
+    query: str | None = None,
 ) -> str:
     """
     Retrieve news for a specific stock ticker using yfinance.
@@ -58,16 +59,32 @@ def get_news_yfinance(
         ticker: Stock ticker symbol (e.g., "AAPL")
         start_date: Start date in yyyy-mm-dd format
         end_date: End date in yyyy-mm-dd format
+        query: Generic query string for vendor-agnostic callers
 
     Returns:
         Formatted string containing news articles
     """
     try:
-        stock = yf.Ticker(ticker)
-        news = stock.get_news(count=20)
+        if not start_date or not end_date:
+            raise ValueError("start_date and end_date are required")
+
+        label = ticker or query or "query"
+
+        if ticker:
+            stock = yf.Ticker(ticker)
+            news = stock.get_news(count=20)
+        elif query:
+            search = yf.Search(
+                query=query,
+                news_count=20,
+                enable_fuzzy_query=True,
+            )
+            news = search.news
+        else:
+            raise ValueError("ticker or query is required")
 
         if not news:
-            return f"No news found for {ticker}"
+            return f"No news found for {label}"
 
         # Parse date range for filtering
         start_dt = datetime.strptime(start_date, "%Y-%m-%d")
@@ -94,12 +111,12 @@ def get_news_yfinance(
             filtered_count += 1
 
         if filtered_count == 0:
-            return f"No news found for {ticker} between {start_date} and {end_date}"
+            return f"No news found for {label} between {start_date} and {end_date}"
 
-        return f"## {ticker} News, from {start_date} to {end_date}:\n\n{news_str}"
+        return f"## {label} News, from {start_date} to {end_date}:\n\n{news_str}"
 
     except Exception as e:
-        return f"Error fetching news for {ticker}: {str(e)}"
+        return f"Error fetching news for {ticker or query or 'query'}: {str(e)}"
 
 
 def get_global_news_yfinance(
