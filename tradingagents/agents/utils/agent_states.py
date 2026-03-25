@@ -84,6 +84,35 @@ class ScenarioCatalystDataState(TypedDict):
     ]
 
 
+class ChiefAnalystDataState(TypedDict):
+    ticker: Annotated[str, "Instrument ticker analyzed for the final summary"]
+    analysis_date: Annotated[str, "Trade date associated with the final summary"]
+    verdict: Annotated[
+        dict[str, str],
+        "Canonical verdict including rating, summary, and thesis",
+    ]
+    fair_value: Annotated[
+        dict[str, str],
+        "Bull/base/bear fair-value framing derived from scenario analysis",
+    ]
+    catalysts: Annotated[
+        list[dict[str, str]],
+        "Structured near-term catalysts that can change the verdict",
+    ]
+    execution: Annotated[
+        dict[str, str],
+        "Research, trading, and portfolio-manager execution guidance",
+    ]
+    tail_risk: Annotated[
+        dict[str, Any],
+        "Risk summary and invalidation triggers that could break the thesis",
+    ]
+    variant_perception: Annotated[
+        dict[str, list[str]],
+        "Segment and driver framing for what the market may be underappreciating",
+    ]
+
+
 class AgentState(MessagesState):
     company_of_interest: Annotated[str, "Company that we are interested in trading"]
     trade_date: Annotated[str, "What date we are trading at"]
@@ -109,6 +138,14 @@ class AgentState(MessagesState):
     scenario_catalyst_data: Annotated[
         ScenarioCatalystDataState,
         "Structured scenario and catalyst analysis output for downstream consumption",
+    ]
+    chief_analyst_report: Annotated[
+        str,
+        "Concise final summary report from the Chief Analyst",
+    ]
+    chief_analyst_data: Annotated[
+        ChiefAnalystDataState,
+        "Structured final summary from the Chief Analyst",
     ]
 
     # researcher team discussion step

@@ -61,6 +61,7 @@ class TradingAgentsGraph:
         "neutral_analyst",
         "conservative_analyst",
         "portfolio_manager",
+        "chief_analyst",
     }
     QUICK_THINKING_ROLES = {
         "market",
@@ -80,6 +81,7 @@ class TradingAgentsGraph:
     DEEP_THINKING_ROLES = {
         "research_manager",
         "portfolio_manager",
+        "chief_analyst",
     }
 
     def __init__(
@@ -405,6 +407,8 @@ class TradingAgentsGraph:
             },
             "investment_plan": final_state["investment_plan"],
             "final_trade_decision": final_state["final_trade_decision"],
+            "chief_analyst_report": final_state.get("chief_analyst_report", ""),
+            "chief_analyst_data": final_state.get("chief_analyst_data", {}),
         }
 
         # Save to file
