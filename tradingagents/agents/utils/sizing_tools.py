@@ -41,10 +41,12 @@ def get_sizing_indicator(
     """Retrieve a volatility indicator, such as ATR, for stop-distance-aware sizing."""
     from tradingagents.dataflows.interface import route_to_vendor
 
+    normalized_indicator = indicator.strip().lower()
+
     return route_to_vendor(
         "get_indicators",
         symbol=symbol,
-        indicator=indicator,
+        indicator=normalized_indicator,
         curr_date=curr_date,
         look_back_days=look_back_days,
     )

@@ -99,6 +99,44 @@ def test_position_sizing_tools_route_to_vendor(monkeypatch):
     ]
 
 
+def test_position_sizing_indicator_normalizes_indicator_name(monkeypatch):
+    import tradingagents.dataflows.interface as interface
+    from tradingagents.agents.utils.sizing_tools import get_sizing_indicator
+
+    calls = []
+
+    def fake_route_to_vendor(method, *args, **kwargs):
+        calls.append((method, args, kwargs))
+        return f"{method}-result"
+
+    monkeypatch.setattr(interface, "route_to_vendor", fake_route_to_vendor)
+
+    assert (
+        get_sizing_indicator.invoke(
+            {
+                "symbol": "AAPL",
+                "indicator": "ATR",
+                "curr_date": "2026-03-24",
+                "look_back_days": 30,
+            }
+        )
+        == "get_indicators-result"
+    )
+
+    assert calls == [
+        (
+            "get_indicators",
+            (),
+            {
+                "symbol": "AAPL",
+                "indicator": "atr",
+                "curr_date": "2026-03-24",
+                "look_back_days": 30,
+            },
+        )
+    ]
+
+
 def test_graph_setup_wires_position_sizing_analyst_and_tools(monkeypatch):
     recorded_llms = {}
 
