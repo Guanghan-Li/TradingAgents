@@ -1,6 +1,6 @@
 import unittest
 
-from cli.main import MessageBuffer, get_progress_teams
+from cli.main import MessageBuffer, get_progress_teams, update_analyst_statuses
 
 
 class CLIDisplayTests(unittest.TestCase):
@@ -65,6 +65,25 @@ class CLIDisplayTests(unittest.TestCase):
 
         self.assertIn("### Valuation Summary", message_buffer.current_report)
         self.assertIn('"primary_method": "dcf"', message_buffer.current_report)
+
+    def test_default_valuation_data_does_not_mark_analyst_complete(self):
+        message_buffer = MessageBuffer()
+        message_buffer.init_for_analysis(["valuation"])
+
+        update_analyst_statuses(
+            message_buffer,
+            {
+                "valuation_data": {
+                    "fair_value_range": {"low": None, "high": None},
+                    "expected_return_pct": None,
+                    "primary_method": "",
+                    "thesis": "",
+                }
+            },
+        )
+
+        self.assertEqual(message_buffer.agent_status["Valuation Analyst"], "in_progress")
+        self.assertIsNone(message_buffer.current_report)
 
 
 if __name__ == "__main__":

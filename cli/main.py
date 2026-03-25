@@ -190,7 +190,7 @@ class MessageBuffer:
 
         # Find the most recently updated section
         for section, content in self.report_sections.items():
-            if content is not None:
+            if has_meaningful_report_content(content):
                 latest_section = section
                 latest_content = content
                
@@ -235,65 +235,68 @@ class MessageBuffer:
             "scenario_catalyst_report",
             "position_sizing_report",
         ]
-        if any(self.report_sections.get(section) for section in analyst_sections):
+        if any(
+            has_meaningful_report_content(self.report_sections.get(section))
+            for section in analyst_sections
+        ):
             report_parts.append("## Analyst Team Reports")
-            if self.report_sections.get("market_report"):
+            if has_meaningful_report_content(self.report_sections.get("market_report")):
                 report_parts.append(
                     f"### Market Analysis\n{self.report_sections['market_report']}"
                 )
-            if self.report_sections.get("sentiment_report"):
+            if has_meaningful_report_content(self.report_sections.get("sentiment_report")):
                 report_parts.append(
                     f"### Social Sentiment\n{self.report_sections['sentiment_report']}"
                 )
-            if self.report_sections.get("news_report"):
+            if has_meaningful_report_content(self.report_sections.get("news_report")):
                 report_parts.append(
                     f"### News Analysis\n{self.report_sections['news_report']}"
                 )
-            if self.report_sections.get("fundamentals_report"):
+            if has_meaningful_report_content(self.report_sections.get("fundamentals_report")):
                 report_parts.append(
                     f"### Fundamentals Analysis\n{self.report_sections['fundamentals_report']}"
                 )
-            if self.report_sections.get("macro_report"):
+            if has_meaningful_report_content(self.report_sections.get("macro_report")):
                 report_parts.append(
                     f"### Macro Analysis\n{self.report_sections['macro_report']}"
                 )
-            if self.report_sections.get("factor_rules_report"):
+            if has_meaningful_report_content(self.report_sections.get("factor_rules_report")):
                 report_parts.append(
                     f"### Factor Rules Analysis\n{format_report_content(self.report_sections['factor_rules_report'])}"
                 )
-            if self.report_sections.get("valuation_data"):
+            if has_meaningful_report_content(self.report_sections.get("valuation_data")):
                 report_parts.append(
                     f"### Valuation Summary\n{format_report_content(self.report_sections['valuation_data'])}"
                 )
-            if self.report_sections.get("segment_report"):
+            if has_meaningful_report_content(self.report_sections.get("segment_report")):
                 report_parts.append(
                     f"### Segment Analysis\n{format_report_content(self.report_sections['segment_report'])}"
                 )
-            if self.report_sections.get("scenario_catalyst_report"):
+            if has_meaningful_report_content(self.report_sections.get("scenario_catalyst_report")):
                 report_parts.append(
                     f"### Scenario & Catalyst Analysis\n{format_report_content(self.report_sections['scenario_catalyst_report'])}"
                 )
-            if self.report_sections.get("position_sizing_report"):
+            if has_meaningful_report_content(self.report_sections.get("position_sizing_report")):
                 report_parts.append(
                     f"### Position Sizing Analysis\n{format_report_content(self.report_sections['position_sizing_report'])}"
                 )
 
         # Research Team Reports
-        if self.report_sections.get("investment_plan"):
+        if has_meaningful_report_content(self.report_sections.get("investment_plan")):
             report_parts.append("## Research Team Decision")
             report_parts.append(f"{self.report_sections['investment_plan']}")
 
         # Trading Team Reports
-        if self.report_sections.get("trader_investment_plan"):
+        if has_meaningful_report_content(self.report_sections.get("trader_investment_plan")):
             report_parts.append("## Trading Team Plan")
             report_parts.append(f"{self.report_sections['trader_investment_plan']}")
 
         # Portfolio Management Decision
-        if self.report_sections.get("final_trade_decision"):
+        if has_meaningful_report_content(self.report_sections.get("final_trade_decision")):
             report_parts.append("## Portfolio Management Decision")
             report_parts.append(f"{self.report_sections['final_trade_decision']}")
 
-        if self.report_sections.get("chief_analyst_report"):
+        if has_meaningful_report_content(self.report_sections.get("chief_analyst_report")):
             report_parts.append("## Chief Analyst Summary")
             report_parts.append(f"{self.report_sections['chief_analyst_report']}")
 
@@ -328,6 +331,23 @@ def format_report_content(content):
 
         return json.dumps(content, indent=2, sort_keys=True)
     return str(content)
+
+
+def has_meaningful_report_content(content):
+    """Return whether report content contains meaningful non-default data."""
+    if content is None:
+        return False
+    if isinstance(content, str):
+        return bool(content.strip())
+    if isinstance(content, bool):
+        return True
+    if isinstance(content, (int, float)):
+        return True
+    if isinstance(content, dict):
+        return any(has_meaningful_report_content(value) for value in content.values())
+    if isinstance(content, (list, tuple, set)):
+        return any(has_meaningful_report_content(value) for value in content)
+    return bool(content)
 
 
 def create_layout():
@@ -993,7 +1013,9 @@ def update_analyst_statuses(message_buffer, chunk):
             message_buffer.update_report_section(report_key, chunk[report_key])
 
         # Determine status from accumulated sections, not just current chunk
-        has_report = bool(message_buffer.report_sections.get(report_key))
+        has_report = has_meaningful_report_content(
+            message_buffer.report_sections.get(report_key)
+        )
 
         if has_report:
             message_buffer.update_agent_status(agent_name, "completed")
