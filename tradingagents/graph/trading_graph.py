@@ -352,15 +352,11 @@ class TradingAgentsGraph:
 
         if self.debug:
             # Debug mode with tracing
-            trace = []
+            final_state = init_agent_state
             for chunk in self.graph.stream(init_agent_state, **args):
-                if len(chunk["messages"]) == 0:
-                    pass
-                else:
+                final_state = chunk
+                if len(chunk["messages"]) > 0:
                     chunk["messages"][-1].pretty_print()
-                    trace.append(chunk)
-
-            final_state = trace[-1]
         else:
             # Standard mode without tracing
             final_state = self.graph.invoke(init_agent_state, **args)

@@ -233,3 +233,152 @@ def test_chief_analyst_returns_structured_final_summary():
             ],
         },
     }
+
+
+def test_chief_analyst_parses_numbered_portfolio_manager_output():
+    from tradingagents.agents.managers.chief_analyst import create_chief_analyst
+
+    node = create_chief_analyst(llm=object())
+    output = node(
+        {
+            "company_of_interest": "MSFT",
+            "trade_date": "2026-03-24",
+            "investment_plan": "Research wants to lean long on durable cloud demand.",
+            "trader_investment_plan": "Scale in over two tranches and keep sizing disciplined.",
+            "final_trade_decision": """1. Rating: Overweight
+2. Executive Summary: Add on modest pullbacks, target a 6-12 month holding period, and keep sizing incremental.
+3. Investment Thesis: Azure durability and improving operating leverage support upside while consensus still underestimates monetization breadth.""",
+            "risk_debate_state": {},
+            "segment_data": {},
+            "scenario_catalyst_data": {},
+        }
+    )
+
+    assert output["chief_analyst_data"]["verdict"] == {
+        "rating": "Overweight",
+        "summary": "Add on modest pullbacks, target a 6-12 month holding period, and keep sizing incremental.",
+        "thesis": "Azure durability and improving operating leverage support upside while consensus still underestimates monetization breadth.",
+    }
+
+
+def test_chief_analyst_returns_stable_defaults_with_missing_data():
+    from tradingagents.agents.managers.chief_analyst import create_chief_analyst
+
+    node = create_chief_analyst(llm=object())
+    output = node(
+        {
+            "company_of_interest": "AAPL",
+            "trade_date": "2026-03-24",
+            "final_trade_decision": "",
+            "risk_debate_state": {},
+            "segment_data": {},
+            "scenario_catalyst_data": {},
+        }
+    )
+
+    assert output["chief_analyst_data"] == {
+        "ticker": "AAPL",
+        "analysis_date": "2026-03-24",
+        "verdict": {
+            "rating": "",
+            "summary": "",
+            "thesis": "",
+        },
+        "fair_value": {
+            "bull_case": "",
+            "base_case": "",
+            "bear_case": "",
+        },
+        "catalysts": [],
+        "execution": {
+            "research_plan": "",
+            "trader_plan": "",
+            "portfolio_manager_guidance": "",
+        },
+        "tail_risk": {
+            "risk_summary": "",
+            "invalidation_triggers": [],
+        },
+        "variant_perception": {
+            "business_segments": [],
+            "value_drivers": [],
+        },
+    }
+
+
+def test_propagator_initial_state_seeds_chief_analyst_defaults():
+    from tradingagents.graph.propagation import Propagator
+
+    state = Propagator().create_initial_state("AAPL", "2026-03-24")
+
+    assert state["chief_analyst_report"] == ""
+    assert state["chief_analyst_data"] == {
+        "ticker": "",
+        "analysis_date": "",
+        "verdict": {
+            "rating": "",
+            "summary": "",
+            "thesis": "",
+        },
+        "fair_value": {
+            "bull_case": "",
+            "base_case": "",
+            "bear_case": "",
+        },
+        "catalysts": [],
+        "execution": {
+            "research_plan": "",
+            "trader_plan": "",
+            "portfolio_manager_guidance": "",
+        },
+        "tail_risk": {
+            "risk_summary": "",
+            "invalidation_triggers": [],
+        },
+        "variant_perception": {
+            "business_segments": [],
+            "value_drivers": [],
+        },
+    }
+
+
+def test_debug_mode_propagate_keeps_terminal_chunk_without_messages(monkeypatch):
+    from tradingagents.graph.trading_graph import TradingAgentsGraph
+
+    class DummyMessage:
+        def pretty_print(self):
+            return None
+
+    class DummyGraph:
+        def stream(self, _init_state, **_kwargs):
+            yield {
+                "messages": [DummyMessage()],
+                "final_trade_decision": "Buy",
+            }
+            yield {
+                "messages": [],
+                "final_trade_decision": "Buy",
+                "chief_analyst_report": "final summary",
+                "chief_analyst_data": {"verdict": {"rating": "Buy"}},
+            }
+
+    class DummyPropagator:
+        def create_initial_state(self, company_name, trade_date):
+            return {"messages": [("human", company_name)], "trade_date": trade_date}
+
+        def get_graph_args(self):
+            return {"stream_mode": "values", "config": {"recursion_limit": 100}}
+
+    graph = TradingAgentsGraph.__new__(TradingAgentsGraph)
+    graph.debug = True
+    graph.graph = DummyGraph()
+    graph.propagator = DummyPropagator()
+    graph._log_state = lambda *_args, **_kwargs: None
+    graph.process_signal = lambda signal: signal
+    graph.log_states_dict = {}
+
+    final_state, decision = TradingAgentsGraph.propagate(graph, "AAPL", "2026-03-24")
+
+    assert decision == "Buy"
+    assert final_state["chief_analyst_report"] == "final summary"
+    assert final_state["chief_analyst_data"] == {"verdict": {"rating": "Buy"}}

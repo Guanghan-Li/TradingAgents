@@ -1,10 +1,19 @@
 import re
 
+from tradingagents.agents.utils.agent_states import build_chief_analyst_data_defaults
+
+
+PORTFOLIO_MANAGER_SECTIONS = [
+    "Rating",
+    "Executive Summary",
+    "Investment Thesis",
+]
+
 
 def _extract_section(text: str, label: str) -> str:
     pattern = re.compile(
-        rf"(?:\*\*{re.escape(label)}\*\*|{re.escape(label)})\s*:\s*(.*?)(?=\n\s*\n(?:\*\*[^*]+\*\*|[A-Z][^:\n]+:)|\Z)",
-        re.IGNORECASE | re.DOTALL,
+        rf"(?:^|\n)\s*(?:\d+\.\s*)?(?:\*\*{re.escape(label)}\*\*|{re.escape(label)})\s*:\s*(.*?)(?=\n\s*(?:\d+\.\s*)?(?:\*\*(?:{'|'.join(re.escape(section) for section in PORTFOLIO_MANAGER_SECTIONS)})\*\*|(?:{'|'.join(re.escape(section) for section in PORTFOLIO_MANAGER_SECTIONS)}))\s*:|\Z)",
+        re.IGNORECASE | re.DOTALL | re.MULTILINE,
     )
     match = pattern.search(text or "")
     if not match:
@@ -14,9 +23,9 @@ def _extract_section(text: str, label: str) -> str:
 
 def _extract_rating(text: str) -> str:
     match = re.search(
-        r"(?:\*\*Rating\*\*|Rating)\s*:\s*([A-Za-z]+(?:\s+[A-Za-z]+)?)",
+        rf"(?:^|\n)\s*(?:\d+\.\s*)?(?:\*\*Rating\*\*|Rating)\s*:\s*([A-Za-z]+(?:\s+[A-Za-z]+)?)",
         text or "",
-        re.IGNORECASE,
+        re.IGNORECASE | re.MULTILINE,
     )
     if not match:
         return ""
@@ -24,7 +33,11 @@ def _extract_rating(text: str) -> str:
 
 
 def _scenario_fair_value_map(scenario_catalyst_data: dict) -> dict:
-    fair_value = {}
+    fair_value = {
+        "bull_case": "",
+        "base_case": "",
+        "bear_case": "",
+    }
     scenario_map = scenario_catalyst_data.get("scenario_map", [])
     for scenario in scenario_map:
         scenario_name = str(scenario.get("name", "")).strip().lower()
@@ -60,9 +73,9 @@ def _format_chief_analyst_report(chief_analyst_data: dict) -> str:
     catalysts = chief_analyst_data["catalysts"]
 
     fair_value_lines = [
-        f"- Bull case: {fair_value.get('bull_case', 'Not provided')}",
-        f"- Base case: {fair_value.get('base_case', 'Not provided')}",
-        f"- Bear case: {fair_value.get('bear_case', 'Not provided')}",
+        f"- Bull case: {fair_value.get('bull_case', 'Not provided') or 'Not provided'}",
+        f"- Base case: {fair_value.get('base_case', 'Not provided') or 'Not provided'}",
+        f"- Bear case: {fair_value.get('bear_case', 'Not provided') or 'Not provided'}",
     ]
     catalyst_lines = [
         f"- {item['date_or_window']}: {item['catalyst']} ({item['expected_impact']})"
@@ -79,7 +92,7 @@ def _format_chief_analyst_report(chief_analyst_data: dict) -> str:
         [
             "## Chief Analyst Summary",
             "",
-            f"### Verdict",
+            "### Verdict",
             f"- Rating: {verdict['rating']}",
             f"- Summary: {verdict['summary']}",
             f"- Thesis: {verdict['thesis']}",
@@ -116,46 +129,44 @@ def create_chief_analyst(llm, memory=None):
         segment_data = state.get("segment_data", {})
         scenario_catalyst_data = state.get("scenario_catalyst_data", {})
 
-        verdict = {
+        chief_analyst_data = build_chief_analyst_data_defaults(
+            ticker=state.get("company_of_interest", ""),
+            analysis_date=state.get("trade_date", ""),
+        )
+        chief_analyst_data["verdict"] = {
             "rating": _extract_rating(final_trade_decision),
             "summary": _extract_section(final_trade_decision, "Executive Summary"),
             "thesis": _extract_section(final_trade_decision, "Investment Thesis"),
         }
-
-        chief_analyst_data = {
-            "ticker": state.get("company_of_interest", ""),
-            "analysis_date": state.get("trade_date", ""),
-            "verdict": verdict,
-            "fair_value": _scenario_fair_value_map(scenario_catalyst_data),
-            "catalysts": [
-                {
-                    "catalyst": catalyst.get("catalyst", ""),
-                    "date_or_window": catalyst.get("date_or_window", ""),
-                    "expected_impact": catalyst.get("expected_impact", ""),
-                }
-                for catalyst in scenario_catalyst_data.get("dated_catalyst_map", [])
-                if isinstance(catalyst, dict)
-            ],
-            "execution": {
-                "research_plan": state.get("investment_plan", ""),
-                "trader_plan": state.get("trader_investment_plan", ""),
-                "portfolio_manager_guidance": verdict["summary"],
-            },
-            "tail_risk": {
-                "risk_summary": risk_debate_state.get("judge_decision", ""),
-                "invalidation_triggers": [
-                    {
-                        "trigger": trigger.get("trigger", ""),
-                        "severity": trigger.get("severity", ""),
-                    }
-                    for trigger in scenario_catalyst_data.get(
-                        "invalidation_triggers", []
-                    )
-                    if isinstance(trigger, dict)
-                ],
-            },
-            "variant_perception": _variant_perception(segment_data),
+        chief_analyst_data["fair_value"] = _scenario_fair_value_map(
+            scenario_catalyst_data
+        )
+        chief_analyst_data["catalysts"] = [
+            {
+                "catalyst": catalyst.get("catalyst", ""),
+                "date_or_window": catalyst.get("date_or_window", ""),
+                "expected_impact": catalyst.get("expected_impact", ""),
+            }
+            for catalyst in scenario_catalyst_data.get("dated_catalyst_map", [])
+            if isinstance(catalyst, dict)
+        ]
+        chief_analyst_data["execution"] = {
+            "research_plan": state.get("investment_plan", ""),
+            "trader_plan": state.get("trader_investment_plan", ""),
+            "portfolio_manager_guidance": chief_analyst_data["verdict"]["summary"],
         }
+        chief_analyst_data["tail_risk"] = {
+            "risk_summary": risk_debate_state.get("judge_decision", ""),
+            "invalidation_triggers": [
+                {
+                    "trigger": trigger.get("trigger", ""),
+                    "severity": trigger.get("severity", ""),
+                }
+                for trigger in scenario_catalyst_data.get("invalidation_triggers", [])
+                if isinstance(trigger, dict)
+            ],
+        }
+        chief_analyst_data["variant_perception"] = _variant_perception(segment_data)
 
         return {
             "chief_analyst_data": chief_analyst_data,

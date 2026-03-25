@@ -84,33 +84,95 @@ class ScenarioCatalystDataState(TypedDict):
     ]
 
 
+class ChiefAnalystVerdictState(TypedDict):
+    rating: Annotated[str, "Canonical top-level rating from the portfolio manager"]
+    summary: Annotated[str, "Compressed execution-oriented summary of the verdict"]
+    thesis: Annotated[str, "Compressed investment thesis supporting the verdict"]
+
+
+class ChiefAnalystFairValueState(TypedDict):
+    bull_case: Annotated[str, "Bull-case fair-value framing or upside scenario"]
+    base_case: Annotated[str, "Base-case fair-value framing or core scenario"]
+    bear_case: Annotated[str, "Bear-case fair-value framing or downside scenario"]
+
+
+class ChiefAnalystExecutionState(TypedDict):
+    research_plan: Annotated[str, "Research manager direction carried into execution"]
+    trader_plan: Annotated[str, "Trader execution plan carried into the final summary"]
+    portfolio_manager_guidance: Annotated[
+        str,
+        "Execution guidance compressed from the portfolio manager decision",
+    ]
+
+
+class ChiefAnalystTailRiskState(TypedDict):
+    risk_summary: Annotated[str, "Compressed risk summary from the risk debate"]
+    invalidation_triggers: Annotated[
+        list[dict[str, str]],
+        "Structured triggers that would invalidate the current thesis",
+    ]
+
+
+class ChiefAnalystVariantPerceptionState(TypedDict):
+    business_segments: Annotated[
+        list[str],
+        "Business segments relevant to the market's potential blind spot",
+    ]
+    value_drivers: Annotated[
+        list[str],
+        "Drivers relevant to the market's potential blind spot",
+    ]
+
+
 class ChiefAnalystDataState(TypedDict):
     ticker: Annotated[str, "Instrument ticker analyzed for the final summary"]
     analysis_date: Annotated[str, "Trade date associated with the final summary"]
-    verdict: Annotated[
-        dict[str, str],
-        "Canonical verdict including rating, summary, and thesis",
-    ]
-    fair_value: Annotated[
-        dict[str, str],
-        "Bull/base/bear fair-value framing derived from scenario analysis",
-    ]
+    verdict: Annotated[ChiefAnalystVerdictState, "Canonical verdict data"]
+    fair_value: Annotated[ChiefAnalystFairValueState, "Stable bull/base/bear framing"]
     catalysts: Annotated[
         list[dict[str, str]],
         "Structured near-term catalysts that can change the verdict",
     ]
-    execution: Annotated[
-        dict[str, str],
-        "Research, trading, and portfolio-manager execution guidance",
-    ]
-    tail_risk: Annotated[
-        dict[str, Any],
-        "Risk summary and invalidation triggers that could break the thesis",
-    ]
+    execution: Annotated[ChiefAnalystExecutionState, "Execution guidance"]
+    tail_risk: Annotated[ChiefAnalystTailRiskState, "Risk summary and invalidations"]
     variant_perception: Annotated[
-        dict[str, list[str]],
+        ChiefAnalystVariantPerceptionState,
         "Segment and driver framing for what the market may be underappreciating",
     ]
+
+
+def build_chief_analyst_data_defaults(
+    ticker: str = "",
+    analysis_date: str = "",
+) -> ChiefAnalystDataState:
+    return {
+        "ticker": ticker,
+        "analysis_date": analysis_date,
+        "verdict": {
+            "rating": "",
+            "summary": "",
+            "thesis": "",
+        },
+        "fair_value": {
+            "bull_case": "",
+            "base_case": "",
+            "bear_case": "",
+        },
+        "catalysts": [],
+        "execution": {
+            "research_plan": "",
+            "trader_plan": "",
+            "portfolio_manager_guidance": "",
+        },
+        "tail_risk": {
+            "risk_summary": "",
+            "invalidation_triggers": [],
+        },
+        "variant_perception": {
+            "business_segments": [],
+            "value_drivers": [],
+        },
+    }
 
 
 class AgentState(MessagesState):
