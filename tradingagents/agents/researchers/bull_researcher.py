@@ -2,6 +2,11 @@ from langchain_core.messages import AIMessage
 import time
 import json
 
+from tradingagents.agents.utils.agent_utils import (
+    build_analyst_report_context,
+    build_structured_stock_priority_context,
+)
+
 
 def create_bull_researcher(llm, memory):
     def bull_node(state) -> dict:
@@ -10,12 +15,14 @@ def create_bull_researcher(llm, memory):
         bull_history = investment_debate_state.get("bull_history", "")
 
         current_response = investment_debate_state.get("current_response", "")
-        market_research_report = state["market_report"]
-        sentiment_report = state["sentiment_report"]
-        news_report = state["news_report"]
-        fundamentals_report = state["fundamentals_report"]
+        analyst_report_context = build_analyst_report_context(state)
+        factor_rules_report = state.get("factor_rules_report", "")
+        factor_rules_context = f"Factor rules summary: {factor_rules_report}"
+        structured_stock_context = build_structured_stock_priority_context(state)
 
-        curr_situation = f"{market_research_report}\n\n{sentiment_report}\n\n{news_report}\n\n{fundamentals_report}"
+        curr_situation = (
+            f"{analyst_report_context}\n{factor_rules_context}\n\n{structured_stock_context}"
+        )
         past_memories = memory.get_memories(curr_situation, n_matches=2)
 
         past_memory_str = ""
@@ -32,10 +39,9 @@ Key points to focus on:
 - Engagement: Present your argument in a conversational style, engaging directly with the bear analyst's points and debating effectively rather than just listing data.
 
 Resources available:
-Market research report: {market_research_report}
-Social media sentiment report: {sentiment_report}
-Latest world affairs news: {news_report}
-Company fundamentals report: {fundamentals_report}
+{analyst_report_context}
+{factor_rules_context}
+Structured stock underwriting outputs to prioritize: {structured_stock_context}
 Conversation history of the debate: {history}
 Last bear argument: {current_response}
 Reflections from similar situations and lessons learned: {past_memory_str}
@@ -54,6 +60,9 @@ Use this information to deliver a compelling bull argument, refute the bear's co
             "count": investment_debate_state["count"] + 1,
         }
 
-        return {"investment_debate_state": new_investment_debate_state}
+        return {
+            "investment_debate_state": new_investment_debate_state,
+            "factor_rules_report": factor_rules_report,
+        }
 
     return bull_node

@@ -3,9 +3,15 @@ from .utils.agent_states import AgentState, InvestDebateState, RiskDebateState
 from .utils.memory import FinancialSituationMemory
 
 from .analysts.fundamentals_analyst import create_fundamentals_analyst
+from .analysts.factor_rule_analyst import create_factor_rule_analyst
+from .analysts.macro_analyst import create_macro_analyst
 from .analysts.market_analyst import create_market_analyst
 from .analysts.news_analyst import create_news_analyst
+from .analysts.position_sizing_analyst import create_position_sizing_analyst
+from .analysts.scenario_catalyst_analyst import create_scenario_catalyst_analyst
+from .analysts.segment_analyst import create_segment_analyst
 from .analysts.social_media_analyst import create_social_media_analyst
+from .analysts.valuation_analyst import create_valuation_analyst
 
 from .researchers.bear_researcher import create_bear_researcher
 from .researchers.bull_researcher import create_bull_researcher
@@ -28,10 +34,16 @@ __all__ = [
     "create_bear_researcher",
     "create_bull_researcher",
     "create_research_manager",
+    "create_factor_rule_analyst",
     "create_fundamentals_analyst",
+    "create_macro_analyst",
     "create_market_analyst",
     "create_neutral_debator",
     "create_news_analyst",
+    "create_position_sizing_analyst",
+    "create_scenario_catalyst_analyst",
+    "create_segment_analyst",
+    "create_valuation_analyst",
     "create_aggressive_debator",
     "create_portfolio_manager",
     "create_conservative_debator",

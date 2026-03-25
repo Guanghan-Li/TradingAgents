@@ -1,17 +1,17 @@
 # TradingAgents/graph/trading_graph.py
 
 import os
-from pathlib import Path
+from copy import deepcopy
 import json
-from datetime import date
-from typing import Dict, Any, Tuple, List, Optional
+from pathlib import Path
+from typing import Dict, Any, List, Optional
 
 from langgraph.prebuilt import ToolNode
 
 from tradingagents.llm_clients import create_llm_client
 
 from tradingagents.agents import *
-from tradingagents.default_config import DEFAULT_CONFIG
+from tradingagents.default_config import DEFAULT_CONFIG, normalize_llm_routing
 from tradingagents.agents.utils.memory import FinancialSituationMemory
 from tradingagents.agents.utils.agent_states import (
     AgentState,
@@ -22,15 +22,30 @@ from tradingagents.dataflows.config import set_config
 
 # Import the new abstract tool methods from agent_utils
 from tradingagents.agents.utils.agent_utils import (
+    build_social_tools,
     get_stock_data,
     get_indicators,
     get_fundamentals,
     get_balance_sheet,
     get_cashflow,
     get_income_statement,
+    get_economic_indicators,
+    get_fed_calendar,
     get_news,
     get_insider_transactions,
-    get_global_news
+    get_global_news,
+    get_catalyst_calendar,
+    get_scenario_fundamentals,
+    get_scenario_news,
+    get_segment_fundamentals,
+    get_segment_income_statement,
+    get_segment_news,
+    get_sizing_fundamentals,
+    get_sizing_indicator,
+    get_sizing_price_history,
+    has_social_sentiment_support,
+    get_valuation_inputs,
+    get_yield_curve,
 )
 
 from .conditional_logic import ConditionalLogic
@@ -43,9 +58,44 @@ from .signal_processing import SignalProcessor
 class TradingAgentsGraph:
     """Main class that orchestrates the trading agents framework."""
 
+    ALWAYS_ON_ROLES = {
+        "bull_researcher",
+        "bear_researcher",
+        "research_manager",
+        "trader",
+        "aggressive_analyst",
+        "neutral_analyst",
+        "conservative_analyst",
+        "portfolio_manager",
+        "chief_analyst",
+    }
+    QUICK_THINKING_ROLES = {
+        "market",
+        "social",
+        "news",
+        "fundamentals",
+        "factor_rules",
+        "valuation",
+        "segment",
+        "scenario",
+        "position_sizing",
+        "macro",
+        "bull_researcher",
+        "bear_researcher",
+        "trader",
+        "aggressive_analyst",
+        "neutral_analyst",
+        "conservative_analyst",
+    }
+    DEEP_THINKING_ROLES = {
+        "research_manager",
+        "portfolio_manager",
+        "chief_analyst",
+    }
+
     def __init__(
         self,
-        selected_analysts=["market", "social", "news", "fundamentals"],
+        selected_analysts=["market", "social", "news", "fundamentals", "macro"],
         debug=False,
         config: Dict[str, Any] = None,
         callbacks: Optional[List] = None,
@@ -59,7 +109,7 @@ class TradingAgentsGraph:
             callbacks: Optional list of callback handlers (e.g., for tracking LLM/tool stats)
         """
         self.debug = debug
-        self.config = config or DEFAULT_CONFIG
+        self.config = self._build_config(config)
         self.callbacks = callbacks or []
 
         # Update the interface's config
@@ -71,28 +121,10 @@ class TradingAgentsGraph:
             exist_ok=True,
         )
 
-        # Initialize LLMs with provider-specific thinking configuration
-        llm_kwargs = self._get_provider_kwargs()
-
-        # Add callbacks to kwargs if provided (passed to LLM constructor)
-        if self.callbacks:
-            llm_kwargs["callbacks"] = self.callbacks
-
-        deep_client = create_llm_client(
-            provider=self.config["llm_provider"],
-            model=self.config["deep_think_llm"],
-            base_url=self.config.get("backend_url"),
-            **llm_kwargs,
-        )
-        quick_client = create_llm_client(
-            provider=self.config["llm_provider"],
-            model=self.config["quick_think_llm"],
-            base_url=self.config.get("backend_url"),
-            **llm_kwargs,
-        )
-
-        self.deep_thinking_llm = deep_client.get_llm()
-        self.quick_thinking_llm = quick_client.get_llm()
+        self.quick_thinking_llm = self._create_legacy_llm("quick")
+        self.deep_thinking_llm = self._create_legacy_llm("deep")
+        self.role_llms = self._create_role_llms(selected_analysts)
+        self.social_sentiment_available = has_social_sentiment_support()
         
         # Initialize memories
         self.bull_memory = FinancialSituationMemory("bull_memory", self.config)
@@ -119,6 +151,8 @@ class TradingAgentsGraph:
             self.invest_judge_memory,
             self.portfolio_manager_memory,
             self.conditional_logic,
+            role_llms=self.role_llms,
+            social_sentiment_available=self.social_sentiment_available,
         )
 
         self.propagator = Propagator()
@@ -133,10 +167,111 @@ class TradingAgentsGraph:
         # Set up the graph
         self.graph = self.graph_setup.setup_graph(selected_analysts)
 
-    def _get_provider_kwargs(self) -> Dict[str, Any]:
+    def _build_config(self, config: Optional[Dict[str, Any]]) -> Dict[str, Any]:
+        """Merge user config over defaults without mutating the shared defaults."""
+        return normalize_llm_routing(self._deep_merge_dicts(DEFAULT_CONFIG, config or {}))
+
+    def _normalize_provider(self, provider: Optional[str]) -> str:
+        return (provider or "").lower()
+
+    def _deep_merge_dicts(
+        self,
+        base: Dict[str, Any],
+        override: Dict[str, Any],
+    ) -> Dict[str, Any]:
+        merged = deepcopy(base)
+        for key, value in override.items():
+            if isinstance(value, dict) and isinstance(merged.get(key), dict):
+                merged[key] = self._deep_merge_dicts(merged[key], value)
+            else:
+                merged[key] = deepcopy(value)
+        return merged
+
+    def _create_legacy_llm(self, thinker_depth: str):
+        model_key = "deep_think_llm" if thinker_depth == "deep" else "quick_think_llm"
+        provider = self._normalize_provider(self.config["llm_provider"])
+        llm_kwargs = self._get_provider_kwargs(provider)
+        if self.callbacks:
+            llm_kwargs["callbacks"] = self.callbacks
+
+        client = create_llm_client(
+            provider=provider,
+            model=self.config[model_key],
+            base_url=self.config.get("backend_url"),
+            **llm_kwargs,
+        )
+        return client.get_llm()
+
+    def _create_role_llms(self, selected_analysts: List[str]) -> Dict[str, Any]:
+        role_llms = {}
+        llm_cache = {}
+        for role in self._get_required_roles(selected_analysts):
+            thinker_depth = "deep" if role in self.DEEP_THINKING_ROLES else "quick"
+            llm_config = self._resolve_llm_config(role, thinker_depth)
+            if self._uses_legacy_llm(llm_config, thinker_depth):
+                continue
+            cache_key = (
+                llm_config["provider"],
+                llm_config["model"],
+                llm_config.get("base_url"),
+            )
+            if cache_key not in llm_cache:
+                llm_cache[cache_key] = self._create_llm_from_config(llm_config)
+            role_llms[role] = llm_cache[cache_key]
+        return role_llms
+
+    def _get_required_roles(self, selected_analysts: List[str]) -> set[str]:
+        return self.ALWAYS_ON_ROLES | set(selected_analysts)
+
+    def _create_llm_from_config(self, llm_config: Dict[str, Any]):
+        llm_kwargs = self._get_provider_kwargs(llm_config["provider"])
+        if self.callbacks:
+            llm_kwargs["callbacks"] = self.callbacks
+
+        client = create_llm_client(
+            provider=llm_config["provider"],
+            model=llm_config["model"],
+            base_url=llm_config.get("base_url"),
+            **llm_kwargs,
+        )
+        return client.get_llm()
+
+    def _uses_legacy_llm(self, llm_config: Dict[str, Any], thinker_depth: str) -> bool:
+        model_key = "deep_think_llm" if thinker_depth == "deep" else "quick_think_llm"
+        return (
+            llm_config["provider"] == self._normalize_provider(self.config["llm_provider"])
+            and llm_config["model"] == self.config[model_key]
+            and llm_config.get("base_url") == self.config.get("backend_url")
+        )
+
+    def _resolve_llm_config(
+        self,
+        role: str,
+        thinker_depth: str,
+    ) -> Dict[str, Any]:
+        routing = self.config.get("llm_routing") or {}
+        role_routes = routing.get("roles") or {}
+        model_key = "deep_think_llm" if thinker_depth == "deep" else "quick_think_llm"
+        legacy_provider = self._normalize_provider(self.config["llm_provider"])
+        legacy_route = {
+            "provider": legacy_provider,
+            "model": self.config[model_key],
+            "base_url": self.config.get("backend_url"),
+        }
+        default_route = routing.get("default") or {}
+        role_route = role_routes.get(role) or {}
+        route = self._deep_merge_dicts(legacy_route, default_route)
+        route = self._deep_merge_dicts(route, role_route)
+        route["provider"] = self._normalize_provider(route.get("provider"))
+        explicit_routed_base_url = "base_url" in default_route or "base_url" in role_route
+        if route["provider"] != legacy_provider and not explicit_routed_base_url:
+            route["base_url"] = None
+        return route
+
+    def _get_provider_kwargs(self, provider: Optional[str] = None) -> Dict[str, Any]:
         """Get provider-specific kwargs for LLM client creation."""
         kwargs = {}
-        provider = self.config.get("llm_provider", "").lower()
+        provider = (provider or self.config.get("llm_provider", "")).lower()
 
         if provider == "google":
             thinking_level = self.config.get("google_thinking_level")
@@ -157,6 +292,9 @@ class TradingAgentsGraph:
 
     def _create_tool_nodes(self) -> Dict[str, ToolNode]:
         """Create tool nodes for different data sources using abstract methods."""
+        social_tools = build_social_tools(
+            getattr(self, "social_sentiment_available", has_social_sentiment_support())
+        )
         return {
             "market": ToolNode(
                 [
@@ -166,12 +304,7 @@ class TradingAgentsGraph:
                     get_indicators,
                 ]
             ),
-            "social": ToolNode(
-                [
-                    # News tools for social media analysis
-                    get_news,
-                ]
-            ),
+            "social": ToolNode(social_tools),
             "news": ToolNode(
                 [
                     # News and insider information
@@ -189,6 +322,44 @@ class TradingAgentsGraph:
                     get_income_statement,
                 ]
             ),
+            "valuation": ToolNode(
+                [
+                    # Valuation analysis tools
+                    get_valuation_inputs,
+                ]
+            ),
+            "segment": ToolNode(
+                [
+                    # Segment and business-mix analysis tools
+                    get_segment_fundamentals,
+                    get_segment_income_statement,
+                    get_segment_news,
+                ]
+            ),
+            "scenario": ToolNode(
+                [
+                    # Scenario and catalyst mapping tools
+                    get_scenario_fundamentals,
+                    get_scenario_news,
+                    get_catalyst_calendar,
+                ]
+            ),
+            "position_sizing": ToolNode(
+                [
+                    # Position sizing analysis tools
+                    get_sizing_fundamentals,
+                    get_sizing_indicator,
+                    get_sizing_price_history,
+                ]
+            ),
+            "macro": ToolNode(
+                [
+                    # Macroeconomic analysis tools
+                    get_economic_indicators,
+                    get_yield_curve,
+                    get_fed_calendar,
+                ]
+            ),
         }
 
     def propagate(self, company_name, trade_date):
@@ -204,15 +375,11 @@ class TradingAgentsGraph:
 
         if self.debug:
             # Debug mode with tracing
-            trace = []
+            final_state = init_agent_state
             for chunk in self.graph.stream(init_agent_state, **args):
-                if len(chunk["messages"]) == 0:
-                    pass
-                else:
+                final_state = chunk
+                if len(chunk["messages"]) > 0:
                     chunk["messages"][-1].pretty_print()
-                    trace.append(chunk)
-
-            final_state = trace[-1]
         else:
             # Standard mode without tracing
             final_state = self.graph.invoke(init_agent_state, **args)
@@ -235,6 +402,16 @@ class TradingAgentsGraph:
             "sentiment_report": final_state["sentiment_report"],
             "news_report": final_state["news_report"],
             "fundamentals_report": final_state["fundamentals_report"],
+            "factor_rules_report": final_state.get("factor_rules_report", ""),
+            "segment_report": final_state.get("segment_report", ""),
+            "segment_data": final_state.get("segment_data", {}),
+            "macro_report": final_state.get("macro_report", ""),
+            "scenario_catalyst_report": final_state.get("scenario_catalyst_report", ""),
+            "scenario_catalyst_data": final_state.get("scenario_catalyst_data", {}),
+            "position_sizing_report": final_state.get("position_sizing_report", ""),
+            "position_sizing_data": final_state.get("position_sizing_data", {}),
+            "chief_analyst_report": final_state.get("chief_analyst_report", ""),
+            "chief_analyst_data": final_state.get("chief_analyst_data", {}),
             "investment_debate_state": {
                 "bull_history": final_state["investment_debate_state"]["bull_history"],
                 "bear_history": final_state["investment_debate_state"]["bear_history"],

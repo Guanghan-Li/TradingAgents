@@ -7,12 +7,20 @@ from langgraph.prebuilt import ToolNode
 
 from tradingagents.agents import *
 from tradingagents.agents.utils.agent_states import AgentState
+from tradingagents.agents.managers.chief_analyst import create_chief_analyst
 
 from .conditional_logic import ConditionalLogic
 
 
 class GraphSetup:
     """Handles the setup and configuration of the agent graph."""
+
+    @staticmethod
+    def _order_selected_analysts(selected_analysts):
+        if "macro" not in selected_analysts:
+            return selected_analysts
+        remaining = [analyst for analyst in selected_analysts if analyst != "macro"]
+        return ["macro", *remaining]
 
     def __init__(
         self,
@@ -25,10 +33,13 @@ class GraphSetup:
         invest_judge_memory,
         portfolio_manager_memory,
         conditional_logic: ConditionalLogic,
+        role_llms: Dict[str, Any] | None = None,
+        social_sentiment_available: bool = False,
     ):
         """Initialize with required components."""
         self.quick_thinking_llm = quick_thinking_llm
         self.deep_thinking_llm = deep_thinking_llm
+        self.role_llms = role_llms or {}
         self.tool_nodes = tool_nodes
         self.bull_memory = bull_memory
         self.bear_memory = bear_memory
@@ -36,9 +47,74 @@ class GraphSetup:
         self.invest_judge_memory = invest_judge_memory
         self.portfolio_manager_memory = portfolio_manager_memory
         self.conditional_logic = conditional_logic
+        self.social_sentiment_available = social_sentiment_available
+        self.market_analyst_llm = self._get_role_llm("market", self.quick_thinking_llm)
+        self.social_analyst_llm = self._get_role_llm("social", self.quick_thinking_llm)
+        self.news_analyst_llm = self._get_role_llm("news", self.quick_thinking_llm)
+        self.fundamentals_analyst_llm = self._get_role_llm(
+            "fundamentals", self.quick_thinking_llm
+        )
+        self.factor_rules_analyst_llm = self._get_role_llm(
+            "factor_rules", self.quick_thinking_llm
+        )
+        self.valuation_analyst_llm = self._get_role_llm(
+            "valuation", self.quick_thinking_llm
+        )
+        self.segment_analyst_llm = self._get_role_llm("segment", self.quick_thinking_llm)
+        self.scenario_analyst_llm = self._get_role_llm("scenario", self.quick_thinking_llm)
+        self.position_sizing_analyst_llm = self._get_role_llm(
+            "position_sizing", self.quick_thinking_llm
+        )
+        self.macro_analyst_llm = self._get_role_llm("macro", self.quick_thinking_llm)
+        self.bull_researcher_llm = self._get_role_llm(
+            "bull_researcher", self.quick_thinking_llm
+        )
+        self.bear_researcher_llm = self._get_role_llm(
+            "bear_researcher", self.quick_thinking_llm
+        )
+        self.research_manager_llm = self._get_role_llm(
+            "research_manager", self.deep_thinking_llm
+        )
+        self.trader_llm = self._get_role_llm("trader", self.quick_thinking_llm)
+        self.aggressive_analyst_llm = self._get_role_llm(
+            "aggressive_analyst", self.quick_thinking_llm
+        )
+        self.neutral_analyst_llm = self._get_role_llm(
+            "neutral_analyst", self.quick_thinking_llm
+        )
+        self.conservative_analyst_llm = self._get_role_llm(
+            "conservative_analyst", self.quick_thinking_llm
+        )
+        self.portfolio_manager_llm = self._get_role_llm(
+            "portfolio_manager", self.deep_thinking_llm
+        )
+        self.chief_analyst_llm = self._get_role_llm(
+            "chief_analyst", self.deep_thinking_llm
+        )
+
+    def _get_role_llm(self, role: str, fallback_llm: ChatOpenAI):
+        return self.role_llms.get(role, fallback_llm)
+
+    def _get_continue_handler(self, analyst_type: str):
+        specific_handler = getattr(
+            self.conditional_logic,
+            f"should_continue_{analyst_type}",
+            None,
+        )
+        if specific_handler is not None:
+            return specific_handler
+
+        def default_handler(state: AgentState):
+            messages = state["messages"]
+            last_message = messages[-1]
+            if getattr(last_message, "tool_calls", None):
+                return f"tools_{analyst_type}"
+            return f"Msg Clear {analyst_type.capitalize()}"
+
+        return default_handler
 
     def setup_graph(
-        self, selected_analysts=["market", "social", "news", "fundamentals"]
+        self, selected_analysts=["market", "social", "news", "fundamentals", "macro"]
     ):
         """Set up and compile the agent workflow graph.
 
@@ -48,9 +124,16 @@ class GraphSetup:
                 - "social": Social media analyst
                 - "news": News analyst
                 - "fundamentals": Fundamentals analyst
+                - "factor_rules": Factor rule analyst
+                - "valuation": Valuation analyst
+                - "segment": Segment analyst
+                - "scenario": Scenario and catalyst analyst
+                - "position_sizing": Position sizing analyst
+                - "macro": Macro analyst
         """
         if len(selected_analysts) == 0:
             raise ValueError("Trading Agents Graph Setup Error: no analysts selected!")
+        selected_analysts = self._order_selected_analysts(list(selected_analysts))
 
         # Create analyst nodes
         analyst_nodes = {}
@@ -59,51 +142,92 @@ class GraphSetup:
 
         if "market" in selected_analysts:
             analyst_nodes["market"] = create_market_analyst(
-                self.quick_thinking_llm
+                self.market_analyst_llm
             )
             delete_nodes["market"] = create_msg_delete()
             tool_nodes["market"] = self.tool_nodes["market"]
 
         if "social" in selected_analysts:
             analyst_nodes["social"] = create_social_media_analyst(
-                self.quick_thinking_llm
+                self.social_analyst_llm,
+                social_sentiment_available=self.social_sentiment_available,
             )
             delete_nodes["social"] = create_msg_delete()
             tool_nodes["social"] = self.tool_nodes["social"]
 
         if "news" in selected_analysts:
             analyst_nodes["news"] = create_news_analyst(
-                self.quick_thinking_llm
+                self.news_analyst_llm
             )
             delete_nodes["news"] = create_msg_delete()
             tool_nodes["news"] = self.tool_nodes["news"]
 
         if "fundamentals" in selected_analysts:
             analyst_nodes["fundamentals"] = create_fundamentals_analyst(
-                self.quick_thinking_llm
+                self.fundamentals_analyst_llm
             )
             delete_nodes["fundamentals"] = create_msg_delete()
             tool_nodes["fundamentals"] = self.tool_nodes["fundamentals"]
 
+        if "factor_rules" in selected_analysts:
+            analyst_nodes["factor_rules"] = create_factor_rule_analyst(
+                self.factor_rules_analyst_llm
+            )
+            delete_nodes["factor_rules"] = create_msg_delete()
+
+        if "valuation" in selected_analysts:
+            analyst_nodes["valuation"] = create_valuation_analyst(
+                self.valuation_analyst_llm
+            )
+            delete_nodes["valuation"] = create_msg_delete()
+            tool_nodes["valuation"] = self.tool_nodes["valuation"]
+
+        if "segment" in selected_analysts:
+            analyst_nodes["segment"] = create_segment_analyst(self.segment_analyst_llm)
+            delete_nodes["segment"] = create_msg_delete()
+            tool_nodes["segment"] = self.tool_nodes["segment"]
+
+        if "scenario" in selected_analysts:
+            analyst_nodes["scenario"] = create_scenario_catalyst_analyst(
+                self.scenario_analyst_llm
+            )
+            delete_nodes["scenario"] = create_msg_delete()
+            tool_nodes["scenario"] = self.tool_nodes["scenario"]
+
+        if "position_sizing" in selected_analysts:
+            analyst_nodes["position_sizing"] = create_position_sizing_analyst(
+                self.position_sizing_analyst_llm
+            )
+            delete_nodes["position_sizing"] = create_msg_delete()
+            tool_nodes["position_sizing"] = self.tool_nodes["position_sizing"]
+
+        if "macro" in selected_analysts:
+            analyst_nodes["macro"] = create_macro_analyst(self.macro_analyst_llm)
+            delete_nodes["macro"] = create_msg_delete()
+            tool_nodes["macro"] = self.tool_nodes["macro"]
+
         # Create researcher and manager nodes
         bull_researcher_node = create_bull_researcher(
-            self.quick_thinking_llm, self.bull_memory
+            self.bull_researcher_llm, self.bull_memory
         )
         bear_researcher_node = create_bear_researcher(
-            self.quick_thinking_llm, self.bear_memory
+            self.bear_researcher_llm, self.bear_memory
         )
         research_manager_node = create_research_manager(
-            self.deep_thinking_llm, self.invest_judge_memory
+            self.research_manager_llm, self.invest_judge_memory
         )
-        trader_node = create_trader(self.quick_thinking_llm, self.trader_memory)
+        trader_node = create_trader(self.trader_llm, self.trader_memory)
 
         # Create risk analysis nodes
-        aggressive_analyst = create_aggressive_debator(self.quick_thinking_llm)
-        neutral_analyst = create_neutral_debator(self.quick_thinking_llm)
-        conservative_analyst = create_conservative_debator(self.quick_thinking_llm)
-        portfolio_manager_node = create_portfolio_manager(
-            self.deep_thinking_llm, self.portfolio_manager_memory
+        aggressive_analyst = create_aggressive_debator(self.aggressive_analyst_llm)
+        neutral_analyst = create_neutral_debator(self.neutral_analyst_llm)
+        conservative_analyst = create_conservative_debator(
+            self.conservative_analyst_llm
         )
+        portfolio_manager_node = create_portfolio_manager(
+            self.portfolio_manager_llm, self.portfolio_manager_memory
+        )
+        chief_analyst_node = create_chief_analyst(self.chief_analyst_llm)
 
         # Create workflow
         workflow = StateGraph(AgentState)
@@ -114,7 +238,8 @@ class GraphSetup:
             workflow.add_node(
                 f"Msg Clear {analyst_type.capitalize()}", delete_nodes[analyst_type]
             )
-            workflow.add_node(f"tools_{analyst_type}", tool_nodes[analyst_type])
+            if analyst_type in tool_nodes:
+                workflow.add_node(f"tools_{analyst_type}", tool_nodes[analyst_type])
 
         # Add other nodes
         workflow.add_node("Bull Researcher", bull_researcher_node)
@@ -125,6 +250,7 @@ class GraphSetup:
         workflow.add_node("Neutral Analyst", neutral_analyst)
         workflow.add_node("Conservative Analyst", conservative_analyst)
         workflow.add_node("Portfolio Manager", portfolio_manager_node)
+        workflow.add_node("Chief Analyst", chief_analyst_node)
 
         # Define edges
         # Start with the first analyst
@@ -140,10 +266,13 @@ class GraphSetup:
             # Add conditional edges for current analyst
             workflow.add_conditional_edges(
                 current_analyst,
-                getattr(self.conditional_logic, f"should_continue_{analyst_type}"),
-                [current_tools, current_clear],
+                self._get_continue_handler(analyst_type),
+                [current_tools, current_clear]
+                if analyst_type in tool_nodes
+                else [current_clear],
             )
-            workflow.add_edge(current_tools, current_analyst)
+            if analyst_type in tool_nodes:
+                workflow.add_edge(current_tools, current_analyst)
 
             # Connect to next analyst or to Bull Researcher if this is the last analyst
             if i < len(selected_analysts) - 1:
@@ -196,7 +325,8 @@ class GraphSetup:
             },
         )
 
-        workflow.add_edge("Portfolio Manager", END)
+        workflow.add_edge("Portfolio Manager", "Chief Analyst")
+        workflow.add_edge("Chief Analyst", END)
 
         # Compile and return
         return workflow.compile()

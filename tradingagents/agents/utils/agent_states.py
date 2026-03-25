@@ -1,4 +1,4 @@
-from typing import Annotated, Sequence
+from typing import Annotated, Any, Sequence
 from datetime import date, timedelta, datetime
 from typing_extensions import TypedDict, Optional
 from langchain_openai import ChatOpenAI
@@ -47,6 +47,154 @@ class RiskDebateState(TypedDict):
     count: Annotated[int, "Length of the current conversation"]  # Conversation length
 
 
+class FairValueRange(TypedDict):
+    low: Optional[float]
+    high: Optional[float]
+
+
+class ValuationData(TypedDict):
+    fair_value_range: FairValueRange
+    expected_return_pct: Optional[float]
+    primary_method: str
+    thesis: str
+
+
+class SegmentData(TypedDict):
+    ticker: str
+    analysis_date: str
+    business_unit_decomposition: list[dict[str, Any]]
+    segment_economics: dict[str, Any]
+    value_driver_map: list[dict[str, Any]]
+
+
+class ScenarioCaseData(TypedDict):
+    probability: Optional[float]
+    price_target: Optional[float]
+    thesis: str
+
+
+class ScenarioCatalystData(TypedDict):
+    ticker: str
+    analysis_date: str
+    scenario_map: list[dict[str, Any]]
+    dated_catalyst_map: list[dict[str, Any]]
+    invalidation_triggers: list[dict[str, Any]]
+
+
+class PositionSizingData(TypedDict):
+    ticker: str
+    analysis_date: str
+    conviction: str
+    target_weight_pct: Optional[float]
+    initial_weight_pct: Optional[float]
+    max_loss_pct: Optional[float]
+    sizing_rationale: str
+
+
+class ChiefAnalystData(TypedDict):
+    ticker: str
+    analysis_date: str
+    verdict: dict[str, str]
+    fair_value: dict[str, str]
+    catalysts: list[dict[str, str]]
+    execution: dict[str, str]
+    tail_risk: dict[str, Any]
+    variant_perception: dict[str, list[str]]
+
+
+def make_default_valuation_data() -> ValuationData:
+    return {
+        "fair_value_range": {"low": None, "high": None},
+        "expected_return_pct": None,
+        "primary_method": "",
+        "thesis": "",
+    }
+
+
+def make_default_segment_data() -> SegmentData:
+    return {
+        "ticker": "",
+        "analysis_date": "",
+        "business_unit_decomposition": [],
+        "segment_economics": {},
+        "value_driver_map": [],
+    }
+
+
+def make_default_scenario_case_data() -> ScenarioCaseData:
+    return {
+        "probability": None,
+        "price_target": None,
+        "thesis": "",
+    }
+
+
+def make_default_scenario_catalyst_data() -> ScenarioCatalystData:
+    return {
+        "ticker": "",
+        "analysis_date": "",
+        "scenario_map": [],
+        "dated_catalyst_map": [],
+        "invalidation_triggers": [],
+    }
+
+
+def make_default_position_sizing_data() -> PositionSizingData:
+    return {
+        "ticker": "",
+        "analysis_date": "",
+        "conviction": "",
+        "target_weight_pct": None,
+        "initial_weight_pct": None,
+        "max_loss_pct": None,
+        "sizing_rationale": "",
+    }
+
+
+def build_chief_analyst_data_defaults(
+    ticker: str = "",
+    analysis_date: str = "",
+) -> ChiefAnalystData:
+    return {
+        "ticker": ticker,
+        "analysis_date": analysis_date,
+        "verdict": {
+            "rating": "",
+            "summary": "",
+            "thesis": "",
+        },
+        "fair_value": {
+            "bull_case": "",
+            "base_case": "",
+            "bear_case": "",
+        },
+        "catalysts": [],
+        "execution": {
+            "research_plan": "",
+            "trader_plan": "",
+            "portfolio_manager_guidance": "",
+        },
+        "tail_risk": {
+            "risk_summary": "",
+            "invalidation_triggers": [],
+        },
+        "variant_perception": {
+            "business_segments": [],
+            "value_drivers": [],
+        },
+    }
+
+
+def make_default_structured_stock_underwriting_state() -> dict[str, Any]:
+    return {
+        "valuation_data": make_default_valuation_data(),
+        "segment_data": make_default_segment_data(),
+        "scenario_catalyst_data": make_default_scenario_catalyst_data(),
+        "position_sizing_data": make_default_position_sizing_data(),
+        "chief_analyst_data": build_chief_analyst_data_defaults(),
+    }
+
+
 class AgentState(MessagesState):
     company_of_interest: Annotated[str, "Company that we are interested in trading"]
     trade_date: Annotated[str, "What date we are trading at"]
@@ -59,7 +207,39 @@ class AgentState(MessagesState):
     news_report: Annotated[
         str, "Report from the News Researcher of current world affairs"
     ]
+    macro_report: Annotated[str, "Report from the Macro Analyst"]
     fundamentals_report: Annotated[str, "Report from the Fundamentals Researcher"]
+    factor_rules_report: Annotated[
+        str, "Summary from the optional factor rule analyst"
+    ]
+    segment_report: Annotated[str, "Report from the Segment Analyst"]
+    scenario_catalyst_report: Annotated[
+        str,
+        "Report from the Scenario and Catalyst Analyst",
+    ]
+    position_sizing_report: Annotated[
+        str,
+        "Report from the Position Sizing Analyst",
+    ]
+    chief_analyst_report: Annotated[
+        str,
+        "Concise final summary report from the Chief Analyst",
+    ]
+    valuation_data: Annotated[
+        ValuationData, "Structured valuation underwriting output"
+    ]
+    segment_data: Annotated[
+        SegmentData, "Structured segment underwriting output"
+    ]
+    scenario_catalyst_data: Annotated[
+        ScenarioCatalystData, "Structured scenario and catalyst underwriting output"
+    ]
+    position_sizing_data: Annotated[
+        PositionSizingData, "Structured position sizing underwriting output"
+    ]
+    chief_analyst_data: Annotated[
+        ChiefAnalystData, "Structured chief analyst summary output"
+    ]
 
     # researcher team discussion step
     investment_debate_state: Annotated[

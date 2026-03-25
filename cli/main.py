@@ -3,6 +3,7 @@ import datetime
 import typer
 from pathlib import Path
 from functools import wraps
+from copy import deepcopy
 from rich.console import Console
 from tradingagents.env import load_project_dotenv
 
@@ -25,7 +26,8 @@ from rich.rule import Rule
 
 from tradingagents.graph.trading_graph import TradingAgentsGraph
 from tradingagents.default_config import DEFAULT_CONFIG
-from cli.models import AnalystType
+from tradingagents.prediction_market import PM_DEFAULT_CONFIG, PredictionMarketGraph
+from cli.models import AnalysisMode, AnalystType
 from cli.utils import *
 from cli.announcements import fetch_announcements, display_announcements
 from cli.stats_handler import StatsCallbackHandler
@@ -46,7 +48,7 @@ class MessageBuffer:
         "Research Team": ["Bull Researcher", "Bear Researcher", "Research Manager"],
         "Trading Team": ["Trader"],
         "Risk Management": ["Aggressive Analyst", "Neutral Analyst", "Conservative Analyst"],
-        "Portfolio Management": ["Portfolio Manager"],
+        "Portfolio Management": ["Portfolio Manager", "Chief Analyst"],
     }
 
     # Analyst name mapping
@@ -55,6 +57,7 @@ class MessageBuffer:
         "social": "Social Analyst",
         "news": "News Analyst",
         "fundamentals": "Fundamentals Analyst",
+        "macro": "Macro Analyst",
     }
 
     # Report section mapping: section -> (analyst_key for filtering, finalizing_agent)
@@ -65,9 +68,11 @@ class MessageBuffer:
         "sentiment_report": ("social", "Social Analyst"),
         "news_report": ("news", "News Analyst"),
         "fundamentals_report": ("fundamentals", "Fundamentals Analyst"),
+        "macro_report": ("macro", "Macro Analyst"),
         "investment_plan": (None, "Research Manager"),
         "trader_investment_plan": (None, "Trader"),
         "final_trade_decision": (None, "Portfolio Manager"),
+        "chief_analyst_report": (None, "Chief Analyst"),
     }
 
     def __init__(self, max_length=100):
@@ -176,6 +181,7 @@ class MessageBuffer:
                 "investment_plan": "Research Team Decision",
                 "trader_investment_plan": "Trading Team Plan",
                 "final_trade_decision": "Portfolio Management Decision",
+                "chief_analyst_report": "Chief Analyst Summary",
             }
             self.current_report = (
                 f"### {section_titles[latest_section]}\n{latest_content}"
@@ -188,7 +194,13 @@ class MessageBuffer:
         report_parts = []
 
         # Analyst Team Reports - use .get() to handle missing sections
-        analyst_sections = ["market_report", "sentiment_report", "news_report", "fundamentals_report"]
+        analyst_sections = [
+            "market_report",
+            "sentiment_report",
+            "news_report",
+            "fundamentals_report",
+            "macro_report",
+        ]
         if any(self.report_sections.get(section) for section in analyst_sections):
             report_parts.append("## Analyst Team Reports")
             if self.report_sections.get("market_report"):
@@ -207,6 +219,10 @@ class MessageBuffer:
                 report_parts.append(
                     f"### Fundamentals Analysis\n{self.report_sections['fundamentals_report']}"
                 )
+            if self.report_sections.get("macro_report"):
+                report_parts.append(
+                    f"### Macro Analysis\n{self.report_sections['macro_report']}"
+                )
 
         # Research Team Reports
         if self.report_sections.get("investment_plan"):
@@ -222,6 +238,10 @@ class MessageBuffer:
         if self.report_sections.get("final_trade_decision"):
             report_parts.append("## Portfolio Management Decision")
             report_parts.append(f"{self.report_sections['final_trade_decision']}")
+
+        if self.report_sections.get("chief_analyst_report"):
+            report_parts.append("## Chief Analyst Summary")
+            report_parts.append(f"{self.report_sections['chief_analyst_report']}")
 
         self.final_report = "\n\n".join(report_parts) if report_parts else None
 
@@ -469,7 +489,7 @@ def get_user_selections():
     welcome_content = f"{welcome_ascii}\n"
     welcome_content += "[bold green]TradingAgents: Multi-Agents LLM Financial Trading Framework - CLI[/bold green]\n\n"
     welcome_content += "[bold]Workflow Steps:[/bold]\n"
-    welcome_content += "I. Analyst Team → II. Research Team → III. Trader → IV. Risk Management → V. Portfolio Management\n\n"
+    welcome_content += "I. Analyst Team → II. Research Team → III. Trader → IV. Risk Management → V. Portfolio Management → VI. Chief Analyst\n\n"
     welcome_content += (
         "[dim]Built by [Tauric Research](https://github.com/TauricResearch)[/dim]"
     )
@@ -709,6 +729,14 @@ def save_report_to_disk(final_state, ticker: str, save_path: Path):
             (portfolio_dir / "decision.md").write_text(risk["judge_decision"])
             sections.append(f"## V. Portfolio Manager Decision\n\n### Portfolio Manager\n{risk['judge_decision']}")
 
+    if final_state.get("chief_analyst_report"):
+        chief_dir = save_path / "6_chief_analyst"
+        chief_dir.mkdir(exist_ok=True)
+        (chief_dir / "summary.md").write_text(final_state["chief_analyst_report"])
+        sections.append(
+            f"## VI. Chief Analyst Summary\n\n### Chief Analyst\n{final_state['chief_analyst_report']}"
+        )
+
     # Write consolidated report
     header = f"# Trading Analysis Report: {ticker}\n\nGenerated: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
     (save_path / "complete_report.md").write_text(header + "\n\n".join(sections))
@@ -775,6 +803,17 @@ def display_complete_report(final_state):
             console.print(Panel("[bold]V. Portfolio Manager Decision[/bold]", border_style="green"))
             console.print(Panel(Markdown(risk["judge_decision"]), title="Portfolio Manager", border_style="blue", padding=(1, 2)))
 
+    if final_state.get("chief_analyst_report"):
+        console.print(Panel("[bold]VI. Chief Analyst Summary[/bold]", border_style="green"))
+        console.print(
+            Panel(
+                Markdown(final_state["chief_analyst_report"]),
+                title="Chief Analyst",
+                border_style="blue",
+                padding=(1, 2),
+            )
+        )
+
 
 def update_research_team_status(status):
     """Update status for research team members (not Trader)."""
@@ -784,14 +823,16 @@ def update_research_team_status(status):
 
 
 # Ordered list of analysts for status transitions
-ANALYST_ORDER = ["market", "social", "news", "fundamentals"]
+ANALYST_ORDER = ["macro", "market", "social", "news", "fundamentals"]
 ANALYST_AGENT_NAMES = {
+    "macro": "Macro Analyst",
     "market": "Market Analyst",
     "social": "Social Analyst",
     "news": "News Analyst",
     "fundamentals": "Fundamentals Analyst",
 }
 ANALYST_REPORT_MAP = {
+    "macro": "macro_report",
     "market": "market_report",
     "social": "sentiment_report",
     "news": "news_report",
@@ -920,13 +961,19 @@ def run_analysis():
     selections = get_user_selections()
 
     # Create config with selected research depth
-    config = DEFAULT_CONFIG.copy()
+    config = deepcopy(DEFAULT_CONFIG)
     config["max_debate_rounds"] = selections["research_depth"]
     config["max_risk_discuss_rounds"] = selections["research_depth"]
     config["quick_think_llm"] = selections["shallow_thinker"]
     config["deep_think_llm"] = selections["deep_thinker"]
     config["backend_url"] = selections["backend_url"]
     config["llm_provider"] = selections["llm_provider"].lower()
+    config["llm_routing"] = build_llm_routing_config(
+        provider=selections["llm_provider"],
+        shallow_model=selections["shallow_thinker"],
+        deep_model=selections["deep_thinker"],
+        backend_url=selections["backend_url"],
+    )
     # Provider-specific thinking configuration
     config["google_thinking_level"] = selections.get("google_thinking_level")
     config["openai_reasoning_effort"] = selections.get("openai_reasoning_effort")
@@ -1137,6 +1184,14 @@ def run_analysis():
                         message_buffer.update_agent_status("Conservative Analyst", "completed")
                         message_buffer.update_agent_status("Neutral Analyst", "completed")
                         message_buffer.update_agent_status("Portfolio Manager", "completed")
+                        if message_buffer.agent_status.get("Chief Analyst") != "completed":
+                            message_buffer.update_agent_status("Chief Analyst", "in_progress")
+
+            if chunk.get("chief_analyst_report"):
+                message_buffer.update_report_section(
+                    "chief_analyst_report", chunk["chief_analyst_report"]
+                )
+                message_buffer.update_agent_status("Chief Analyst", "completed")
 
             # Update the display
             update_display(layout, stats_handler=stats_handler, start_time=start_time)
@@ -1188,8 +1243,76 @@ def run_analysis():
         display_complete_report(final_state)
 
 
+def run_polymarket_analysis():
+    config = PM_DEFAULT_CONFIG.copy()
+    market_id, market_question = get_market_id()
+    analysis_date = get_analysis_date()
+    selected_analysts = select_pm_analysts()
+    selected_research_depth = select_research_depth()
+    selected_llm_provider, backend_url = select_llm_provider()
+    selected_shallow_thinker = select_shallow_thinking_agent(selected_llm_provider)
+    selected_deep_thinker = select_deep_thinking_agent(selected_llm_provider)
+
+    config["results_dir"] = DEFAULT_CONFIG["results_dir"]
+    config["max_debate_rounds"] = selected_research_depth
+    config["max_risk_discuss_rounds"] = selected_research_depth
+    config["quick_think_llm"] = selected_shallow_thinker
+    config["deep_think_llm"] = selected_deep_thinker
+    config["backend_url"] = backend_url
+    config["llm_provider"] = selected_llm_provider.lower()
+
+    provider_lower = selected_llm_provider.lower()
+    if provider_lower == "google":
+        config["google_thinking_level"] = ask_gemini_thinking_config()
+    elif provider_lower == "openai":
+        config["openai_reasoning_effort"] = ask_openai_reasoning_effort()
+    elif provider_lower == "anthropic":
+        config["anthropic_effort"] = ask_anthropic_effort()
+
+    graph = PredictionMarketGraph(
+        selected_analysts=[analyst.value for analyst in selected_analysts],
+        config=config,
+        debug=False,
+    )
+
+    console.print(
+        f"[green]Running Polymarket analysis[/green] for market {market_id} on {analysis_date}"
+    )
+    if market_question:
+        console.print(f"[dim]{market_question}[/dim]")
+
+    final_state, decision = graph.propagate(
+        market_id,
+        analysis_date,
+        market_question=market_question,
+    )
+
+    console.print(
+        f"[green]Polymarket decision[/green]: {decision}"
+    )
+    return {
+        "market_id": market_id,
+        "market_question": market_question,
+        "analysis_date": analysis_date,
+        "graph": graph,
+        "final_state": final_state,
+        "decision": decision,
+    }
+
+
 @app.command()
-def analyze():
+def analyze(
+    mode: AnalysisMode = typer.Option(
+        AnalysisMode.STOCK,
+        "--mode",
+        help="Choose which analysis product to run.",
+        case_sensitive=False,
+    ),
+):
+    if mode == AnalysisMode.POLYMARKET:
+        run_polymarket_analysis()
+        return
+
     run_analysis()
 
 
