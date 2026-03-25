@@ -12,9 +12,22 @@ class CLIDisplayTests(unittest.TestCase):
 
         self.assertEqual(message_buffer.current_report, "### Macro Analysis\nMacro body")
 
-    def test_progress_teams_include_macro_and_chief_when_active(self):
+    def test_progress_teams_include_all_stock_analysts_and_chief_when_active(self):
         message_buffer = MessageBuffer()
-        message_buffer.init_for_analysis(["market", "social", "news", "fundamentals", "macro"])
+        message_buffer.init_for_analysis(
+            [
+                "market",
+                "social",
+                "news",
+                "fundamentals",
+                "macro",
+                "factor_rules",
+                "valuation",
+                "segment",
+                "scenario",
+                "position_sizing",
+            ]
+        )
 
         teams = get_progress_teams(message_buffer.agent_status)
 
@@ -26,12 +39,32 @@ class CLIDisplayTests(unittest.TestCase):
                 "News Analyst",
                 "Fundamentals Analyst",
                 "Macro Analyst",
+                "Factor Rules Analyst",
+                "Valuation Analyst",
+                "Segment Analyst",
+                "Scenario Analyst",
+                "Position Sizing Analyst",
             ],
         )
         self.assertEqual(
             teams["Portfolio Management"],
             ["Portfolio Manager", "Chief Analyst"],
         )
+
+    def test_structured_valuation_data_is_rendered_in_current_report(self):
+        message_buffer = MessageBuffer()
+        message_buffer.init_for_analysis(["valuation"])
+
+        message_buffer.update_report_section(
+            "valuation_data",
+            {
+                "fair_value_range": {"low": 150.0, "high": 180.0},
+                "primary_method": "dcf",
+            },
+        )
+
+        self.assertIn("### Valuation Summary", message_buffer.current_report)
+        self.assertIn('"primary_method": "dcf"', message_buffer.current_report)
 
 
 if __name__ == "__main__":

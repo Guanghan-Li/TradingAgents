@@ -58,6 +58,11 @@ class MessageBuffer:
         "news": "News Analyst",
         "fundamentals": "Fundamentals Analyst",
         "macro": "Macro Analyst",
+        "factor_rules": "Factor Rules Analyst",
+        "valuation": "Valuation Analyst",
+        "segment": "Segment Analyst",
+        "scenario": "Scenario Analyst",
+        "position_sizing": "Position Sizing Analyst",
     }
 
     ANALYST_TEAM = [
@@ -66,6 +71,11 @@ class MessageBuffer:
         "News Analyst",
         "Fundamentals Analyst",
         "Macro Analyst",
+        "Factor Rules Analyst",
+        "Valuation Analyst",
+        "Segment Analyst",
+        "Scenario Analyst",
+        "Position Sizing Analyst",
     ]
 
     # Report section mapping: section -> (analyst_key for filtering, finalizing_agent)
@@ -77,6 +87,11 @@ class MessageBuffer:
         "news_report": ("news", "News Analyst"),
         "fundamentals_report": ("fundamentals", "Fundamentals Analyst"),
         "macro_report": ("macro", "Macro Analyst"),
+        "factor_rules_report": ("factor_rules", "Factor Rules Analyst"),
+        "valuation_data": ("valuation", "Valuation Analyst"),
+        "segment_report": ("segment", "Segment Analyst"),
+        "scenario_catalyst_report": ("scenario", "Scenario Analyst"),
+        "position_sizing_report": ("position_sizing", "Position Sizing Analyst"),
         "investment_plan": (None, "Research Manager"),
         "trader_investment_plan": (None, "Trader"),
         "final_trade_decision": (None, "Portfolio Manager"),
@@ -187,13 +202,18 @@ class MessageBuffer:
                 "news_report": "News Analysis",
                 "fundamentals_report": "Fundamentals Analysis",
                 "macro_report": "Macro Analysis",
+                "factor_rules_report": "Factor Rules Analysis",
+                "valuation_data": "Valuation Summary",
+                "segment_report": "Segment Analysis",
+                "scenario_catalyst_report": "Scenario & Catalyst Analysis",
+                "position_sizing_report": "Position Sizing Analysis",
                 "investment_plan": "Research Team Decision",
                 "trader_investment_plan": "Trading Team Plan",
                 "final_trade_decision": "Portfolio Management Decision",
                 "chief_analyst_report": "Chief Analyst Summary",
             }
             self.current_report = (
-                f"### {section_titles[latest_section]}\n{latest_content}"
+                f"### {section_titles[latest_section]}\n{format_report_content(latest_content)}"
             )
 
         # Update the final complete report
@@ -209,6 +229,11 @@ class MessageBuffer:
             "news_report",
             "fundamentals_report",
             "macro_report",
+            "factor_rules_report",
+            "valuation_data",
+            "segment_report",
+            "scenario_catalyst_report",
+            "position_sizing_report",
         ]
         if any(self.report_sections.get(section) for section in analyst_sections):
             report_parts.append("## Analyst Team Reports")
@@ -231,6 +256,26 @@ class MessageBuffer:
             if self.report_sections.get("macro_report"):
                 report_parts.append(
                     f"### Macro Analysis\n{self.report_sections['macro_report']}"
+                )
+            if self.report_sections.get("factor_rules_report"):
+                report_parts.append(
+                    f"### Factor Rules Analysis\n{format_report_content(self.report_sections['factor_rules_report'])}"
+                )
+            if self.report_sections.get("valuation_data"):
+                report_parts.append(
+                    f"### Valuation Summary\n{format_report_content(self.report_sections['valuation_data'])}"
+                )
+            if self.report_sections.get("segment_report"):
+                report_parts.append(
+                    f"### Segment Analysis\n{format_report_content(self.report_sections['segment_report'])}"
+                )
+            if self.report_sections.get("scenario_catalyst_report"):
+                report_parts.append(
+                    f"### Scenario & Catalyst Analysis\n{format_report_content(self.report_sections['scenario_catalyst_report'])}"
+                )
+            if self.report_sections.get("position_sizing_report"):
+                report_parts.append(
+                    f"### Position Sizing Analysis\n{format_report_content(self.report_sections['position_sizing_report'])}"
                 )
 
         # Research Team Reports
@@ -272,6 +317,17 @@ def get_progress_teams(agent_status):
             teams[team] = active_agents
 
     return teams
+
+
+def format_report_content(content):
+    """Convert structured or plain report content into displayable text."""
+    if isinstance(content, str):
+        return content
+    if isinstance(content, (dict, list)):
+        import json
+
+        return json.dumps(content, indent=2, sort_keys=True)
+    return str(content)
 
 
 def create_layout():
@@ -675,6 +731,38 @@ def save_report_to_disk(final_state, ticker: str, save_path: Path):
         analysts_dir.mkdir(exist_ok=True)
         (analysts_dir / "fundamentals.md").write_text(final_state["fundamentals_report"])
         analyst_parts.append(("Fundamentals Analyst", final_state["fundamentals_report"]))
+    if final_state.get("macro_report"):
+        analysts_dir.mkdir(exist_ok=True)
+        (analysts_dir / "macro.md").write_text(final_state["macro_report"])
+        analyst_parts.append(("Macro Analyst", final_state["macro_report"]))
+    if final_state.get("factor_rules_report"):
+        analysts_dir.mkdir(exist_ok=True)
+        (analysts_dir / "factor_rules.md").write_text(
+            format_report_content(final_state["factor_rules_report"])
+        )
+        analyst_parts.append(("Factor Rules Analyst", final_state["factor_rules_report"]))
+    if final_state.get("valuation_data"):
+        analysts_dir.mkdir(exist_ok=True)
+        (analysts_dir / "valuation.md").write_text(
+            format_report_content(final_state["valuation_data"])
+        )
+        analyst_parts.append(("Valuation Analyst", format_report_content(final_state["valuation_data"])))
+    if final_state.get("segment_report"):
+        analysts_dir.mkdir(exist_ok=True)
+        (analysts_dir / "segment.md").write_text(final_state["segment_report"])
+        analyst_parts.append(("Segment Analyst", final_state["segment_report"]))
+    if final_state.get("scenario_catalyst_report"):
+        analysts_dir.mkdir(exist_ok=True)
+        (analysts_dir / "scenario_catalyst.md").write_text(
+            final_state["scenario_catalyst_report"]
+        )
+        analyst_parts.append(("Scenario Analyst", final_state["scenario_catalyst_report"]))
+    if final_state.get("position_sizing_report"):
+        analysts_dir.mkdir(exist_ok=True)
+        (analysts_dir / "position_sizing.md").write_text(
+            final_state["position_sizing_report"]
+        )
+        analyst_parts.append(("Position Sizing Analyst", final_state["position_sizing_report"]))
     if analyst_parts:
         content = "\n\n".join(f"### {name}\n{text}" for name, text in analyst_parts)
         sections.append(f"## I. Analyst Team Reports\n\n{content}")
@@ -764,6 +852,18 @@ def display_complete_report(final_state):
         analysts.append(("News Analyst", final_state["news_report"]))
     if final_state.get("fundamentals_report"):
         analysts.append(("Fundamentals Analyst", final_state["fundamentals_report"]))
+    if final_state.get("macro_report"):
+        analysts.append(("Macro Analyst", final_state["macro_report"]))
+    if final_state.get("factor_rules_report"):
+        analysts.append(("Factor Rules Analyst", format_report_content(final_state["factor_rules_report"])))
+    if final_state.get("valuation_data"):
+        analysts.append(("Valuation Analyst", format_report_content(final_state["valuation_data"])))
+    if final_state.get("segment_report"):
+        analysts.append(("Segment Analyst", final_state["segment_report"]))
+    if final_state.get("scenario_catalyst_report"):
+        analysts.append(("Scenario Analyst", final_state["scenario_catalyst_report"]))
+    if final_state.get("position_sizing_report"):
+        analysts.append(("Position Sizing Analyst", final_state["position_sizing_report"]))
     if analysts:
         console.print(Panel("[bold]I. Analyst Team Reports[/bold]", border_style="cyan"))
         for title, content in analysts:
@@ -829,13 +929,29 @@ def update_research_team_status(status):
 
 
 # Ordered list of analysts for status transitions
-ANALYST_ORDER = ["macro", "market", "social", "news", "fundamentals"]
+ANALYST_ORDER = [
+    "macro",
+    "market",
+    "social",
+    "news",
+    "fundamentals",
+    "factor_rules",
+    "valuation",
+    "segment",
+    "scenario",
+    "position_sizing",
+]
 ANALYST_AGENT_NAMES = {
     "macro": "Macro Analyst",
     "market": "Market Analyst",
     "social": "Social Analyst",
     "news": "News Analyst",
     "fundamentals": "Fundamentals Analyst",
+    "factor_rules": "Factor Rules Analyst",
+    "valuation": "Valuation Analyst",
+    "segment": "Segment Analyst",
+    "scenario": "Scenario Analyst",
+    "position_sizing": "Position Sizing Analyst",
 }
 ANALYST_REPORT_MAP = {
     "macro": "macro_report",
@@ -843,6 +959,11 @@ ANALYST_REPORT_MAP = {
     "social": "sentiment_report",
     "news": "news_report",
     "fundamentals": "fundamentals_report",
+    "factor_rules": "factor_rules_report",
+    "valuation": "valuation_data",
+    "segment": "segment_report",
+    "scenario": "scenario_catalyst_report",
+    "position_sizing": "position_sizing_report",
 }
 
 
@@ -1045,7 +1166,7 @@ def run_analysis():
                 content = obj.report_sections[section_name]
                 if content:
                     file_name = f"{section_name}.md"
-                    text = "\n".join(str(item) for item in content) if isinstance(content, list) else content
+                    text = format_report_content(content)
                     with open(report_dir / file_name, "w") as f:
                         f.write(text)
         return wrapper

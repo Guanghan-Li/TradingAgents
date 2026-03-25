@@ -16,6 +16,11 @@ ANALYST_ORDER = [
     ("News Analyst", AnalystType.NEWS),
     ("Fundamentals Analyst", AnalystType.FUNDAMENTALS),
     ("Macro Analyst", AnalystType.MACRO),
+    ("Factor Rules Analyst", AnalystType.FACTOR_RULES),
+    ("Valuation Analyst", AnalystType.VALUATION),
+    ("Segment Analyst", AnalystType.SEGMENT),
+    ("Scenario & Catalyst Analyst", AnalystType.SCENARIO),
+    ("Position Sizing Analyst", AnalystType.POSITION_SIZING),
 ]
 
 PM_ANALYST_ORDER = [

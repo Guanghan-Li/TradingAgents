@@ -14,6 +14,11 @@ class AnalystType(str, Enum):
     NEWS = "news"
     FUNDAMENTALS = "fundamentals"
     MACRO = "macro"
+    FACTOR_RULES = "factor_rules"
+    VALUATION = "valuation"
+    SEGMENT = "segment"
+    SCENARIO = "scenario"
+    POSITION_SIZING = "position_sizing"
 
 
 class PMAnalystType(str, Enum):
