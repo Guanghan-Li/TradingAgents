@@ -1,5 +1,6 @@
 import os
 from typing import Any, Optional
+from urllib.parse import urlparse
 
 from langchain_openai import ChatOpenAI
 
@@ -30,6 +31,17 @@ _PROVIDER_CONFIG = {
     "openrouter": ("https://openrouter.ai/api/v1", "OPENROUTER_API_KEY"),
     "ollama": ("http://localhost:11434/v1", None),
 }
+
+_NATIVE_OPENAI_HOSTS = {"api.openai.com"}
+
+
+def _uses_native_openai_responses_api(base_url: Optional[str]) -> bool:
+    """Return whether the configured base URL is native OpenAI."""
+    if not base_url:
+        return True
+
+    hostname = urlparse(base_url).hostname
+    return bool(hostname and hostname.lower() in _NATIVE_OPENAI_HOSTS)
 
 
 class OpenAIClient(BaseLLMClient):
@@ -73,10 +85,13 @@ class OpenAIClient(BaseLLMClient):
             if key in self.kwargs:
                 llm_kwargs[key] = self.kwargs[key]
 
-        # Native OpenAI: use Responses API for consistent behavior across
-        # all model families. Third-party providers use Chat Completions.
+        # Only native OpenAI guarantees the Responses API behavior LangChain
+        # expects. OpenAI-compatible gateways may return plain-text bodies for
+        # some failures, which breaks the Responses API parser path.
         if self.provider == "openai":
-            llm_kwargs["use_responses_api"] = True
+            llm_kwargs["use_responses_api"] = _uses_native_openai_responses_api(
+                llm_kwargs.get("base_url")
+            )
 
         return NormalizedChatOpenAI(**llm_kwargs)
 

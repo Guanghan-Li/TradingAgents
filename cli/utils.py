@@ -4,6 +4,7 @@ from typing import List, Optional, Tuple, Dict
 from rich.console import Console
 
 from cli.models import AnalystType
+from tradingagents.env import DEFAULT_OPENAI_BASE_URL, get_openai_base_url
 
 console = Console()
 
@@ -264,9 +265,14 @@ def select_deep_thinking_agent(provider) -> str:
 
 def select_llm_provider() -> tuple[str, str]:
     """Select the OpenAI api url using interactive selection."""
+    openai_base_url = get_openai_base_url()
+    openai_label = "OpenAI"
+    if openai_base_url != DEFAULT_OPENAI_BASE_URL:
+        openai_label = f"OpenAI Compatible ({openai_base_url})"
+
     # Define OpenAI api options with their corresponding endpoints
     BASE_URLS = [
-        ("OpenAI", "https://api.openai.com/v1"),
+        (openai_label, openai_base_url),
         ("Google", "https://generativelanguage.googleapis.com/v1"),
         ("Anthropic", "https://api.anthropic.com/"),
         ("xAI", "https://api.x.ai/v1"),
@@ -277,7 +283,7 @@ def select_llm_provider() -> tuple[str, str]:
     choice = questionary.select(
         "Select your LLM Provider:",
         choices=[
-            questionary.Choice(display, value=(display, value))
+            questionary.Choice(display, value=(display.split(" ", 1)[0].lower(), value))
             for display, value in BASE_URLS
         ],
         instruction="\n- Use arrow keys to navigate\n- Press Enter to select",
@@ -294,10 +300,14 @@ def select_llm_provider() -> tuple[str, str]:
         console.print("\n[red]no OpenAI backend selected. Exiting...[/red]")
         exit(1)
     
-    display_name, url = choice
+    provider_key, url = choice
+    display_name = next(
+        (display for display, candidate_url in BASE_URLS if candidate_url == url),
+        provider_key,
+    )
     print(f"You selected: {display_name}\tURL: {url}")
 
-    return display_name, url
+    return provider_key, url
 
 
 def ask_openai_reasoning_effort() -> str:
