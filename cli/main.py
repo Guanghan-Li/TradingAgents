@@ -25,7 +25,8 @@ from rich.rule import Rule
 
 from tradingagents.graph.trading_graph import TradingAgentsGraph
 from tradingagents.default_config import DEFAULT_CONFIG
-from cli.models import AnalystType
+from tradingagents.prediction_market import PM_DEFAULT_CONFIG, PredictionMarketGraph
+from cli.models import AnalysisMode, AnalystType
 from cli.utils import *
 from cli.announcements import fetch_announcements, display_announcements
 from cli.stats_handler import StatsCallbackHandler
@@ -1188,8 +1189,44 @@ def run_analysis():
         display_complete_report(final_state)
 
 
+def run_polymarket_analysis():
+    config = PM_DEFAULT_CONFIG.copy()
+    config["results_dir"] = DEFAULT_CONFIG["results_dir"]
+
+    stats_handler = StatsCallbackHandler()
+    market_input = get_polymarket_market_input()
+    analysis_date = get_analysis_date()
+
+    graph = PredictionMarketGraph(
+        selected_analysts=["market", "news"],
+        config=config,
+        debug=True,
+        callbacks=[stats_handler],
+    )
+
+    console.print(
+        f"[green]Initialized Polymarket analysis[/green] for {market_input} on {analysis_date}"
+    )
+    return {
+        "market_input": market_input,
+        "analysis_date": analysis_date,
+        "graph": graph,
+    }
+
+
 @app.command()
-def analyze():
+def analyze(
+    mode: AnalysisMode = typer.Option(
+        AnalysisMode.STOCK,
+        "--mode",
+        help="Choose which analysis product to run.",
+        case_sensitive=False,
+    ),
+):
+    if mode == AnalysisMode.POLYMARKET:
+        run_polymarket_analysis()
+        return
+
     run_analysis()
 
 

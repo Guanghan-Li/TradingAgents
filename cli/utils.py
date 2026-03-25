@@ -1,5 +1,5 @@
 import questionary
-from typing import List, Optional, Tuple, Dict
+from typing import List
 
 from rich.console import Console
 
@@ -8,6 +8,9 @@ from cli.models import AnalystType
 console = Console()
 
 TICKER_INPUT_EXAMPLES = "Examples: SPY, CNC.TO, 7203.T, 0700.HK"
+POLYMARKET_INPUT_EXAMPLES = (
+    "Examples: 12345, https://polymarket.com/event/example-market"
+)
 
 ANALYST_ORDER = [
     ("Market Analyst", AnalystType.MARKET),
@@ -40,6 +43,32 @@ def get_ticker() -> str:
 def normalize_ticker_symbol(ticker: str) -> str:
     """Normalize ticker input while preserving exchange suffixes."""
     return ticker.strip().upper()
+
+
+def normalize_polymarket_market_input(value: str) -> str:
+    """Normalize Polymarket input while preserving either IDs or URLs."""
+    return value.strip()
+
+
+def get_polymarket_market_input() -> str:
+    """Prompt the user to enter a Polymarket market id or URL."""
+    market = questionary.text(
+        f"Enter a Polymarket market id or URL to analyze ({POLYMARKET_INPUT_EXAMPLES}):",
+        validate=lambda x: len(x.strip()) > 0
+        or "Please enter a valid Polymarket market id or URL.",
+        style=questionary.Style(
+            [
+                ("text", "fg:green"),
+                ("highlighted", "noinherit"),
+            ]
+        ),
+    ).ask()
+
+    if not market:
+        console.print("\n[red]No Polymarket market provided. Exiting...[/red]")
+        exit(1)
+
+    return normalize_polymarket_market_input(market)
 
 
 def get_analysis_date() -> str:

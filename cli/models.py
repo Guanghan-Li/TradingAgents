@@ -1,6 +1,9 @@
 from enum import Enum
-from typing import List, Optional, Dict
-from pydantic import BaseModel
+
+
+class AnalysisMode(str, Enum):
+    STOCK = "stock"
+    POLYMARKET = "polymarket"
 
 
 class AnalystType(str, Enum):
