@@ -60,6 +60,14 @@ class MessageBuffer:
         "macro": "Macro Analyst",
     }
 
+    ANALYST_TEAM = [
+        "Market Analyst",
+        "Social Analyst",
+        "News Analyst",
+        "Fundamentals Analyst",
+        "Macro Analyst",
+    ]
+
     # Report section mapping: section -> (analyst_key for filtering, finalizing_agent)
     # analyst_key: which analyst selection controls this section (None = always included)
     # finalizing_agent: which agent must be "completed" for this report to count as done
@@ -178,6 +186,7 @@ class MessageBuffer:
                 "sentiment_report": "Social Sentiment",
                 "news_report": "News Analysis",
                 "fundamentals_report": "Fundamentals Analysis",
+                "macro_report": "Macro Analysis",
                 "investment_plan": "Research Team Decision",
                 "trader_investment_plan": "Trading Team Plan",
                 "final_trade_decision": "Portfolio Management Decision",
@@ -249,6 +258,22 @@ class MessageBuffer:
 message_buffer = MessageBuffer()
 
 
+def get_progress_teams(agent_status):
+    """Return the active team -> agents mapping for the progress panel."""
+    all_teams = {
+        "Analyst Team": MessageBuffer.ANALYST_TEAM,
+        **MessageBuffer.FIXED_AGENTS,
+    }
+
+    teams = {}
+    for team, agents in all_teams.items():
+        active_agents = [agent for agent in agents if agent in agent_status]
+        if active_agents:
+            teams[team] = active_agents
+
+    return teams
+
+
 def create_layout():
     layout = Layout()
     layout.split_column(
@@ -299,26 +324,7 @@ def update_display(layout, spinner_text=None, stats_handler=None, start_time=Non
     progress_table.add_column("Agent", style="green", justify="center", width=20)
     progress_table.add_column("Status", style="yellow", justify="center", width=20)
 
-    # Group agents by team - filter to only include agents in agent_status
-    all_teams = {
-        "Analyst Team": [
-            "Market Analyst",
-            "Social Analyst",
-            "News Analyst",
-            "Fundamentals Analyst",
-        ],
-        "Research Team": ["Bull Researcher", "Bear Researcher", "Research Manager"],
-        "Trading Team": ["Trader"],
-        "Risk Management": ["Aggressive Analyst", "Neutral Analyst", "Conservative Analyst"],
-        "Portfolio Management": ["Portfolio Manager"],
-    }
-
-    # Filter teams to only include agents that are in agent_status
-    teams = {}
-    for team, agents in all_teams.items():
-        active_agents = [a for a in agents if a in message_buffer.agent_status]
-        if active_agents:
-            teams[team] = active_agents
+    teams = get_progress_teams(message_buffer.agent_status)
 
     for team, agents in teams.items():
         # Add first agent with team name
