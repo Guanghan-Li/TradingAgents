@@ -22,6 +22,7 @@ from tradingagents.dataflows.config import set_config
 
 # Import the new abstract tool methods from agent_utils
 from tradingagents.agents.utils.agent_utils import (
+    build_social_tools,
     get_stock_data,
     get_indicators,
     get_fundamentals,
@@ -39,6 +40,7 @@ from tradingagents.agents.utils.agent_utils import (
     get_segment_fundamentals,
     get_segment_income_statement,
     get_segment_news,
+    has_social_sentiment_support,
     get_valuation_inputs,
     get_yield_curve,
 )
@@ -116,6 +118,7 @@ class TradingAgentsGraph:
         self.quick_thinking_llm = self._create_legacy_llm("quick")
         self.deep_thinking_llm = self._create_legacy_llm("deep")
         self.role_llms = self._create_role_llms(selected_analysts)
+        self.social_sentiment_available = has_social_sentiment_support()
         
         # Initialize memories
         self.bull_memory = FinancialSituationMemory("bull_memory", self.config)
@@ -143,6 +146,7 @@ class TradingAgentsGraph:
             self.portfolio_manager_memory,
             self.conditional_logic,
             role_llms=self.role_llms,
+            social_sentiment_available=self.social_sentiment_available,
         )
 
         self.propagator = Propagator()
@@ -282,6 +286,9 @@ class TradingAgentsGraph:
 
     def _create_tool_nodes(self) -> Dict[str, ToolNode]:
         """Create tool nodes for different data sources using abstract methods."""
+        social_tools = build_social_tools(
+            getattr(self, "social_sentiment_available", has_social_sentiment_support())
+        )
         return {
             "market": ToolNode(
                 [
@@ -291,12 +298,7 @@ class TradingAgentsGraph:
                     get_indicators,
                 ]
             ),
-            "social": ToolNode(
-                [
-                    # News tools for social media analysis
-                    get_news,
-                ]
-            ),
+            "social": ToolNode(social_tools),
             "news": ToolNode(
                 [
                     # News and insider information
