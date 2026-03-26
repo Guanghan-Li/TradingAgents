@@ -3,7 +3,12 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import yfinance as yf
 import os
-from .stockstats_utils import StockstatsUtils, _clean_dataframe, yf_retry
+from .stockstats_utils import (
+    StockstatsUtils,
+    _clean_dataframe,
+    to_yfinance_exclusive_end,
+    yf_retry,
+)
 
 def get_YFin_data_online(
     symbol: Annotated[str, "ticker symbol of the company"],
@@ -18,7 +23,12 @@ def get_YFin_data_online(
     ticker = yf.Ticker(symbol.upper())
 
     # Fetch historical data for the specified date range
-    data = yf_retry(lambda: ticker.history(start=start_date, end=end_date))
+    data = yf_retry(
+        lambda: ticker.history(
+            start=start_date,
+            end=to_yfinance_exclusive_end(end_date),
+        )
+    )
 
     # Check if data is empty
     if data.empty:
@@ -217,12 +227,11 @@ def _get_stock_stats_bulk(
     else:
         # Online data fetching with caching
         today_date = pd.Timestamp.today()
-        curr_date_dt = pd.to_datetime(curr_date)
 
         end_date = today_date
         start_date = today_date - pd.DateOffset(years=15)
         start_date_str = start_date.strftime("%Y-%m-%d")
-        end_date_str = end_date.strftime("%Y-%m-%d")
+        end_date_str = to_yfinance_exclusive_end(end_date)
 
         os.makedirs(config["data_cache_dir"], exist_ok=True)
 

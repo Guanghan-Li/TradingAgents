@@ -12,6 +12,13 @@ from .config import get_config
 logger = logging.getLogger(__name__)
 
 
+def to_yfinance_exclusive_end(date_value) -> str:
+    """Convert an inclusive date into yfinance's exclusive end-date format."""
+    return (pd.Timestamp(date_value).normalize() + pd.Timedelta(days=1)).strftime(
+        "%Y-%m-%d"
+    )
+
+
 def yf_retry(func, max_retries=3, base_delay=2.0):
     """Execute a yfinance call with exponential backoff on rate limits.
 
@@ -63,7 +70,7 @@ class StockstatsUtils:
         end_date = today_date
         start_date = today_date - pd.DateOffset(years=15)
         start_date_str = start_date.strftime("%Y-%m-%d")
-        end_date_str = end_date.strftime("%Y-%m-%d")
+        end_date_str = to_yfinance_exclusive_end(end_date)
 
         # Ensure cache directory exists
         os.makedirs(config["data_cache_dir"], exist_ok=True)
