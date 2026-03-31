@@ -261,6 +261,40 @@ def test_chief_analyst_parses_numbered_portfolio_manager_output():
     }
 
 
+def test_chief_analyst_parses_markdown_portfolio_manager_sections():
+    from tradingagents.agents.managers.chief_analyst import create_chief_analyst
+
+    node = create_chief_analyst(llm=object())
+    output = node(
+        {
+            "company_of_interest": "VICI",
+            "trade_date": "2026-03-31",
+            "investment_plan": "Research plan",
+            "trader_investment_plan": "Trader plan",
+            "final_trade_decision": """1. **Rating**: **Overweight**
+
+2. **Executive Summary**  
+**VICI** should be **accumulated gradually, not chased aggressively**.
+
+- Start at **1.0%-2.0%** only if support holds.
+
+3. **Investment Thesis**  
+My final decision on **VICI** is **Overweight**, not **Buy** and not **Hold**.
+
+The underwriting supports a meaningful starter, but not a blind full-size entry.""",
+            "risk_debate_state": {},
+            "segment_data": {},
+            "scenario_catalyst_data": {},
+        }
+    )
+
+    assert output["chief_analyst_data"]["verdict"] == {
+        "rating": "Overweight",
+        "summary": "**VICI** should be **accumulated gradually, not chased aggressively**.\n\n- Start at **1.0%-2.0%** only if support holds.",
+        "thesis": "My final decision on **VICI** is **Overweight**, not **Buy** and not **Hold**.\n\nThe underwriting supports a meaningful starter, but not a blind full-size entry.",
+    }
+
+
 def test_chief_analyst_returns_stable_defaults_with_missing_data():
     from tradingagents.agents.managers.chief_analyst import create_chief_analyst
 

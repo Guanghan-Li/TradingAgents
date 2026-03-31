@@ -10,26 +10,42 @@ PORTFOLIO_MANAGER_SECTIONS = [
 ]
 
 
-def _extract_section(text: str, label: str) -> str:
-    pattern = re.compile(
-        rf"(?:^|\n)\s*(?:\d+\.\s*)?(?:\*\*{re.escape(label)}\*\*|{re.escape(label)})\s*:\s*(.*?)(?=\n\s*(?:\d+\.\s*)?(?:\*\*(?:{'|'.join(re.escape(section) for section in PORTFOLIO_MANAGER_SECTIONS)})\*\*|(?:{'|'.join(re.escape(section) for section in PORTFOLIO_MANAGER_SECTIONS)}))\s*:|\Z)",
-        re.IGNORECASE | re.DOTALL | re.MULTILINE,
+def _section_heading_pattern() -> re.Pattern[str]:
+    section_union = "|".join(re.escape(section) for section in PORTFOLIO_MANAGER_SECTIONS)
+    return re.compile(
+        rf"^\s*(?:\d+\.\s*)?(?:\*\*(?P<label>{section_union})\*\*|(?P<plain>{section_union}))\s*(?::\s*(?P<inline>.*?))?\s*$",
+        re.IGNORECASE | re.MULTILINE,
     )
-    match = pattern.search(text or "")
-    if not match:
-        return ""
-    return match.group(1).strip()
+
+
+def _extract_section_body(text: str, label: str) -> str:
+    matches = list(_section_heading_pattern().finditer(text or ""))
+    for index, match in enumerate(matches):
+        matched_label = match.group("label") or match.group("plain") or ""
+        if matched_label.lower() != label.lower():
+            continue
+
+        inline = (match.group("inline") or "").strip()
+        section_end = matches[index + 1].start() if index + 1 < len(matches) else len(text or "")
+        trailing = (text or "")[match.end():section_end].strip()
+
+        if inline and trailing:
+            return f"{inline}\n\n{trailing}".strip()
+        if inline:
+            return inline
+        return trailing
+    return ""
+
+
+def _extract_section(text: str, label: str) -> str:
+    return _extract_section_body(text, label)
 
 
 def _extract_rating(text: str) -> str:
-    match = re.search(
-        rf"(?:^|\n)\s*(?:\d+\.\s*)?(?:\*\*Rating\*\*|Rating)\s*:\s*([A-Za-z]+(?:\s+[A-Za-z]+)?)",
-        text or "",
-        re.IGNORECASE | re.MULTILINE,
-    )
-    if not match:
+    rating_body = _extract_section_body(text, "Rating")
+    if not rating_body:
         return ""
-    return match.group(1).strip()
+    return rating_body.splitlines()[0].strip().strip("*").strip()
 
 
 def _scenario_fair_value_map(scenario_catalyst_data: dict) -> dict:
