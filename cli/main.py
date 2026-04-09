@@ -27,6 +27,7 @@ from rich.rule import Rule
 from tradingagents.graph.trading_graph import TradingAgentsGraph
 from tradingagents.default_config import DEFAULT_CONFIG
 from tradingagents.prediction_market import PM_DEFAULT_CONFIG, PredictionMarketGraph
+from cli.automation import resolve_analysis_date, run_batch_command, run_stock_command, summarize_runs_for_date
 from cli.models import AnalysisMode, AnalystType
 from cli.utils import *
 from cli.announcements import fetch_announcements, display_announcements
@@ -1449,8 +1450,9 @@ def run_polymarket_analysis():
     }
 
 
-@app.command()
-def analyze(
+@app.callback(invoke_without_command=True)
+def main(
+    ctx: typer.Context,
     mode: AnalysisMode = typer.Option(
         AnalysisMode.STOCK,
         "--mode",
@@ -1458,11 +1460,106 @@ def analyze(
         case_sensitive=False,
     ),
 ):
+    if ctx.invoked_subcommand is not None:
+        return
+
     if mode == AnalysisMode.POLYMARKET:
         run_polymarket_analysis()
         return
 
     run_analysis()
+
+
+@app.command("run-stock")
+def run_stock(
+    ticker: str = typer.Option(..., "--ticker", help="Ticker symbol to analyze."),
+    analysis_date: Optional[str] = typer.Option(None, "--date", help="Analysis date in YYYY-MM-DD format."),
+    provider: Optional[str] = typer.Option(None, "--provider", help="LLM provider key."),
+    backend_url: Optional[str] = typer.Option(None, "--backend-url", help="LLM backend URL."),
+    model: Optional[str] = typer.Option(None, "--model", help="Set both quick and deep models to the same value."),
+    quick_model: Optional[str] = typer.Option(None, "--quick-model", help="Quick-thinking model override."),
+    deep_model: Optional[str] = typer.Option(None, "--deep-model", help="Deep-thinking model override."),
+    reasoning_effort: Optional[str] = typer.Option(None, "--reasoning-effort", help="OpenAI reasoning effort."),
+    depth: Optional[str] = typer.Option(None, "--depth", help="Research depth preset: shallow, medium, or deep."),
+    results_dir: Optional[Path] = typer.Option(None, "--results-dir", help="Results directory override."),
+):
+    kwargs = {"ticker": ticker}
+    if analysis_date is not None:
+        kwargs["analysis_date"] = analysis_date
+    if provider is not None:
+        kwargs["provider"] = provider
+    if backend_url is not None:
+        kwargs["backend_url"] = backend_url
+    if model is not None:
+        kwargs["model"] = model
+    if quick_model is not None:
+        kwargs["quick_model"] = quick_model
+    if deep_model is not None:
+        kwargs["deep_model"] = deep_model
+    if reasoning_effort is not None:
+        kwargs["reasoning_effort"] = reasoning_effort
+    if depth is not None:
+        kwargs["depth"] = depth
+    if results_dir is not None:
+        kwargs["results_dir"] = str(results_dir)
+    result = run_stock_command(**kwargs)
+    console.print(f"[green]Completed stock analysis[/green]: {result['ticker']} -> {result['decision']}")
+
+
+@app.command("batch")
+def batch(
+    watchlist_path: Path = typer.Option(..., "--watchlist", help="Path to the watchlist YAML file."),
+    cap: int = typer.Option(4, "--cap", help="Maximum concurrent stock runs."),
+    analysis_date: Optional[str] = typer.Option(None, "--date", help="Analysis date in YYYY-MM-DD format."),
+    provider: Optional[str] = typer.Option(None, "--provider", help="LLM provider key."),
+    backend_url: Optional[str] = typer.Option(None, "--backend-url", help="LLM backend URL."),
+    model: Optional[str] = typer.Option(None, "--model", help="Set both quick and deep models to the same value."),
+    quick_model: Optional[str] = typer.Option(None, "--quick-model", help="Quick-thinking model override."),
+    deep_model: Optional[str] = typer.Option(None, "--deep-model", help="Deep-thinking model override."),
+    reasoning_effort: Optional[str] = typer.Option(None, "--reasoning-effort", help="OpenAI reasoning effort."),
+    depth: Optional[str] = typer.Option(None, "--depth", help="Research depth preset: shallow, medium, or deep."),
+    results_dir: Optional[Path] = typer.Option(None, "--results-dir", help="Results directory override."),
+):
+    kwargs = {
+        "watchlist_path": watchlist_path,
+        "cap": cap,
+    }
+    if analysis_date is not None:
+        kwargs["analysis_date"] = analysis_date
+    if provider is not None:
+        kwargs["provider"] = provider
+    if backend_url is not None:
+        kwargs["backend_url"] = backend_url
+    if model is not None:
+        kwargs["model"] = model
+    if quick_model is not None:
+        kwargs["quick_model"] = quick_model
+    if deep_model is not None:
+        kwargs["deep_model"] = deep_model
+    if reasoning_effort is not None:
+        kwargs["reasoning_effort"] = reasoning_effort
+    if depth is not None:
+        kwargs["depth"] = depth
+    if results_dir is not None:
+        kwargs["results_dir"] = results_dir
+    result = run_batch_command(**kwargs)
+    console.print(
+        f"[green]Batch complete[/green]: {len(result['completed'])} completed, {len(result['failed'])} failed"
+    )
+    if result["failed"]:
+        raise typer.Exit(code=1)
+
+
+@app.command("summarize")
+def summarize(
+    analysis_date: Optional[str] = typer.Option(None, "--date", help="Analysis date in YYYY-MM-DD format."),
+    results_dir: Path = typer.Option(Path(DEFAULT_CONFIG["results_dir"]), "--results-dir", help="Results directory root."),
+):
+    result = summarize_runs_for_date(
+        analysis_date=resolve_analysis_date(analysis_date),
+        results_dir=results_dir,
+    )
+    console.print(f"[green]Summary complete[/green]: {result['analysis_date']}")
 
 
 if __name__ == "__main__":

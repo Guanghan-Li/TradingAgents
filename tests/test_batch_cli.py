@@ -1,0 +1,275 @@
+from typer.testing import CliRunner
+
+from cli.main import app
+
+
+runner = CliRunner()
+
+
+def test_root_cli_without_subcommand_runs_interactive_stock_flow(monkeypatch):
+    calls = []
+
+    monkeypatch.setattr("cli.main.run_analysis", lambda: calls.append("interactive"))
+
+    result = runner.invoke(app, [])
+
+    assert result.exit_code == 0, result.output
+    assert calls == ["interactive"]
+
+
+def test_run_stock_command_dispatches_non_interactive_runner(monkeypatch):
+    calls = []
+
+    def fake_run_stock_command(**kwargs):
+        calls.append(kwargs)
+        return {"ticker": "MSFT", "decision": "BUY"}
+
+    monkeypatch.setattr("cli.main.run_stock_command", fake_run_stock_command, raising=False)
+
+    result = runner.invoke(app, ["run-stock", "--ticker", "MSFT"])
+
+    assert result.exit_code == 0, result.output
+    assert calls == [{"ticker": "MSFT"}]
+
+
+def test_run_stock_command_accepts_non_interactive_flags(monkeypatch):
+    calls = []
+
+    def fake_run_stock_command(**kwargs):
+        calls.append(kwargs)
+        return {"ticker": "MSFT", "decision": "BUY"}
+
+    monkeypatch.setattr("cli.main.run_stock_command", fake_run_stock_command)
+
+    result = runner.invoke(
+        app,
+        [
+            "run-stock",
+            "--ticker",
+            "MSFT",
+            "--date",
+            "2026-04-08",
+            "--model",
+            "gpt-5.4",
+            "--reasoning-effort",
+            "high",
+            "--depth",
+            "deep",
+        ],
+    )
+
+    assert result.exit_code == 0, result.output
+    assert calls == [
+        {
+            "ticker": "MSFT",
+            "analysis_date": "2026-04-08",
+            "model": "gpt-5.4",
+            "reasoning_effort": "high",
+            "depth": "deep",
+        }
+    ]
+
+
+def test_build_batch_config_uses_itgpt_gpt54_defaults():
+    from cli.automation import build_batch_config
+
+    config = build_batch_config()
+
+    assert config["llm_provider"] == "openai"
+    assert config["backend_url"] == "https://api.itgpt.chat/v1"
+    assert config["quick_think_llm"] == "gpt-5.4"
+    assert config["deep_think_llm"] == "gpt-5.4"
+    assert config["openai_reasoning_effort"] == "high"
+    assert config["max_debate_rounds"] == 5
+    assert config["max_risk_discuss_rounds"] == 5
+
+
+def test_run_stock_command_defaults_date_to_today(monkeypatch):
+    from datetime import date
+
+    from cli.automation import run_stock_command
+
+    class FakeDate(date):
+        @classmethod
+        def today(cls):
+            return cls(2026, 4, 8)
+
+    class FakeGraph:
+        instances = []
+        propagate_calls = []
+
+        def __init__(self, selected_analysts, debug, config):
+            self.selected_analysts = selected_analysts
+            self.debug = debug
+            self.config = config
+            FakeGraph.instances.append(self)
+
+        def propagate(self, ticker, analysis_date):
+            FakeGraph.propagate_calls.append((ticker, analysis_date))
+            return (
+                {
+                    "chief_analyst_data": {
+                        "verdict": {
+                            "rating": "Overweight",
+                            "summary": "Stage in.",
+                            "thesis": "Good setup.",
+                        }
+                    }
+                },
+                "BUY",
+            )
+
+    monkeypatch.setattr("cli.automation.date", FakeDate)
+    monkeypatch.setattr("cli.automation.TradingAgentsGraph", FakeGraph)
+
+    result = run_stock_command(ticker="MSFT")
+
+    assert FakeGraph.instances[0].selected_analysts == [
+        "market",
+        "social",
+        "news",
+        "fundamentals",
+        "macro",
+        "factor_rules",
+        "valuation",
+        "segment",
+        "scenario",
+        "position_sizing",
+    ]
+    assert FakeGraph.instances[0].config["backend_url"] == "https://api.itgpt.chat/v1"
+    assert FakeGraph.instances[0].config["openai_reasoning_effort"] == "high"
+    assert FakeGraph.propagate_calls == [("MSFT", "2026-04-08")]
+    assert result["analysis_date"] == "2026-04-08"
+    assert result["decision"] == "BUY"
+
+
+def test_run_batch_command_loads_watchlist_and_runs_each_ticker(monkeypatch, tmp_path):
+    from cli.automation import run_batch_command
+
+    watchlist_path = tmp_path / "watchlist.yaml"
+    watchlist_path.write_text(
+        "defaults:\n"
+        "  model: gpt-5.4\n"
+        "tickers:\n"
+        "  - MSFT\n"
+        "  - NVDA\n"
+        "  - AAPL\n"
+    )
+
+    observed_tickers = []
+
+    def fake_run_cli_stock_job(job):
+        observed_tickers.append(job["ticker"])
+        return {"ticker": job["ticker"], "status": "completed", "returncode": 0}
+
+    monkeypatch.setattr("cli.automation.run_cli_stock_job", fake_run_cli_stock_job)
+
+    result = run_batch_command(watchlist_path=watchlist_path, cap=4)
+
+    assert observed_tickers == ["MSFT", "NVDA", "AAPL"]
+    assert result["completed"] == ["MSFT", "NVDA", "AAPL"]
+    assert result["failed"] == []
+
+
+def test_batch_command_dispatches_runner(monkeypatch, tmp_path):
+    watchlist_path = tmp_path / "watchlist.yaml"
+    watchlist_path.write_text("tickers:\n  - MSFT\n")
+    calls = []
+
+    def fake_run_batch_command(**kwargs):
+        calls.append(kwargs)
+        return {"completed": ["MSFT"], "failed": []}
+
+    monkeypatch.setattr("cli.main.run_batch_command", fake_run_batch_command, raising=False)
+
+    result = runner.invoke(
+        app,
+        [
+            "batch",
+            "--watchlist",
+            str(watchlist_path),
+            "--cap",
+            "6",
+            "--date",
+            "2026-04-08",
+            "--model",
+            "gpt-5.4",
+            "--reasoning-effort",
+            "high",
+            "--depth",
+            "deep",
+            "--results-dir",
+            str(tmp_path / "results"),
+        ],
+    )
+
+    assert result.exit_code == 0, result.output
+    assert calls == [
+        {
+            "watchlist_path": watchlist_path,
+            "cap": 6,
+            "analysis_date": "2026-04-08",
+            "model": "gpt-5.4",
+            "reasoning_effort": "high",
+            "depth": "deep",
+            "results_dir": tmp_path / "results",
+        }
+    ]
+
+
+def test_run_batch_command_honors_cap(monkeypatch, tmp_path):
+    import threading
+    import time
+
+    from cli.automation import run_batch_command
+
+    watchlist_path = tmp_path / "watchlist.yaml"
+    watchlist_path.write_text(
+        "tickers:\n"
+        "  - MSFT\n"
+        "  - NVDA\n"
+        "  - AAPL\n"
+        "  - AMZN\n"
+        "  - META\n"
+    )
+
+    state = {"active": 0, "max_active": 0}
+    lock = threading.Lock()
+
+    def fake_run_cli_stock_job(job):
+        with lock:
+            state["active"] += 1
+            state["max_active"] = max(state["max_active"], state["active"])
+        time.sleep(0.05)
+        with lock:
+            state["active"] -= 1
+        return {"ticker": job["ticker"], "status": "completed", "returncode": 0}
+
+    monkeypatch.setattr("cli.automation.run_cli_stock_job", fake_run_cli_stock_job)
+
+    result = run_batch_command(watchlist_path=watchlist_path, cap=2)
+
+    assert state["max_active"] == 2
+    assert len(result["completed"]) == 5
+
+
+def test_summarize_command_dispatches_runner(monkeypatch, tmp_path):
+    calls = []
+
+    def fake_summarize_runs_for_date(**kwargs):
+        calls.append(kwargs)
+        return {"analysis_date": "2026-04-08"}
+
+    monkeypatch.setattr(
+        "cli.main.summarize_runs_for_date",
+        fake_summarize_runs_for_date,
+        raising=False,
+    )
+
+    result = runner.invoke(
+        app,
+        ["summarize", "--date", "2026-04-08", "--results-dir", str(tmp_path)],
+    )
+
+    assert result.exit_code == 0, result.output
+    assert calls == [{"analysis_date": "2026-04-08", "results_dir": tmp_path}]

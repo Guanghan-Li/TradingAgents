@@ -165,6 +165,30 @@ An interface will appear showing results as they load, letting you track the age
   <img src="assets/cli/cli_transaction.png" width="100%" style="display: inline-block; margin: 0 2%;">
 </p>
 
+### Non-Interactive Automation
+
+The CLI also supports non-interactive stock runs and watchlist batches while keeping the questionnaire flow for manual use.
+
+Run one stock with fixed flags:
+
+```bash
+tradingagents run-stock --ticker MSFT --date 2026-04-08 --model gpt-5.4 --reasoning-effort high --depth deep
+```
+
+Run a watchlist with bounded parallelism:
+
+```bash
+tradingagents batch --watchlist config/watchlist.example.yaml --cap 4 --date 2026-04-08
+```
+
+Generate a daily rollup from completed automated runs:
+
+```bash
+tradingagents summarize --date 2026-04-08
+```
+
+Batch runs read tickers from a YAML watchlist. CLI flags override watchlist defaults when both are provided.
+
 ## TradingAgents Package
 
 ### Implementation Details

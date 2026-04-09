@@ -1,0 +1,12 @@
+defaults:
+  provider: openai
+  backend_url: https://api.itgpt.chat/v1
+  model: gpt-5.4
+  reasoning_effort: high
+  depth: deep
+
+tickers:
+  - MSFT
+  - NVDA
+  - AAPL
+  - AMZN
