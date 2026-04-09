@@ -7,7 +7,7 @@ import os
 import json
 import hashlib
 import time
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Optional
 
 import requests
@@ -32,7 +32,7 @@ def _get_cache_dir():
 
 def _cache_key(prefix: str, **kwargs) -> str:
     raw = f"{prefix}:{json.dumps(kwargs, sort_keys=True)}"
-    return hashlib.md5(raw.encode()).hexdigest()
+    return hashlib.sha256(raw.encode()).hexdigest()
 
 
 def _get_cached(key: str, max_age_seconds: int = 300):
@@ -232,7 +232,7 @@ def get_polymarket_order_book(market_id: str) -> str:
 
     lines = [
         f"Order Book for: {market_data.get('question', market_id)}",
-        f"Token: YES outcome",
+        "Token: YES outcome",
         f"Tick Size: {data.get('tick_size', 'N/A')}",
         f"Min Order Size: {data.get('min_order_size', 'N/A')}",
         f"Last Trade Price: {data.get('last_trade_price', 'N/A')}",

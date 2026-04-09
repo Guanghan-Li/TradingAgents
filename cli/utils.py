@@ -1,5 +1,5 @@
 import questionary
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 from rich.console import Console
 

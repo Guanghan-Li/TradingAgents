@@ -2,7 +2,6 @@
 
 from typing import Dict, Any, List, Optional
 from tradingagents.prediction_market.agents.utils.pm_agent_states import (
-    PMAgentState,
     PMInvestDebateState,
     PMRiskDebateState,
 )

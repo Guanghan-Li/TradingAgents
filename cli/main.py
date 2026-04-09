@@ -1,37 +1,56 @@
+# ruff: noqa: E402
+
 from typing import Optional
 import datetime
-import typer
-from pathlib import Path
-from functools import wraps
+from collections import deque
 from copy import deepcopy
+from functools import wraps
+from pathlib import Path
+import time
+
+import typer
+from rich import box
+from rich.align import Align
 from rich.console import Console
+from rich.layout import Layout
+from rich.live import Live
+from rich.markdown import Markdown
+from rich.panel import Panel
+from rich.rule import Rule
+from rich.spinner import Spinner
+from rich.table import Table
+from rich.text import Text
+
+from cli.announcements import display_announcements, fetch_announcements
+from cli.automation import (
+    resolve_analysis_date,
+    run_batch_command,
+    run_stock_command,
+    summarize_runs_for_date,
+)
+from cli.models import AnalysisMode
+from cli.stats_handler import StatsCallbackHandler
+from cli.utils import (
+    ANALYST_ORDER,
+    ask_anthropic_effort,
+    ask_gemini_thinking_config,
+    ask_openai_reasoning_effort,
+    build_llm_routing_config,
+    get_market_id,
+    select_analysts,
+    select_deep_thinking_agent,
+    select_llm_provider,
+    select_pm_analysts,
+    select_research_depth,
+    select_shallow_thinking_agent,
+)
+from tradingagents.default_config import DEFAULT_CONFIG
 from tradingagents.env import load_project_dotenv
+from tradingagents.graph.trading_graph import TradingAgentsGraph
+from tradingagents.prediction_market import PM_DEFAULT_CONFIG, PredictionMarketGraph
 
 # Load environment variables from .env file
 load_project_dotenv()
-from rich.panel import Panel
-from rich.spinner import Spinner
-from rich.live import Live
-from rich.columns import Columns
-from rich.markdown import Markdown
-from rich.layout import Layout
-from rich.text import Text
-from rich.table import Table
-from collections import deque
-import time
-from rich.tree import Tree
-from rich import box
-from rich.align import Align
-from rich.rule import Rule
-
-from tradingagents.graph.trading_graph import TradingAgentsGraph
-from tradingagents.default_config import DEFAULT_CONFIG
-from tradingagents.prediction_market import PM_DEFAULT_CONFIG, PredictionMarketGraph
-from cli.automation import resolve_analysis_date, run_batch_command, run_stock_command, summarize_runs_for_date
-from cli.models import AnalysisMode, AnalystType
-from cli.utils import *
-from cli.announcements import fetch_announcements, display_announcements
-from cli.stats_handler import StatsCallbackHandler
 
 console = Console()
 
@@ -950,7 +969,7 @@ def update_research_team_status(status):
 
 
 # Ordered list of analysts for status transitions
-ANALYST_ORDER = [
+ANALYST_STATUS_ORDER = [
     "macro",
     "market",
     "social",
@@ -1002,7 +1021,7 @@ def update_analyst_statuses(message_buffer, chunk):
     selected = message_buffer.selected_analysts
     found_active = False
 
-    for analyst_key in ANALYST_ORDER:
+    for analyst_key in ANALYST_STATUS_ORDER:
         if analyst_key not in selected:
             continue
 
@@ -1201,7 +1220,7 @@ def run_analysis():
     # Now start the display layout
     layout = create_layout()
 
-    with Live(layout, refresh_per_second=4) as live:
+    with Live(layout, refresh_per_second=4):
         # Initial display
         update_display(layout, stats_handler=stats_handler, start_time=start_time)
 
@@ -1350,7 +1369,7 @@ def run_analysis():
 
         # Get final state and decision
         final_state = trace[-1]
-        decision = graph.process_signal(final_state["final_trade_decision"])
+        graph.process_signal(final_state["final_trade_decision"])
 
         # Update all agent statuses to completed
         for agent in message_buffer.agent_status:

@@ -207,7 +207,6 @@ def _get_stock_stats_bulk(
     from .config import get_config
     import pandas as pd
     from stockstats import wrap
-    import os
     
     config = get_config()
     online = config["data_vendors"]["technical_indicators"] != "local"
