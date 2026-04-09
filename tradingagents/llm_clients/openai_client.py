@@ -1,11 +1,31 @@
 import os
+import time
 from typing import Any, Optional
 from urllib.parse import urlparse
 
+import openai
 from langchain_openai import ChatOpenAI
 
 from .base_client import BaseLLMClient, normalize_content
 from .validators import validate_model
+
+
+_TRANSIENT_STATUS_CODES = {408, 409, 429, 500, 502, 503, 504}
+_TRANSIENT_RETRY_ATTEMPTS = 2
+_TRANSIENT_RETRY_BASE_DELAY_SECONDS = 1.0
+
+
+def _is_retryable_openai_error(exc: Exception) -> bool:
+    if isinstance(exc, (openai.APITimeoutError, openai.APIConnectionError)):
+        return True
+
+    if isinstance(exc, openai.APIStatusError):
+        status_code = getattr(exc, "status_code", None)
+        if status_code is None and getattr(exc, "response", None) is not None:
+            status_code = getattr(exc.response, "status_code", None)
+        return status_code in _TRANSIENT_STATUS_CODES
+
+    return False
 
 
 class NormalizedChatOpenAI(ChatOpenAI):
@@ -17,7 +37,13 @@ class NormalizedChatOpenAI(ChatOpenAI):
     """
 
     def invoke(self, input, config=None, **kwargs):
-        return normalize_content(super().invoke(input, config, **kwargs))
+        for attempt in range(_TRANSIENT_RETRY_ATTEMPTS + 1):
+            try:
+                return normalize_content(super().invoke(input, config, **kwargs))
+            except Exception as exc:
+                if not _is_retryable_openai_error(exc) or attempt >= _TRANSIENT_RETRY_ATTEMPTS:
+                    raise
+                time.sleep(_TRANSIENT_RETRY_BASE_DELAY_SECONDS * (2 ** attempt))
 
 # Kwargs forwarded from user config to ChatOpenAI
 _PASSTHROUGH_KWARGS = (

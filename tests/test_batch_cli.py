@@ -1,6 +1,10 @@
+import httpx
+import openai
 from typer.testing import CliRunner
 
+import cli.main as cli_main
 from cli.main import app
+from cli.models import AnalystType
 
 
 runner = CliRunner()
@@ -190,6 +194,55 @@ def test_run_stock_command_writes_progress_events(monkeypatch, tmp_path):
     assert "Market Analyst" in payload
     assert "Chief Analyst" in payload
     assert result["decision"] == "BUY"
+
+
+def test_root_cli_handles_upstream_gateway_timeout_cleanly(monkeypatch, tmp_path):
+    class FakePropagator:
+        def create_initial_state(self, ticker, analysis_date):
+            return {"messages": []}
+
+        def get_graph_args(self, **kwargs):
+            return {}
+
+    class FakeStreamGraph:
+        def stream(self, init_agent_state, **kwargs):
+            request = httpx.Request("POST", "https://api.itgpt.chat/v1/chat/completions")
+            response = httpx.Response(504, request=request, text="Gateway time-out")
+            raise openai.InternalServerError(
+                "Gateway time-out",
+                response=response,
+                body=None,
+            )
+
+    class FakeGraph:
+        def __init__(self, selected_analysts, config, debug, callbacks):
+            self.propagator = FakePropagator()
+            self.graph = FakeStreamGraph()
+
+    monkeypatch.setattr(
+        "cli.main.get_user_selections",
+        lambda: {
+            "ticker": "SOFI",
+            "analysis_date": "2026-04-09",
+            "analysts": [AnalystType.MACRO],
+            "research_depth": 5,
+            "llm_provider": "OpenAI Compatible",
+            "backend_url": "https://api.itgpt.chat/v1",
+            "shallow_thinker": "gpt-5.4",
+            "deep_thinker": "gpt-5.4",
+            "google_thinking_level": None,
+            "openai_reasoning_effort": "high",
+            "anthropic_effort": None,
+        },
+    )
+    monkeypatch.setattr("cli.main.TradingAgentsGraph", FakeGraph)
+    monkeypatch.setitem(cli_main.DEFAULT_CONFIG, "results_dir", str(tmp_path))
+
+    result = runner.invoke(app, [])
+
+    assert result.exit_code == 1
+    assert "Gateway time-out" in result.output
+    assert "Traceback" not in result.output
 
 
 def test_run_batch_command_loads_watchlist_and_runs_each_ticker(monkeypatch, tmp_path):
