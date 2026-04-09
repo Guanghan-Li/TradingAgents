@@ -32,6 +32,7 @@ DEFAULT_BATCH_BACKEND_URL = "https://api.itgpt.chat/v1"
 DEFAULT_BATCH_MODEL = "gpt-5.4"
 DEFAULT_REASONING_EFFORT = "high"
 DEFAULT_DEPTH_PRESET = "deep"
+DEFAULT_BATCH_LAUNCH_STAGGER_SECONDS = 180.0
 DEPTH_PRESET_TO_ROUNDS = {
     "shallow": 1,
     "medium": 3,
@@ -196,6 +197,7 @@ def run_batch_command(
     depth: Optional[str] = None,
     results_dir: Optional[str] = None,
     progress_callback=None,
+    launch_stagger_seconds: float = 0.0,
 ) -> dict:
     if cap < 1:
         raise ValueError("cap must be at least 1")
@@ -221,6 +223,9 @@ def run_batch_command(
             total_jobs=len(jobs),
             slots=[BatchWorkerSlot(slot_index=index + 1) for index in range(cap)],
         )
+    slots = dashboard_state.slots if dashboard_state is not None else [
+        BatchWorkerSlot(slot_index=index + 1) for index in range(cap)
+    ]
 
     progress_dir_context = (
         tempfile.TemporaryDirectory(prefix="tradingagents-batch-progress-")
@@ -230,6 +235,7 @@ def run_batch_command(
 
     with progress_dir_context as progress_dir, ThreadPoolExecutor(max_workers=cap) as executor:
         future_to_state = {}
+        next_launch_at = time.monotonic()
 
         def publish_update():
             if progress_callback and dashboard_state is not None:
@@ -260,27 +266,61 @@ def run_batch_command(
             future_to_state[future] = {"job": job, "slot": slot}
             return True
 
-        initial_slots = dashboard_state.slots if dashboard_state is not None else [
-            BatchWorkerSlot(slot_index=index + 1) for index in range(cap)
-        ]
-        for slot in initial_slots:
-            if not submit_next_job(slot):
-                break
+        def get_available_slot():
+            active_slots = {id(state["slot"]) for state in future_to_state.values()}
+            for slot in slots:
+                if id(slot) not in active_slots:
+                    return slot
+            return None
+
+        def maybe_submit_jobs():
+            nonlocal next_launch_at
+
+            submitted_any = False
+            while pending_jobs:
+                slot = get_available_slot()
+                if slot is None:
+                    break
+
+                now = time.monotonic()
+                if launch_stagger_seconds > 0 and now < next_launch_at:
+                    break
+
+                if not submit_next_job(slot):
+                    break
+
+                submitted_any = True
+                if launch_stagger_seconds > 0:
+                    next_launch_at = now + launch_stagger_seconds
+                    break
+
+            return submitted_any
+
+        maybe_submit_jobs()
         publish_update()
 
-        while future_to_state:
+        while future_to_state or pending_jobs:
+            maybe_submit_jobs()
+
             done, _ = wait(
                 list(future_to_state.keys()),
-                timeout=0.05 if progress_callback else None,
+                timeout=0.05 if future_to_state else 0.05,
                 return_when=FIRST_COMPLETED,
-            )
+            ) if future_to_state else (set(), set())
 
             if progress_callback and dashboard_state is not None:
                 poll_active_slots()
                 publish_update()
 
             if not done:
-                time.sleep(0.01)
+                if pending_jobs and not future_to_state:
+                    sleep_for = 0.01
+                    if launch_stagger_seconds > 0:
+                        sleep_for = min(
+                            max(next_launch_at - time.monotonic(), 0.0),
+                            0.05,
+                        )
+                    time.sleep(sleep_for)
                 continue
 
             for future in done:
@@ -299,9 +339,6 @@ def run_batch_command(
                     else:
                         dashboard_state.failed_jobs += 1
                     publish_update()
-
-                submit_next_job(slot)
-                publish_update()
 
     completed = [
         job["ticker"]

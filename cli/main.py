@@ -23,6 +23,7 @@ from rich.text import Text
 
 from cli.announcements import display_announcements, fetch_announcements
 from cli.automation import (
+    DEFAULT_BATCH_LAUNCH_STAGGER_SECONDS,
     resolve_analysis_date,
     run_batch_command,
     run_stock_command,
@@ -1565,6 +1566,7 @@ def batch(
         kwargs["depth"] = depth
     if results_dir is not None:
         kwargs["results_dir"] = results_dir
+    kwargs["launch_stagger_seconds"] = DEFAULT_BATCH_LAUNCH_STAGGER_SECONDS
 
     dashboard_renderable = Panel(
         "[italic]Initializing batch dashboard...[/italic]",

@@ -221,6 +221,8 @@ def test_run_batch_command_loads_watchlist_and_runs_each_ticker(monkeypatch, tmp
 
 
 def test_batch_command_dispatches_runner(monkeypatch, tmp_path):
+    from cli.automation import DEFAULT_BATCH_LAUNCH_STAGGER_SECONDS
+
     watchlist_path = tmp_path / "watchlist.yaml"
     watchlist_path.write_text("tickers:\n  - MSFT\n")
     calls = []
@@ -262,6 +264,7 @@ def test_batch_command_dispatches_runner(monkeypatch, tmp_path):
             "reasoning_effort": "high",
             "depth": "deep",
             "results_dir": tmp_path / "results",
+            "launch_stagger_seconds": DEFAULT_BATCH_LAUNCH_STAGGER_SECONDS,
             "progress_callback": calls[0]["progress_callback"],
         }
     ]
@@ -319,6 +322,46 @@ def test_run_batch_command_honors_cap(monkeypatch, tmp_path):
 
     assert state["max_active"] == 2
     assert len(result["completed"]) == 5
+
+
+def test_run_batch_command_staggers_launches(monkeypatch, tmp_path):
+    import time
+
+    from cli.automation import run_batch_command
+
+    watchlist_path = tmp_path / "watchlist.yaml"
+    watchlist_path.write_text(
+        "tickers:\n"
+        "  - MSFT\n"
+        "  - NVDA\n"
+        "  - AAPL\n"
+    )
+
+    started_at = []
+
+    def fake_run_cli_stock_job(job):
+        started_at.append(time.monotonic())
+        time.sleep(0.01)
+        return {
+            "ticker": job["ticker"],
+            "status": "completed",
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+        }
+
+    monkeypatch.setattr("cli.automation.run_cli_stock_job", fake_run_cli_stock_job)
+
+    result = run_batch_command(
+        watchlist_path=watchlist_path,
+        cap=3,
+        launch_stagger_seconds=0.05,
+    )
+
+    assert result["completed"] == ["MSFT", "NVDA", "AAPL"]
+    assert len(started_at) == 3
+    assert started_at[1] - started_at[0] >= 0.04
+    assert started_at[2] - started_at[1] >= 0.04
 
 
 def test_run_batch_command_reuses_worker_slots(monkeypatch, tmp_path):
