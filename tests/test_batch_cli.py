@@ -302,6 +302,61 @@ def test_run_batch_command_honors_cap(monkeypatch, tmp_path):
     assert len(result["completed"]) == 5
 
 
+def test_run_batch_command_reuses_worker_slots(monkeypatch, tmp_path):
+    import time
+    from pathlib import Path
+
+    from cli.automation import run_batch_command
+
+    watchlist_path = tmp_path / "watchlist.yaml"
+    watchlist_path.write_text(
+        "tickers:\n"
+        "  - MSFT\n"
+        "  - NVDA\n"
+        "  - AAPL\n"
+    )
+
+    updates = []
+
+    def fake_run_cli_stock_job(job):
+        progress_file = Path(job["progress_file"])
+        progress_file.write_text(
+            '{"event":"run_started","ticker":"' + job["ticker"] + '"}\n'
+            '{"event":"agent_completed","agent":"Trader","ticker":"' + job["ticker"] + '"}\n'
+            '{"event":"run_completed","ticker":"' + job["ticker"] + '"}\n'
+        )
+        if job["ticker"] == "NVDA":
+            time.sleep(0.1)
+        else:
+            time.sleep(0.02)
+        return {
+            "ticker": job["ticker"],
+            "status": "completed",
+            "returncode": 0,
+            "stdout": "",
+            "stderr": "",
+        }
+
+    monkeypatch.setattr("cli.automation.run_cli_stock_job", fake_run_cli_stock_job)
+
+    result = run_batch_command(
+        watchlist_path=watchlist_path,
+        cap=2,
+        progress_callback=lambda state: updates.append(state.snapshot()),
+    )
+
+    seen_slot_assignments = {
+        (slot["slot_index"], slot["ticker"])
+        for update in updates
+        for slot in update["slots"]
+        if slot["ticker"]
+    }
+
+    assert result["completed"] == ["MSFT", "NVDA", "AAPL"]
+    assert (1, "MSFT") in seen_slot_assignments
+    assert (1, "AAPL") in seen_slot_assignments
+
+
 def test_summarize_command_dispatches_runner(monkeypatch, tmp_path):
     calls = []
 

@@ -1,15 +1,26 @@
 from copy import deepcopy
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from collections import deque
+from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
+from contextlib import nullcontext
 from datetime import date, datetime
 import json
 from pathlib import Path
 import subprocess
 import sys
+import tempfile
+import time
 from typing import Optional
 
 import yaml
 
-from cli.batch_progress import RunProgressTracker, append_progress_event
+from cli.batch_progress import (
+    BatchDashboardState,
+    BatchWorkerSlot,
+    RunProgressTracker,
+    append_progress_event,
+    apply_progress_event,
+    read_progress_events,
+)
 from tradingagents.default_config import DEFAULT_CONFIG
 from tradingagents.graph.trading_graph import TradingAgentsGraph
 
@@ -184,6 +195,7 @@ def run_batch_command(
     reasoning_effort: Optional[str] = None,
     depth: Optional[str] = None,
     results_dir: Optional[str] = None,
+    progress_callback=None,
 ) -> dict:
     if cap < 1:
         raise ValueError("cap must be at least 1")
@@ -202,14 +214,94 @@ def run_batch_command(
     )
 
     results_by_ticker = {}
-    with ThreadPoolExecutor(max_workers=cap) as executor:
-        future_to_job = {
-            executor.submit(run_cli_stock_job, job): job
-            for job in jobs
-        }
-        for future in as_completed(future_to_job):
-            job = future_to_job[future]
-            results_by_ticker[job["ticker"]] = future.result()
+    pending_jobs = deque(dict(job) for job in jobs)
+    dashboard_state = None
+    if progress_callback:
+        dashboard_state = BatchDashboardState(
+            total_jobs=len(jobs),
+            slots=[BatchWorkerSlot(slot_index=index + 1) for index in range(cap)],
+        )
+
+    progress_dir_context = (
+        tempfile.TemporaryDirectory(prefix="tradingagents-batch-progress-")
+        if progress_callback
+        else nullcontext(None)
+    )
+
+    with progress_dir_context as progress_dir, ThreadPoolExecutor(max_workers=cap) as executor:
+        future_to_state = {}
+
+        def publish_update():
+            if progress_callback and dashboard_state is not None:
+                progress_callback(dashboard_state)
+
+        def poll_active_slots():
+            for slot in dashboard_state.slots if dashboard_state is not None else []:
+                if not slot.progress_file:
+                    continue
+                events, new_offset = read_progress_events(
+                    slot.progress_file,
+                    slot.progress_offset,
+                )
+                slot.progress_offset = new_offset
+                for event in events:
+                    apply_progress_event(slot, event)
+
+        def submit_next_job(slot: BatchWorkerSlot):
+            if not pending_jobs:
+                return False
+
+            job = pending_jobs.popleft()
+            if progress_dir is not None:
+                progress_path = Path(progress_dir) / f"{slot.slot_index}-{job['ticker']}.jsonl"
+                job["progress_file"] = str(progress_path)
+                slot.assign(ticker=job["ticker"], progress_file=str(progress_path))
+            future = executor.submit(run_cli_stock_job, job)
+            future_to_state[future] = {"job": job, "slot": slot}
+            return True
+
+        initial_slots = dashboard_state.slots if dashboard_state is not None else [
+            BatchWorkerSlot(slot_index=index + 1) for index in range(cap)
+        ]
+        for slot in initial_slots:
+            if not submit_next_job(slot):
+                break
+        publish_update()
+
+        while future_to_state:
+            done, _ = wait(
+                list(future_to_state.keys()),
+                timeout=0.05 if progress_callback else None,
+                return_when=FIRST_COMPLETED,
+            )
+
+            if progress_callback and dashboard_state is not None:
+                poll_active_slots()
+                publish_update()
+
+            if not done:
+                time.sleep(0.01)
+                continue
+
+            for future in done:
+                state = future_to_state.pop(future)
+                job = state["job"]
+                slot = state["slot"]
+                result = future.result()
+                results_by_ticker[job["ticker"]] = result
+
+                if progress_callback and dashboard_state is not None:
+                    poll_active_slots()
+                    slot.status = "completed" if result["returncode"] == 0 else "failed"
+                    slot.active_agent = None
+                    if result["returncode"] == 0:
+                        dashboard_state.completed_jobs += 1
+                    else:
+                        dashboard_state.failed_jobs += 1
+                    publish_update()
+
+                submit_next_job(slot)
+                publish_update()
 
     completed = [
         job["ticker"]

@@ -72,8 +72,59 @@ class BatchProgressEvent:
 class BatchWorkerSlot:
     slot_index: int
     ticker: str | None = None
+    status: str = "idle"
+    active_agent: str | None = None
     total_milestones: int = 0
     completed_agents: set[str] = field(default_factory=set)
+    progress_file: str | None = None
+    progress_offset: int = 0
+
+    def assign(self, *, ticker: str, progress_file: str | None = None) -> None:
+        self.ticker = ticker
+        self.status = "starting"
+        self.active_agent = None
+        self.total_milestones = 0
+        self.completed_agents.clear()
+        self.progress_file = progress_file
+        self.progress_offset = 0
+
+    def snapshot(self) -> dict:
+        return {
+            "slot_index": self.slot_index,
+            "ticker": self.ticker,
+            "status": self.status,
+            "active_agent": self.active_agent,
+            "total_milestones": self.total_milestones,
+            "completed_agents": sorted(self.completed_agents),
+            "progress_fraction": compute_progress_fraction(self),
+        }
+
+
+@dataclass
+class BatchDashboardState:
+    total_jobs: int
+    slots: list[BatchWorkerSlot]
+    completed_jobs: int = 0
+    failed_jobs: int = 0
+
+    def snapshot(self) -> dict:
+        active_jobs = sum(
+            1
+            for slot in self.slots
+            if slot.ticker and slot.status not in {"idle", "completed", "failed"}
+        )
+        return {
+            "total_jobs": self.total_jobs,
+            "completed_jobs": self.completed_jobs,
+            "failed_jobs": self.failed_jobs,
+            "finished_jobs": self.completed_jobs + self.failed_jobs,
+            "active_jobs": active_jobs,
+            "queued_jobs": max(
+                self.total_jobs - self.completed_jobs - self.failed_jobs - active_jobs,
+                0,
+            ),
+            "slots": [slot.snapshot() for slot in self.slots],
+        }
 
 
 class RunProgressTracker:
@@ -170,6 +221,8 @@ def total_run_milestones(selected_analysts: list[str]) -> int:
 
 
 def compute_progress_fraction(slot: BatchWorkerSlot) -> float:
+    if slot.status == "completed":
+        return 1.0
     if slot.total_milestones <= 0:
         return 0.0
     return min(len(slot.completed_agents) / slot.total_milestones, 1.0)
@@ -219,3 +272,47 @@ def has_meaningful_report_content(content) -> bool:
     if isinstance(content, (list, tuple, set)):
         return any(has_meaningful_report_content(value) for value in content)
     return bool(content)
+
+
+def read_progress_events(path: str | Path, offset: int = 0) -> tuple[list[BatchProgressEvent], int]:
+    progress_path = Path(path)
+    if not progress_path.exists():
+        return [], offset
+
+    with progress_path.open("r", encoding="utf-8") as handle:
+        handle.seek(offset)
+        chunk = handle.read()
+        new_offset = handle.tell()
+
+    return parse_progress_events(chunk), new_offset
+
+
+def apply_progress_event(slot: BatchWorkerSlot, event: BatchProgressEvent) -> None:
+    if event.total_milestones:
+        slot.total_milestones = event.total_milestones
+
+    if event.event == "run_started":
+        slot.status = "running"
+        return
+
+    if event.event == "agent_started":
+        slot.status = "running"
+        slot.active_agent = event.agent
+        return
+
+    if event.event == "agent_completed":
+        if event.agent:
+            slot.completed_agents.add(event.agent)
+            if slot.active_agent == event.agent:
+                slot.active_agent = None
+        slot.status = "running"
+        return
+
+    if event.event == "run_completed":
+        slot.status = "completed"
+        slot.active_agent = None
+        return
+
+    if event.event == "run_failed":
+        slot.status = "failed"
+        slot.active_agent = None
