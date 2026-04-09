@@ -4,6 +4,12 @@ from dataclasses import dataclass, field
 import json
 from pathlib import Path
 
+from rich.console import Group
+from rich.panel import Panel
+from rich.progress_bar import ProgressBar
+from rich.table import Table
+from rich.text import Text
+
 
 ANALYST_STATUS_ORDER = [
     "macro",
@@ -316,3 +322,69 @@ def apply_progress_event(slot: BatchWorkerSlot, event: BatchProgressEvent) -> No
     if event.event == "run_failed":
         slot.status = "failed"
         slot.active_agent = None
+
+
+def render_batch_dashboard(state: BatchDashboardState):
+    snapshot = state.snapshot()
+
+    summary = Table.grid(expand=True)
+    summary.add_column(ratio=1)
+    summary.add_row(
+        Text(
+            " | ".join(
+                [
+                    f"Done {snapshot['completed_jobs']}/{snapshot['total_jobs']}",
+                    f"Failed {snapshot['failed_jobs']}",
+                    f"Active {snapshot['active_jobs']}",
+                    f"Queued {snapshot['queued_jobs']}",
+                ]
+            ),
+            style="bold cyan",
+        )
+    )
+    summary.add_row(
+        ProgressBar(
+            total=max(snapshot["total_jobs"], 1),
+            completed=snapshot["finished_jobs"],
+        )
+    )
+
+    worker_group = Group(*(render_worker_slot(slot) for slot in snapshot["slots"]))
+    return Group(
+        Panel(summary, title="Batch Progress", border_style="cyan"),
+        Panel(worker_group, title="Workers", border_style="blue"),
+    )
+
+
+def render_worker_slot(slot_snapshot: dict) -> Panel:
+    status = slot_snapshot["status"]
+    status_style = {
+        "idle": "dim",
+        "starting": "yellow",
+        "running": "cyan",
+        "completed": "green",
+        "failed": "red",
+    }.get(status, "white")
+
+    title = f"Worker #{slot_snapshot['slot_index']}"
+    ticker = slot_snapshot["ticker"] or "Waiting for next job"
+    active_agent = slot_snapshot["active_agent"] or "Waiting"
+    completed = len(slot_snapshot["completed_agents"])
+    total = slot_snapshot["total_milestones"] or 1
+    progress_completed = completed
+    if status == "completed":
+        progress_completed = total
+
+    body = Table.grid(expand=True)
+    body.add_column(ratio=1)
+    body.add_row(Text(ticker, style="bold white"))
+    body.add_row(Text(f"Status: {status}", style=status_style))
+    body.add_row(Text(f"Current: {active_agent}", style="white"))
+    body.add_row(ProgressBar(total=total, completed=progress_completed))
+    body.add_row(
+        Text(
+            f"Milestones: {completed}/{slot_snapshot['total_milestones'] or 0}",
+            style="dim",
+        )
+    )
+    return Panel(body, title=title, border_style=status_style)

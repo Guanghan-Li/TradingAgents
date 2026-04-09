@@ -28,6 +28,7 @@ from cli.automation import (
     run_stock_command,
     summarize_runs_for_date,
 )
+from cli.batch_progress import render_batch_dashboard
 from cli.models import AnalysisMode
 from cli.stats_handler import StatsCallbackHandler
 from cli.utils import (
@@ -1564,7 +1565,20 @@ def batch(
         kwargs["depth"] = depth
     if results_dir is not None:
         kwargs["results_dir"] = results_dir
-    result = run_batch_command(**kwargs)
+
+    dashboard_renderable = Panel(
+        "[italic]Initializing batch dashboard...[/italic]",
+        title="Batch Progress",
+        border_style="cyan",
+    )
+
+    with Live(dashboard_renderable, console=console, refresh_per_second=8) as live:
+        def on_progress(state):
+            live.update(render_batch_dashboard(state))
+
+        kwargs["progress_callback"] = on_progress
+        result = run_batch_command(**kwargs)
+
     console.print(
         f"[green]Batch complete[/green]: {len(result['completed'])} completed, {len(result['failed'])} failed"
     )

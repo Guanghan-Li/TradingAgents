@@ -262,8 +262,27 @@ def test_batch_command_dispatches_runner(monkeypatch, tmp_path):
             "reasoning_effort": "high",
             "depth": "deep",
             "results_dir": tmp_path / "results",
+            "progress_callback": calls[0]["progress_callback"],
         }
     ]
+    assert callable(calls[0]["progress_callback"])
+
+
+def test_batch_command_passes_progress_callback(monkeypatch, tmp_path):
+    watchlist_path = tmp_path / "watchlist.yaml"
+    watchlist_path.write_text("tickers:\n  - MSFT\n")
+    calls = []
+
+    def fake_run_batch_command(**kwargs):
+        calls.append(kwargs)
+        return {"completed": ["MSFT"], "failed": [], "jobs": [], "results": []}
+
+    monkeypatch.setattr("cli.main.run_batch_command", fake_run_batch_command, raising=False)
+
+    result = runner.invoke(app, ["batch", "--watchlist", str(watchlist_path), "--cap", "4"])
+
+    assert result.exit_code == 0, result.output
+    assert callable(calls[0]["progress_callback"])
 
 
 def test_run_batch_command_honors_cap(monkeypatch, tmp_path):
