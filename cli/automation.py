@@ -9,6 +9,7 @@ from typing import Optional
 
 import yaml
 
+from cli.batch_progress import RunProgressTracker, append_progress_event
 from tradingagents.default_config import DEFAULT_CONFIG
 from tradingagents.graph.trading_graph import TradingAgentsGraph
 
@@ -145,6 +146,7 @@ def build_run_stock_argv(job: dict) -> list[str]:
         "reasoning_effort": "--reasoning-effort",
         "depth": "--depth",
         "results_dir": "--results-dir",
+        "progress_file": "--progress-file",
     }
     for key, flag in flag_map.items():
         value = job.get(key)
@@ -427,6 +429,7 @@ def run_stock_command(
     reasoning_effort: str = DEFAULT_REASONING_EFFORT,
     depth: str = DEFAULT_DEPTH_PRESET,
     results_dir: Optional[str] = None,
+    progress_file: Optional[str] = None,
     debug: bool = False,
 ) -> dict:
     resolved_analysis_date = resolve_analysis_date(analysis_date)
@@ -448,7 +451,33 @@ def run_stock_command(
         config=config,
     )
     started_at = datetime.now().isoformat()
-    final_state, decision = graph.propagate(ticker, resolved_analysis_date)
+    if progress_file:
+        tracker = RunProgressTracker(
+            resolved_analysts,
+            ticker=ticker,
+            analysis_date=resolved_analysis_date,
+        )
+        append_progress_event(progress_file, tracker.build_run_started_event())
+
+        init_agent_state = graph.propagator.create_initial_state(
+            ticker,
+            resolved_analysis_date,
+        )
+        args = graph.propagator.get_graph_args()
+        final_state = init_agent_state
+
+        try:
+            for chunk in graph.graph.stream(init_agent_state, **args):
+                final_state = chunk
+                for event in tracker.update_from_chunk(chunk):
+                    append_progress_event(progress_file, event)
+            decision = graph.process_signal(final_state["final_trade_decision"])
+            append_progress_event(progress_file, tracker.build_run_completed_event())
+        except Exception as exc:
+            append_progress_event(progress_file, tracker.build_run_failed_event(str(exc)))
+            raise
+    else:
+        final_state, decision = graph.propagate(ticker, resolved_analysis_date)
     summary = write_run_artifacts(
         final_state=final_state,
         ticker=ticker,

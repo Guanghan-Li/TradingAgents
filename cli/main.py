@@ -1501,6 +1501,7 @@ def run_stock(
     reasoning_effort: Optional[str] = typer.Option(None, "--reasoning-effort", help="OpenAI reasoning effort."),
     depth: Optional[str] = typer.Option(None, "--depth", help="Research depth preset: shallow, medium, or deep."),
     results_dir: Optional[Path] = typer.Option(None, "--results-dir", help="Results directory override."),
+    progress_file: Optional[Path] = typer.Option(None, "--progress-file", hidden=True),
 ):
     kwargs = {"ticker": ticker}
     if analysis_date is not None:
@@ -1521,6 +1522,8 @@ def run_stock(
         kwargs["depth"] = depth
     if results_dir is not None:
         kwargs["results_dir"] = str(results_dir)
+    if progress_file is not None:
+        kwargs["progress_file"] = str(progress_file)
     result = run_stock_command(**kwargs)
     console.print(f"[green]Completed stock analysis[/green]: {result['ticker']} -> {result['decision']}")
 

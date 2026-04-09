@@ -143,6 +143,55 @@ def test_run_stock_command_defaults_date_to_today(monkeypatch):
     assert result["decision"] == "BUY"
 
 
+def test_run_stock_command_writes_progress_events(monkeypatch, tmp_path):
+    from cli.automation import run_stock_command
+
+    progress_file = tmp_path / "progress.jsonl"
+
+    class FakePropagator:
+        def create_initial_state(self, ticker, analysis_date):
+            return {"ticker": ticker, "analysis_date": analysis_date}
+
+        def get_graph_args(self):
+            return {}
+
+    class FakeStreamGraph:
+        def stream(self, init_agent_state, **kwargs):
+            yield {"messages": [], "market_report": "Market body"}
+            yield {"messages": [], "trader_investment_plan": "Trade body"}
+            yield {
+                "messages": [],
+                "chief_analyst_report": "Chief body",
+                "chief_analyst_data": {"verdict": {"rating": "Buy"}},
+                "final_trade_decision": "BUY",
+            }
+
+    class FakeGraph:
+        def __init__(self, selected_analysts, debug, config):
+            self.selected_analysts = selected_analysts
+            self.debug = debug
+            self.config = config
+            self.propagator = FakePropagator()
+            self.graph = FakeStreamGraph()
+
+        def process_signal(self, decision):
+            return decision
+
+        def propagate(self, ticker, analysis_date):
+            raise AssertionError("streaming path should be used when progress_file is set")
+
+    monkeypatch.setattr("cli.automation.TradingAgentsGraph", FakeGraph)
+
+    result = run_stock_command(ticker="MSFT", progress_file=str(progress_file))
+
+    payload = progress_file.read_text()
+    assert '"event": "run_started"' in payload
+    assert '"event": "agent_completed"' in payload
+    assert "Market Analyst" in payload
+    assert "Chief Analyst" in payload
+    assert result["decision"] == "BUY"
+
+
 def test_run_batch_command_loads_watchlist_and_runs_each_ticker(monkeypatch, tmp_path):
     from cli.automation import run_batch_command
 
