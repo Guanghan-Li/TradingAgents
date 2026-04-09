@@ -1127,6 +1127,12 @@ def format_tool_args(args, max_length=80) -> str:
         return result[:max_length - 3] + "..."
     return result
 
+
+def normalize_selected_analyst_keys(selected_analysts) -> list[str]:
+    """Return selected analyst keys in the canonical CLI order."""
+    selected_set = set(selected_analysts)
+    return [analyst.value for _, analyst in ANALYST_ORDER if analyst.value in selected_set]
+
 def run_analysis():
     # First get all user selections
     selections = get_user_selections()
@@ -1154,8 +1160,9 @@ def run_analysis():
     stats_handler = StatsCallbackHandler()
 
     # Normalize analyst selection to predefined order (selection is a 'set', order is fixed)
-    selected_set = {analyst.value for analyst in selections["analysts"]}
-    selected_analyst_keys = [a for a in ANALYST_ORDER if a in selected_set]
+    selected_analyst_keys = normalize_selected_analyst_keys(
+        analyst.value for analyst in selections["analysts"]
+    )
 
     # Initialize the graph with callbacks bound to LLMs
     graph = TradingAgentsGraph(

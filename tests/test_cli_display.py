@@ -1,9 +1,26 @@
 import unittest
 
-from cli.main import MessageBuffer, get_progress_teams, update_analyst_statuses
+from cli.main import (
+    MessageBuffer,
+    get_progress_teams,
+    normalize_selected_analyst_keys,
+    update_analyst_statuses,
+)
 
 
 class CLIDisplayTests(unittest.TestCase):
+    def test_normalize_selected_analyst_keys_returns_values_in_cli_order(self):
+        selected = {
+            "macro",
+            "market",
+            "news",
+        }
+
+        self.assertEqual(
+            normalize_selected_analyst_keys(selected),
+            ["market", "news", "macro"],
+        )
+
     def test_macro_report_updates_current_report_without_key_error(self):
         message_buffer = MessageBuffer()
         message_buffer.init_for_analysis(["macro"])
