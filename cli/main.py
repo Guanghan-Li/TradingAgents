@@ -1129,6 +1129,13 @@ def format_tool_args(args, max_length=80) -> str:
     return result
 
 
+def build_run_log_paths(results_dir: Path, run_stamp: str) -> dict[str, Path]:
+    return {
+        "message_tool_log": results_dir / f"message_tool_{run_stamp}.log",
+        "error_log": results_dir / f"error_{run_stamp}.log",
+    }
+
+
 def _extract_error_detail(exc: Exception) -> str:
     response = getattr(exc, "response", None)
     if response is not None:
@@ -1206,13 +1213,16 @@ def run_analysis():
 
     # Track start time for elapsed display
     start_time = time.time()
+    run_started_at = datetime.datetime.now()
+    run_stamp = run_started_at.strftime("%Y%m%d_%H%M%S")
 
     # Create result directory
     results_dir = Path(config["results_dir"]) / selections["ticker"] / selections["analysis_date"]
     results_dir.mkdir(parents=True, exist_ok=True)
     report_dir = results_dir / "reports"
     report_dir.mkdir(parents=True, exist_ok=True)
-    log_file = results_dir / "message_tool.log"
+    log_paths = build_run_log_paths(results_dir, run_stamp)
+    log_file = log_paths["message_tool_log"]
     log_file.touch(exist_ok=True)
 
     def save_message_decorator(obj, func_name):
@@ -1430,7 +1440,7 @@ def run_analysis():
             agent=message_buffer.current_agent,
             ticker=selections["ticker"],
         )
-        error_log = results_dir / "error.log"
+        error_log = log_paths["error_log"]
         error_log.write_text(
             error_summary
             + "\n\n"

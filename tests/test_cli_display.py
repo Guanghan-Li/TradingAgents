@@ -1,7 +1,9 @@
 import unittest
+from pathlib import Path
 
 from cli.main import (
     MessageBuffer,
+    build_run_log_paths,
     get_progress_teams,
     normalize_selected_analyst_keys,
     update_analyst_statuses,
@@ -9,6 +11,21 @@ from cli.main import (
 
 
 class CLIDisplayTests(unittest.TestCase):
+    def test_build_run_log_paths_includes_timestamp_in_filenames(self):
+        paths = build_run_log_paths(
+            Path("/tmp/results/SOFI/2026-04-09"),
+            "20260410_033012",
+        )
+
+        self.assertEqual(
+            paths["message_tool_log"],
+            Path("/tmp/results/SOFI/2026-04-09/message_tool_20260410_033012.log"),
+        )
+        self.assertEqual(
+            paths["error_log"],
+            Path("/tmp/results/SOFI/2026-04-09/error_20260410_033012.log"),
+        )
+
     def test_normalize_selected_analyst_keys_returns_values_in_cli_order(self):
         selected = {
             "macro",
