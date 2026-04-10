@@ -81,11 +81,13 @@ def test_build_batch_config_uses_itgpt_gpt54_defaults():
 
     assert config["llm_provider"] == "openai"
     assert config["backend_url"] == "https://api.itgpt.chat/v1"
-    assert config["quick_think_llm"] == "gpt-5.4"
+    assert config["quick_think_llm"] == "gpt-5-mini"
     assert config["deep_think_llm"] == "gpt-5.4"
     assert config["openai_reasoning_effort"] == "high"
     assert config["max_debate_rounds"] == 5
     assert config["max_risk_discuss_rounds"] == 5
+    assert config["llm_routing"]["default"]["model"] == "gpt-5-mini"
+    assert config["llm_routing"]["roles"]["chief_analyst"]["model"] == "gpt-5.4"
 
 
 def test_run_stock_command_defaults_date_to_today(monkeypatch):

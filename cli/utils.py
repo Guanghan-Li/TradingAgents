@@ -1,5 +1,6 @@
 import questionary
 from typing import Any, Dict, List, Optional
+from urllib.parse import urlparse
 
 from rich.console import Console
 
@@ -9,6 +10,8 @@ from tradingagents.env import DEFAULT_OPENAI_BASE_URL, get_openai_base_url
 console = Console()
 
 TICKER_INPUT_EXAMPLES = "Examples: SPY, CNC.TO, 7203.T, 0700.HK"
+OPENAI_COMPATIBLE_QUICK_MODEL = "gpt-5-mini"
+_NON_NATIVE_OPENAI_HEAVY_MODELS = {"gpt-5.4", "gpt-5.4-pro"}
 
 ANALYST_ORDER = [
     ("Market Analyst", AnalystType.MARKET),
@@ -502,8 +505,31 @@ def build_llm_routing_config(
         "roles": {
             "research_manager": deep_route.copy(),
             "portfolio_manager": deep_route.copy(),
+            "chief_analyst": deep_route.copy(),
         },
     }
+
+
+def resolve_gateway_model_pair(
+    provider: str,
+    backend_url: Optional[str],
+    shallow_model: str,
+    deep_model: str,
+) -> tuple[str, str]:
+    provider_lower = provider.lower()
+    hostname = urlparse(backend_url).hostname if backend_url else None
+    is_non_native_openai = provider_lower == "openai" and bool(
+        hostname and hostname.lower() != "api.openai.com"
+    )
+
+    if (
+        is_non_native_openai
+        and shallow_model == deep_model
+        and shallow_model in _NON_NATIVE_OPENAI_HEAVY_MODELS
+    ):
+        return OPENAI_COMPATIBLE_QUICK_MODEL, deep_model
+
+    return shallow_model, deep_model
 
 
 def ask_openai_reasoning_effort() -> str:

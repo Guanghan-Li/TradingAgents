@@ -3,6 +3,7 @@ from pathlib import Path
 
 from cli.main import (
     MessageBuffer,
+    _extract_task_name_from_traceback,
     build_run_log_paths,
     get_progress_teams,
     normalize_selected_analyst_keys,
@@ -11,6 +12,15 @@ from cli.main import (
 
 
 class CLIDisplayTests(unittest.TestCase):
+    def test_extract_task_name_from_traceback_prefers_langgraph_note(self):
+        trace_text = (
+            "Traceback ...\n"
+            "InternalServerError: Gateway time-out\n"
+            "During task with name 'Macro Analyst' and id 'abc123'\n"
+        )
+
+        self.assertEqual(_extract_task_name_from_traceback(trace_text), "Macro Analyst")
+
     def test_build_run_log_paths_includes_timestamp_in_filenames(self):
         paths = build_run_log_paths(
             Path("/tmp/results/SOFI/2026-04-09"),

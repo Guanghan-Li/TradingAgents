@@ -24,7 +24,11 @@ from cli.batch_progress import (
 from tradingagents.default_config import DEFAULT_CONFIG
 from tradingagents.graph.trading_graph import TradingAgentsGraph
 
-from cli.utils import ANALYST_ORDER, build_llm_routing_config
+from cli.utils import (
+    ANALYST_ORDER,
+    build_llm_routing_config,
+    resolve_gateway_model_pair,
+)
 
 
 DEFAULT_BATCH_PROVIDER = "openai"
@@ -371,6 +375,12 @@ def build_batch_config(
 ) -> dict:
     resolved_quick_model = quick_model or model
     resolved_deep_model = deep_model or model
+    resolved_quick_model, resolved_deep_model = resolve_gateway_model_pair(
+        provider,
+        backend_url,
+        resolved_quick_model,
+        resolved_deep_model,
+    )
     rounds = DEPTH_PRESET_TO_ROUNDS[depth]
 
     config = deepcopy(DEFAULT_CONFIG)

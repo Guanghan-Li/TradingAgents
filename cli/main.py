@@ -6,6 +6,7 @@ from collections import deque
 from copy import deepcopy
 from functools import wraps
 from pathlib import Path
+import re
 import time
 import traceback
 
@@ -40,6 +41,7 @@ from cli.utils import (
     ask_openai_reasoning_effort,
     build_llm_routing_config,
     get_market_id,
+    resolve_gateway_model_pair,
     select_analysts,
     select_deep_thinking_agent,
     select_llm_provider,
@@ -1164,6 +1166,13 @@ def _format_analysis_error(exc: Exception, *, agent: str | None, ticker: str) ->
     return "\n".join(parts)
 
 
+def _extract_task_name_from_traceback(trace_text: str) -> str | None:
+    match = re.search(r"During task with name '([^']+)'", trace_text)
+    if match:
+        return match.group(1)
+    return None
+
+
 def normalize_selected_analyst_keys(selected_analysts) -> list[str]:
     """Return selected analyst keys in the canonical CLI order."""
     selected_set = set(selected_analysts)
@@ -1177,14 +1186,20 @@ def run_analysis():
     config = deepcopy(DEFAULT_CONFIG)
     config["max_debate_rounds"] = selections["research_depth"]
     config["max_risk_discuss_rounds"] = selections["research_depth"]
-    config["quick_think_llm"] = selections["shallow_thinker"]
-    config["deep_think_llm"] = selections["deep_thinker"]
+    resolved_shallow_model, resolved_deep_model = resolve_gateway_model_pair(
+        selections["llm_provider"],
+        selections["backend_url"],
+        selections["shallow_thinker"],
+        selections["deep_thinker"],
+    )
+    config["quick_think_llm"] = resolved_shallow_model
+    config["deep_think_llm"] = resolved_deep_model
     config["backend_url"] = selections["backend_url"]
     config["llm_provider"] = selections["llm_provider"].lower()
     config["llm_routing"] = build_llm_routing_config(
         provider=selections["llm_provider"],
-        shallow_model=selections["shallow_thinker"],
-        deep_model=selections["deep_thinker"],
+        shallow_model=resolved_shallow_model,
+        deep_model=resolved_deep_model,
         backend_url=selections["backend_url"],
     )
     # Provider-specific thinking configuration
@@ -1435,16 +1450,18 @@ def run_analysis():
 
             update_display(layout, stats_handler=stats_handler, start_time=start_time)
     except Exception as exc:
+        trace_text = traceback.format_exc()
+        failing_agent = _extract_task_name_from_traceback(trace_text) or message_buffer.current_agent
         error_summary = _format_analysis_error(
             exc,
-            agent=message_buffer.current_agent,
+            agent=failing_agent,
             ticker=selections["ticker"],
         )
         error_log = log_paths["error_log"]
         error_log.write_text(
             error_summary
             + "\n\n"
-            + traceback.format_exc(),
+            + trace_text,
             encoding="utf-8",
         )
         console.print(
