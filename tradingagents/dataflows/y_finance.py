@@ -10,6 +10,10 @@ from .stockstats_utils import (
     yf_retry,
 )
 
+
+MAX_LLM_STOCK_ROWS = 40
+MAX_LLM_INDICATOR_POINTS = 20
+
 def get_YFin_data_online(
     symbol: Annotated[str, "ticker symbol of the company"],
     start_date: Annotated[str, "Start date in yyyy-mm-dd format"],
@@ -46,12 +50,21 @@ def get_YFin_data_online(
         if col in data.columns:
             data[col] = data[col].round(2)
 
+    total_records = len(data)
+    truncated = total_records > MAX_LLM_STOCK_ROWS
+    if truncated:
+        data = data.tail(MAX_LLM_STOCK_ROWS)
+
     # Convert DataFrame to CSV string
     csv_string = data.to_csv()
 
     # Add header information
     header = f"# Stock data for {symbol.upper()} from {start_date} to {end_date}\n"
-    header += f"# Total records: {len(data)}\n"
+    header += f"# Total records: {total_records}\n"
+    if truncated:
+        header += (
+            f"# Displaying latest {MAX_LLM_STOCK_ROWS} records for LLM context\n"
+        )
     header += f"# Data retrieved on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
 
     return header + csv_string
@@ -184,8 +197,22 @@ def get_stock_stats_indicators_window(
             ind_string += f"{curr_date_dt.strftime('%Y-%m-%d')}: {indicator_value}\n"
             curr_date_dt = curr_date_dt - relativedelta(days=1)
 
+    truncated = len(date_values) > MAX_LLM_INDICATOR_POINTS
+    displayed_values = date_values[:MAX_LLM_INDICATOR_POINTS]
+
+    ind_string = ""
+    for date_str, value in displayed_values:
+        ind_string += f"{date_str}: {value}\n"
+
+    truncation_header = ""
+    if truncated:
+        truncation_header = (
+            f"## Showing latest {MAX_LLM_INDICATOR_POINTS} dates for LLM context\n\n"
+        )
+
     result_str = (
         f"## {indicator} values from {before.strftime('%Y-%m-%d')} to {end_date}:\n\n"
+        + truncation_header
         + ind_string
         + "\n\n"
         + best_ind_params.get(indicator, "No description available.")
