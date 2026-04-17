@@ -1,0 +1,11 @@
+TSLA factor view is mixed-to-cautious. The two highest-importance rules point in opposite directions, so the decision hinges on which conditional evidence is actually present on 2026-04-15.
+
+Strongest bullish signal: Rule 1, `AI capex acceleration` (`high`). It is only supportive if backlog is still rising and margins are holding while capex increases. Its importance is high, but its applicability is not yet proven from the provided context; analysts still need to confirm that TSLA is behaving like a direct beneficiary of AI infrastructure demand rather than just spending into it.
+
+Strongest bearish signal: Rule 2, `Valuation stretch under slowing growth` (`high`). This is the clearest risk rule because it directly flags downside if growth guidance is revised lower while the valuation multiple stays rich or expands faster than earnings expectations. If both conditions are true, this rule should likely dominate the bullish case.
+
+Important offset: Rule 3, `Balance sheet resilience` (`medium`, neutral). A strong net cash position and healthy free cash flow would improve drawdown resilience, but this is more of a durability cushion than a primary upside driver.
+
+Key conflict: the bullish and bearish rules are both high weight, but the context does not provide the actual evidence needed to resolve them. Missing inputs include backlog trend, margin stability during capex ramp, forward growth guidance revisions, relative movement in valuation vs. earnings revisions, and current net cash / free cash flow quality.
+
+Practical guidance for downstream analysts: treat this as a conditional setup, not a directional conclusion. First verify whether Rule 1’s operating conditions are genuinely present. Then stress-test Rule 2 using current valuation and guidance revision data. If growth is decelerating while valuation remains stretched, keep the overall read bearish despite balance-sheet strength. If backlog and margins are holding through higher capex and guidance is stable, the setup improves toward bullish or at least balanced.

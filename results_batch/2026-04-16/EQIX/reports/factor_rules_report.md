@@ -1,0 +1,9 @@
+Factor rule read for EQIX on 2026-04-16 is balanced but high-conviction on both sides. The strongest bullish input is the high-weight AI capex acceleration rule: if EQIX is seeing rising backlog and stable margins despite higher capex, AI infrastructure demand could support revenue growth and pricing power. This is the key upside rule because it ties directly to demand durability and monetization.
+
+The strongest bearish input is also high weight: valuation stretch under slowing growth. If forward growth guidance is revised lower while the market multiple stays elevated or expands faster than earnings revisions, downside risk rises. This rule matters most as a cautionary overlay because it can offset strong thematic demand if expectations are already too rich.
+
+The medium-weight balance sheet resilience rule is neutral rather than directionally bullish here. A modest leverage profile and healthy free cash flow conversion would improve durability in tighter macro conditions, but this rule does not by itself resolve the growth-versus-valuation conflict.
+
+Main conflict: the rule set has one high-weight bullish and one high-weight bearish signal. Downstream analysts should focus on whether AI-driven backlog and pricing power are translating into actual guidance, margin stability, and earnings revisions. Missing information includes current valuation versus historical range, forward guidance changes, backlog trend, margin trajectory, capex intensity, leverage, and free cash flow conversion.
+
+Practical guidance: treat EQIX as a conditional long-bias candidate only if backlog growth, margin stability, and earnings revisions confirm the AI infrastructure thesis. If growth expectations are being revised down or valuation has expanded without earnings support, the bearish valuation rule should dominate the factor interpretation.

@@ -1,0 +1,57 @@
+{
+  "analysis_date": "2026-04-13",
+  "anthropic_effort": null,
+  "backend_url": "claude://local",
+  "catalysts": [
+    {
+      "catalyst": "Q1 2026 Earnings Release",
+      "date_or_window": "April 14-16, 2026",
+      "expected_impact": "Critical \u2013 sets AI demand trajectory for H2 2026 and validates/invalidates current 20\u00d7 forward P/E. Beat >5% activates Bull; miss triggers Bear."
+    },
+    {
+      "catalyst": "Q2 2026 Guidance & Management Commentary",
+      "date_or_window": "Mid-April 2026 (earnings call)",
+      "expected_impact": "High \u2013 forward visibility on 3nm/2nm ramp, capex plans, and utilization rates. Guidance raise supports Bull; flat guide confirms Base."
+    },
+    {
+      "catalyst": "FOMC Meeting (May 2026)",
+      "date_or_window": "May 6-7, 2026",
+      "expected_impact": "Medium \u2013 rate path clarity affects tech valuation multiples. Hawkish surprise (hike or dot plot shift) pressures Base case; dovish hold supports status quo."
+    },
+    {
+      "catalyst": "Taiwan Election Cycle & Geopolitical Developments",
+      "date_or_window": "Q2-Q3 2026",
+      "expected_impact": "Medium \u2013 heightened Taiwan Strait tensions or PLA military exercises increase geopolitical risk premium. Escalation activates Bear case tail risk."
+    },
+    {
+      "catalyst": "Nvidia, AMD, Hyperscaler Capex Reports",
+      "date_or_window": "April-May 2026 (earnings season)",
+      "expected_impact": "High \u2013 validates AI infrastructure spending trajectory. Capex increases >15% YoY support Bull; flat or declining capex weakens Bull, confirms Base."
+    },
+    {
+      "catalyst": "China Semiconductor Policy & Export Controls",
+      "date_or_window": "Ongoing (Q2-Q3 2026)",
+      "expected_impact": "Medium \u2013 escalation of US-China tech decoupling (e.g., EUV restrictions, advanced packaging bans) disrupts supply chain and pressures margins."
+    },
+    {
+      "catalyst": "US CHIPS Act Milestone (Arizona Fab Update)",
+      "date_or_window": "Q2 2026",
+      "expected_impact": "Low-Medium \u2013 positive news on Arizona fab production timeline or subsidy disbursement supports Bull narrative of geopolitical risk mitigation."
+    }
+  ],
+  "chief_rating": "",
+  "chief_summary": "",
+  "chief_thesis": "",
+  "decision": "BUY",
+  "deep_think_llm": "claude-sonnet-4-6",
+  "ended_at": "2026-04-13T11:33:50.564245",
+  "error": null,
+  "openai_reasoning_effort": null,
+  "provider": "claude_code",
+  "quick_think_llm": "claude-sonnet-4-6",
+  "results_dir": "results_batch/2026-04-13/TSM",
+  "risk_summary": "{\n  \"rating\": \"Buy\",\n  \"executive_summary\": \"Initiate TSM with 2% position at current levels (~$370), targeting 4% on confirmation. Entry timing is suboptimal with earnings April 16, but forward P/E of 20x for a business generating 35% ROE and 62% gross margins offers acceptable risk/reward when sized appropriately. Stop loss at $351 (50-day SMA) with realistic gap risk to $340-345 caps portfolio loss at 1.6-2.2%. Scale to 4% target weight on earnings beat >5% with Q2 guidance up, or on successful retest of $350-360 support. Exit immediately on gross margin compression below 52%, hyperscaler capex cuts >20%, or Taiwan Strait escalation. Time horizon: 6-12 months to $400-440 bull case.\",\n  \"investment_thesis\": \"The Neutral analyst correctly identified the core tension: TSM is an exceptional business, but we're buying at resistance three days before a binary catalyst. However, the structured position sizing and scenario analysis support taking measured exposure now rather than waiting for perfect information.\\n\\n**Why Buy Now Despite Timing Risk:**\\n\\nFirst, the forward valuation is reasonable, not stretched. The P/E compression from 35x to 20x already prices in high expectations\u2014$18-19 in forward earnings at 20x multiple is appropriate for a business with 48% net margins, 35% ROE, and $364B quarterly free cash flow. The Conservative analyst's concern that \\\"the bar is extremely high\\\" misses that the market has already raised the bar through multiple compression. We're not paying for hope; we're paying for demonstrated earnings power.\\n\\nSecond, the segment economics support the bull thesis. Advanced nodes (62.5% of revenue) are growing 25%+ YoY with 620 bps of gross margin expansion from Q4 2024 to Q4 2025. This isn't cyclical demand\u2014it's structural AI infrastructure buildout. The Aggressive analyst is correct that hyperscaler capex (Amazon, Microsoft, Google, Meta) remains robust, and TSM's 3nm/5nm nodes are the sole supply source for Nvidia, AMD, and Apple's leading-edge chips. Customer concentration is a feature, not a bug, when you're the exclusive supplier to the AI value chain.\\n\\nThird, the scenario analysis shows 85% probability of base case or better outcomes. The Conservative analyst's expected value calculation of $386 (4.3% upside from $370) uses midpoint estimates on wide ranges, but more importantly, it ignores the optionality of scaling. We're not committing 4% now\u2014we're taking 2% with the ability to add 2% more at $380-390 if the thesis confirms. The real expected value calculation should weight the staged entry: 2% now with 1.6% risk, 2% more on confirmation with reduced risk. That changes the math significantly.\\n\\nFourth, the technical setup shows institutional accumulation, not retail distribution. The 16% YTD gain with 15-24% alpha versus the sector, occurring on declining volume during consolidation, indicates smart money positioning ahead of earnings. The price above all moving averages (10 EMA, 50 SMA, 200 SMA) with MACD positive and RSI at 62 confirms trend strength without overbought conditions.\\n\\n**Acknowledging the Risks:**\\n\\nThe Conservative analyst is right about gap risk. ATR of $12.64 (3.4% of price) means an earnings miss could gap us to $340-345, not the $351 stop level. This increases real portfolio risk from the stated 1.5% to 1.6-2.2%. I'm accepting this because the position sizing caps absolute loss at a tolerable level, and the probability-weighted scenarios favor upside.\\n\\nGeopolitical risk (Taiwan Strait tensions) is structural and could materialize at any time. The Neutral analyst correctly notes this is \\\"medium confidence\\\" for Q2-Q3 2026, not imminent, but it's a tail risk that could gap us down 15-20% overnight. The mitigation is clear exit rules: any PLA military exercises within 12 nautical miles or cross-strait incidents trigger immediate exit, regardless of technical levels.\\n\\nInput cost inflation (PPI up 2.08% MoM) threatens the margin expansion story. If gross margin compresses below 52%\u2014a 1,030 bps buffer from current 62.3%\u2014the thesis breaks. However, the mix shift toward advanced nodes (higher margin) provides a natural hedge against absolute pricing pressure.\\n\\n**Why Not Wait for Earnings:**\\n\\nThe Conservative analyst's argument that \\\"waiting has optionality\\\" assumes we can enter at $380-390 post-earnings. But if TSM beats by 5%+ and guides Q2 up (the bull case signposts), we're gapping to $400-410 at the open. The Neutral analyst is correct: we won't get a $380-390 entry on good news\u2014we'll be chasing at $410-420 with minimal upside to the $440-500 bull case range. The cost of waiting isn't 5-10% slippage; it's potentially missing the move entirely or entering with 1:1 risk/reward instead of the current 2:1.\\n\\nThe alternative scenario\u2014TSM misses and we avoid the loss\u2014is valid, but the structured scenario analysis assigns only 15% probability to the bear case. The invalidation triggers (Q1 miss AND Q2 guide down >5%, gross margin <52%, hyperscaler capex cuts >20%) require multiple things to go wrong simultaneously. That's not a balanced risk.\\n\\n**Execution Plan:**\\n\\n1. **Entry:** 2% position at current levels $365-375. This is the initial_weight_pct from the structured sizing analysis.\\n\\n2. **Stop Loss:** $351 (50-day SMA and technical breakdown level). Accept that gap risk could take us to $340-345, increasing portfolio loss to 1.6-2.2%. This is the realistic max loss, not the optimistic 1.5%.\\n\\n3. **Scale Trigger:** Add 2% (to 4% total) on either: (a) Earnings beat >5% with Q2 guidance up sequentially, entering at $380-390 on any pullback, OR (b) Successful retest of $350-360 support with gross margin guidance \u226560% for Q2.\\n\\n4. **Invalidation Triggers (immediate exit):** \\n   - Gross margin compression below 52%\\n   - Hyperscaler capex cuts >20% YoY (watch Microsoft, Google, Meta earnings in April-May)\\n   - Taiwan Strait military escalation (PLA exercises within 12 nautical miles)\\n   - Q1 miss with Q2 guide down >5% QoQ\\n\\n5. **Time Horizon:** 6-12 months to reach $400-440 (bull case lower end). Reassess if we're still at $370-380 after 3 months with no thesis progression.\\n\\n**Final Word:**\\n\\nThe Neutral analyst's Path 3 (1% now, 1% in reserve) is intellectually appealing but operationally complex. The structured position sizing recommends 2% initial weight for a reason: it balances conviction with risk management. The Aggressive analyst is correct that \\\"sometimes the best opportunities come right before binary events when everyone else is too scared to act,\\\" but the Conservative analyst is also correct that \\\"we're buying at resistance with elevated expectations.\\\" \\n\\nThe synthesis: we buy now with 2% because the forward valuation is reasonable, the business quality is exceptional, the scenario probabilities favor upside, and the position sizing caps our loss at a tolerable level. But we acknowledge the timing is suboptimal, the gap risk is real, and we're relying on disciplined scaling and clear exit rules to manage the uncertainty. This isn't a high-conviction, bet-the-farm trade\u2014it's a measured position in the dominant AI foundry with asymmetric upside if we're right and defined downside if we're wrong.\"\n}",
+  "started_at": "2026-04-13T11:10:50.415654",
+  "status": "completed",
+  "ticker": "TSM"
+}

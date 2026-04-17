@@ -1,0 +1,49 @@
+{
+  "analysis_date": "2026-04-16",
+  "anthropic_effort": null,
+  "backend_url": "codex://local",
+  "catalysts": [
+    {
+      "catalyst": "ARM quarterly earnings and guidance update",
+      "date_or_window": "Late Apr-May 2026 (exact date not provided in source context)",
+      "expected_impact": "Primary company-specific read on whether AI partnerships and design-win momentum are translating into financial upside."
+    },
+    {
+      "catalyst": "US CPI and PPI releases",
+      "date_or_window": "Next 1-2 months",
+      "expected_impact": "Inflation surprises can reprice long-end yields and materially affect ARM's valuation multiple."
+    },
+    {
+      "catalyst": "US labor-market releases (nonfarm payrolls and unemployment)",
+      "date_or_window": "Next 1-2 months",
+      "expected_impact": "Labor data can shift rate expectations and broader risk appetite for high-beta growth equities."
+    },
+    {
+      "catalyst": "Fed policy communication / next meeting window",
+      "date_or_window": "Q2 2026",
+      "expected_impact": "Any hawkish repricing would pressure ARM's premium multiple; a benign policy tone would help support it."
+    },
+    {
+      "catalyst": "Commercial updates tied to SK Telecom and IBM alliances",
+      "date_or_window": "Next 1-2 quarters",
+      "expected_impact": "Visible customer deployments or monetization milestones would strengthen the AI-centered bull thesis."
+    }
+  ],
+  "chief_action": "Hold",
+  "chief_rating": "Neutral",
+  "chief_relative_stance": "Neutral",
+  "chief_summary": "Hold ARM with a disciplined, risk-constrained posture rather than a fresh aggressive entry. Maintain existing exposure only if it is within the structured sizing framework: approximately 0.75% initial weight, with any move toward the 2.0% target weight reserved for confirmation from earnings, guidance, royalty growth, and stable long-end yields. Do not add materially ahead of the late-April to May 2026 earnings window.\n\nKey implementation levels are clear. ARM closed at 162.33 on 2026-04-16, above its 10-day EMA of 154.58, 50-day SMA of 132.92, and 200-day SMA of 138.58, so the trend remains constructive. However, the stock is extended after a 12.8% seven-session move, with RSI at 66.49, ATR near 8.62, and price close to the upper volatility envelope. A controlled add would require either a pullback toward roughly 155 to 158 that holds support, or a confirmed breakout through 166 to 168 on stronger volume and preferably post-earnings confirmation. The 149 to 151 zone should be treated as the primary risk line; a decisive break below that area, especially with weak guidance or higher yields, would justify cutting risk.",
+  "chief_thesis": "The final decision is Hold / Neutral because ARM combines excellent business quality with unattractive near-term asymmetry. The strongest bullish evidence is structural: 56% of revenue comes from royalties, 39% from licenses that can seed future royalties, and only 5% from ecosystem/software/services. That creates a high-quality, asset-light model with very high gross margins, broad exposure across mobile, cloud/AI, automotive, and embedded markets, and continued relevance from AI and custom-silicon adoption. Quarterly revenue rose from $983M to $1.242B year over year, roughly 26% growth, while gross profit remained exceptionally high. The SK Telecom and IBM alliance news supports ARM\u2019s strategic AI narrative, even if it does not yet prove near-term monetization.\n\nThe offset is valuation and path risk. ARM is priced at 216.44x trailing earnings and 75.71x forward earnings, with beta of 3.338 and ATR near 8.62. Those figures mean the stock does not need a broken thesis to correct; merely solid guidance, hotter CPI/PPI, higher Treasury yields, or limited AI commercialization detail could pressure the multiple. The conservative analyst is right that a two-ATR downside move toward roughly 145 implies meaningful drawdown risk, and the stock remains in a repair-stage technical structure because the 50-day SMA is still below the 200-day SMA despite strong spot price action.\n\nThe scenario analysis also supports neutrality rather than aggression. The base case carries the highest probability at 45% and points to consolidation or modest upside, not a clean rerating. The bull case is meaningful at 30%, but it requires accelerating royalty and licensing growth, forward EPS revisions, commercial traction from AI partnerships, and stable or lower long-end yields. The bear case is lower probability at 25%, but its downside could be sharp because valuation compression can exceed any near-term earnings miss when expectations are this elevated.\n\nTherefore, the committee should not sell ARM simply because it is expensive, but it also should not chase ARM at the current level. Hold existing exposure, keep the stance Neutral, respect the 0.75% initial and 2.0% target-weight discipline, and require evidence before upgrading: measurable royalty/license acceleration, raised guidance, broader EPS revisions, and stable or falling long-end yields. If ARM loses the 149 to 151 support zone or guidance disappoints while rates rise, reduce exposure and reassess the Hold stance.",
+  "decision": "HOLD",
+  "deep_think_llm": "gpt-5.4",
+  "ended_at": "2026-04-16T15:12:02.652396",
+  "error": null,
+  "openai_reasoning_effort": "high",
+  "provider": "codex_cli",
+  "quick_think_llm": "gpt-5.4",
+  "results_dir": "results_batch/2026-04-16/ARM",
+  "risk_summary": "1. **Absolute Action**: Hold\n\n2. **Relative Stance**: Neutral\n\n3. **Executive Summary**: Hold ARM with a disciplined, risk-constrained posture rather than a fresh aggressive entry. Maintain existing exposure only if it is within the structured sizing framework: approximately 0.75% initial weight, with any move toward the 2.0% target weight reserved for confirmation from earnings, guidance, royalty growth, and stable long-end yields. Do not add materially ahead of the late-April to May 2026 earnings window.\n\nKey implementation levels are clear. ARM closed at 162.33 on 2026-04-16, above its 10-day EMA of 154.58, 50-day SMA of 132.92, and 200-day SMA of 138.58, so the trend remains constructive. However, the stock is extended after a 12.8% seven-session move, with RSI at 66.49, ATR near 8.62, and price close to the upper volatility envelope. A controlled add would require either a pullback toward roughly 155 to 158 that holds support, or a confirmed breakout through 166 to 168 on stronger volume and preferably post-earnings confirmation. The 149 to 151 zone should be treated as the primary risk line; a decisive break below that area, especially with weak guidance or higher yields, would justify cutting risk.\n\n4. **Investment Thesis**: The final decision is Hold / Neutral because ARM combines excellent business quality with unattractive near-term asymmetry. The strongest bullish evidence is structural: 56% of revenue comes from royalties, 39% from licenses that can seed future royalties, and only 5% from ecosystem/software/services. That creates a high-quality, asset-light model with very high gross margins, broad exposure across mobile, cloud/AI, automotive, and embedded markets, and continued relevance from AI and custom-silicon adoption. Quarterly revenue rose from $983M to $1.242B year over year, roughly 26% growth, while gross profit remained exceptionally high. The SK Telecom and IBM alliance news supports ARM\u2019s strategic AI narrative, even if it does not yet prove near-term monetization.\n\nThe offset is valuation and path risk. ARM is priced at 216.44x trailing earnings and 75.71x forward earnings, with beta of 3.338 and ATR near 8.62. Those figures mean the stock does not need a broken thesis to correct; merely solid guidance, hotter CPI/PPI, higher Treasury yields, or limited AI commercialization detail could pressure the multiple. The conservative analyst is right that a two-ATR downside move toward roughly 145 implies meaningful drawdown risk, and the stock remains in a repair-stage technical structure because the 50-day SMA is still below the 200-day SMA despite strong spot price action.\n\nThe scenario analysis also supports neutrality rather than aggression. The base case carries the highest probability at 45% and points to consolidation or modest upside, not a clean rerating. The bull case is meaningful at 30%, but it requires accelerating royalty and licensing growth, forward EPS revisions, commercial traction from AI partnerships, and stable or lower long-end yields. The bear case is lower probability at 25%, but its downside could be sharp because valuation compression can exceed any near-term earnings miss when expectations are this elevated.\n\nTherefore, the committee should not sell ARM simply because it is expensive, but it also should not chase ARM at the current level. Hold existing exposure, keep the stance Neutral, respect the 0.75% initial and 2.0% target-weight discipline, and require evidence before upgrading: measurable royalty/license acceleration, raised guidance, broader EPS revisions, and stable or falling long-end yields. If ARM loses the 149 to 151 support zone or guidance disappoints while rates rise, reduce exposure and reassess the Hold stance.",
+  "started_at": "2026-04-16T14:57:25.073827",
+  "status": "completed",
+  "ticker": "ARM"
+}

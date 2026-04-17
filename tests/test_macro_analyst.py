@@ -1,5 +1,7 @@
 from inspect import signature
 
+import httpx
+import anthropic
 from langchain_core.messages import AIMessage
 from langchain_core.runnables import RunnableLambda
 
@@ -210,6 +212,150 @@ def test_macro_analyst_keeps_macro_output_out_of_news_report():
     assert "news_report" not in result
 
 
+def test_quick_analyst_wrapper_degrades_macro_on_anthropic_gateway_failure():
+    from tradingagents.agents.utils.analyst_resilience import wrap_quick_analyst_node
+
+    request = httpx.Request("POST", "https://api.routeai.cc/v1/messages")
+    response = httpx.Response(502, request=request, text="Bad gateway")
+
+    def failing_node(_state):
+        raise anthropic.InternalServerError("Bad gateway", response=response, body=None)
+
+    wrapped = wrap_quick_analyst_node(
+        failing_node,
+        analyst_name="Macro Analyst",
+        report_key="macro_report",
+    )
+    result = wrapped(
+        {
+            "company_of_interest": "AMD",
+            "trade_date": "2026-04-11",
+        }
+    )
+
+    assert "degraded backend fallback" in result["macro_report"]
+    assert "Backend status: 502" in result["macro_report"]
+    assert result["messages"][0].content == result["macro_report"]
+
+
+def test_quick_analyst_wrapper_degrades_on_claude_code_refusal_text():
+    from tradingagents.agents.utils.analyst_resilience import wrap_quick_analyst_node
+
+    def refusal_node(_state):
+        return {
+            "messages": [
+                AIMessage(
+                    content="I'm Claude, an AI assistant made by Anthropic. I'm supposed to be a Claude documentation assistant."
+                )
+            ],
+            "macro_report": "I'm Claude, an AI assistant made by Anthropic.",
+        }
+
+    wrapped = wrap_quick_analyst_node(
+        refusal_node,
+        analyst_name="Macro Analyst",
+        report_key="macro_report",
+    )
+    result = wrapped(
+        {
+            "company_of_interest": "AMD",
+            "trade_date": "2026-04-11",
+        }
+    )
+
+    assert "degraded backend fallback" in result["macro_report"]
+    assert "support refusal" in result["macro_report"].lower()
+
+
+def test_quick_analyst_wrapper_degrades_on_trading_recommendation_refusal_text():
+    from tradingagents.agents.utils.analyst_resilience import wrap_quick_analyst_node
+
+    refusal_text = (
+        "I'm Claude, made by Anthropic. I cannot provide TSLA trading recommendations "
+        "because:\n\n1 I don't have access to financial data tools "
+        "(get_economic_indicators, get_yield_curve, get_fed_calendar)\n"
+        "2 I'm not integrated with TradingAgents or live market feeds\n"
+        "3 I cannot make binding financial trading recommendations"
+    )
+
+    def refusal_node(_state):
+        return {
+            "messages": [AIMessage(content=refusal_text)],
+            "macro_report": refusal_text,
+        }
+
+    wrapped = wrap_quick_analyst_node(
+        refusal_node,
+        analyst_name="Macro Analyst",
+        report_key="macro_report",
+    )
+    result = wrapped(
+        {
+            "company_of_interest": "TSLA",
+            "trade_date": "2026-04-12",
+        }
+    )
+
+    assert "degraded backend fallback" in result["macro_report"]
+    assert "support refusal" in result["macro_report"].lower()
+
+
+def test_quick_analyst_wrapper_degrades_nested_risk_state_refusal_text():
+    from tradingagents.agents.utils.analyst_resilience import wrap_quick_analyst_node
+
+    def refusal_node(_state):
+        return {
+            "risk_debate_state": {
+                "history": "Aggressive Analyst: I'm Claude, made by Anthropic.",
+                "aggressive_history": "Aggressive Analyst: I'm Claude, made by Anthropic.",
+                "conservative_history": "",
+                "neutral_history": "",
+                "latest_speaker": "Aggressive",
+                "current_aggressive_response": "Aggressive Analyst: I'm Claude, made by Anthropic.",
+                "current_conservative_response": "",
+                "current_neutral_response": "",
+                "judge_decision": "",
+                "count": 1,
+            }
+        }
+
+    wrapped = wrap_quick_analyst_node(
+        refusal_node,
+        analyst_name="Aggressive Analyst",
+        extra_state_factory=lambda state, report: {
+            "risk_debate_state": {
+                **state["risk_debate_state"],
+                "history": f"{state['risk_debate_state']['history']}\nAggressive Analyst: {report}".strip(),
+                "aggressive_history": f"{state['risk_debate_state']['aggressive_history']}\nAggressive Analyst: {report}".strip(),
+                "latest_speaker": "Aggressive",
+                "current_aggressive_response": f"Aggressive Analyst: {report}",
+                "count": state["risk_debate_state"]["count"] + 1,
+            }
+        },
+    )
+    result = wrapped(
+        {
+            "company_of_interest": "AMD",
+            "trade_date": "2026-04-12",
+            "risk_debate_state": {
+                "history": "",
+                "aggressive_history": "",
+                "conservative_history": "",
+                "neutral_history": "",
+                "latest_speaker": "",
+                "current_aggressive_response": "",
+                "current_conservative_response": "",
+                "current_neutral_response": "",
+                "judge_decision": "",
+                "count": 0,
+            },
+        }
+    )
+
+    assert "degraded backend fallback" in result["risk_debate_state"]["aggressive_history"]
+    assert "support refusal" in result["risk_debate_state"]["current_aggressive_response"].lower()
+
+
 def test_shared_analyst_context_and_state_contract_include_macro():
     from tradingagents.agents.utils.agent_states import AgentState
     from tradingagents.agents.utils.agent_utils import build_analyst_report_context
@@ -245,6 +391,33 @@ def test_macro_is_exposed_in_default_graph_and_cli_selection_paths():
 
     message_buffer = MessageBuffer()
     message_buffer.init_for_analysis(["macro"])
-
     assert message_buffer.agent_status["Macro Analyst"] == "pending"
     assert "macro_report" in message_buffer.report_sections
+
+
+def test_macro_analyst_prompt_marks_workflow_as_educational():
+    from tradingagents.agents.analysts.macro_analyst import create_macro_analyst
+
+    captured = {}
+
+    def capture_inputs(inputs):
+        captured["inputs"] = inputs
+        return AIMessage(content="macro summary", tool_calls=[])
+
+    class FakeLLM:
+        def bind_tools(self, _tools):
+            return RunnableLambda(capture_inputs)
+
+    node = create_macro_analyst(FakeLLM())
+    node(
+        {
+            "trade_date": "2026-03-24",
+            "company_of_interest": "TSLA",
+            "messages": [("human", "Analyze TSLA")],
+        }
+    )
+
+    system_message = captured["inputs"].messages[0].content.lower()
+    assert "educational purposes" in system_message
+    assert "not personal financial advice" in system_message
+    assert "trading recommendations for a real account" in system_message

@@ -9,6 +9,7 @@ from tradingagents.agents.risk_mgmt.conservative_debator import (
     create_conservative_debator,
 )
 from tradingagents.agents.risk_mgmt.neutral_debator import create_neutral_debator
+from tradingagents.agents.utils.agent_utils import build_compact_risk_handoff_context
 from tradingagents.graph.propagation import Propagator
 
 
@@ -178,3 +179,21 @@ def test_risk_and_portfolio_prompts_consume_structured_fields(monkeypatch):
     )
     assert_prompt_mentions_structured_fields(portfolio_llm.prompts[0])
     assert portfolio_result["final_trade_decision"] == "Portfolio output"
+
+
+def test_compact_risk_handoff_context_truncates_large_reports_and_skips_placeholder_sentiment():
+    state = build_state()
+    state["market_report"] = "M" * 3000
+    state["macro_report"] = "Macro " * 500
+    state["fundamentals_report"] = "F" * 4000
+    state["news_report"] = "N" * 2500
+    state["sentiment_report"] = "I'll analyze this and gather more social sentiment first."
+    state["factor_rules_report"] = "R" * 2000
+
+    context = build_compact_risk_handoff_context(state)
+
+    assert "Social Media Sentiment Report" not in context
+    assert "Market Research Report" in context
+    assert "Company Fundamentals Report" in context
+    assert "...[truncated]" in context
+    assert len(context) < 8000

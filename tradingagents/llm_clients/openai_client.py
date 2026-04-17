@@ -13,10 +13,29 @@ from .validators import validate_model
 _TRANSIENT_STATUS_CODES = {408, 409, 429, 500, 502, 503, 504}
 _TRANSIENT_RETRY_ATTEMPTS = 2
 _TRANSIENT_RETRY_BASE_DELAY_SECONDS = 1.0
+_TRANSIENT_GATEWAY_BLOCK_TEXT = "Your request was blocked."
 
 
-def _is_retryable_openai_error(exc: Exception) -> bool:
+def _is_retryable_gateway_block(exc: Exception, base_url: Optional[str]) -> bool:
+    if not isinstance(exc, openai.PermissionDeniedError):
+        return False
+
+    if _uses_native_openai_responses_api(base_url):
+        return False
+
+    response = getattr(exc, "response", None)
+    response_text = getattr(response, "text", "") if response is not None else ""
+    if response_text and response_text.strip() == _TRANSIENT_GATEWAY_BLOCK_TEXT:
+        return True
+
+    return str(exc).strip() == _TRANSIENT_GATEWAY_BLOCK_TEXT
+
+
+def _is_retryable_openai_error(exc: Exception, base_url: Optional[str] = None) -> bool:
     if isinstance(exc, (openai.APITimeoutError, openai.APIConnectionError)):
+        return True
+
+    if _is_retryable_gateway_block(exc, base_url):
         return True
 
     if isinstance(exc, openai.APIStatusError):
@@ -41,7 +60,7 @@ class NormalizedChatOpenAI(ChatOpenAI):
             try:
                 return normalize_content(super().invoke(input, config, **kwargs))
             except Exception as exc:
-                if not _is_retryable_openai_error(exc) or attempt >= _TRANSIENT_RETRY_ATTEMPTS:
+                if not _is_retryable_openai_error(exc, getattr(self, "openai_api_base", None)) or attempt >= _TRANSIENT_RETRY_ATTEMPTS:
                     raise
                 time.sleep(_TRANSIENT_RETRY_BASE_DELAY_SECONDS * (2 ** attempt))
 

@@ -216,6 +216,154 @@ def test_mixed_provider_route_does_not_inherit_legacy_backend_url(monkeypatch):
     assert recorded_llms["Market Analyst"]["base_url"] is None
 
 
+def test_claude_code_provider_receives_anthropic_effort(monkeypatch):
+    recorded_llms = {}
+
+    monkeypatch.setattr(
+        "tradingagents.graph.trading_graph.create_llm_client",
+        lambda provider, model, base_url=None, **kwargs: DummyClient(
+            provider, model, base_url, **kwargs
+        ),
+    )
+    monkeypatch.setattr(
+        "tradingagents.graph.trading_graph.FinancialSituationMemory",
+        lambda *args, **kwargs: object(),
+    )
+    _patch_graph_setup_wiring(monkeypatch, recorded_llms)
+
+    TradingAgentsGraph(
+        selected_analysts=["market"],
+        config={
+            "llm_provider": "claude_code",
+            "backend_url": "claude://local",
+            "quick_think_llm": "claude-sonnet-4-6",
+            "deep_think_llm": "claude-sonnet-4-6",
+            "anthropic_effort": "high",
+        },
+    )
+
+    assert recorded_llms["Market Analyst"]["provider"] == "claude_code"
+    assert recorded_llms["Market Analyst"]["kwargs"]["effort"] == "high"
+
+
+def test_claude_code_routing_supports_role_specific_effort(monkeypatch):
+    recorded_llms = {}
+
+    monkeypatch.setattr(
+        "tradingagents.graph.trading_graph.create_llm_client",
+        lambda provider, model, base_url=None, **kwargs: DummyClient(
+            provider, model, base_url, **kwargs
+        ),
+    )
+    monkeypatch.setattr(
+        "tradingagents.graph.trading_graph.FinancialSituationMemory",
+        lambda *args, **kwargs: object(),
+    )
+    _patch_graph_setup_wiring(monkeypatch, recorded_llms)
+
+    TradingAgentsGraph(
+        selected_analysts=["market"],
+        config={
+            "llm_provider": "claude_code",
+            "backend_url": "claude://local",
+            "quick_think_llm": "claude-sonnet-4-6",
+            "deep_think_llm": "claude-sonnet-4-6",
+            "llm_routing": {
+                "default": {
+                    "provider": "claude_code",
+                    "model": "claude-sonnet-4-6",
+                    "base_url": "claude://local",
+                    "effort": "medium",
+                },
+                "roles": {
+                    "portfolio_manager": {
+                        "provider": "claude_code",
+                        "model": "claude-sonnet-4-6",
+                        "base_url": "claude://local",
+                        "effort": "high",
+                    }
+                },
+            },
+        },
+    )
+
+    assert recorded_llms["Market Analyst"]["kwargs"]["effort"] == "medium"
+    assert recorded_llms["Portfolio Manager"]["kwargs"]["effort"] == "high"
+
+
+def test_claude_code_provider_uses_extended_timeout(monkeypatch):
+    recorded_llms = {}
+
+    monkeypatch.setattr(
+        "tradingagents.graph.trading_graph.create_llm_client",
+        lambda provider, model, base_url=None, **kwargs: DummyClient(
+            provider, model, base_url, **kwargs
+        ),
+    )
+    monkeypatch.setattr(
+        "tradingagents.graph.trading_graph.FinancialSituationMemory",
+        lambda *args, **kwargs: object(),
+    )
+    _patch_graph_setup_wiring(monkeypatch, recorded_llms)
+
+    TradingAgentsGraph(
+        selected_analysts=["market"],
+        config={
+            "llm_provider": "claude_code",
+            "backend_url": "claude://local",
+            "quick_think_llm": "claude-sonnet-4-6",
+            "deep_think_llm": "claude-sonnet-4-6",
+            "llm_timeout_seconds": 60,
+        },
+    )
+
+    assert recorded_llms["Market Analyst"]["kwargs"]["timeout"] == 180
+
+
+def test_codex_cli_provider_receives_role_specific_reasoning_effort(monkeypatch):
+    recorded_llms = {}
+
+    monkeypatch.setattr(
+        "tradingagents.graph.trading_graph.create_llm_client",
+        lambda provider, model, base_url=None, **kwargs: DummyClient(
+            provider, model, base_url, **kwargs
+        ),
+    )
+    monkeypatch.setattr(
+        "tradingagents.graph.trading_graph.FinancialSituationMemory",
+        lambda *args, **kwargs: object(),
+    )
+    _patch_graph_setup_wiring(monkeypatch, recorded_llms)
+
+    TradingAgentsGraph(
+        selected_analysts=["market"],
+        config={
+            "llm_provider": "codex_cli",
+            "backend_url": "codex://local",
+            "quick_think_llm": "gpt-5.4",
+            "deep_think_llm": "gpt-5.4",
+            "openai_reasoning_effort": "medium",
+            "llm_routing": {
+                "default": {
+                    "provider": "codex_cli",
+                    "model": "gpt-5.4",
+                    "base_url": "codex://local",
+                    "reasoning_effort": "medium",
+                },
+                "roles": {
+                    "portfolio_manager": {
+                        "reasoning_effort": "high",
+                    }
+                },
+            },
+        },
+    )
+
+    assert recorded_llms["Market Analyst"]["provider"] == "codex_cli"
+    assert recorded_llms["Market Analyst"]["kwargs"]["reasoning_effort"] == "medium"
+    assert recorded_llms["Portfolio Manager"]["kwargs"]["reasoning_effort"] == "high"
+
+
 def test_unused_role_routes_do_not_instantiate_clients(monkeypatch):
     created_clients = []
 
@@ -311,6 +459,29 @@ def test_anthropic_client_passes_base_url_to_langchain(monkeypatch):
     client.get_llm()
 
     assert captured_kwargs["anthropic_api_url"] == "https://anthropic.example/v1"
+
+
+def test_anthropic_client_passes_auth_token_to_langchain(monkeypatch):
+    captured_kwargs = {}
+
+    class FakeChatAnthropic:
+        def __init__(self, **kwargs):
+            captured_kwargs.update(kwargs)
+
+    monkeypatch.setattr(
+        "tradingagents.llm_clients.anthropic_client.NormalizedChatAnthropic",
+        FakeChatAnthropic,
+    )
+    monkeypatch.setenv("ANTHROPIC_AUTH_TOKEN", "routeai-token")
+
+    client = AnthropicClient(
+        model="claude-sonnet-4-6",
+        base_url="https://api.routeai.cc",
+    )
+    client.get_llm()
+
+    assert captured_kwargs["anthropic_api_url"] == "https://api.routeai.cc"
+    assert captured_kwargs["auth_token"] == "routeai-token"
 
 
 def test_google_client_passes_base_url_to_langchain(monkeypatch):

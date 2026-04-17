@@ -70,3 +70,40 @@ def test_normalized_chat_openai_retries_transient_internal_server_errors(monkeyp
     assert result.content == "ok"
     assert calls["count"] == 3
     assert sleeps == [1.0, 2.0]
+
+
+def test_normalized_chat_openai_retries_gateway_blocked_permission_denied_for_custom_base_url(monkeypatch):
+    sleeps = []
+    calls = {"count": 0}
+
+    request = httpx.Request("POST", "https://api.routeai.cc/v1/chat/completions")
+    response = httpx.Response(403, request=request, text="Your request was blocked.")
+
+    class FakeMessage:
+        def __init__(self, content):
+            self.content = content
+
+    def fake_invoke(self, input, config=None, **kwargs):
+        calls["count"] += 1
+        if calls["count"] < 3:
+            raise openai.PermissionDeniedError(
+                "Your request was blocked.",
+                response=response,
+                body=None,
+            )
+        return FakeMessage("ok")
+
+    monkeypatch.setattr(ChatOpenAI, "invoke", fake_invoke)
+    monkeypatch.setattr(openai_client_module.time, "sleep", sleeps.append)
+
+    llm = NormalizedChatOpenAI(
+        model="gpt-5.4",
+        api_key="test-key",
+        base_url="https://api.routeai.cc",
+    )
+
+    result = llm.invoke("hello")
+
+    assert result.content == "ok"
+    assert calls["count"] == 3
+    assert sleeps == [1.0, 2.0]

@@ -1,0 +1,7 @@
+CRWD is a tactical **BUY**, but only as a starter position. The setup is improving: CRWD closed at `411.16`, above the `close_10_ema` (`401.17`) and `close_50_sma` (`405.18`), while `rsi` at `50.99` and `macd` at `-3.20` show momentum repair. Fundamentals also support the long case: revenue growth remains strong, deferred revenue and free cash flow are healthy, the balance sheet carries substantial net cash, and recent operating profitability improved materially. Sentiment and macro are also supportive enough for cybersecurity leadership to hold up in a risk-on but higher-for-longer regime.
+
+The constraint is valuation and incomplete trend repair. CRWD is still below the `close_200_sma` (`460.42`), rebound volume has not fully confirmed institutional accumulation, `atr` at `20.74` implies elevated volatility, and the stock is priced for sustained execution. That makes this a controlled-entry setup, not an aggressive chase.
+
+Best interpretation: buy CRWD only while the `401-405` support zone holds, add only on confirmation through `423-427` and then `436-442`, and avoid averaging down if CRWD loses `401` and especially `394` on a closing basis. The evidence favors initiating risk, but with staged sizing because the longer-term chart and valuation still require proof.
+
+FINAL TRANSACTION PROPOSAL: **BUY**

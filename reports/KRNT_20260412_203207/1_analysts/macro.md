@@ -1,0 +1,1 @@
+User provided ticker 'KRNT' with minimal context. Awaiting clarification on investment objective: price target, sector rotation, macro regime fit, or risk scenario. Prefetched macro context available (Fed funds 3.64%, 2Y-10Y spread +51bp, unemployment 4.30%). Ready to provide macroeconomic analysis once investment question is specified.

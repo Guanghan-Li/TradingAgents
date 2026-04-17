@@ -1,0 +1,11 @@
+VALE factor-rule readout is mixed and low-conviction from the supplied context alone.
+
+The strongest bullish rule is `AI capex acceleration` because it carries high weight, but it only matters if VALE is a direct beneficiary of AI infrastructure demand and if backlog is rising with stable margins despite higher capex. None of that company-specific evidence is provided here, so this bullish signal is conditional rather than active.
+
+The strongest bearish rule is `valuation stretch under slowing growth`, also high weight. This is the more decision-relevant caution signal because it directly flags downside if growth guidance is cut while the valuation multiple stays rich or expands. But this also cannot be confirmed from the rule text alone because there is no valuation, guidance-revision, or earnings-revision data in the prompt.
+
+`Balance sheet resilience` is the main offset. If VALE has net cash or only modest leverage plus solid free-cash-flow conversion, that would reduce drawdown risk and weaken the bearish case. Again, the necessary balance-sheet and cash-flow evidence is missing.
+
+Main conflict: the rule set is evenly split between one high-weight bullish rule and one high-weight bearish rule, with a neutral durability overlay. There is also an unresolved applicability issue: the AI-demand rule may be poorly matched unless VALE has a clearly demonstrated link to AI infrastructure demand. No market, news, macro, or current fundamentals evidence was provided to resolve that conflict.
+
+Practical guidance for downstream analysts: treat this as a framework, not a signal. First verify whether VALE actually meets the AI-beneficiary conditions. Then check whether forward growth expectations have been revised down while valuation remains stretched. Finally, confirm leverage and free-cash-flow quality to judge whether balance-sheet resilience offsets any valuation risk. Until those checks are done, the factor view should be considered balanced-to-cautious, not decisively bullish or bearish.

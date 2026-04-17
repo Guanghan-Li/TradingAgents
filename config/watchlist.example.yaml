@@ -6,7 +6,57 @@ defaults:
   depth: deep
 
 tickers:
-  - MSFT
+  # Growth - Mega & Large Cap Tech
   - NVDA
-  - AAPL
+  - MSFT
   - AMZN
+  - META
+  - TSLA
+  - CRWD
+  - PLTR
+  - GOOGL
+
+  # Semiconductors & AI Hardware
+  - TSM
+  - ASML
+  - AMD
+  - AVGO
+  - ARM
+  - MU
+
+  # Datacenter & Infrastructure
+  - DLR
+  - EQIX
+  - ANET
+  - DELL
+  - SMCI
+
+  # AI Software & Cloud
+  - NOW
+  - SNOW
+  - DDOG
+  - NET
+
+  # Dividend - Income & Stability
+  - VICI
+  - MAIN
+  - JPM
+  - JNJ
+  - NEE
+  - MO
+  - O
+
+  # Minerals & Materials
+  - MP
+  - ALB
+  - FCX
+  - SCCO
+  - VALE
+
+  # ETF / Macro - Broad Exposure
+  - QQQ
+  - VYM
+  - GLD
+  - VWO
+  - BND
+  - XLE

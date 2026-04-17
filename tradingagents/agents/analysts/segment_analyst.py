@@ -4,6 +4,7 @@ import re
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 from tradingagents.agents.utils.agent_utils import (
+    add_educational_use_context,
     build_instrument_context,
     get_segment_fundamentals,
     get_segment_income_statement,
@@ -72,6 +73,7 @@ def create_segment_analyst(llm):
         current_date = state["trade_date"]
         ticker = state["company_of_interest"]
         instrument_context = build_instrument_context(ticker)
+        prefetched_context = (state.get("prefetched_context") or {}).get("segment", "").strip()
 
         tools = [
             get_segment_fundamentals,
@@ -95,6 +97,7 @@ def create_segment_analyst(llm):
             "`impacted_segments`, `direction`, `horizon`, `evidence`). "
             "If data is unavailable, still include all keys using empty lists/objects."
         )
+        system_message = add_educational_use_context(system_message)
 
         prompt = ChatPromptTemplate.from_messages(
             [
@@ -118,7 +121,14 @@ def create_segment_analyst(llm):
         prompt = prompt.partial(current_date=current_date)
         prompt = prompt.partial(instrument_context=instrument_context)
 
-        chain = prompt | llm.bind_tools(tools)
+        if prefetched_context:
+            prompt = prompt.partial(
+                system_message=system_message
+                + f"\n\nUse this prefetched live segment context as your primary evidence.\n\n{prefetched_context}"
+            )
+            chain = prompt | llm
+        else:
+            chain = prompt | llm.bind_tools(tools)
         result = chain.invoke(state["messages"])
 
         tool_calls = getattr(result, "tool_calls", None) or []

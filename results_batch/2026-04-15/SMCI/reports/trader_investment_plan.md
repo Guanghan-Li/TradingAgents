@@ -1,0 +1,7 @@
+SMCI has improved tactically, but the evidence still favors caution over chasing the rebound. Price at 27.29 is above the 10-day EMA at 25.10, RSI at 55 and a sharply improving MACD show short-term recovery momentum, and recent edge AI product news supports near-term sentiment. But SMCI remains below the 50-day SMA at 28.65 and far below the 200-day SMA at 39.07, so the larger trend is still damaged and the stock is now pushing into a real resistance zone around 28.65 to 29.83 rather than breaking into open upside.
+
+The bigger problem is fundamental quality. The latest quarter showed major revenue acceleration, but cash conversion was weak: operating cash flow was -24.0M, free cash flow was -45.1M, receivables rose to 11.0B, inventory to 10.6B, and total debt increased to 4.91B. In a higher-for-longer rate backdrop, that combination makes SMCI vulnerable to multiple pressure if execution slips. The social/news read is constructive but still fragile and headline-driven, which is not enough to offset unresolved balance-sheet and cash-flow concerns.
+
+Decision: SELL SMCI. If already long, this rebound looks more like an opportunity to reduce or exit than add. If flat, the setup does not justify initiating here ahead of resistance and before confirmation that margins and operating cash flow are improving. I would only reconsider a bullish stance if SMCI decisively reclaims 28.65 to 29.83 and a subsequent report confirms better cash conversion and validates forward earnings.
+
+FINAL TRANSACTION PROPOSAL: **SELL**

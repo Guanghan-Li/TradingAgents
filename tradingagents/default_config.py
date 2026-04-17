@@ -1,9 +1,6 @@
 from copy import deepcopy
 import os
 
-from tradingagents.env import get_openai_base_url
-
-
 def normalize_llm_routing(config):
     """Return config with llm_routing normalized to the expected dict shape."""
     normalized = deepcopy(config)
@@ -29,16 +26,17 @@ DEFAULT_CONFIG = {
         "dataflows/data_cache",
     ),
     # LLM settings
-    "llm_provider": "openai",
-    "deep_think_llm": "gpt-5.2",
-    "quick_think_llm": "gpt-5-mini",
-    "backend_url": get_openai_base_url(),
+    "llm_provider": "anthropic",
+    "deep_think_llm": "claude-sonnet-4-6",
+    "quick_think_llm": "claude-sonnet-4-6",
+    "backend_url": "https://api.routeai.cc",
     "llm_routing": None,
     "factor_rules_path": None,
     # Provider-specific thinking configuration
     "google_thinking_level": None,      # "high", "minimal", etc.
     "openai_reasoning_effort": None,    # "medium", "high", "low"
-    "anthropic_effort": None,           # "high", "medium", "low"
+    "anthropic_effort": "medium",       # "high", "medium", "low"
+    "llm_timeout_seconds": 60,
     # Debate and discussion settings
     "max_debate_rounds": 2,
     "max_risk_discuss_rounds": 2,

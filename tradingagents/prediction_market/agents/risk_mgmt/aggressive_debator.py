@@ -1,3 +1,6 @@
+from tradingagents.agents.utils.agent_utils import invoke_committee_debate_llm
+
+
 def create_pm_aggressive_debator(llm):
     def aggressive_node(state) -> dict:
         risk_debate_state = state["risk_debate_state"]
@@ -14,7 +17,7 @@ def create_pm_aggressive_debator(llm):
 
         trader_decision = state["trader_investment_plan"]
 
-        prompt = f"""As the Aggressive Risk Analyst for prediction markets, your role is to actively champion the trader's proposed position, emphasizing the magnitude of the identified edge and the information advantage it represents. When evaluating the trader's decision, focus intently on the potential upside, the strength of the probability estimate, and the favorable risk/reward ratio of the position. Use the provided market data and analysis to strengthen your arguments and challenge the opposing views.
+        prompt = f"""As the Aggressive Risk Analyst for prediction markets, analyze the proposed position through a risk-tolerant lens. Focus on the magnitude of the identified edge, the strength of the probability estimate, and where the committee may be underestimating upside. Use the provided market data and analysis to challenge opposing views, but keep the analysis factual rather than sales-oriented.
 
 Specifically, respond directly to each point made by the conservative and neutral analysts, countering with data-driven rebuttals and persuasive reasoning. Highlight where their caution might cause the team to miss a profitable opportunity or where their risk concerns are overblown relative to the identified edge.
 
@@ -30,7 +33,7 @@ Here is the trader's decision:
 
 {trader_decision}
 
-Your task is to create a compelling case for the trader's decision by questioning and critiquing the conservative and neutral stances to demonstrate why taking this position offers the best path forward. Incorporate insights from the following sources into your arguments:
+Your task is to identify the strongest evidence supporting the trader's decision and explain where the conservative and neutral stances may be overweighting downside risk. Incorporate insights from the following sources into your analysis:
 
 Event Analysis Report: {event_report}
 Odds Analysis Report: {odds_report}
@@ -38,9 +41,9 @@ Information Analysis Report: {information_report}
 Sentiment Analysis Report: {sentiment_report}
 Here is the current conversation history: {history} Here are the last arguments from the conservative analyst: {current_conservative_response} Here are the last arguments from the neutral analyst: {current_neutral_response}. If there are no responses from the other viewpoints, do not hallucinate and just present your point.
 
-Engage actively by addressing any specific concerns raised, refuting the weaknesses in their logic, and asserting the benefits of taking the position to capitalize on the identified edge. Maintain a focus on debating and persuading, not just presenting data. Challenge each counterpoint to underscore why the proposed trade is optimal. Output conversationally as if you are speaking without any special formatting."""
+Address specific concerns raised by the other analysts, rebut weak assumptions with evidence, and state what conditions would justify keeping the higher-risk position. Focus on rigorous committee debate, not persuasion tactics. Output conversationally as if you are speaking without any special formatting."""
 
-        response = llm.invoke(prompt)
+        response = invoke_committee_debate_llm(llm, "Aggressive Risk Analyst", prompt)
 
         argument = f"Aggressive Analyst: {response.content}"
 

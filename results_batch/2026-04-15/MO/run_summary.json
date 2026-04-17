@@ -1,0 +1,54 @@
+{
+  "analysis_date": "2026-04-15",
+  "anthropic_effort": null,
+  "backend_url": "codex://local",
+  "catalysts": [
+    {
+      "catalyst": "MO Q1 2026 earnings report and management commentary",
+      "date_or_window": "Late Apr to early May 2026",
+      "expected_impact": "Primary near-term share-price catalyst; will shape views on pricing, volume declines, smoke-free execution, and dividend durability."
+    },
+    {
+      "catalyst": "Dividend and capital allocation updates",
+      "date_or_window": "Q2 2026",
+      "expected_impact": "Can reinforce or weaken the core income thesis depending on payout coverage and management tone."
+    },
+    {
+      "catalyst": "Smoke-free product rollout and adoption updates",
+      "date_or_window": "Q2 2026",
+      "expected_impact": "A clean rollout supports a transition narrative; weak adoption increases skepticism around long-term earnings replacement."
+    },
+    {
+      "catalyst": "US inflation prints and Treasury yield repricing",
+      "date_or_window": "Apr to Jun 2026",
+      "expected_impact": "Higher long-end yields can pressure valuation support for bond-like dividend equities; easing rate pressure is supportive."
+    },
+    {
+      "catalyst": "Fed policy expectation shifts",
+      "date_or_window": "Q2 2026",
+      "expected_impact": "Stable/easing policy helps defensive yield names; hawkish repricing can compress relative valuation."
+    },
+    {
+      "catalyst": "Tobacco regulation or excise-tax developments",
+      "date_or_window": "Ongoing",
+      "expected_impact": "Material downside risk to volume assumptions and sentiment even before full financial effects appear."
+    }
+  ],
+  "chief_action": "",
+  "chief_rating": "",
+  "chief_relative_stance": "",
+  "chief_summary": "",
+  "chief_thesis": "",
+  "decision": "BUY",
+  "deep_think_llm": "gpt-5.4",
+  "ended_at": "2026-04-15T14:45:45.775417",
+  "error": null,
+  "openai_reasoning_effort": "high",
+  "provider": "codex_cli",
+  "quick_think_llm": "gpt-5.4",
+  "results_dir": "results_batch/2026-04-15/MO",
+  "risk_summary": "**Absolute Action:** Hold MO\n\n**Relative Stance:** Neutral\n\n**Executive Summary:** Hold MO with a tightly risk-budgeted, wait-for-confirmation posture. Keep exposure around the structured `1.5%` starter weight and do not add before the late-April to early-May 2026 Q1 earnings catalyst. Only scale MO toward the `3.0%` target weight if management keeps forward EPS near `5.81`, shows stable pricing and margins, preserves clean dividend coverage, and MO reclaims roughly `65.8` to `66.0` with improving momentum. Respect the `0.5%` max-loss budget; a decisive break of the `63.2` to `63.4` support zone, or earnings evidence of weaker pricing, margin compression, dividend strain, or poor smoke-free adoption, should trigger reduction or exit. Time horizon is near- to medium-term, with Q1 2026 earnings as the primary decision point.\n\n**Investment Thesis:** The strongest evidence supports patience, not aggression. The structured underwriting is balanced, with `Base 50%`, `Bull 25%`, and `Bear 25%`, and the sizing output is explicitly modest at `1.5%` initial weight, `3.0%` target weight, and `0.5%` max loss. That argues against both a fresh Buy and an outright Sell. MO still has real support underneath it: about `$9.23B` of free cash flow, a `6.46%` dividend yield, low beta of `0.447`, very high margins, and price at `64.42` still above the `200-day SMA` of `60.93`. Those facts support the neutral and aggressive analysts\u2019 point that MO is not a broken thesis and that the base case remains a cash-harvest, income-defensive story.\n\nThe reason not to Buy MO now is timing and confirmation risk. The conservative and neutral analysts are right that MO is below the `10-day EMA` at `65.99` and the `50-day SMA` at `65.79`, with decelerating momentum and no washed-out technical reset. The underwriting also flags high concentration risk in smokeable products, while smoke-free diversification is strategically important but still not numerically proven in the segment data. Balance-sheet constraints are not just optical either: negative equity, weak current liquidity, and elevated debt matter more if earnings quality slips. That is especially relevant with the `10-year Treasury` near `4.26%`, sticky inflation, and a risk-on tape that can leave MO lagging even if the business is merely stable.\n\nHold MO is therefore the clean committee decision. It preserves exposure to a still-strong cash engine and dividend carry while refusing to pay in advance for an unproven smoke-free transition or a pre-earnings upside narrative. The bar for turning MO more constructive is specific: resilient Q1 pricing, stable margins, forward EPS near `5.81`, clear dividend coverage, measurable smoke-free progress, and a technical reclaim of the mid-`65` to `66` area. The bar for becoming more defensive is equally specific: a break below `63.2` to `63.4`, lower forward EPS, weaker pricing power, dividend-coverage strain, or disappointing smoke-free execution. Until one of those paths is confirmed, Hold MO with a Neutral stance is the most disciplined outcome.",
+  "started_at": "2026-04-15T14:33:17.633549",
+  "status": "completed",
+  "ticker": "MO"
+}

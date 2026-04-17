@@ -1,0 +1,7 @@
+TSLA looks tactically stronger short term, but the evidence still favors distribution rather than adding risk. The April 15, 2026 surge reclaimed the 10 EMA and slightly cleared the 50 SMA on heavy volume, yet TSLA closed just below the major 398-400 resistance cluster defined by the 200 SMA and upper Bollinger Band. MACD is still negative, the 50 SMA is still declining, and the move has the profile of a powerful rebound inside an unfinished repair phase, not a confirmed trend reversal.
+
+Fundamentals and macro keep the risk/reward skewed against chasing. TSLA is still trading at extremely rich trailing and forward multiples despite thin margins, modest earnings power, and unresolved monetization of AI/FSD/robotics. At the same time, a 4.30% 10Y yield and sticky inflation remain a headwind for long-duration valuation. Social/news sentiment improved on the AI5 chip milestone, but that looks more like narrative fuel than proof of durable earnings support.
+
+Recommendation: SELL TSLA into strength or avoid initiating here. I would only revisit a bullish stance after TSLA decisively clears and holds above 398-400 with continued volume, while earnings, margins, and free cash flow materially improve.
+
+FINAL TRANSACTION PROPOSAL: **SELL**

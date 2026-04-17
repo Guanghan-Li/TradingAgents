@@ -1,0 +1,9 @@
+META presents a constructive but not clean setup. The strongest support for a BUY is that fundamentals, sentiment, and macro all lean positive: revenue growth remains strong, margins are still elite despite AI spending, liquidity is ample, and the Broadcom AI chip deal strengthens the narrative that AI capex is becoming a monetization-enabling asset rather than just a cost burden. The broader risk-on backdrop and positive earnings sentiment also support taking exposure.
+
+The reason this is not an aggressive full-size BUY is technical timing. META has rebounded sharply to 671.58, is near the upper Bollinger Band, RSI is close to overbought at 67.11, and the stock remains just below the 200-day SMA near 680.72. That resistance zone is the key confirmation point. A decisive close above roughly 680-685 with stronger volume would justify adding toward the target allocation. Until then, chasing a full position carries elevated pullback risk.
+
+The best implementation is a staged BUY: initiate or maintain a starter position around 2.0%, not the full 4.0% target. Add only on a confirmed 200-day SMA breakout or after earnings provide clear evidence of AI monetization, disciplined capex, and durable revenue growth. Use the 625-630 area as the main risk line; a closing break below that zone would weaken the recovery and justify reducing or exiting the starter position.
+
+Decision: BUY, but with controlled sizing and confirmation-based scaling. The expected risk/reward is favorable enough to own META now, while the technical stretch and earnings expectations argue against maximum exposure immediately.
+
+FINAL TRANSACTION PROPOSAL: **BUY**

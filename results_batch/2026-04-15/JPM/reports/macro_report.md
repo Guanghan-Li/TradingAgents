@@ -1,0 +1,18 @@
+Macro view for `JPM` as of April 15, 2026: the backdrop looks like a soft-landing, nominal-growth regime rather than a recession regime. Labor is still firm, with unemployment at 4.3% on March 1, 2026 and nonfarm payrolls up 178k, while the Treasury curve has re-steepened to a healthy +50 bp 2Y-10Y spread on April 14, 2026. That combination is generally supportive for `JPM`: credit costs should stay contained, loan demand should remain decent, and a positively sloped curve is better for core banking economics than inversion.
+
+The main macro complication is inflation stickiness. CPI rose 0.87% sequentially in the latest March 2026 print and PPI rose 1.78%, while the effective fed funds rate has been unchanged at 3.64% since February after a series of cuts into January. That argues for a Fed pause, not an aggressive easing cycle. For `JPM`, this is still net constructive because "higher for longer but not restrictive enough to break growth" tends to support net interest income, trading activity, and overall bank sentiment. It also reduces the immediate recession tail risk that would normally hit large-bank credit and capital-markets expectations.
+
+Cross-asset read-through: this macro mix favors financials over long-duration growth if the curve keeps steepening for the right reason, meaning stable growth and contained policy risk. `JPM` should benefit more than the average equity from a normal curve and stable labor backdrop, but it remains exposed to two macro risks: a bear-steepening driven by renewed inflation pressure, which could lift funding competition and mark-to-market stress, or a sudden labor/growth rollover, which would quickly reverse the credit narrative.
+
+Bottom line for the committee: macro is currently a modest tailwind for `JPM`. The regime is best described as soft landing plus sticky inflation plus Fed pause. That is better for large money-center banks than either inversion or recession, so the macro overlay leans constructive unless incoming inflation forces a renewed hawkish repricing.
+
+| Macro Signal | Latest Read | Regime Interpretation | Market Implication | `JPM` Implication |
+| --- | --- | --- | --- | --- |
+| Fed funds rate | 3.64% on 2026-03-01, unchanged since 2026-02-01 | Fed pause after prior easing | Higher-for-longer repricing risk remains | Supportive for NII and bank earnings stability |
+| CPI | 330.29 on 2026-03-01, +0.87% sequentially | Disinflation not clean; inflation still sticky | Caps aggressive rate-cut expectations | Positive near term for margins, but raises policy-risk tail |
+| PPI | 274.10 on 2026-03-01, +1.78% sequentially | Upstream price pressure re-accelerating | Bear-steepening risk at long end | Mixed: helps asset yields, but can pressure funding and valuation |
+| Unemployment | 4.3% on 2026-03-01, down 0.1 pt | Labor market still resilient | Low immediate recession signal | Favorable for credit quality and reserve outlook |
+| Nonfarm payrolls | +178k sequential gain on 2026-03-01 | Growth still positive, not contracting | Supports cyclicals and financials | Positive for loan demand and broad banking sentiment |
+| 2Y-10Y Treasury spread | +0.50% on 2026-04-14 | Normal upward-sloping curve | Better backdrop for banks than inversion | Clear positive for `JPM` relative to inverted-curve regimes |
+| VIX | 18.36 on 2026-04-14 | Risk sentiment relatively calm | Supports equity multiples and issuance/trading activity | Helpful for capital markets and trading businesses |
+| GDP level | $31.42T on 2025-10-01 | Nominal economy remains large and expanding | No macro recession confirmation from available data | Broadly supportive, though stale versus other indicators |

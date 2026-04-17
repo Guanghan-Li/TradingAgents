@@ -1,0 +1,11 @@
+Factor Rule Analyst Report for VICI, trade date 2026-04-15
+
+The curated rule set is mixed: one high-weight bullish rule, one high-weight bearish rule, and one medium-weight neutral resilience rule. The strongest bullish signal is AI capex acceleration, but its applicability to VICI is not established by the supplied context. This rule only matters if VICI is a direct beneficiary of AI infrastructure demand, with rising backlog and stable margins during increased capex. Without evidence that VICI has direct AI infrastructure exposure, this bullish rule should be treated as conditional rather than active.
+
+The strongest bearish signal is valuation stretch under slowing growth. Because it is also high weight, it should receive at least equal attention to the bullish rule. Downstream analysts should check whether forward growth guidance has been revised lower and whether valuation multiple expansion has exceeded earnings revisions. If both are true, this becomes the most actionable cautionary factor in the set.
+
+The neutral balance sheet resilience rule is supportive but not directional. A modest leverage profile, net cash position, or healthy free cash flow conversion would improve downside durability, especially if macro conditions tighten. However, this rule does not offset valuation risk by itself; it mainly affects risk tolerance and drawdown resilience.
+
+Key conflicts and missing information: the rule set contains a possible sector-fit issue, because the AI capex rule may not be relevant unless VICI has verified direct exposure to AI infrastructure demand. The rules also lack current valuation, earnings revision, growth guidance, leverage, free cash flow, macro, news, and market-price evidence. No backtest or probability estimate should be inferred from these rules.
+
+Practical guidance for downstream analysts: first validate whether the AI capex rule applies to VICI at all. If not, the factor balance shifts toward valuation caution with balance-sheet durability as a mitigating factor. Prioritize checks on forward growth revisions, AFFO/earnings expectations, valuation versus history and peers, leverage maturity profile, free cash flow coverage, and any recent company guidance before using these factor rules in a broader committee view.

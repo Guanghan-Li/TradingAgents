@@ -1,7 +1,9 @@
+# ruff: noqa: E402
+
 from tradingagents.env import load_project_dotenv
 
 # Load environment variables before importing env-backed config.
-load_project_dotenv()
+load_project_dotenv(override=True)
 
 from tradingagents.graph.trading_graph import TradingAgentsGraph
 from tradingagents.default_config import DEFAULT_CONFIG

@@ -238,6 +238,38 @@ def test_valuation_analyst_marks_parse_failure_without_changing_shape():
     assert result["valuation_data"]["thesis"] == "not valid json"
 
 
+def test_valuation_analyst_marks_empty_structured_payload_as_empty_response():
+    from tradingagents.agents.analysts.valuation_analyst import create_valuation_analyst
+
+    class FakeLLM:
+        def bind_tools(self, _tools):
+            return RunnableLambda(
+                lambda _inputs: AIMessage(
+                    content=json.dumps(
+                        {
+                            "fair_value_range": {"low": None, "high": None},
+                            "expected_return_pct": None,
+                            "primary_method": "",
+                            "thesis": "",
+                        }
+                    ),
+                    tool_calls=[],
+                )
+            )
+
+    node = create_valuation_analyst(FakeLLM())
+    result = node(
+        {
+            "trade_date": "2026-03-24",
+            "company_of_interest": "NVDA",
+            "messages": [("human", "Value NVDA")],
+        }
+    )
+
+    assert result["valuation_data"]["primary_method"] == "empty_response"
+    assert result["valuation_data"]["thesis"] == "[empty model response]"
+
+
 def test_valuation_analyst_populates_structured_data_after_tool_loop(monkeypatch):
     import tradingagents.dataflows.interface as interface
     from tradingagents.agents.analysts.valuation_analyst import create_valuation_analyst

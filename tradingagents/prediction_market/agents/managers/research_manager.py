@@ -1,5 +1,8 @@
 
 
+from tradingagents.agents.utils.agent_utils import add_educational_use_context
+
+
 def create_pm_research_manager(llm, memory):
     def research_manager_node(state) -> dict:
         history = state["investment_debate_state"].get("history", "")
@@ -17,7 +20,7 @@ def create_pm_research_manager(llm, memory):
         for i, rec in enumerate(past_memories, 1):
             past_memory_str += rec["recommendation"] + "\n\n"
 
-        prompt = f"""As the research manager and debate judge for this prediction market analysis, your role is to critically evaluate the YES/NO debate and produce a definitive investment thesis. You must commit to a clear directional view rather than defaulting to neutrality.
+        prompt = add_educational_use_context(f"""As the research manager and debate judge for this prediction market analysis, your role is to critically evaluate the YES/NO debate and produce a definitive investment thesis. You must commit to a clear directional view rather than defaulting to neutrality.
 
 Synthesize the key arguments from both the YES and NO analysts, focusing on the most compelling evidence. Your output must include:
 
@@ -36,7 +39,7 @@ Here are your past reflections on mistakes:
 
 Here is the debate:
 Debate History:
-{history}"""
+{history}""")
         response = llm.invoke(prompt)
 
         new_investment_debate_state = {

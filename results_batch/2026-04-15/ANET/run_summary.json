@@ -1,0 +1,49 @@
+{
+  "analysis_date": "2026-04-15",
+  "anthropic_effort": null,
+  "backend_url": "codex://local",
+  "catalysts": [
+    {
+      "catalyst": "ANET earnings and forward guidance update",
+      "date_or_window": "Late April to early May 2026",
+      "expected_impact": "Primary company-specific catalyst for demand, margin, and valuation direction."
+    },
+    {
+      "catalyst": "Hyperscaler earnings and AI capex commentary",
+      "date_or_window": "April to May 2026",
+      "expected_impact": "Important read-through for customer demand durability and deployment timing."
+    },
+    {
+      "catalyst": "US inflation and labor data releases",
+      "date_or_window": "Next 2 to 6 weeks after 2026-04-15",
+      "expected_impact": "Can shift rate expectations and compress or stabilize ANET's premium valuation multiple."
+    },
+    {
+      "catalyst": "Fed communication / policy window",
+      "date_or_window": "Next 1 to 6 weeks after 2026-04-15",
+      "expected_impact": "A higher-for-longer message would weigh on long-duration growth equities including ANET."
+    },
+    {
+      "catalyst": "Networking peer earnings and demand commentary",
+      "date_or_window": "Through spring 2026 earnings season",
+      "expected_impact": "Validates whether AI networking demand is broadening or becoming more competitive."
+    }
+  ],
+  "chief_action": "Buy",
+  "chief_rating": "Overweight",
+  "chief_relative_stance": "Overweight",
+  "chief_summary": "Buy ANET, but only as a staged accumulation. The primary evidence is the structured underwriting: 67% of revenue is in accelerating Cloud and AI data-center networking, the scenario map is 30% Bull / 50% Base / 20% Bear, conviction is medium-high, initial weight is 1.5%, target weight is 4.0%, and max portfolio loss is 0.6%. Implement ANET as a starter position at 1.5% now, then add only on either a confirmed breakout above 155.4 or a successful retest of 145-147; treat a decisive loss of 144 as invalidation. Time horizon is 1-4 quarters for catalyst realization, with the core thesis tied to 12-24 month AI Ethernet demand.",
+  "chief_thesis": "The committee should side with the aggressive and neutral analysts on direction, and with the conservative analyst on implementation discipline. The decisive point is that the structured evidence supports ownership of ANET, not avoidance: 80% of the scenario distribution is non-bearish, the Base case at 50% still describes continued execution, and the sizing model explicitly supports building from 1.5% toward 4.0% rather than remaining flat. ANET also has unusually strong operating quality for a premium growth name: about 29% year-over-year revenue growth, operating margin near 41.5%, net margin near 39%, strong free cash flow, and roughly $10.7B of cash and short-term investments. That supports the aggressive analyst\u2019s view that this is a high-quality AI infrastructure compounder rather than a fragile momentum trade.\n\nThe main reason this is not a full-size immediate buy is the conservative case on entry quality. ANET rose about 32.9% from March 30, 2026 to April 15, 2026, is near the 155.4 resistance area, has RSI near the upper end of neutral-to-stretched territory, and ATR near 4% of price. Valuation is also rich, and the macro backdrop is only mixed-positive: the April 14, 2026 10Y Treasury yield of 4.26% and sticky sequential CPI/PPI data can cap multiple expansion even if fundamentals remain solid. That means the conservative analyst is right that the 20% Bear case is meaningful, especially because 67% of ANET revenue is tied to hyperscaler and AI networking demand that can be vulnerable to digestion, timing shifts, or competitive pressure.\n\nThe correct synthesis is therefore Buy ANET with an Overweight stance, but only through controlled accumulation. The neutral analyst\u2019s framing is the most balanced: the thesis is strong enough to own, but not strong enough to chase indiscriminately before late-April to early-May 2026 earnings and guidance. Adds should require proof: stronger guidance, resilient margins, solid backlog or bookings commentary, constructive hyperscaler capex read-throughs, and stable competitive positioning. If those do not appear, ANET should remain at starter size or be held rather than expanded. If ANET loses 144 decisively, or management signals softer cloud demand, order digestion, or margin erosion, the buy thesis is no longer valid on current underwriting.",
+  "decision": "BUY",
+  "deep_think_llm": "gpt-5.4",
+  "ended_at": "2026-04-15T14:07:01.862906",
+  "error": null,
+  "openai_reasoning_effort": "high",
+  "provider": "codex_cli",
+  "quick_think_llm": "gpt-5.4",
+  "results_dir": "results_batch/2026-04-15/ANET",
+  "risk_summary": "**Absolute Action**: Buy\n\n**Relative Stance**: Overweight\n\n**Executive Summary**: Buy ANET, but only as a staged accumulation. The primary evidence is the structured underwriting: 67% of revenue is in accelerating Cloud and AI data-center networking, the scenario map is 30% Bull / 50% Base / 20% Bear, conviction is medium-high, initial weight is 1.5%, target weight is 4.0%, and max portfolio loss is 0.6%. Implement ANET as a starter position at 1.5% now, then add only on either a confirmed breakout above 155.4 or a successful retest of 145-147; treat a decisive loss of 144 as invalidation. Time horizon is 1-4 quarters for catalyst realization, with the core thesis tied to 12-24 month AI Ethernet demand.\n\n**Investment Thesis**: The committee should side with the aggressive and neutral analysts on direction, and with the conservative analyst on implementation discipline. The decisive point is that the structured evidence supports ownership of ANET, not avoidance: 80% of the scenario distribution is non-bearish, the Base case at 50% still describes continued execution, and the sizing model explicitly supports building from 1.5% toward 4.0% rather than remaining flat. ANET also has unusually strong operating quality for a premium growth name: about 29% year-over-year revenue growth, operating margin near 41.5%, net margin near 39%, strong free cash flow, and roughly $10.7B of cash and short-term investments. That supports the aggressive analyst\u2019s view that this is a high-quality AI infrastructure compounder rather than a fragile momentum trade.\n\nThe main reason this is not a full-size immediate buy is the conservative case on entry quality. ANET rose about 32.9% from March 30, 2026 to April 15, 2026, is near the 155.4 resistance area, has RSI near the upper end of neutral-to-stretched territory, and ATR near 4% of price. Valuation is also rich, and the macro backdrop is only mixed-positive: the April 14, 2026 10Y Treasury yield of 4.26% and sticky sequential CPI/PPI data can cap multiple expansion even if fundamentals remain solid. That means the conservative analyst is right that the 20% Bear case is meaningful, especially because 67% of ANET revenue is tied to hyperscaler and AI networking demand that can be vulnerable to digestion, timing shifts, or competitive pressure.\n\nThe correct synthesis is therefore Buy ANET with an Overweight stance, but only through controlled accumulation. The neutral analyst\u2019s framing is the most balanced: the thesis is strong enough to own, but not strong enough to chase indiscriminately before late-April to early-May 2026 earnings and guidance. Adds should require proof: stronger guidance, resilient margins, solid backlog or bookings commentary, constructive hyperscaler capex read-throughs, and stable competitive positioning. If those do not appear, ANET should remain at starter size or be held rather than expanded. If ANET loses 144 decisively, or management signals softer cloud demand, order digestion, or margin erosion, the buy thesis is no longer valid on current underwriting.",
+  "started_at": "2026-04-15T13:54:03.773730",
+  "status": "completed",
+  "ticker": "ANET"
+}

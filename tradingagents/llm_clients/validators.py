@@ -19,11 +19,30 @@ VALID_MODELS = {
         "gpt-4.1-mini",
         "gpt-4.1-nano",
     ],
+    "codex_cli": [
+        "gpt-5.4-pro",
+        "gpt-5.4",
+        "gpt-5.2",
+        "gpt-5.1",
+        "gpt-5",
+        "gpt-5-mini",
+        "gpt-5-nano",
+        "gpt-4.1",
+        "gpt-4.1-mini",
+        "gpt-4.1-nano",
+    ],
     "anthropic": [
         # Claude 4.6 series (latest)
         "claude-opus-4-6",
         "claude-sonnet-4-6",
         # Claude 4.5 series
+        "claude-opus-4-5",
+        "claude-sonnet-4-5",
+        "claude-haiku-4-5",
+    ],
+    "claude_code": [
+        "claude-opus-4-6",
+        "claude-sonnet-4-6",
         "claude-opus-4-5",
         "claude-sonnet-4-5",
         "claude-haiku-4-5",

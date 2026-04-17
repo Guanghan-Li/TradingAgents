@@ -1,5 +1,6 @@
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from tradingagents.agents.utils.agent_utils import (
+    add_educational_use_context,
     build_instrument_context,
     get_balance_sheet,
     get_cashflow,
@@ -18,39 +19,7 @@ def create_fundamentals_analyst(llm):
         current_date = state["trade_date"]
         ticker = state["company_of_interest"]
         instrument_context = build_instrument_context(state["company_of_interest"])
-
-        income_csv = route_to_vendor(
-            "get_income_statement",
-            ticker,
-            "quarterly",
-            current_date,
-        )
-        balance_csv = route_to_vendor(
-            "get_balance_sheet",
-            ticker,
-            "quarterly",
-            current_date,
-        )
-        cashflow_csv = route_to_vendor(
-            "get_cashflow",
-            ticker,
-            "quarterly",
-            current_date,
-        )
-        ttm_report = format_ttm_report(
-            compute_ttm_metrics(income_csv, balance_csv, cashflow_csv, n_quarters=8),
-            ticker,
-        )
-        peer_report = get_peer_comparison_report(ticker, current_date)
-        sector_report = get_sector_relative_report(ticker, current_date)
-        macro_regime_report = format_macro_report(classify_macro_regime(current_date))
-        upstream_macro_report = state.get("macro_report", "").strip()
-        macro_report = macro_regime_report
-        if upstream_macro_report:
-            macro_report = (
-                f"{upstream_macro_report}\n\n## Medium-Term Macro Regime Overlay\n\n"
-                f"{macro_regime_report}"
-            )
+        prefetched_context = (state.get("prefetched_context") or {}).get("fundamentals", "").strip()
 
         tools = [
             get_fundamentals,
@@ -63,12 +32,50 @@ def create_fundamentals_analyst(llm):
             "You are a researcher tasked with analyzing fundamental information over the past week about a company. Please write a comprehensive report of the company's fundamental information such as financial documents, company profile, basic company financials, and company financial history to gain a full view of the company's fundamental information to inform traders. Make sure to include as much detail as possible. Provide specific, actionable insights with supporting evidence to help traders make informed decisions."
             + " Make sure to append a Markdown table at the end of the report to organize key points in the report, organized and easy to read."
             + " Use the available tools: `get_fundamentals` for comprehensive company analysis, `get_balance_sheet`, `get_cashflow`, and `get_income_statement` for specific financial statements."
-            + f"\n\nPrecomputed medium-term context for {ticker}:"
-            + f"\n\n[TTM Analysis]\n{ttm_report}"
-            + f"\n\n[Peer Comparison]\n{peer_report}"
-            + f"\n\n[Sector Relative Performance]\n{sector_report}"
-            + f"\n\n[Macro Regime]\n{macro_report}"
         )
+        system_message = add_educational_use_context(system_message)
+
+        if not prefetched_context:
+            income_csv = route_to_vendor(
+                "get_income_statement",
+                ticker,
+                "quarterly",
+                current_date,
+            )
+            balance_csv = route_to_vendor(
+                "get_balance_sheet",
+                ticker,
+                "quarterly",
+                current_date,
+            )
+            cashflow_csv = route_to_vendor(
+                "get_cashflow",
+                ticker,
+                "quarterly",
+                current_date,
+            )
+            ttm_report = format_ttm_report(
+                compute_ttm_metrics(income_csv, balance_csv, cashflow_csv, n_quarters=8),
+                ticker,
+            )
+            peer_report = get_peer_comparison_report(ticker, current_date)
+            sector_report = get_sector_relative_report(ticker, current_date)
+            macro_regime_report = format_macro_report(classify_macro_regime(current_date))
+            upstream_macro_report = state.get("macro_report", "").strip()
+            macro_report = macro_regime_report
+            if upstream_macro_report:
+                macro_report = (
+                    f"{upstream_macro_report}\n\n## Medium-Term Macro Regime Overlay\n\n"
+                    f"{macro_regime_report}"
+                )
+
+            system_message += (
+                f"\n\nPrecomputed medium-term context for {ticker}:"
+                + f"\n\n[TTM Analysis]\n{ttm_report}"
+                + f"\n\n[Peer Comparison]\n{peer_report}"
+                + f"\n\n[Sector Relative Performance]\n{sector_report}"
+                + f"\n\n[Macro Regime]\n{macro_report}"
+            )
 
         prompt = ChatPromptTemplate.from_messages(
             [
@@ -92,7 +99,14 @@ def create_fundamentals_analyst(llm):
         prompt = prompt.partial(current_date=current_date)
         prompt = prompt.partial(instrument_context=instrument_context)
 
-        chain = prompt | llm.bind_tools(tools)
+        if prefetched_context:
+            prompt = prompt.partial(
+                system_message=system_message
+                + f"\n\nUse this prefetched live fundamentals context as your primary evidence.\n\n{prefetched_context}"
+            )
+            chain = prompt | llm
+        else:
+            chain = prompt | llm.bind_tools(tools)
 
         result = chain.invoke(state["messages"])
 

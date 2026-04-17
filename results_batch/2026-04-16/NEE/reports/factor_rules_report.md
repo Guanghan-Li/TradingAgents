@@ -1,0 +1,7 @@
+NEE’s factor setup is mixed and highly conditional. The strongest bullish input is the high-weight AI capex acceleration rule, but it only matters if rising backlog and stable margins are visible alongside higher capex. The strongest bearish input is also high-weight: valuation stretch under slowing growth. That caution dominates if forward growth guidance is revised lower while the multiple stays elevated or expands.
+
+The neutral balance sheet resilience rule is an important secondary buffer, not a primary driver. It can reduce downside severity if leverage is modest and free cash flow conversion is healthy, but it does not resolve the core bull vs. bear conflict.
+
+The main conflict is that the two highest-weight rules point in opposite directions, and the provided context does not confirm the trigger conditions for either one. Missing information includes backlog trend, margin stability, capex trajectory, guidance revisions, valuation vs. earnings revisions, leverage, and free cash flow quality.
+
+Practical guidance for downstream analysts: treat this as a watchlist name rather than a clean factor signal. First verify whether the growth-and-capex conditions are actually being met. Then test whether valuation already discounts that upside. If growth is holding and valuation is not stretched, the bullish rule has room to matter. If guidance is softening while expectations remain rich, the bearish rule should take priority.

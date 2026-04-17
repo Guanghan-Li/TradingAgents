@@ -1,0 +1,7 @@
+FCX has a constructive but extended setup. The technical trend is clearly bullish: price is above the 10 EMA, 50 SMA, and 200 SMA; MACD has reversed strongly positive; RSI is firm but not yet decisively overbought; and volatility is improving as ATR declines. The news and sentiment backdrop also supports upside, with multiple analyst target hikes into the $71-$77 range and a favorable copper-demand narrative tied to AI infrastructure and electrification.
+
+The main risk is that FCX has already rerated sharply while recent fundamentals were uneven. Q4 2025 showed weaker revenue, compressed margins, lower EPS, and negative quarterly free cash flow, so the current price depends heavily on the forward earnings recovery thesis. Sticky inflation, elevated long-end yields, and a possible stronger dollar could also cap metals and mining upside. That argues against an aggressive full-size chase.
+
+My decision is to BUY FCX as a controlled starter position rather than simply HOLD. The setup has enough alignment across trend, momentum, analyst revisions, macro cyclicality, and copper exposure to justify participation, but position sizing should reflect elevated expectations. A 2.0% initial weight is appropriate, with adds only on a confirmed breakout above roughly $69.5 on strong volume or after earnings confirm margin recovery, disciplined capex, and healthy free cash flow conversion. Risk should be managed around the $65.5-$65.7 area, with a deeper thesis review if FCX loses the low-$61s / 50 SMA zone.
+
+FINAL TRANSACTION PROPOSAL: **BUY**

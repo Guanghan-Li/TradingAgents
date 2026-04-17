@@ -1,0 +1,18 @@
+AMZN macro view: the backdrop is late-cycle but not recessionary. Labor remains firm with unemployment at 4.3% and payrolls up 178k in March 2026, while inflation has re-accelerated materially with CPI up 0.87% m/m and PPI up 1.78% m/m. The Fed has already cut from 4.09% in October 2025 to 3.64% by January 2026, but that easing cycle appears paused through March, which argues for a "cuts delivered, now wait" regime rather than a fresh dovish pivot.
+
+For AMZN, that is a mixed macro setup. The positive side is that resilient employment and still-expanding payrolls support consumer spending and enterprise/cloud demand, which helps both the retail and AWS sides of AMZN. The negative side is that sticky inflation and a paused Fed keep front-end yields elevated, which can pressure long-duration equity multiples and raise sensitivity to any margin disappointment. Hot PPI is especially relevant for AMZN because upstream cost pressure can bleed into logistics, fulfillment, packaging, and wage expectations even if demand stays intact.
+
+The Treasury evidence is thin because only 1M and 3M yields are available, but the front end is essentially flat at 3.72% vs 3.71%. That does not signal imminent policy easing. Combined with the unchanged 3.64% effective funds rate, the market message is that policy is no longer actively tightening, but it is also not rushing to price a downturn rescue. That generally favors selective risk-taking over broad multiple expansion.
+
+Bottom line for AMZN: macro is modestly supportive for revenue durability but less supportive for valuation expansion. If AMZN outperforms, it is more likely to come from execution, operating leverage, AWS demand, and cash-flow resilience than from a falling-rate tailwind. Key macro risks other analysts should incorporate are renewed inflation pressure, a longer Fed pause than equity markets want, and any consumer slowdown if real incomes get squeezed.
+
+| Macro Signal | Current Read | Regime Interpretation | Market Implication | AMZN Implication |
+| --- | --- | --- | --- | --- |
+| Fed funds rate | 3.64%, unchanged since Jan-Mar 2026 | Easing cycle has paused | Limits near-term multiple expansion from lower rates | Neutral to slight headwind for valuation |
+| CPI | +0.87% m/m in Mar 2026 | Inflation re-acceleration | Higher nominal yields, less dovish Fed | Headwind for growth-stock rerating |
+| PPI | +1.78% m/m in Mar 2026 | Upstream cost pressure is building | Margin pressure risk across equities | Watch AMZN retail/logistics margin sensitivity |
+| Unemployment | 4.3%, down 0.1 ppt | Labor market still resilient | Supports risk assets and consumption | Positive for retail demand and AWS enterprise spend |
+| Nonfarm payrolls | +178k m/m | Growth is slowing less than feared | Soft-landing narrative stays alive | Supports top-line durability for AMZN |
+| 1M vs 3M Treasury | 3.72% vs 3.71% | Front end is flat, not pricing fast cuts | Cash remains competitive, risk assets need earnings support | AMZN needs fundamental execution, not macro beta |
+| Fed path since Oct 2025 | 4.09% to 3.64% | Partial normalization already delivered | Some easing benefit already in the market | Less room for AMZN upside from policy alone |
+| Data gaps | GDP, ISM, confidence, VIX unavailable | Confidence in full regime call is lower | Need caution on cyclical breadth | Keep AMZN view tied to company-specific execution |

@@ -1,0 +1,54 @@
+{
+  "analysis_date": "2026-04-16",
+  "anthropic_effort": null,
+  "backend_url": "codex://local",
+  "catalysts": [
+    {
+      "catalyst": "Post-Q1 sales and demand follow-through for TSM",
+      "date_or_window": "Late April to May 2026",
+      "expected_impact": "Tests whether the recent beat and higher guidance represent a durable acceleration."
+    },
+    {
+      "catalyst": "US CPI/PPI and rates repricing",
+      "date_or_window": "April to June 2026",
+      "expected_impact": "Sticky inflation and higher yields would pressure valuation for TSM and other premium semiconductor names."
+    },
+    {
+      "catalyst": "Fed communication and FOMC window",
+      "date_or_window": "June 2026",
+      "expected_impact": "A neutral or dovish read supports risk appetite; a hawkish read raises discount-rate pressure."
+    },
+    {
+      "catalyst": "Customer AI ramp and packaging demand evidence for TSM",
+      "date_or_window": "Q2 2026",
+      "expected_impact": "Strength would reinforce the thesis that AI demand is still outrunning supply at the leading edge."
+    },
+    {
+      "catalyst": "Next TSM earnings and guidance reset",
+      "date_or_window": "July 2026 window",
+      "expected_impact": "Primary test of whether forward EPS assumptions need to move materially up or down."
+    },
+    {
+      "catalyst": "Taiwan or semiconductor trade-policy/geopolitical headlines affecting TSM",
+      "date_or_window": "Any time",
+      "expected_impact": "Could cause abrupt multiple compression regardless of operating execution."
+    }
+  ],
+  "chief_action": "Buy",
+  "chief_rating": "Neutral",
+  "chief_relative_stance": "Neutral",
+  "chief_summary": "Buy TSM as a staged position. Start with the structured 3.0% initial weight and keep total portfolio max loss at 0.6%. Add only if TSM reclaims 370.60 and then 375.10 to 379.89 on constructive volume, or if it bases and turns higher in the 353 to 348 support zone. Do not push TSM toward the 8.0% target weight until late-April to May sales, Q2 AI and packaging demand, margin commentary, and estimate revisions validate the guide-up. Treat a clean break below 352.91, the 50-day area, without quick recovery as invalidation. Time horizon: 6 to 24 months, with July 2026 earnings as the next major reset.",
+  "chief_thesis": "TSM merits a Buy because the structured underwriting still favors ownership. HPC is 55% of revenue and is in strong acceleration, the scenario map is 30% bull, 50% base, and 20% bear, and the sizing model assigns medium-high conviction with a 3.0% starter rather than avoidance. That is enough to own TSM now, but not enough to buy it aggressively. The aggressive analyst is right that TSM is being driven by real earnings power: quarterly revenue rose from 839.3B to 1,046.1B through 2025, gross margin expanded from about 58.8% to 62.3%, operating margin from about 48.5% to 54.0%, profit margin is 45.1%, ROE is 35.06%, free cash flow is 643.45B, and the balance sheet is strong. The world-affairs and social inputs also point to a Q1 beat and higher guidance tied to AI demand.\n\nThe conservative and neutral analysts are right that TSM has not earned an immediate Overweight stance. Only 30% of the scenario map is bull, while 70% is base plus bear; the stock just had a heavy-volume down day, ATR is 12.37, RSI cooled to 58.01, and macro valuation pressure remains real with the 10Y near 4.29% and sticky CPI and PPI. TSM is still above the 50 SMA at 352.91 and 200 SMA at 295.58, with MACD still positive at 7.46, so the primary trend is intact, but this is consolidation, not a clean chase point. The 55% HPC mix is the upside engine and the main risk because it concentrates TSM in AI demand, packaging, export-policy, and customer-capex outcomes. I am rejecting Hold because an 80% combined bull-plus-base probability, intact trend, and strong beat-and-raise argue for ownership. I am rejecting Overweight because the entry is not clean enough and the 0.6% max-loss budget does not support rushing toward the 8.0% target weight before price and fundamentals re-confirm.",
+  "decision": "BUY",
+  "deep_think_llm": "gpt-5.4",
+  "ended_at": "2026-04-16T15:10:50.445383",
+  "error": null,
+  "openai_reasoning_effort": "high",
+  "provider": "codex_cli",
+  "quick_think_llm": "gpt-5.4",
+  "results_dir": "results_batch/2026-04-16/TSM",
+  "risk_summary": "1. **Absolute Action**: Buy\n2. **Relative Stance**: Neutral\n3. **Executive Summary**: Buy TSM as a staged position. Start with the structured 3.0% initial weight and keep total portfolio max loss at 0.6%. Add only if TSM reclaims 370.60 and then 375.10 to 379.89 on constructive volume, or if it bases and turns higher in the 353 to 348 support zone. Do not push TSM toward the 8.0% target weight until late-April to May sales, Q2 AI and packaging demand, margin commentary, and estimate revisions validate the guide-up. Treat a clean break below 352.91, the 50-day area, without quick recovery as invalidation. Time horizon: 6 to 24 months, with July 2026 earnings as the next major reset.\n4. **Investment Thesis**: TSM merits a Buy because the structured underwriting still favors ownership. HPC is 55% of revenue and is in strong acceleration, the scenario map is 30% bull, 50% base, and 20% bear, and the sizing model assigns medium-high conviction with a 3.0% starter rather than avoidance. That is enough to own TSM now, but not enough to buy it aggressively. The aggressive analyst is right that TSM is being driven by real earnings power: quarterly revenue rose from 839.3B to 1,046.1B through 2025, gross margin expanded from about 58.8% to 62.3%, operating margin from about 48.5% to 54.0%, profit margin is 45.1%, ROE is 35.06%, free cash flow is 643.45B, and the balance sheet is strong. The world-affairs and social inputs also point to a Q1 beat and higher guidance tied to AI demand.\n\nThe conservative and neutral analysts are right that TSM has not earned an immediate Overweight stance. Only 30% of the scenario map is bull, while 70% is base plus bear; the stock just had a heavy-volume down day, ATR is 12.37, RSI cooled to 58.01, and macro valuation pressure remains real with the 10Y near 4.29% and sticky CPI and PPI. TSM is still above the 50 SMA at 352.91 and 200 SMA at 295.58, with MACD still positive at 7.46, so the primary trend is intact, but this is consolidation, not a clean chase point. The 55% HPC mix is the upside engine and the main risk because it concentrates TSM in AI demand, packaging, export-policy, and customer-capex outcomes. I am rejecting Hold because an 80% combined bull-plus-base probability, intact trend, and strong beat-and-raise argue for ownership. I am rejecting Overweight because the entry is not clean enough and the 0.6% max-loss budget does not support rushing toward the 8.0% target weight before price and fundamentals re-confirm.",
+  "started_at": "2026-04-16T14:56:12.326785",
+  "status": "completed",
+  "ticker": "TSM"
+}

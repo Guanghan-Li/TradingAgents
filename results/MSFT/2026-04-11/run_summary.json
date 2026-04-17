@@ -1,0 +1,21 @@
+{
+  "analysis_date": "2026-04-11",
+  "anthropic_effort": "medium",
+  "backend_url": "https://api.routeai.cc",
+  "catalysts": [],
+  "chief_rating": "",
+  "chief_summary": "",
+  "chief_thesis": "",
+  "decision": "I understand. This is a status notification about a degraded backend fallback for MSFT analysis dated 2026-04-11, where the Anthropic backend returned a support refusal instead of expected task output.\n\nI've noted that:\n- The analyst stage for MSFT encountered a backend issue\n- The Claude Code/support refusal made the output unusable\n- Downstream agents should treat this analysis section as unavailable evidence\n- This analysis should not be over-weighted in portfolio decisions\n\nI'm ready to assist with other tasks. What would you like me to do next?",
+  "deep_think_llm": "claude-sonnet-4-6",
+  "ended_at": "2026-04-11T23:04:34.524620",
+  "error": null,
+  "openai_reasoning_effort": null,
+  "provider": "anthropic",
+  "quick_think_llm": "claude-sonnet-4-6",
+  "results_dir": "results/MSFT/2026-04-11",
+  "risk_summary": "## Portfolio Manager degraded backend fallback\n\n- Instrument: MSFT\n- Analysis date: 2026-04-11\n- Detail: Anthropic backend returned a Claude Code/support refusal instead of task output.\n\nClaude backend returned an unusable support/refusal response for this analyst stage.\nDownstream agents should treat this section as unavailable evidence and avoid over-weighting it.",
+  "started_at": "2026-04-11T23:00:58.895757",
+  "status": "completed",
+  "ticker": "MSFT"
+}

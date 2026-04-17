@@ -1,0 +1,15 @@
+Macro view for `MAIN`: the regime is late-cycle soft landing, not recession. Labor is still holding up as of 2026-03-01 with unemployment at 4.3% and nonfarm payrolls up 178k, while the Treasury curve on 2026-04-14 is positively sloped with 2Y-10Y at +50 bps. That combination argues against an imminent contraction signal.
+
+The problem is inflation. Headline CPI rose 0.87% m/m in March 2026 and PPI rose 1.78% m/m, which is too hot for a Fed that has already cut from 4.09% in October 2025 to 3.64% by January 2026 and then paused through March. The most likely policy path is a prolonged hold, with easing delayed until inflation cools materially; the tail risk is a renewed hawkish shift if another few hot prints arrive. In market terms, this is supportive for nominal growth and credit in the near term, but it is a headwind for duration, rate-sensitive equity multiples, and any financing-heavy exposures.
+
+For `MAIN`, the macro backdrop is mixed-to-slightly constructive operationally but less supportive on valuation. A still-growing economy and contained VIX at 18.36 help credit performance and borrower fundamentals, which matters for a BDC-style risk profile. But sticky inflation, a higher long end, and a Fed on hold increase refinancing pressure and keep discount rates elevated. Base case: stable growth, no near-term recession, slower easing than bulls want. Key risks other analysts should incorporate are inflation reacceleration, long-end yield backup, credit spread widening if policy stays restrictive too long, and any labor deterioration that would quickly flip the current soft-landing narrative.
+
+| Macro signal | Latest evidence | Regime read | Market implication for `MAIN` |
+| --- | --- | --- | --- |
+| Fed policy | Effective fed funds 3.64% on 2026-03-01; unchanged since 2026-01-01 after cuts from 4.09% in 2025-10 | Fed pause near neutral/restrictive | Near-term policy stability helps planning, but less chance of rapid easing |
+| Inflation | CPI +0.87% m/m and PPI +1.78% m/m in 2026-03 | Inflation reacceleration risk | Negative for multiples and funding costs; raises hawkish-policy risk |
+| Labor | Unemployment 4.3% and payrolls +178k in 2026-03 | Labor market still resilient | Supports credit quality and borrower cash flows |
+| Yield curve | 2Y 3.76%, 10Y 4.26%, 2s10s +0.50% on 2026-04-14 | Normal upward-sloping curve | Not signaling imminent recession; long-end rates still pressure valuations |
+| Growth backdrop | Nominal GDP 31,422.53B on 2025-10-01 | Expansion/soft landing | Supports earnings and credit demand more than a recession regime would |
+| Volatility | VIX 18.36 on 2026-04-14 | Risk sentiment relatively contained | Supportive for risk assets unless inflation/rates shock re-prices markets |
+| Main macro risk | Hot inflation with paused Fed | Higher-for-longer rates | Biggest risk is tighter financial conditions hitting credit and valuations |

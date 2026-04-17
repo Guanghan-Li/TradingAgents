@@ -1,0 +1,18 @@
+ANET macro view: the current backdrop is a soft-landing / mid-cycle expansion regime, not a recession regime. As of March 2026, labor remains resilient with unemployment at 4.3% and payrolls still expanding, while inflation has not fully normalized: CPI rose 0.87% sequentially and PPI rose 1.78% sequentially in the latest reading. The Fed has already eased materially from 4.09% in October 2025 to 3.64% by March 2026, but the recent pause suggests policy is now closer to neutral and data-dependent rather than on a fast-cut path.
+
+The Treasury curve reinforces that message. On April 14, 2026, the 2Y Treasury yielded 3.76% and the 10Y yielded 4.26%, a positive 2Y-10Y spread of 0.50%. That is a normal upward-sloping curve, which argues against an imminent recession and points instead to steady growth plus some term-premium and inflation persistence in the long end. For ANET, that is macro mixed-positive: healthy growth and a stable labor market support enterprise and cloud infrastructure spending, but higher long-end yields can cap valuation multiples for high-quality growth equities.
+
+Base case for ANET: macro is supportive for fundamentals but less supportive for multiple expansion. If disinflation resumes, ANET benefits from a soft-landing environment with easier financial conditions later in 2026. If inflation stays sticky, especially given the recent PPI/CPI reacceleration, the Fed may stay on hold longer and long-duration tech could face valuation pressure even if operating demand stays intact.
+
+Key risks other analysts should incorporate for ANET are: 1) sticky inflation keeping the Fed sidelined, 2) higher 10Y/30Y yields compressing growth-stock multiples, 3) any labor-market rollover that would weaken enterprise capex, and 4) a false soft landing where curve steepening reflects inflation risk rather than durable growth.
+
+| Macro Signal | Latest Read | Regime Interpretation | Market Implication | ANET Readthrough |
+| --- | --- | --- | --- | --- |
+| Fed funds rate | 3.64% on 2026-03-01 | Fed easing cycle has paused near neutral | Lower policy stress than late 2025, but not an active stimulus phase | Supportive for demand stability; limited help from further multiple expansion unless cuts resume |
+| CPI | 330.29 on 2026-03-01, +0.87% sequentially | Disinflation incomplete | Keeps market sensitive to inflation surprises | Sticky inflation can pressure ANET valuation even if business trends hold |
+| PPI | 274.10 on 2026-03-01, +1.78% sequentially | Upstream price pressure reaccelerating | Raises odds of higher-for-longer rates | Negative for high-multiple tech if cost/inflation fears broaden |
+| Unemployment | 4.3% on 2026-03-01, down 0.1 pt | Labor market still resilient | Supports soft-landing narrative and risk appetite | Positive for enterprise/networking demand tied to capex confidence |
+| Nonfarm payrolls | +178k sequentially on 2026-03-01 | Ongoing expansion, not contraction | Supports equities over defensives | Positive for ANET fundamental backdrop |
+| 2Y-10Y curve | +0.50% on 2026-04-14 | Normal upward slope, not recessionary inversion | Better macro signal for cyclicals and credit | Positive for ANET demand outlook, though long-end rates still matter for multiples |
+| 10Y Treasury | 4.26% on 2026-04-14 | Long-end rates remain elevated | Can restrain duration-sensitive equity valuations | Caps upside from rerating in ANET |
+| VIX | 18.36 on 2026-04-14 | Risk conditions relatively contained | Constructive for equity risk-taking | Helpful for ANET sentiment if macro stays stable |

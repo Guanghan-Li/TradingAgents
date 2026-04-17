@@ -1,0 +1,49 @@
+{
+  "analysis_date": "2026-04-15",
+  "anthropic_effort": null,
+  "backend_url": "codex://local",
+  "catalysts": [
+    {
+      "catalyst": "VICI next earnings report",
+      "date_or_window": "Late April to early May 2026 window",
+      "expected_impact": "Primary company-specific checkpoint for AFFO trajectory, rent coverage, leverage, acquisition pipeline, dividend coverage, and tenant diversification progress."
+    },
+    {
+      "catalyst": "Treasury yield curve and Fed-rate expectations",
+      "date_or_window": "Ongoing through Q2 2026",
+      "expected_impact": "Lower long-end yields would support REIT multiple expansion; higher yields would pressure VICI's dividend spread and equity duration profile."
+    },
+    {
+      "catalyst": "Inflation data follow-through after March CPI/PPI increases",
+      "date_or_window": "April-May 2026 macro releases",
+      "expected_impact": "Disinflation would support lower-rate sensitivity; renewed CPI/PPI acceleration would pressure REIT valuations and funding assumptions."
+    },
+    {
+      "catalyst": "Dividend-growth and income-investor narrative after eighth annual dividend hike",
+      "date_or_window": "2026 dividend cycle",
+      "expected_impact": "Reinforces VICI's defensive income appeal if payout coverage and AFFO growth remain intact."
+    },
+    {
+      "catalyst": "Analyst revision cycle following Wolfe target cut to $33 from $40",
+      "date_or_window": "Near term, post-earnings",
+      "expected_impact": "Further target cuts would signal valuation or growth concern; stabilization would reduce sentiment overhang."
+    }
+  ],
+  "chief_action": "Buy",
+  "chief_rating": "Neutral",
+  "chief_relative_stance": "Neutral",
+  "chief_summary": "Initiate VICI at a 2.0% starter weight near the current reference price of 28.13. Do not move immediately to the 4.0% target weight. Add only if VICI closes and holds above the 28.38 to 28.60 resistance zone with improving relative strength, or if the late-April to early-May 2026 earnings update confirms stable AFFO, solid rent coverage, comfortable dividend coverage, and no worsening tenant-credit commentary while long-end yields remain contained. Use 27.60 to 27.65 as the first warning zone, require a hard thesis review near 26.55, and keep total portfolio risk capped near the structured 0.15% max-loss level. Time horizon: 3 to 9 months, with the main checkpoints being earnings and Q2 2026 rate/inflation data.",
+  "chief_thesis": "The final decision is Buy VICI, but only as a controlled accumulation to Neutral rather than an aggressive Overweight. The primary evidence is the structured underwriting, not the narrative. Position sizing already points to action: medium conviction, 2.0% initial weight, 4.0% target weight, and 0.15% max portfolio loss. That is stronger than a pure Hold because the framework explicitly supports initiating exposure now, but it is not strong enough for an Overweight because the most likely scenario is still the 55% base case of a stable high-yield REIT with limited rerating.\n\nThe Aggressive Analyst is right on three important points. First, VICI is not expensive: 9.54x forward P/E, 1.08x price/book, and a 6.29% dividend yield leave room for upside if rates ease or earnings validate the dividend story. Second, operating evidence is stable rather than deteriorating: revenue increased from 976.1M to 1,013.1M, the company has low beta at 0.728, and the dividend narrative remains constructive after the eighth consecutive annual increase. Third, technical repair is real even if incomplete: VICI closed at 28.13, above the 10 EMA at 27.97, MACD improved from about -0.51 to -0.01, and RSI recovered from roughly 32 to 53. Those are valid reasons to start a position before a full all-clear signal.\n\nThe Conservative and Neutral Analysts are also correct on what should limit conviction. VICI is still below the 50 SMA at 28.38 and the 200 SMA at 29.48, so this remains a recovery inside a broader damaged trend until proven otherwise. The business mix is still concentrated, with 85% of revenue tied to gaming/casino real estate, which keeps tenant-credit and concentration risk relevant. The macro headwind is real: the 10-year Treasury at 4.26% is still a valuation constraint for REITs, and the bear-case invalidation threshold above 4.5% is high severity. The scenario map is not strongly bullish: 25% bull, 55% base, 20% bear. That means the expected path is mostly dividend carry plus modest appreciation, not a high-conviction rerating trade.\n\nThat synthesis leads to a clear committee stance: Buy VICI to a Neutral weighting as a measured income/value position. The decision is not based on momentum leadership; it is based on acceptable probability-weighted downside when paired with disciplined sizing and explicit triggers. Approval is conditional on respecting the guardrails the debate converged on: no immediate scale-up, no averaging down through broken support, and no tolerance for worsening AFFO, rent coverage, dividend coverage, or tenant-credit commentary. If VICI confirms above 28.38 to 28.60 or earnings materially strengthen the AFFO/dividend case while rates stay contained, the committee can add toward 4.0%. If VICI breaks 27.60 to 27.65 or the macro/fundamental invalidation triggers fire, the committee should pause adds and reassess immediately.",
+  "decision": "BUY",
+  "deep_think_llm": "gpt-5.4",
+  "ended_at": "2026-04-15T14:28:55.498165",
+  "error": null,
+  "openai_reasoning_effort": "high",
+  "provider": "codex_cli",
+  "quick_think_llm": "gpt-5.4",
+  "results_dir": "results_batch/2026-04-15/VICI",
+  "risk_summary": "1. Absolute Action: Buy\n2. Relative Stance: Neutral\n3. Executive Summary: Initiate VICI at a 2.0% starter weight near the current reference price of 28.13. Do not move immediately to the 4.0% target weight. Add only if VICI closes and holds above the 28.38 to 28.60 resistance zone with improving relative strength, or if the late-April to early-May 2026 earnings update confirms stable AFFO, solid rent coverage, comfortable dividend coverage, and no worsening tenant-credit commentary while long-end yields remain contained. Use 27.60 to 27.65 as the first warning zone, require a hard thesis review near 26.55, and keep total portfolio risk capped near the structured 0.15% max-loss level. Time horizon: 3 to 9 months, with the main checkpoints being earnings and Q2 2026 rate/inflation data.\n4. Investment Thesis: The final decision is Buy VICI, but only as a controlled accumulation to Neutral rather than an aggressive Overweight. The primary evidence is the structured underwriting, not the narrative. Position sizing already points to action: medium conviction, 2.0% initial weight, 4.0% target weight, and 0.15% max portfolio loss. That is stronger than a pure Hold because the framework explicitly supports initiating exposure now, but it is not strong enough for an Overweight because the most likely scenario is still the 55% base case of a stable high-yield REIT with limited rerating.\n\nThe Aggressive Analyst is right on three important points. First, VICI is not expensive: 9.54x forward P/E, 1.08x price/book, and a 6.29% dividend yield leave room for upside if rates ease or earnings validate the dividend story. Second, operating evidence is stable rather than deteriorating: revenue increased from 976.1M to 1,013.1M, the company has low beta at 0.728, and the dividend narrative remains constructive after the eighth consecutive annual increase. Third, technical repair is real even if incomplete: VICI closed at 28.13, above the 10 EMA at 27.97, MACD improved from about -0.51 to -0.01, and RSI recovered from roughly 32 to 53. Those are valid reasons to start a position before a full all-clear signal.\n\nThe Conservative and Neutral Analysts are also correct on what should limit conviction. VICI is still below the 50 SMA at 28.38 and the 200 SMA at 29.48, so this remains a recovery inside a broader damaged trend until proven otherwise. The business mix is still concentrated, with 85% of revenue tied to gaming/casino real estate, which keeps tenant-credit and concentration risk relevant. The macro headwind is real: the 10-year Treasury at 4.26% is still a valuation constraint for REITs, and the bear-case invalidation threshold above 4.5% is high severity. The scenario map is not strongly bullish: 25% bull, 55% base, 20% bear. That means the expected path is mostly dividend carry plus modest appreciation, not a high-conviction rerating trade.\n\nThat synthesis leads to a clear committee stance: Buy VICI to a Neutral weighting as a measured income/value position. The decision is not based on momentum leadership; it is based on acceptable probability-weighted downside when paired with disciplined sizing and explicit triggers. Approval is conditional on respecting the guardrails the debate converged on: no immediate scale-up, no averaging down through broken support, and no tolerance for worsening AFFO, rent coverage, dividend coverage, or tenant-credit commentary. If VICI confirms above 28.38 to 28.60 or earnings materially strengthen the AFFO/dividend case while rates stay contained, the committee can add toward 4.0%. If VICI breaks 27.60 to 27.65 or the macro/fundamental invalidation triggers fire, the committee should pause adds and reassess immediately.",
+  "started_at": "2026-04-15T14:16:54.478615",
+  "status": "completed",
+  "ticker": "VICI"
+}

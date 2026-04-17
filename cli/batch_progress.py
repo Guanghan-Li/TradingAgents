@@ -72,6 +72,7 @@ class BatchProgressEvent:
     analysis_date: str | None = None
     total_milestones: int | None = None
     completed_milestones: int | None = None
+    error: str | None = None
 
 
 @dataclass
@@ -84,6 +85,7 @@ class BatchWorkerSlot:
     completed_agents: set[str] = field(default_factory=set)
     progress_file: str | None = None
     progress_offset: int = 0
+    error: str | None = None
 
     def assign(self, *, ticker: str, progress_file: str | None = None) -> None:
         self.ticker = ticker
@@ -93,6 +95,7 @@ class BatchWorkerSlot:
         self.completed_agents.clear()
         self.progress_file = progress_file
         self.progress_offset = 0
+        self.error = None
 
     def snapshot(self) -> dict:
         return {
@@ -103,6 +106,7 @@ class BatchWorkerSlot:
             "total_milestones": self.total_milestones,
             "completed_agents": sorted(self.completed_agents),
             "progress_fraction": compute_progress_fraction(self),
+            "error": self.error,
         }
 
 
@@ -259,6 +263,7 @@ def parse_progress_events(text: str) -> list[BatchProgressEvent]:
                 analysis_date=payload.get("analysis_date"),
                 total_milestones=payload.get("total_milestones"),
                 completed_milestones=payload.get("completed_milestones"),
+                error=payload.get("error"),
             )
         )
     return events
@@ -322,6 +327,7 @@ def apply_progress_event(slot: BatchWorkerSlot, event: BatchProgressEvent) -> No
     if event.event == "run_failed":
         slot.status = "failed"
         slot.active_agent = None
+        slot.error = event.error
 
 
 def render_batch_dashboard(state: BatchDashboardState):
@@ -387,4 +393,6 @@ def render_worker_slot(slot_snapshot: dict) -> Panel:
             style="dim",
         )
     )
+    if slot_snapshot.get("error"):
+        body.add_row(Text(f"Error: {slot_snapshot['error']}", style="red"))
     return Panel(body, title=title, border_style=status_style)

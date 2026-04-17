@@ -1,0 +1,15 @@
+Recommendation: Hold MO. I lean closer to the bear analyst on timing, but not far enough to move to Sell MO.
+
+The strongest anchor is the structured underwriting, not the narrative. MO has a 50% base-case probability, 25% bull, and 25% bear, with an initial weight of 1.5%, a target weight of 3.0%, and a max loss budget of 0.5%. That is the profile of a modest income-defensive holding, not an aggressive Buy and not a broken stock that demands a Sell.
+
+The bull side is right that MO still has real support underneath it. MO is producing about $9.23B of free cash flow, the dividend yield is 6.46%, forward P/E is 11.08, beta is 0.447, and price at 64.42 is still above the 200-day average at 60.93. The business is still a cash machine, and if Q1 confirms stable pricing, resilient margins, and credible smoke-free progress, MO can work higher from here.
+
+The bear side has the better near-term timing argument. MO is below the 10-day EMA at 65.99 and the 50-day SMA at 65.79, MACD has decelerated sharply, RSI around 49 is neutral rather than washed out, and the stock is heading into earnings with no technical reset extreme yet. On top of that, MO still carries negative equity of -$3.502B, a current ratio of 0.648, net debt of $21.235B, and a macro backdrop where 10-year and 30-year Treasury yields at 4.26% and 4.87% compete directly with the MO income story. Smoke-free optionality is interesting, but it is still optionality, not proof.
+
+That is why Hold is the right call for MO. I would not Buy MO ahead of the earnings catalyst because too much of the upside case still needs confirmation. I also would not Sell MO here because the cash-flow base, dividend coverage, and intact long-term trend argue against treating MO like a broken thesis. No prior mistake notes were provided, so the discipline I am applying is to avoid a common error in these setups: giving full credit to an unproven transition story before management actually validates it.
+
+The investment plan is straightforward. If you already own MO, hold it and keep the position modest around the structured 1.5% starter size. Do not add before Q1 earnings. Only scale MO toward 3.0% if management keeps forward EPS near 5.81, shows stable pricing and margin behavior, preserves clean dividend coverage, and MO reclaims the 65.8 to 66.0 area and starts rebuilding momentum. If you do not own MO, Hold means wait, not initiate.
+
+Risk control matters. Respect the 0.5% portfolio loss budget. If MO loses the 63.2 to 63.4 support zone, or if Q1 commentary shows weaker pricing power, materially lower forward EPS, dividend-coverage strain, or disappointing smoke-free adoption, reduce or exit MO. ATR is about 1.48, so stops need to allow normal volatility rather than sit too tight.
+
+So the committee decision is Hold MO. The bull case is good enough to keep exposure, but the bear case is strong enough that fresh buying before earnings is not justified.

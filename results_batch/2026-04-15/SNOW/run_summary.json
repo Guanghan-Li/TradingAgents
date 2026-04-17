@@ -1,0 +1,49 @@
+{
+  "analysis_date": "2026-04-15",
+  "anthropic_effort": null,
+  "backend_url": "codex://local",
+  "catalysts": [
+    {
+      "catalyst": "U.S. payrolls report",
+      "date_or_window": "Early May 2026 (inferred window)",
+      "expected_impact": "A softer labor print could ease rate pressure and help premium software multiples; a strong print could do the opposite."
+    },
+    {
+      "catalyst": "U.S. CPI release",
+      "date_or_window": "Mid-May 2026 (inferred window)",
+      "expected_impact": "Lower inflation would support valuation expansion; sticky inflation would increase discount-rate pressure on SNOW."
+    },
+    {
+      "catalyst": "U.S. PPI release",
+      "date_or_window": "Mid-May 2026 (inferred window)",
+      "expected_impact": "Producer inflation persistence would reinforce a higher-for-longer rates narrative and cap upside for richly valued software."
+    },
+    {
+      "catalyst": "Fed policy communication / next FOMC window",
+      "date_or_window": "Next scheduled window not provided in context",
+      "expected_impact": "Dovish guidance could support multiple expansion; hawkish guidance could accelerate de-rating risk."
+    },
+    {
+      "catalyst": "Next SNOW earnings / company update",
+      "date_or_window": "Date not provided in context",
+      "expected_impact": "Most important company-specific catalyst for AI monetization, competitive positioning, and forward guidance credibility."
+    }
+  ],
+  "chief_action": "Hold",
+  "chief_rating": "Neutral",
+  "chief_relative_stance": "Neutral",
+  "chief_summary": "Maintain `SNOW` only as a tightly sized, proof-driven position. The primary evidence is the structured underwriting: `Base` case `50%`, `Bull` `30%`, `Bear` `20%`, with `conviction` only `medium-low`, `initial_weight_pct` `0.75`, `target_weight_pct` capped at `2.0`, and `max_loss_pct` `0.35`. If already owned, keep `SNOW` at starter-size exposure rather than adding aggressively. If flat, do not chase the rebound; only initiate near the underwriting size if exposure is required. Time horizon is the next 1-2 company update / macro catalyst windows. Upgrade only if `SNOW` reclaims `150-153`, then `165`, with `RSI` above `50`, `MACD` continuing to improve, and the next company update showing real AI monetization or better operating leverage. If `SNOW` loses `142`, stop adding; if it breaks `135-132`, reduce; if it retests `123.6-121.1` or the next update shows weaker growth or stronger competitive pressure, exit.",
+  "chief_thesis": "The committee should stay at Hold / Neutral because the numbers support cautious exposure, not a fresh directional bet. The strongest positive evidence is that `SNOW` still has a real operating base: `90%` of revenue comes from the Core Data Cloud platform, quarterly revenue rose from `$986.8M` to `$1.284B`, gross profit from `$653.6M` to `$857.7M`, normalized EBITDA improved from `-$282.2M` to `-$216.5M`, deferred revenue is `$3.347B`, and TTM free cash flow is `$1.587B`. That is why Sell is too aggressive.\n\nBut Buy is not justified yet. The aggressive analyst is right that downside momentum has eased, but the conservative and neutral analysts are right that the rebound is still incomplete: `SNOW` closed at `144.48`, just above the `10 EMA` at `142.18`, while still about `12.4%` below the `50-day` at `164.98` and `31.7%` below the `200-day` at `211.50`. `MACD` remains negative at `-10.05`, `RSI` is only `43.00`, and `ATR` near `9.56` says volatility is still high. Fundamentally, the AI layer is only `5%` of revenue today, so the upside narrative still depends on proof rather than current economics. Against that, `SNOW` still carries deep GAAP losses, heavy stock-based compensation, dilution risk, and a rich valuation, while sticky inflation and long yields (`10Y` `4.26%`, `30Y` `4.87%`) keep pressure on premium software multiples.\n\nThe correct synthesis is that `SNOW` is fundamentally durable but still multiple-sensitive and technically damaged. The underwriting already reflects that reality by allowing only a small initial position and a capped target size. That makes Hold / Neutral the clean decision: keep exposure small, demand confirmation, and do not pay in advance for AI optionality until management shows measurable workload conversion, stable guidance, and clearer operating leverage.",
+  "decision": "HOLD",
+  "deep_think_llm": "gpt-5.4",
+  "ended_at": "2026-04-15T14:21:09.600208",
+  "error": null,
+  "openai_reasoning_effort": "high",
+  "provider": "codex_cli",
+  "quick_think_llm": "gpt-5.4",
+  "results_dir": "results_batch/2026-04-15/SNOW",
+  "risk_summary": "1. **Absolute Action**: Hold\n2. **Relative Stance**: Neutral\n\n3. **Executive Summary**: Maintain `SNOW` only as a tightly sized, proof-driven position. The primary evidence is the structured underwriting: `Base` case `50%`, `Bull` `30%`, `Bear` `20%`, with `conviction` only `medium-low`, `initial_weight_pct` `0.75`, `target_weight_pct` capped at `2.0`, and `max_loss_pct` `0.35`. If already owned, keep `SNOW` at starter-size exposure rather than adding aggressively. If flat, do not chase the rebound; only initiate near the underwriting size if exposure is required. Time horizon is the next 1-2 company update / macro catalyst windows. Upgrade only if `SNOW` reclaims `150-153`, then `165`, with `RSI` above `50`, `MACD` continuing to improve, and the next company update showing real AI monetization or better operating leverage. If `SNOW` loses `142`, stop adding; if it breaks `135-132`, reduce; if it retests `123.6-121.1` or the next update shows weaker growth or stronger competitive pressure, exit.\n\n4. **Investment Thesis**: The committee should stay at Hold / Neutral because the numbers support cautious exposure, not a fresh directional bet. The strongest positive evidence is that `SNOW` still has a real operating base: `90%` of revenue comes from the Core Data Cloud platform, quarterly revenue rose from `$986.8M` to `$1.284B`, gross profit from `$653.6M` to `$857.7M`, normalized EBITDA improved from `-$282.2M` to `-$216.5M`, deferred revenue is `$3.347B`, and TTM free cash flow is `$1.587B`. That is why Sell is too aggressive.\n\nBut Buy is not justified yet. The aggressive analyst is right that downside momentum has eased, but the conservative and neutral analysts are right that the rebound is still incomplete: `SNOW` closed at `144.48`, just above the `10 EMA` at `142.18`, while still about `12.4%` below the `50-day` at `164.98` and `31.7%` below the `200-day` at `211.50`. `MACD` remains negative at `-10.05`, `RSI` is only `43.00`, and `ATR` near `9.56` says volatility is still high. Fundamentally, the AI layer is only `5%` of revenue today, so the upside narrative still depends on proof rather than current economics. Against that, `SNOW` still carries deep GAAP losses, heavy stock-based compensation, dilution risk, and a rich valuation, while sticky inflation and long yields (`10Y` `4.26%`, `30Y` `4.87%`) keep pressure on premium software multiples.\n\nThe correct synthesis is that `SNOW` is fundamentally durable but still multiple-sensitive and technically damaged. The underwriting already reflects that reality by allowing only a small initial position and a capped target size. That makes Hold / Neutral the clean decision: keep exposure small, demand confirmation, and do not pay in advance for AI optionality until management shows measurable workload conversion, stable guidance, and clearer operating leverage.",
+  "started_at": "2026-04-15T14:07:07.981768",
+  "status": "completed",
+  "ticker": "SNOW"
+}

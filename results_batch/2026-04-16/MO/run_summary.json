@@ -1,0 +1,49 @@
+{
+  "analysis_date": "2026-04-16",
+  "anthropic_effort": null,
+  "backend_url": "codex://local",
+  "catalysts": [
+    {
+      "catalyst": "MO Q1 2026 results webcast and earnings release",
+      "date_or_window": "Announced as upcoming after 2026-04-16; exact date not provided in prefetched context",
+      "expected_impact": "Highest near-term company-specific catalyst; confirms or challenges EPS trajectory, pricing power, shipment trends, cash conversion, and dividend coverage."
+    },
+    {
+      "catalyst": "Philip Morris Q1 earnings read-through for tobacco category demand and smoke-free momentum",
+      "date_or_window": "Near-term after 2026-04-16; exact date not provided in prefetched context",
+      "expected_impact": "Can influence investor assumptions for category demand, pricing elasticity, and reduced-risk product adoption, though MO's U.S.-centric profile limits direct comparability."
+    },
+    {
+      "catalyst": "Next CPI and PPI releases after March 2026 data",
+      "date_or_window": "Next monthly inflation release window after 2026-04-16",
+      "expected_impact": "Inflation surprises affect rate expectations and the relative attractiveness of MO's dividend yield versus cash and Treasuries."
+    },
+    {
+      "catalyst": "Fed policy expectations and Treasury yield curve repricing",
+      "date_or_window": "Ongoing after 2026-04-16",
+      "expected_impact": "With 10Y Treasury yield at 4.29% and 30Y at 4.89%, the risk-free yield backdrop directly affects required return for a high-dividend equity like MO."
+    },
+    {
+      "catalyst": "Nicotine, tobacco, menthol, tax, or litigation-related regulatory headlines",
+      "date_or_window": "Unscheduled / ongoing",
+      "expected_impact": "Adverse developments could lower terminal cash-flow assumptions; absence of negative headlines supports the base case and could modestly improve sentiment."
+    }
+  ],
+  "chief_action": "Hold",
+  "chief_rating": "Neutral",
+  "chief_relative_stance": "Neutral",
+  "chief_summary": "Hold MO and keep exposure near the structured 2.0% initial weight into the upcoming Q1 2026 earnings catalyst rather than adding ahead of confirmation. Only scale toward the 4.0% target weight if MO proves that pricing still offsets combustible volume decline, free cash flow still covers the dividend comfortably, and the stock reclaims 65.8-65.9 with stronger momentum and volume. Treat 64.3 as the first warning level and 62.65-63.3 on heavier volume as the risk-reduction zone; enforce the 0.75% max portfolio loss. Time horizon: near term through earnings confirmation, then reassess over the next 1-2 quarters.",
+  "chief_thesis": "The primary evidence supports Hold on MO, not Buy or Sell. The structured scenario map is 55% base case, 25% bull case, and 20% bear case, which means the highest-probability outcome is still a range-bound, income-led result rather than a fresh upside rerating or an immediate breakdown. The position-sizing output says the same thing: 2.0% initial weight, 4.0% target only after confirmation, and 0.75% max loss. That is a monitored hold, not an aggressive accumulation.\n\nMO still has real support. Free cash flow of roughly $9.1B-$9.2B against about $7.0B of dividends implies about 1.3x coverage, the dividend yield is 6.58%, forward P/E is 11.17x, and MO closed at 64.94 on 2026-04-16 while remaining above its 200-day average near 61-63. The aggressive analyst is right that this is not a broken chart: MACD was still positive at 0.13, RSI was 45.78, and ATR near 1.43 points to orderly weakness rather than disorderly damage. Those facts justify avoiding a Sell.\n\nBut the aggressive case overstates upside asymmetry. The conservative and neutral analysts are right that 87% of MO revenue still comes from Smokeable Products, while Oral is only 10% and NJOY / E-vapor is 2%. That concentration keeps the whole thesis dependent on pricing offsetting secular volume decline in the core combustible business. The balance sheet and rate backdrop also cap upside: negative equity, weak liquidity, meaningful leverage, and Treasury yields around 4.29% on the 10-year and 4.89% on the 30-year reduce the relative advantage of MO's 6.58% dividend and limit multiple expansion. Those facts justify avoiding a Buy.\n\nThe correct synthesis is therefore Hold / Neutral on MO. There is enough cash-flow durability, valuation support, and defensive yield to keep the position, but not enough diversification, momentum, or catalyst confirmation to expand risk ahead of earnings. With no prior mistake log provided, the committee should explicitly avoid two common errors: treating 2025 impairment noise as proof MO is broken, and treating a covered dividend as sufficient reason to buy aggressively. The next decision point is clear: if Q1 confirms pricing power, stable cash conversion, and intact dividend support, MO can move from a 2.0% hold toward the 4.0% target. If MO breaks 64.3 and especially 62.65-63.3 on heavier volume, or if earnings and guidance weaken confidence on elasticity, coverage, or regulation, the committee should shift from Hold to active risk reduction.",
+  "decision": "HOLD",
+  "deep_think_llm": "gpt-5.4",
+  "ended_at": "2026-04-16T15:42:42.481334",
+  "error": null,
+  "openai_reasoning_effort": "high",
+  "provider": "codex_cli",
+  "quick_think_llm": "gpt-5.4",
+  "results_dir": "results_batch/2026-04-16/MO",
+  "risk_summary": "1. Absolute Action: Hold\n2. Relative Stance: Neutral\n3. Executive Summary: Hold MO and keep exposure near the structured 2.0% initial weight into the upcoming Q1 2026 earnings catalyst rather than adding ahead of confirmation. Only scale toward the 4.0% target weight if MO proves that pricing still offsets combustible volume decline, free cash flow still covers the dividend comfortably, and the stock reclaims 65.8-65.9 with stronger momentum and volume. Treat 64.3 as the first warning level and 62.65-63.3 on heavier volume as the risk-reduction zone; enforce the 0.75% max portfolio loss. Time horizon: near term through earnings confirmation, then reassess over the next 1-2 quarters.\n\n4. Investment Thesis: The primary evidence supports Hold on MO, not Buy or Sell. The structured scenario map is 55% base case, 25% bull case, and 20% bear case, which means the highest-probability outcome is still a range-bound, income-led result rather than a fresh upside rerating or an immediate breakdown. The position-sizing output says the same thing: 2.0% initial weight, 4.0% target only after confirmation, and 0.75% max loss. That is a monitored hold, not an aggressive accumulation.\n\nMO still has real support. Free cash flow of roughly $9.1B-$9.2B against about $7.0B of dividends implies about 1.3x coverage, the dividend yield is 6.58%, forward P/E is 11.17x, and MO closed at 64.94 on 2026-04-16 while remaining above its 200-day average near 61-63. The aggressive analyst is right that this is not a broken chart: MACD was still positive at 0.13, RSI was 45.78, and ATR near 1.43 points to orderly weakness rather than disorderly damage. Those facts justify avoiding a Sell.\n\nBut the aggressive case overstates upside asymmetry. The conservative and neutral analysts are right that 87% of MO revenue still comes from Smokeable Products, while Oral is only 10% and NJOY / E-vapor is 2%. That concentration keeps the whole thesis dependent on pricing offsetting secular volume decline in the core combustible business. The balance sheet and rate backdrop also cap upside: negative equity, weak liquidity, meaningful leverage, and Treasury yields around 4.29% on the 10-year and 4.89% on the 30-year reduce the relative advantage of MO's 6.58% dividend and limit multiple expansion. Those facts justify avoiding a Buy.\n\nThe correct synthesis is therefore Hold / Neutral on MO. There is enough cash-flow durability, valuation support, and defensive yield to keep the position, but not enough diversification, momentum, or catalyst confirmation to expand risk ahead of earnings. With no prior mistake log provided, the committee should explicitly avoid two common errors: treating 2025 impairment noise as proof MO is broken, and treating a covered dividend as sufficient reason to buy aggressively. The next decision point is clear: if Q1 confirms pricing power, stable cash conversion, and intact dividend support, MO can move from a 2.0% hold toward the 4.0% target. If MO breaks 64.3 and especially 62.65-63.3 on heavier volume, or if earnings and guidance weaken confidence on elasticity, coverage, or regulation, the committee should shift from Hold to active risk reduction.",
+  "started_at": "2026-04-16T15:26:24.436698",
+  "status": "completed",
+  "ticker": "MO"
+}

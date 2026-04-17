@@ -1,0 +1,47 @@
+FINAL TRANSACTION PROPOSAL: **HOLD**
+
+For `SCCO`, the most relevant indicator set in this market context is: `close_10_ema`, `close_50_sma`, `close_200_sma`, `macd`, `rsi`, `boll_ub`, `boll_lb`, and `atr`.
+
+These are the best fit because they cover the full stack without much redundancy: short-term trend (`close_10_ema`), medium-term trend and key pivot (`close_50_sma`), structural trend (`close_200_sma`), momentum inflection (`macd`), exhaustion/participation quality (`rsi`), volatility envelope and breakout context (`boll_ub`, `boll_lb`), and trading-risk calibration (`atr`). I would not prioritize `boll` because the upper/lower bands already imply the centerline, and I would not spend one of the eight slots on both `macd` and its derivatives unless I specifically needed crossover mechanics.
+
+Technically, `SCCO` has repaired a meaningful amount of damage from the March selloff, but the tape is not yet clean enough to justify an aggressive chase. The stock bottomed around `152.71` on `2026-03-20`, then staged a strong recovery into the high `190s`, reaching `196.38` on `2026-04-13` before slipping to `189.30` on `2026-04-15`. That sequence matters: price has clearly rebounded, but the most recent bars show hesitation after the first serious test of the upper part of the recent trading envelope.
+
+Trend structure is constructive across timeframes, but not uniformly strong. The latest close at `189.30` sits above the `10 EMA` at `185.57`, above the `50 SMA` at `188.07`, and far above the `200 SMA` at `139.77`. That is the core bullish fact pattern. It says the short-term swing trend is up, the stock has just reclaimed medium-term trend support, and the long-term primary trend remains decisively positive. The most important nuance is that the `50 SMA` is nearly flat to slightly drifting down, not strongly rising. So `SCCO` is in a recovery phase inside a larger uptrend, not yet in a fully re-accelerating trend leg.
+
+Momentum has improved materially. `MACD` went from deeply negative in late March (`-9.41` on `2026-03-27`) to positive (`+2.62` on `2026-04-15`). That is a strong bullish reversal in directional momentum. The speed of that move suggests the rebound was not just a dead-cat bounce. However, momentum is no longer at the earliest, highest-conviction phase of the turn. After flipping positive, price stalled under `200`, and the last two sessions pulled back from the recovery high. That does not negate the bullish turn, but it does argue that momentum is transitioning from impulse to digestion.
+
+`RSI` tells a similar story. It rose from deeply weak levels around `38-40` in late March to `62.12` on `2026-04-13`, then cooled to `55.97` on `2026-04-15`. This is healthy, not bearish. It means momentum has normalized into the upper half of the range without becoming overbought. In practice, that usually supports one of two paths: either a sideways consolidation above moving-average support before another push higher, or a shallow pullback to retest trend support. What it does not show is the kind of stretched, euphoric momentum that often precedes immediate reversal.
+
+The Bollinger setup also argues for consolidation rather than immediate breakout. On `2026-04-15`, `boll_ub` is `201.10` and `boll_lb` is `145.96`, placing `SCCO` in the upper half of its volatility envelope but not at an extreme. Earlier in the rebound, price approached the upper band area as the move accelerated, but it has not decisively expanded through it. That matters because in a macro backdrop that is supportive for cyclicals but constrained by sticky inflation and high long yields, you want to see clean expansion through the upper band with volume confirmation before assuming a new momentum leg is underway. So far, `SCCO` looks more like it is pausing beneath resistance than launching through it.
+
+`ATR` reinforces that interpretation. ATR has eased from a bit above `10` in early April to `8.96` on `2026-04-15`. Volatility is still elevated in absolute terms, but it is cooling. Lower ATR after a strong rebound often means the market is transitioning from panic/repricing into a more two-sided, decision-making phase. For traders, that means breakouts need better confirmation because raw volatility is no longer doing as much directional work for you. It also means support/resistance levels become more tradable.
+
+Volume is the main caution flag. The hardest selloff days in March came with heavy turnover, including `3.36M` shares on `2026-03-19` and `3.07M` on `2026-03-20`. The rebound has generally occurred on lighter volume, often in the `1.0M-1.8M` range. That does not invalidate the recovery, but it does reduce confidence that large buyers are aggressively pressing the stock higher here. In cyclical names like `SCCO`, low-volume rebounds can continue, but they are more vulnerable to macro disappointment, copper-price weakness, or rate-driven de-rating.
+
+Against the supplied macro regime, the chart makes sense. A soft-landing or mid-cycle expansion backdrop with contained `VIX`, positive curve slope, and resilient payrolls is supportive for copper-linked equities, so the fact that `SCCO` remains well above its `200 SMA` and has recovered sharply from the March drawdown is consistent with that macro input. At the same time, inflation reacceleration and a `10Y` yield at `4.26%` make it harder for the equity multiple to expand smoothly. That helps explain why `SCCO` can have improving momentum and still stall under the round-number resistance area near `195-201`.
+
+The most important trading levels are fairly clear. First support is the `50 SMA` around `188.07`, which the stock is only marginally above. Below that, the `10 EMA` at `185.57` is the next short-term trend marker. If `SCCO` loses both on closing basis, the rebound is likely entering a deeper reset toward the `177-172` zone, which includes the early-April pivot region and the late-March breakout area. On the upside, the first resistance band is `193.37-196.38`, then the Bollinger upper band near `201.10`, and beyond that the more important February supply zone around `207-220`.
+
+Actionably, this is why `HOLD` is the right committee posture instead of an outright `BUY`. The evidence is constructive enough that I would not want to be net bearish: price is above all key moving averages except there is no exception here, momentum has turned positive, and the macro regime is not recessionary. But the evidence is also not strong enough for a full-throttle long entry at this exact print, because `SCCO` just failed to hold the first push into resistance, volume has not decisively validated the rebound, and the inflation/rates backdrop can still compress cyclical equity multiples even if copper-sensitive fundamentals remain decent.
+
+Specific tactical read:
+- Bullish continuation case: a decisive reclaim of `193.37-196.38` followed by acceptance above `201.10` would confirm that the rebound is transitioning into trend continuation. In that case, a retest of the February highs becomes plausible.
+- Base-case case: sideways consolidation between roughly `185` and `196` as momentum cools, with the stock deciding whether the March-April rebound was the start of a new leg or just a retracement within a broader range.
+- Bearish failure case: a close below the `10 EMA` and then below the `50 SMA` would weaken the setup materially and raise the odds of a move back toward `177` or lower.
+
+For risk framing, `ATR` near `9` means traders should respect the fact that normal daily movement is still large. Any swing setup in `SCCO` needs wider stops than a low-volatility defensive stock. A breakout trader would want price confirmation plus stronger volume rather than buying the middle of the current range. A pullback trader would want to see whether the `185-188` support cluster actually holds before leaning long.
+
+Net assessment: `SCCO` is technically constructive in a moderately supportive macro regime, but the stock is at a tactically awkward spot, just above support and just below notable resistance after a fast rebound. That is not the cleanest location for a fresh aggressive buy, and it is not weak enough for a sell. `HOLD` best matches the evidence.
+
+| Area | Observation for `SCCO` | Trading Implication |
+| --- | --- | --- |
+| Short-term trend | Close `189.30` is above `10 EMA 185.57` | Near-term trend still constructive |
+| Medium-term trend | Close is slightly above `50 SMA 188.07` | Key pivot support is being tested now |
+| Long-term trend | Close is far above `200 SMA 139.77` | Structural uptrend remains intact |
+| Momentum | `MACD +2.62`, sharply improved from late March | Bullish reversal has occurred, but impulse is cooling |
+| RSI | `55.97`, down from `62.12` | Positive but not overbought; favors consolidation or shallow pullback |
+| Bollinger context | Price below `boll_ub 201.10`, well above `boll_lb 145.96` | Upper-half positioning, but no confirmed breakout yet |
+| Volatility | `ATR 8.96`, easing from early-April highs | Still wide trading ranges; use disciplined risk sizing |
+| Volume quality | Rebound volume lighter than March selloff volume | Recovery is real but not fully conviction-backed |
+| Macro overlay | Soft-landing / risk-on backdrop, but sticky inflation and high long yields | Supports fundamentals, constrains multiple expansion |
+| Committee stance | Technicals constructive, entry quality mixed | `HOLD` until either breakout confirmation or cleaner pullback support |

@@ -1,0 +1,18 @@
+Macro view for `DDOG`: the backdrop looks like a soft-landing / late-cycle expansion, not a recession regime. Labor is still intact with unemployment at 4.3% and payrolls still growing, while the curve is positively sloped with a 2Y-10Y spread of +53 bps, which argues against an immediate recession signal. That is broadly supportive for enterprise software demand and IT budget stability, which is a macro positive for `DDOG`.
+
+The problem is inflation appears sticky again. Headline CPI and PPI both accelerated in the latest reading, and the long end of the Treasury curve is materially above the front end, with the 10Y at 4.29% and 30Y at 4.89%. Combined with the Fed having already eased from 4.09% in October 2025 to 3.64% by January-March 2026 and then pausing, the most usable interpretation is: the Fed is near neutral, but further near-term cuts are less likely unless growth weakens. That is a mixed setup for `DDOG`: fundamentals get support from resilient growth, but valuation multiples remain exposed to higher long-duration discount rates.
+
+Cross-asset implication: this is better for credit and cyclical risk than for long-duration growth multiple expansion. For `DDOG`, macro probably supports revenue resilience more than multiple re-rating. If rates stay elevated or reprice higher on sticky inflation, premium software names can lag even without a demand collapse. If inflation cools and the 10Y backs down, `DDOG` would likely benefit disproportionately because duration-sensitive growth equities tend to respond quickly to easing real-rate pressure.
+
+Key risks other analysts should incorporate for `DDOG`: a renewed inflation scare, a bear-steepening move in yields, and any delayed slowdown in enterprise spending if Fed policy stays restrictive for longer than equity markets expect. Also note PMI and consumer confidence were unavailable here, so the growth signal relies more heavily on labor, policy-rate path, and the Treasury curve than on broad survey confirmation.
+
+| Macro signal | Current read | Regime implication | Likely market impact | `DDOG` implication |
+| --- | --- | --- | --- | --- |
+| Fed funds | 3.64%, unchanged since Jan-Mar 2026 after prior cuts | Fed near neutral, pause likely | Less support from imminent cuts | Neutral to slight headwind for multiple expansion |
+| CPI | Latest reading accelerated sequentially | Disinflation may be stalling | Keeps real yields/rate volatility elevated | Headwind for high-multiple software valuations |
+| PPI | Latest reading accelerated more sharply | Upstream price pressure still present | Raises risk of higher inflation expectations | Negative for long-duration growth if sustained |
+| Labor | Unemployment 4.3%, payrolls still rising | Growth holding up, no clear recession signal | Supports risk appetite and earnings durability | Positive for enterprise spending stability |
+| Yield curve | 2Y-10Y at +0.53% | Normal upward slope, not recessionary | Better for cyclicals/credit than recession hedges | Positive for demand backdrop |
+| Long-end yields | 10Y 4.29%, 30Y 4.89% | Term premium/inflation concern remains | Caps equity multiple expansion | Main macro constraint on `DDOG` upside |
+| VIX | 18.17 | Contained risk aversion | Supportive for risk assets tactically | Mild positive |
+| Overall macro regime | Soft landing with sticky inflation | Growth okay, rates still restrictive enough to matter | Mixed for equities; selective, not broad beta | Fundamentals supported, valuation still rate-sensitive |

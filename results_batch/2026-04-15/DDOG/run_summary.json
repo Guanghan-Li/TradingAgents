@@ -1,0 +1,49 @@
+{
+  "analysis_date": "2026-04-15",
+  "anthropic_effort": null,
+  "backend_url": "codex://local",
+  "catalysts": [
+    {
+      "catalyst": "DDOG Q1 earnings and guidance",
+      "date_or_window": "Near-term Q1 2026 reporting season; exact date unavailable in provided context",
+      "expected_impact": "Primary event risk; results and guidance will determine whether recent analyst support despite target cuts is validated or challenged."
+    },
+    {
+      "catalyst": "TD Cowen target cut to $190 from $215 while maintaining Buy",
+      "date_or_window": "2026-04-05 to 2026-04-15 news window",
+      "expected_impact": "Supports the view that DDOG remains investable but valuation expectations have moderated."
+    },
+    {
+      "catalyst": "Mizuho target cut to $145 from $170 while maintaining Outperform",
+      "date_or_window": "2026-04-05 to 2026-04-15 news window",
+      "expected_impact": "Reinforces valuation sensitivity into Q1, especially if growth or margin outlook does not beat expectations."
+    },
+    {
+      "catalyst": "Macro rate and inflation backdrop",
+      "date_or_window": "Latest data through 2026-04-15; CPI/PPI observations dated 2026-03-01 and Treasury curve dated 2026-04-14",
+      "expected_impact": "Higher inflation readings and a 10Y yield around 4.26% can cap multiples for high-growth software equities."
+    },
+    {
+      "catalyst": "Software sector rally participation",
+      "date_or_window": "2026-04-05 to 2026-04-15 news window",
+      "expected_impact": "Improved sector breadth can sustain DDOG investor appetite if company execution remains intact."
+    }
+  ],
+  "chief_action": "Buy",
+  "chief_rating": "Overweight",
+  "chief_relative_stance": "Overweight",
+  "chief_summary": "Initiate a controlled starter position in DDOG, not a full-size purchase. The approved entry is a 1.25% initial weight, with a conditional path toward the 3.0% target weight only if DDOG confirms through price action and Q1 execution. Keep the total portfolio loss budget capped near 0.6%. The first technical checkpoint is whether DDOG can hold above the 50-day area around 119.13 and break the 122-124 resistance zone with follow-through. A close back below 114.79, materially weaker Q1 guidance, deterioration in free cash flow, weaker usage trends, or analyst downgrades would invalidate the starter. Time horizon is medium-term, but the next decision point is Q1 earnings and guidance.",
+  "chief_thesis": "The final decision is Buy DDOG because the structured underwriting supports exposure, but only with disciplined sizing. The probability map assigns 30% to the bull case, 50% to the base case, and 20% to the bear case. That does not justify an aggressive full allocation, but it does justify a starter because the bear case is not dominant and the base case is not negative. The 1.25% initial weight, 3.0% target weight, and 0.6% max portfolio loss convert the recommendation from a valuation bet into a staged risk-budgeted position.\n\nThe aggressive analyst is correct that DDOG is not a broken asset. Core Observability represents about 70% of revenue and remains the main retention and expansion engine. Security adds 15% of revenue and is faster-growing from a smaller base, while AI/LLM observability is only 5% today but provides option value if adoption becomes measurable. Fundamentally, DDOG still shows strong operating momentum: latest quarterly revenue growth was about 29.2% year over year, sequential revenue growth was about 7.6%, gross margin was about 80.4%, deferred revenue grew about 28%, Q4 free cash flow was strong, and the balance sheet carries substantial cash and investments against manageable debt.\n\nThe conservative analyst is also right that this is not a clean high-conviction buy. The base case is the largest scenario at 50%, valuation remains demanding with forward P/E around 45.9, GAAP margins are thin, stock-based compensation is material, and Q1 guidance is the key near-term catalyst risk. Technically, DDOG has reclaimed the 10 EMA near 114.79 and the 50 SMA near 119.13, but it remains below the 200 SMA near 138.69 and MACD is still negative. That argues against buying a full position before confirmation.\n\nThe neutral analyst provides the right implementation discipline: treat the position as a conditional probe, not as a thesis-confirmed full allocation. DDOG\u2019s close at 121.06 shows tactical repair, but the sharp rebound from 105.37 to 121.06 means chasing would be poor risk control. Add only if DDOG holds the reclaimed trend levels, clears 122-124 with improving momentum, and Q1 confirms stable-to-improving guidance, healthy usage demand, durable free-cash-flow conversion, and credible AI or multiproduct monetization.\n\nFinal portfolio instruction: Buy DDOG as a staged Overweight candidate. Start at 1.25%, do not exceed that before Q1 confirmation, and move toward 3.0% only if the evidence improves. If DDOG loses 114.79 on a closing basis or Q1 points to deceleration, weaker retention, free-cash-flow deterioration, or downgrade-driven sentiment damage, exit the starter and return DDOG to no active exposure.",
+  "decision": "BUY",
+  "deep_think_llm": "gpt-5.4",
+  "ended_at": "2026-04-15T14:24:00.170415",
+  "error": null,
+  "openai_reasoning_effort": "high",
+  "provider": "codex_cli",
+  "quick_think_llm": "gpt-5.4",
+  "results_dir": "results_batch/2026-04-15/DDOG",
+  "risk_summary": "**Absolute Action**: Buy\n\n**Relative Stance**: Overweight\n\n**Executive Summary**: Initiate a controlled starter position in DDOG, not a full-size purchase. The approved entry is a 1.25% initial weight, with a conditional path toward the 3.0% target weight only if DDOG confirms through price action and Q1 execution. Keep the total portfolio loss budget capped near 0.6%. The first technical checkpoint is whether DDOG can hold above the 50-day area around 119.13 and break the 122-124 resistance zone with follow-through. A close back below 114.79, materially weaker Q1 guidance, deterioration in free cash flow, weaker usage trends, or analyst downgrades would invalidate the starter. Time horizon is medium-term, but the next decision point is Q1 earnings and guidance.\n\n**Investment Thesis**: The final decision is Buy DDOG because the structured underwriting supports exposure, but only with disciplined sizing. The probability map assigns 30% to the bull case, 50% to the base case, and 20% to the bear case. That does not justify an aggressive full allocation, but it does justify a starter because the bear case is not dominant and the base case is not negative. The 1.25% initial weight, 3.0% target weight, and 0.6% max portfolio loss convert the recommendation from a valuation bet into a staged risk-budgeted position.\n\nThe aggressive analyst is correct that DDOG is not a broken asset. Core Observability represents about 70% of revenue and remains the main retention and expansion engine. Security adds 15% of revenue and is faster-growing from a smaller base, while AI/LLM observability is only 5% today but provides option value if adoption becomes measurable. Fundamentally, DDOG still shows strong operating momentum: latest quarterly revenue growth was about 29.2% year over year, sequential revenue growth was about 7.6%, gross margin was about 80.4%, deferred revenue grew about 28%, Q4 free cash flow was strong, and the balance sheet carries substantial cash and investments against manageable debt.\n\nThe conservative analyst is also right that this is not a clean high-conviction buy. The base case is the largest scenario at 50%, valuation remains demanding with forward P/E around 45.9, GAAP margins are thin, stock-based compensation is material, and Q1 guidance is the key near-term catalyst risk. Technically, DDOG has reclaimed the 10 EMA near 114.79 and the 50 SMA near 119.13, but it remains below the 200 SMA near 138.69 and MACD is still negative. That argues against buying a full position before confirmation.\n\nThe neutral analyst provides the right implementation discipline: treat the position as a conditional probe, not as a thesis-confirmed full allocation. DDOG\u2019s close at 121.06 shows tactical repair, but the sharp rebound from 105.37 to 121.06 means chasing would be poor risk control. Add only if DDOG holds the reclaimed trend levels, clears 122-124 with improving momentum, and Q1 confirms stable-to-improving guidance, healthy usage demand, durable free-cash-flow conversion, and credible AI or multiproduct monetization.\n\nFinal portfolio instruction: Buy DDOG as a staged Overweight candidate. Start at 1.25%, do not exceed that before Q1 confirmation, and move toward 3.0% only if the evidence improves. If DDOG loses 114.79 on a closing basis or Q1 points to deceleration, weaker retention, free-cash-flow deterioration, or downgrade-driven sentiment damage, exit the starter and return DDOG to no active exposure.",
+  "started_at": "2026-04-15T14:10:18.280231",
+  "status": "completed",
+  "ticker": "DDOG"
+}

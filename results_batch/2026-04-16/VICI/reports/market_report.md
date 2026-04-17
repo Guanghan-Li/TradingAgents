@@ -1,0 +1,27 @@
+FINAL TRANSACTION PROPOSAL: **HOLD**
+
+For `VICI`, the highest-value indicator set in this regime is `close_10_ema`, `close_50_sma`, `close_200_sma`, `macd`, `rsi`, `boll_ub`, `boll_lb`, and `atr`. That mix is appropriate because it covers short-, medium-, and long-horizon trend, momentum confirmation, overextension/range structure, and volatility-based risk control without wasting slots on redundant derivatives like `macds`, `macdh`, or `boll`.
+
+The technical picture is improving, but it is not fully repaired. `VICI` closed at `28.40` on `2026-04-16`, above the rising `close_10_ema` at `28.05`, which confirms short-term upside momentum has been restored. `macd` also flipped positive to `0.0247` from `-0.0136` the prior session, which is an important momentum inflection after a multiweek recovery from the `2026-03-27` low at `26.61`. `rsi` at `56.94` supports that read: bullish enough to show demand is improving, but not so elevated that the move looks exhausted.
+
+The problem is that price is only just reaching meaningful overhead supply, not clearing it. `VICI` is sitting essentially on the `close_50_sma` at `28.40`, so the stock is testing medium-term trend neutrality rather than decisively reclaiming it. Above that, `boll_ub` is `28.68`, which means price is already near the upper end of its current volatility envelope. In practice, that creates a near-term decision zone: a clean close through roughly `28.68` would argue the rebound is graduating into a stronger trend continuation, while repeated rejection in the `28.40` to `28.70` area would suggest the move is still just a bounce inside a broader repair process.
+
+The long-term trend remains the main constraint. `close_200_sma` is still `29.47`, more than a dollar above spot, and it has been drifting lower but remains clearly above price. That tells you the larger structure is still not fully bullish. Said differently: short-term momentum is constructive, medium-term structure is being challenged, but long-term trend confirmation is absent. For a REIT like `VICI`, that matters even more because the macro backdrop is only moderately supportive for valuation. The soft-landing, risk-on regime helps tenant health and supports carry trades, but the `10Y` at `4.29%` and `30Y` at `4.89%` still compete directly with income-oriented equities and can cap multiple expansion.
+
+Volatility is behaving constructively. `atr` has fallen to `0.486` from about `0.620` around `2026-03-30`, showing the panic phase has cooled and price action is becoming more orderly. Bollinger structure also reflects compression after the March downdraft: the upper band has fallen sharply from late-March extremes while the lower band has risen, meaning the range is tightening. That usually sets up a cleaner directional move, but because price is already pressing the upper portion of the band, the next move matters more than the last one. A breakout from compression would be bullish; a stall at the upper band would be a warning that upside is being capped by resistance and rates.
+
+From a trading standpoint, this is not a clean sell because momentum and regime have improved, but it is also not a high-conviction buy at current levels because `VICI` is pressing resistance into a still-unresolved long-term downtrend. The best interpretation is `HOLD` with a tactical bullish bias only if price confirms. A sustained move above `28.68` would improve the setup materially and open the way toward the `29.00` to `29.50` region, where the `close_200_sma` becomes the next major test. If the stock fails here and loses the `close_10_ema` near `28.05`, then the rebound likely weakens and a retracement toward the `27.65` to `27.30` support zone becomes more likely.
+
+One additional nuance: the recent rebound has come with generally lighter volume than the late-February and mid-March selling phases. That does not invalidate the recovery, but it does reduce confidence in an immediate upside expansion. In this macro regime, breakouts can work, but for `VICI` I would want confirmation because long-duration valuation headwinds remain real.
+
+| Area | Read for `VICI` | Evidence | Trading Implication |
+| --- | --- | --- | --- |
+| Short-term trend | Bullish improving | Close `28.40` above `close_10_ema` `28.05` | Near-term momentum favors buyers |
+| Medium-term trend | At decision point | Price is essentially on `close_50_sma` `28.40` | Need decisive reclaim to validate trend repair |
+| Long-term trend | Still bearish/unfinished | `close_200_sma` `29.47` remains above price | Rally not yet a full trend reversal |
+| Momentum | Constructive | `macd` turned positive to `0.0247`; `rsi` `56.94` | Upside pressure is improving without overbought conditions |
+| Volatility regime | Cooling and compressing | `atr` down to `0.486`; Bollinger range tightening | Favors pending breakout or rejection setup |
+| Resistance | Immediate overhead | `28.40` (`close_50_sma`), then `28.68` (`boll_ub`), then `29.47` (`close_200_sma`) | Do not chase unless resistance is cleared |
+| Support | First support close by | `28.05` (`close_10_ema`), then `27.65` to `27.30` recent base | Loss of EMA would weaken the recovery |
+| Macro overlay | Mildly supportive, valuation-capped | Risk-on regime helps fundamentals, but `10Y`/`30Y` yields remain elevated | Good for stability, less good for multiple expansion |
+| Bottom line | `HOLD` | Recovery is real, but overhead resistance and long-rate headwinds remain unresolved | Wait for confirmed breakout or better risk/reward entry |

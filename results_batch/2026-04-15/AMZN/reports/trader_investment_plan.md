@@ -1,0 +1,5 @@
+AMZN remains fundamentally strong and strategically well positioned, with improving operating leverage, strong cash generation, supportive AI and infrastructure narratives, and a broadly risk-on macro backdrop. Price action is decisively bullish, but the stock is also extended: RSI is overbought, price is pressing above the upper Bollinger Band, ATR is elevated, and Q1 earnings add event risk. That makes this a good company with a less forgiving entry, not a broken setup.
+
+The best synthesis is a disciplined Buy rather than an aggressive chase. The edge comes from AMZN’s quality, momentum, and medium-term growth optionality, but risk control matters because valuation and positioning are no longer cheap. A starter position is justified now, with adds only on either a controlled pullback that holds the 238-240 breakout area or 10 EMA support near 231.84, or on a clean breakout above 252.18 with renewed volume. If price loses 238-240 and momentum weakens, the setup deteriorates quickly; a deeper break below 231.84 would argue for cutting exposure.
+
+Decision: initiate or maintain a partial long in AMZN, not a full-size chase. FINAL TRANSACTION PROPOSAL: **BUY**

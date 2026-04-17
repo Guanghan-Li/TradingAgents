@@ -1,0 +1,21 @@
+{
+  "analysis_date": "2026-04-11",
+  "anthropic_effort": "medium",
+  "backend_url": "https://api.routeai.cc",
+  "catalysts": [],
+  "chief_rating": "Hold",
+  "chief_summary": "Claude backend unavailable; preserve capital and rerun when the provider is healthy.",
+  "chief_thesis": "This run completed in degraded mode because the configured Claude backend was unavailable.",
+  "decision": "HOLD",
+  "deep_think_llm": "claude-sonnet-4-6",
+  "ended_at": "2026-04-11T19:47:57.771795",
+  "error": null,
+  "openai_reasoning_effort": null,
+  "provider": "anthropic",
+  "quick_think_llm": "claude-sonnet-4-6",
+  "results_dir": "results/NVDA/2026-04-11",
+  "risk_summary": "Anthropic backend preflight failed: Error code: 401 - {'code': 'INVALID_API_KEY', 'message': 'Invalid API key'}",
+  "started_at": "2026-04-11T19:47:57.771786",
+  "status": "completed",
+  "ticker": "NVDA"
+}

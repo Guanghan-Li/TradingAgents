@@ -1,0 +1,1 @@
+SLV is a commodity ETF with no operating segments. Macro drivers: USD weakness (positive), geopolitical risk hedging (positive short-term), retail ETF participation (positive). Near-term bias constructive pending USD direction and equity volatility regime. No income statement data available; analysis based on silver price drivers and ETF flows. See JSON for value driver map.

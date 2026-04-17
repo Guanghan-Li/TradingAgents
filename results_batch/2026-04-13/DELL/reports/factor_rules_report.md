@@ -1,0 +1,10 @@
+{
+  "ticker": "DELL",
+  "trade_date": "2026-04-13",
+  "analyst_summary": "DELL faces a balanced but tense setup. Two high-weight rules pull in opposite directions: AI capex acceleration (bullish) versus valuation stretch under slowing growth (bearish). Balance sheet resilience (neutral, medium weight) provides a modest cushion but does not resolve the conflict.",
+  "strongest_bullish_signal": "AI capex acceleration (high weight). If DELL's backlog is rising and margins hold steady amid infrastructure spending, the company is well-positioned to capture AI-driven demand. This rule carries the most upside conviction.",
+  "strongest_bearish_signal": "Valuation stretch under slowing growth (high weight). If forward guidance weakens or the multiple expands faster than earnings revisions, downside risk becomes material. This is the primary caution flag.",
+  "key_conflicts": "Both high-weight rules are active but contradictory. Without current backlog data, margin trends, forward guidance, and valuation multiples, we cannot determine which rule dominates. The neutral balance sheet rule does not break the tie.",
+  "missing_information": "Critical gaps: (1) Recent backlog and order trends, (2) Margin trajectory amid capex increases, (3) Forward revenue/EPS guidance and any revisions, (4) Current P/E or EV/EBITDA multiple vs. historical range, (5) Free cash flow and net cash position. These data points are required to activate or dismiss the high-weight rules.",
+  "practical_guidance": "Downstream analysts should: (1) Verify whether AI infrastructure demand is translating into rising backlog and stable margins (activates bullish rule), (2) Check if valuation has expanded beyond earnings support or if guidance has been cut (activates bearish rule), (3) Confirm balance sheet strength to assess downside protection. If both high-weight rules trigger, the trade becomes a coin flip unless one condition is clearly stronger. Prioritize gathering the missing data before taking a directional stance."
+}

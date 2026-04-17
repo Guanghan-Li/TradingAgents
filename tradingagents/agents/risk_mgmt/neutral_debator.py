@@ -1,7 +1,8 @@
 
 from tradingagents.agents.utils.agent_utils import (
-    build_analyst_report_context,
+    build_compact_risk_handoff_context,
     build_structured_stock_priority_context,
+    invoke_committee_debate_llm,
 )
 
 
@@ -14,24 +15,24 @@ def create_neutral_debator(llm):
         current_aggressive_response = risk_debate_state.get("current_aggressive_response", "")
         current_conservative_response = risk_debate_state.get("current_conservative_response", "")
 
-        analyst_report_context = build_analyst_report_context(state)
+        analyst_report_context = build_compact_risk_handoff_context(state)
         structured_stock_context = build_structured_stock_priority_context(state)
 
         trader_decision = state["trader_investment_plan"]
 
-        prompt = f"""As the Neutral Risk Analyst, your role is to provide a balanced perspective, weighing both the potential benefits and risks of the trader's decision or plan. You prioritize a well-rounded approach, evaluating the upsides and downsides while factoring in broader market trends, potential economic shifts, and diversification strategies.Here is the trader's decision:
+        prompt = f"""As the Neutral Risk Analyst, evaluate the trader's decision through a balanced risk-reward lens. Weigh upside and downside fairly, factor in broader market conditions, and identify the most decision-relevant trade-offs without favoring either extreme. Here is the trader's decision:
 
 {trader_decision}
 
-Your task is to challenge both the Aggressive and Conservative Analysts, pointing out where each perspective may be overly optimistic or overly cautious. Use insights from the following data sources to support a moderate, sustainable strategy to adjust the trader's decision:
+Your task is to challenge both the Aggressive and Conservative Analysts, pointing out where each perspective may be overstating or understating the risk/reward. Use insights from the following data sources to recommend a calibrated middle-ground interpretation of the trader's decision:
 
 {analyst_report_context}
 Structured Stock Underwriting Outputs To Prioritize: {structured_stock_context}
 Here is the current conversation history: {history} Here is the last response from the aggressive analyst: {current_aggressive_response} Here is the last response from the conservative analyst: {current_conservative_response}. If there are no responses from the other viewpoints yet, present your own argument based on the available data.
 
-Engage actively by analyzing both sides critically, addressing weaknesses in the aggressive and conservative arguments to advocate for a more balanced approach. Challenge each of their points to illustrate why a moderate risk strategy might offer the best of both worlds, providing growth potential while safeguarding against extreme volatility. Focus on debating rather than simply presenting data, aiming to show that a balanced view can lead to the most reliable outcomes. Output conversationally as if you are speaking without any special formatting."""
+Analyze both sides critically, address weaknesses in the aggressive and conservative arguments, and explain what balanced sizing or conditions would make sense if the trade proceeds. Focus on rigorous committee debate, not persuasion tactics. Output conversationally as if you are speaking without any special formatting."""
 
-        response = llm.invoke(prompt)
+        response = invoke_committee_debate_llm(llm, "Neutral Risk Analyst", prompt)
 
         argument = f"Neutral Analyst: {response.content}"
 

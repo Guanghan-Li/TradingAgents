@@ -1,0 +1,11 @@
+For `MU`, my decision is a disciplined staged **BUY**, not an aggressive full-size chase. The strongest reason to lean bullish is that the fundamental inflection is unusually powerful: revenue, EPS, margins, operating cash flow, free cash flow, and balance-sheet quality have all improved sharply, while the stock still screens inexpensive on forward earnings if the memory upcycle and AI/HBM demand remain durable.
+
+The live market context keeps the entry tactical. `MU` is trading around 457.23, above its 10 EMA, 50 SMA, and 200 SMA, with positive MACD and RSI near 63. That confirms bullish trend and momentum, but price is also close to the 465-471 resistance zone after a very fast rebound from the late-March low. ATR near 26 means volatility is high, so position sizing matters more than usual.
+
+The macro and sentiment backdrop support exposure but do not remove risk. Risk appetite is constructive, the yield curve is positively sloped, and AI semiconductor narratives remain favorable. However, sticky inflation, elevated long yields, sector crowding, and dependence on broader AI-chip sentiment create real drawdown risk if the market rotates out of semiconductors or if NVIDIA-linked sentiment weakens.
+
+My trading plan is to initiate or maintain a partial `MU` long now, around a 3% portfolio weight, and scale only if `MU` closes decisively above 471 on strong volume or pulls back toward the 426 area and holds. Risk should be capped tightly at the portfolio level, with reduction warranted if `MU` loses the 426 area on a closing basis and a stronger exit signal if it breaks below roughly 405. A stop framework near 418 is reasonable for a staged position, while recognizing that tight stops may be hit by normal volatility.
+
+Key risks to monitor are gross-margin durability, receivables/cash conversion, DRAM pricing, Chinese memory supply, rate shocks around CPI/PPI or FOMC events, and whether fiscal Q3 results validate the current earnings expectations. With no past mistake log available, the main discipline applied here is to avoid confusing an extended entry with a broken thesis while still refusing to ignore volatility and cash-conversion risk.
+
+FINAL TRANSACTION PROPOSAL: **BUY**

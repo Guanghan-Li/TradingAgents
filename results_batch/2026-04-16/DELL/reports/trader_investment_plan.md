@@ -1,0 +1,7 @@
+DELL remains a controlled trend-following buy. The technical picture is the clearest driver: DELL broke to fresh closing and intraday highs on above-average volume, price is well above rising 10 EMA, 50 SMA, and 200 SMA, and MACD/RSI still support continuation even with mild momentum divergence. Macro is good enough for enterprise hardware demand in a soft-landing, higher-for-longer regime, and the fundamental story is real: revenue, operating income, EPS, EBITDA, and free cash flow all accelerated materially.
+
+The supporting narrative is also constructive. DELL benefits from the overlap of AI infrastructure exposure and relative value, reinforced by Goldman Sachs raising its price target to $215 and maintaining Buy. The main negatives are execution and positioning risks, not a broken thesis: DELL is extended near the upper volatility envelope, ATR is rising, gross margin has compressed, the latest free-cash-flow surge was partly working-capital-assisted, and leverage remains meaningful. That argues for disciplined sizing, not for avoiding the trade.
+
+The best decision is to buy DELL with risk controls. Initiate at the underwritten 2.0% weight and only scale toward 4.0% on either clean continuation above 193.80 with volume or a constructive retest of 190 to 185 that holds. A fast loss of the 189.8 to 191.4 breakout zone is an early warning; a decisive close below 181 is the hard invalidation level. On balance, Bull plus Base outcomes still dominate, and the evidence favors owning DELL rather than holding back.
+
+FINAL TRANSACTION PROPOSAL: **BUY**

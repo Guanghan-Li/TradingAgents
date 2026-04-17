@@ -1,0 +1,7 @@
+TSLA merits a cautious tactical long, not an aggressive chase. The strongest positives are the sharp short-term momentum recovery, price back above the 10-day EMA, improving MACD and RSI, a risk-on market backdrop, supportive AI5/Optimus/Terafab narrative momentum, and a very strong balance sheet with about $44.06B in cash and short-term investments against $14.72B in debt. Those factors argue against zero exposure.
+
+The constraints are real. TSLA closed at 388.90 on 2026-04-16, still below the 50-day SMA at 390.45 and the 200-day SMA at 398.37, with the upper Bollinger Band also near 398.38. That 390-400 area is heavy resistance. Fundamentals also do not justify a large position yet: valuation is extreme, net margin is only 4.0%, earnings quality is uneven, and sticky inflation plus a paused Fed are not ideal for a duration-heavy growth stock.
+
+Decision: Buy TSLA only as a small, staged position. Start with the initial 1.0% weight from the plan, not the full 2.5% target. Add only if TSLA delivers a decisive close above 398-400 with volume confirmation, or if upcoming results show stronger EPS revisions, operating margin improvement, and durable free cash flow. If TSLA loses the 368 area near the 10-day EMA, or if Cybertruck demand-quality concerns worsen without hard AI/robotics execution proof, reduce or exit rather than average down.
+
+FINAL TRANSACTION PROPOSAL: **BUY**

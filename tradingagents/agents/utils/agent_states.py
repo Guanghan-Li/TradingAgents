@@ -155,7 +155,8 @@ def build_chief_analyst_data_defaults(
         "ticker": ticker,
         "analysis_date": analysis_date,
         "verdict": {
-            "rating": "",
+            "absolute_action": "",
+            "relative_stance": "",
             "summary": "",
             "thesis": "",
         },
@@ -194,6 +195,7 @@ def make_default_structured_stock_underwriting_state() -> dict[str, Any]:
 class AgentState(MessagesState):
     company_of_interest: Annotated[str, "Company that we are interested in trading"]
     trade_date: Annotated[str, "What date we are trading at"]
+    prefetched_context: Annotated[dict[str, str], "Prefetched analyst context blocks"]
 
     sender: Annotated[str, "Agent that sent this message"]
 

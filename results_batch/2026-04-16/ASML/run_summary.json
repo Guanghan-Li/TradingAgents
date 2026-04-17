@@ -1,0 +1,49 @@
+{
+  "analysis_date": "2026-04-16",
+  "anthropic_effort": null,
+  "backend_url": "codex://local",
+  "catalysts": [
+    {
+      "catalyst": "Post-Q1 2026 estimate revisions and analyst price-target updates",
+      "date_or_window": "April-May 2026",
+      "expected_impact": "Positive if additional analysts echo RBC's view that EUV demand is outpacing supply and 2027 growth visibility is improving; neutral if revisions merely catch up to already priced expectations."
+    },
+    {
+      "catalyst": "Next ASML earnings, order intake, backlog, and supply-chain update",
+      "date_or_window": "July 2026 expected window",
+      "expected_impact": "High-impact company-specific catalyst. Strong EUV bookings and clean margin commentary would validate the bull case; weak orders, China drag, or shipment constraints would shift probability toward the bear case."
+    },
+    {
+      "catalyst": "Monthly U.S. CPI/PPI releases and rate-market repricing",
+      "date_or_window": "May-July 2026",
+      "expected_impact": "Higher inflation or long-end yields would pressure high-multiple growth equities, including semiconductor equipment leaders; stable inflation and rates would support the base case."
+    },
+    {
+      "catalyst": "Major foundry and AI infrastructure capex updates",
+      "date_or_window": "Q2-Q3 2026 earnings season",
+      "expected_impact": "Customer confirmation that AI-related leading-edge spend remains strong would reinforce ASML's 2027 growth setup; signs of digestion or lower capex would challenge the bull thesis."
+    },
+    {
+      "catalyst": "Netherlands, EU, U.S., or China export-control developments affecting advanced lithography",
+      "date_or_window": "Ongoing through 2026",
+      "expected_impact": "Policy tightening could reduce China-related revenue visibility and increase multiple risk; absence of further tightening supports the base case."
+    }
+  ],
+  "chief_action": "Hold",
+  "chief_rating": "Neutral",
+  "chief_relative_stance": "Neutral",
+  "chief_summary": "For ASML, the committee decision is Hold / Neutral. Maintain existing exposure at or below the 2.0% starter weight and do not add blindly at current levels. The only acceptable scale-up path toward the 4.0% target weight is either a clean defense of the 1399 to 1383 support zone with momentum stabilizing, or a reclaim of 1431 to 1449 followed by a move through 1478. Keep the max-loss budget at 0.6% because ATR near 58.9 implies wide normal volatility. If ASML breaks 1399 decisively and does not recover quickly, or loses the 1359 to 1321 area, cut risk. Time horizon is the next 1 to 2 quarters, with April-May 2026 estimate revisions and July 2026 earnings, backlog, and order commentary as the main decision points.",
+  "chief_thesis": "The debate resolves to Hold because ASML is still a high-quality franchise, but the entry is not clean enough to justify a Buy. The strongest evidence against selling is that the business and trend remain intact: Q1 revenue grew 13.2% year over year, net income grew 17.1%, EPS grew 19.2%, gross margin held near 53%, operating margin held near 36%, and ASML remains net cash. Technically, ASML is still above the 50 SMA at 1399.30 and far above the 200 SMA at 1073.74, with positive MACD and RSI at 52.51 indicating consolidation rather than breakdown. The structured scenario work also leans constructive overall, with 45% base, 35% bull, and only 20% bear.\n\nThat said, the evidence does not justify upgrading ASML to Buy yet. The stock is already priced for strong execution at about 46.44x trailing earnings and 29.57x forward earnings. Q1 operating cash flow was negative 2.19B, free cash flow was negative 2.61B, and working capital swung negative 5.16B, so cash conversion still needs to normalize. Short-term momentum also cooled, with price below the 10 EMA after the pullback from 1518.30 to 1410.83. Macro is not clean enough to ignore either: March 2026 CPI rose 0.87% m/m, PPI rose 1.78% m/m, the 10-year yield is 4.29%, and the 30-year yield is 4.89%, which can cap multiple expansion for a premium semiconductor name.\n\nSo the decisive synthesis is: ASML is strong enough to own, but not strong enough to chase. The aggressive analyst is right on franchise quality, AI capex support, and EUV demand strength; the conservative analyst is right that valuation, rates, and cash-conversion risk require hard guardrails; the neutral analyst has the correct portfolio conclusion. Hold ASML now, keep sizing disciplined, and only upgrade after backlog, margins, guidance, and price action provide proof that the business is catching back up with the valuation.",
+  "decision": "HOLD",
+  "deep_think_llm": "gpt-5.4",
+  "ended_at": "2026-04-16T15:08:50.086770",
+  "error": null,
+  "openai_reasoning_effort": "high",
+  "provider": "codex_cli",
+  "quick_think_llm": "gpt-5.4",
+  "results_dir": "results_batch/2026-04-16/ASML",
+  "risk_summary": "**Absolute Action**: Hold\n\n**Relative Stance**: Neutral\n\n**Executive Summary**: For ASML, the committee decision is Hold / Neutral. Maintain existing exposure at or below the 2.0% starter weight and do not add blindly at current levels. The only acceptable scale-up path toward the 4.0% target weight is either a clean defense of the 1399 to 1383 support zone with momentum stabilizing, or a reclaim of 1431 to 1449 followed by a move through 1478. Keep the max-loss budget at 0.6% because ATR near 58.9 implies wide normal volatility. If ASML breaks 1399 decisively and does not recover quickly, or loses the 1359 to 1321 area, cut risk. Time horizon is the next 1 to 2 quarters, with April-May 2026 estimate revisions and July 2026 earnings, backlog, and order commentary as the main decision points.\n\n**Investment Thesis**: The debate resolves to Hold because ASML is still a high-quality franchise, but the entry is not clean enough to justify a Buy. The strongest evidence against selling is that the business and trend remain intact: Q1 revenue grew 13.2% year over year, net income grew 17.1%, EPS grew 19.2%, gross margin held near 53%, operating margin held near 36%, and ASML remains net cash. Technically, ASML is still above the 50 SMA at 1399.30 and far above the 200 SMA at 1073.74, with positive MACD and RSI at 52.51 indicating consolidation rather than breakdown. The structured scenario work also leans constructive overall, with 45% base, 35% bull, and only 20% bear.\n\nThat said, the evidence does not justify upgrading ASML to Buy yet. The stock is already priced for strong execution at about 46.44x trailing earnings and 29.57x forward earnings. Q1 operating cash flow was negative 2.19B, free cash flow was negative 2.61B, and working capital swung negative 5.16B, so cash conversion still needs to normalize. Short-term momentum also cooled, with price below the 10 EMA after the pullback from 1518.30 to 1410.83. Macro is not clean enough to ignore either: March 2026 CPI rose 0.87% m/m, PPI rose 1.78% m/m, the 10-year yield is 4.29%, and the 30-year yield is 4.89%, which can cap multiple expansion for a premium semiconductor name.\n\nSo the decisive synthesis is: ASML is strong enough to own, but not strong enough to chase. The aggressive analyst is right on franchise quality, AI capex support, and EUV demand strength; the conservative analyst is right that valuation, rates, and cash-conversion risk require hard guardrails; the neutral analyst has the correct portfolio conclusion. Hold ASML now, keep sizing disciplined, and only upgrade after backlog, margins, guidance, and price action provide proof that the business is catching back up with the valuation.",
+  "started_at": "2026-04-16T14:56:25.518977",
+  "status": "completed",
+  "ticker": "ASML"
+}

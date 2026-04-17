@@ -1,0 +1,7 @@
+ANET is a tactical BUY, but it should be implemented as staged accumulation rather than full-size chasing. The decisive evidence is fundamental: roughly 29% YoY revenue growth, operating margin above 40%, very strong free cash flow, about $10.74B in cash and short-term investments, and major deferred revenue expansion. That supports the view that ANET is being repriced on real AI-networking demand and not just sentiment. Macro is mixed but still supportive for demand, and the May 5, 2026 earnings catalyst keeps the setup constructive.
+
+The constraint is entry quality. ANET is extended after a sharp rally, RSI is near overbought, price is pressing resistance around 155.4, and valuation is rich enough that any guidance miss or rate backup could trigger a hard pullback. That makes aggressive upside chasing inefficient, but it does not invalidate the long thesis.
+
+The best course is to buy ANET in a risk-controlled way: start with partial exposure, add on a convincing break above 155.4 with strong participation, or add on a successful retest of the 145-147 support zone near the 10 EMA. Avoid pressing size if ANET loses 144 decisively or if earnings/guidance weakens the AI demand narrative.
+
+FINAL TRANSACTION PROPOSAL: **BUY**

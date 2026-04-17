@@ -16,8 +16,10 @@ def _make_price_history(symbols: list[str]) -> pd.DataFrame:
 
 
 def test_get_sector_peers_maps_known_sector_and_excludes_self():
-    with patch("yfinance.Ticker") as mock_ticker:
-        mock_ticker.return_value.info = {"sector": "Technology"}
+    with patch(
+        "tradingagents.dataflows.peer_comparison.fetch_ticker_info",
+        return_value={"sector": "Technology"},
+    ):
         from tradingagents.dataflows.peer_comparison import get_sector_peers
 
         sector_display, sector_key, peers = get_sector_peers("AAPL")
@@ -30,7 +32,7 @@ def test_get_sector_peers_maps_known_sector_and_excludes_self():
 
 def test_compute_relative_performance_returns_ranked_markdown_table():
     with patch(
-        "yfinance.download",
+        "tradingagents.dataflows.peer_comparison.fetch_download_frame",
         return_value=_make_price_history(["AAPL", "MSFT", "NVDA", "XLK"]),
     ):
         from tradingagents.dataflows.peer_comparison import compute_relative_performance
@@ -45,7 +47,7 @@ def test_compute_relative_performance_returns_ranked_markdown_table():
 
 def test_compute_relative_performance_ranks_against_peers_only():
     with patch(
-        "yfinance.download",
+        "tradingagents.dataflows.peer_comparison.fetch_download_frame",
         return_value=_make_price_history(["AAPL", "MSFT", "NVDA", "XLK"]),
     ):
         from tradingagents.dataflows.peer_comparison import compute_relative_performance
@@ -60,8 +62,10 @@ def test_compute_relative_performance_ranks_against_peers_only():
 
 
 def test_get_sector_relative_report_handles_unknown_sector_gracefully():
-    with patch("yfinance.Ticker") as mock_ticker:
-        mock_ticker.return_value.info = {"sector": "Unknown Sector"}
+    with patch(
+        "tradingagents.dataflows.peer_comparison.fetch_ticker_info",
+        return_value={"sector": "Unknown Sector"},
+    ):
         from tradingagents.dataflows.peer_comparison import get_sector_relative_report
 
         report = get_sector_relative_report("AAPL")
@@ -76,11 +80,13 @@ def test_get_sector_relative_report_handles_missing_columns_gracefully():
         axis=1,
     )
 
-    with patch("yfinance.Ticker") as mock_ticker, patch(
-        "yfinance.download",
+    with patch(
+        "tradingagents.dataflows.peer_comparison.fetch_ticker_info",
+        return_value={"sector": "Technology"},
+    ), patch(
+        "tradingagents.dataflows.peer_comparison.fetch_download_frame",
         return_value=partial_history,
     ):
-        mock_ticker.return_value.info = {"sector": "Technology"}
         from tradingagents.dataflows.peer_comparison import get_sector_relative_report
 
         report = get_sector_relative_report("AAPL")
@@ -92,11 +98,14 @@ def test_get_sector_relative_report_handles_missing_columns_gracefully():
 def test_peer_comparison_uses_curr_date_as_end_date():
     calls = []
 
-    def fake_download(symbols, **kwargs):
+    def fake_download(symbols, timeout_seconds=30, **kwargs):
         calls.append(kwargs)
         return _make_price_history(["AAPL", "MSFT", "XLK"])
 
-    with patch("yfinance.download", side_effect=fake_download):
+    with patch(
+        "tradingagents.dataflows.peer_comparison.fetch_download_frame",
+        side_effect=fake_download,
+    ):
         from tradingagents.dataflows.peer_comparison import compute_relative_performance
 
         compute_relative_performance(

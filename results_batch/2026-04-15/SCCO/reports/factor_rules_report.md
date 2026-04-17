@@ -1,0 +1,9 @@
+SCCO factor readout is mixed, with one high-weight bullish rule, one high-weight bearish rule, and one medium-weight neutral stabilizer. The bullish case is Rule 1, but it only matters if SCCO is actually showing rising backlog and stable margins alongside higher capex, and if the company is a direct beneficiary of AI infrastructure demand. That applicability is not established in the provided context, so this signal should be treated as conditional rather than active.
+
+The strongest bearish signal is Rule 2. It is also high weight and is the cleaner risk framework here: if forward growth is being revised down while the valuation multiple stays rich or expands, downside risk rises quickly. Without current guidance or valuation data, this is not confirmed, but it is the most important adverse rule to test first because it directly addresses expectation risk.
+
+Rule 3 adds some resilience if SCCO has net cash or only modest leverage and healthy free cash flow conversion. That does not turn the setup bullish by itself, but it can soften drawdown risk if the balance sheet is strong.
+
+Main conflict: the bullish and bearish rules are both high weight, but they depend on very different evidence. Rule 1 needs proof of demand-led operating strength; Rule 2 needs proof that valuation has outrun growth. Missing information is substantial: no SCCO-specific backlog trend, margin trend, capex trajectory, growth revisions, valuation context, leverage, or free cash flow data is provided.
+
+Practical guidance for downstream analysts: first verify whether Rule 1 is even relevant to SCCO’s business mix; then check for any downward growth revisions versus current valuation levels; finally use balance sheet and cash flow quality as a secondary durability filter. Until those checks are completed, the rule set supports a cautious neutral-to-mixed stance rather than a decisive directional view.

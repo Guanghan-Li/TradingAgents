@@ -1,0 +1,1 @@
+Trader fallback: no trade. Claude backend was unavailable, so execute no action and wait for a healthy rerun.

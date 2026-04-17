@@ -136,6 +136,10 @@ class PMTradingAgentsGraph:
             reasoning_effort = self.config.get("openai_reasoning_effort")
             if reasoning_effort:
                 kwargs["reasoning_effort"] = reasoning_effort
+        elif provider in {"anthropic", "claude_code"}:
+            effort = self.config.get("anthropic_effort")
+            if effort:
+                kwargs["effort"] = effort
 
         return kwargs
 

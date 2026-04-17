@@ -1,10 +1,9 @@
 from tradingagents.dataflows.yfinance_news import get_news_yfinance
 
 
-class _FakeSearch:
-    def __init__(self, query, news_count=20, enable_fuzzy_query=True):
-        self.query = query
-        self.news = [
+def test_get_news_yfinance_accepts_query_search(monkeypatch):
+    def fake_fetch_search_news(query, news_count=20, enable_fuzzy_query=True):
+        return [
             {
                 "title": f"{query} headline",
                 "publisher": "Example",
@@ -12,23 +11,7 @@ class _FakeSearch:
             }
         ]
 
-
-class _FakeTicker:
-    def __init__(self, ticker):
-        self.ticker = ticker
-
-    def get_news(self, count=20):
-        return [
-            {
-                "title": f"{self.ticker} headline",
-                "publisher": "Example",
-                "link": "https://example.com/story",
-            }
-        ]
-
-
-def test_get_news_yfinance_accepts_query_search(monkeypatch):
-    monkeypatch.setattr("tradingagents.dataflows.yfinance_news.yf.Search", _FakeSearch)
+    monkeypatch.setattr("tradingagents.dataflows.yfinance_news.fetch_search_news", fake_fetch_search_news)
 
     result = get_news_yfinance(
         query="AAPL product launch catalyst",
@@ -40,7 +23,16 @@ def test_get_news_yfinance_accepts_query_search(monkeypatch):
 
 
 def test_get_news_yfinance_accepts_ticker_lookup(monkeypatch):
-    monkeypatch.setattr("tradingagents.dataflows.yfinance_news.yf.Ticker", _FakeTicker)
+    def fake_fetch_ticker_news(ticker, count=20):
+        return [
+            {
+                "title": f"{ticker} headline",
+                "publisher": "Example",
+                "link": "https://example.com/story",
+            }
+        ]
+
+    monkeypatch.setattr("tradingagents.dataflows.yfinance_news.fetch_ticker_news", fake_fetch_ticker_news)
 
     result = get_news_yfinance(
         ticker="AAPL",

@@ -1,0 +1,49 @@
+{
+  "analysis_date": "2026-04-15",
+  "anthropic_effort": null,
+  "backend_url": "codex://local",
+  "catalysts": [
+    {
+      "catalyst": "ALB earnings / guidance update",
+      "date_or_window": "Late Apr to early May 2026 (inferred seasonal window; exact date not provided)",
+      "expected_impact": "Primary catalyst for validating or rejecting the forward earnings recovery narrative."
+    },
+    {
+      "catalyst": "Monthly CPI / PPI releases",
+      "date_or_window": "Mid-April to mid-May 2026 windows",
+      "expected_impact": "Sticky inflation would reduce odds of easier policy and pressure valuation support for cyclicals."
+    },
+    {
+      "catalyst": "U.S. labor-market update",
+      "date_or_window": "Early May 2026 window",
+      "expected_impact": "A stable labor backdrop supports soft-landing demand assumptions; deterioration would hurt cyclical sentiment."
+    },
+    {
+      "catalyst": "Next Fed decision / communication window",
+      "date_or_window": "Q2 2026 (exact meeting date not provided in context)",
+      "expected_impact": "Dovish communication would support multiple expansion; hawkish tone would cap the rerating."
+    },
+    {
+      "catalyst": "Lithium market pricing / peer commentary",
+      "date_or_window": "Ongoing through Q2 2026",
+      "expected_impact": "Incremental signals on lithium realizations can quickly change expectations for ALB's earnings power."
+    }
+  ],
+  "chief_action": "",
+  "chief_rating": "",
+  "chief_relative_stance": "",
+  "chief_summary": "For ALB, keep existing exposure but keep it small at the structured 0.75% starter weight until the next earnings/guidance window and lithium-pricing commentary confirm the recovery. Do not chase ALB at 185.38. Add only if ALB closes cleanly above 190-191 with volume while forward EPS around 8.81, margins, and free cash flow remain intact, or on a controlled pullback into 180-181 that holds and turns higher. If ALB closes below 180-181, de-risk. If ALB breaks 171-172 decisively, treat that as thesis damage and exit. Time horizon: near to medium term, centered on late April to early May 2026 earnings and Q2 2026 macro and lithium updates.",
+  "chief_thesis": "The structured underwriting is the deciding evidence for ALB. The scenario map is 30% Bull, 45% Base, and 25% Bear, conviction is only medium, the initial weight is 0.75%, the target weight is 2.0%, and max loss is 0.35%. That is a hold-sized setup, not a buy-sized one, and it is not weak enough to justify a sell while the operating trend and price trend are still improving.\n\nThe bullish evidence is real. ALB\u2019s Q4 2025 revenue improved to $1.428B, gross margin rose to 13.9% from 9.0%, pre-special-charge operating income turned positive, free cash flow stayed positive for two straight quarters and was $453.3M TTM, debt improved, and ALB remains above the 10 EMA at 180.11, the 50 SMA at 171.72, and the 200 SMA at 121.81. MACD is still positive and RSI at 58.39 is constructive rather than stretched. That supports continuing to hold ALB rather than cutting it.\n\nThe limiting evidence is equally important. ALB still has trailing EPS of -5.75, trailing net income of about -$677.4M, operating margin of only 2.3% TTM, and large unusual charges of $247.6M in 4Q25 and $183.3M in 3Q25. ALB is valued at about 21.0x forward earnings on forward EPS of 8.81, yet it already rallied sharply into the 190-191 resistance zone and failed to break out cleanly. That means the market has already priced a meaningful part of the recovery before the next hard confirmation.\n\nThe analysts\u2019 debate resolves cleanly into Hold and Neutral for ALB. The aggressive analyst is right that ALB is not broken: trend, free cash flow, and margin direction have improved, and Oppenheimer\u2019s April 15, 2026 target increase to 222 shows the rerating case is still active. The conservative analyst is right that path risk remains high: beta is 1.433, ATR is near 5% of price, and downside from 185.38 to the 171-172 thesis-break zone is too large to justify pressing size before evidence improves. The neutral analyst is right that this is a participation-with-discipline setup, not an accumulation setup.\n\nMacro and factor evidence keep ALB at Neutral rather than Overweight. A soft-landing backdrop helps, with unemployment at 4.3%, payrolls up 178k, and a positive 2Y-10Y spread of +0.50%, but March 2026 CPI of +0.87% and PPI of +1.78% argue for higher-for-longer policy that can cap multiple expansion and pressure downstream demand. The factor slate is explicitly balanced, with the strongest bullish and bearish rules pointing in opposite directions and important operating data still missing. For ALB, that supports holding earned exposure, but not increasing conviction before the next earnings and lithium-pricing catalysts.",
+  "decision": "BUY",
+  "deep_think_llm": "gpt-5.4",
+  "ended_at": "2026-04-15T14:53:34.896662",
+  "error": null,
+  "openai_reasoning_effort": "high",
+  "provider": "codex_cli",
+  "quick_think_llm": "gpt-5.4",
+  "results_dir": "results_batch/2026-04-15/ALB",
+  "risk_summary": "**Absolute Action for ALB**: Hold\n**Relative Stance for ALB**: Neutral\n\n**Executive Summary**: For ALB, keep existing exposure but keep it small at the structured 0.75% starter weight until the next earnings/guidance window and lithium-pricing commentary confirm the recovery. Do not chase ALB at 185.38. Add only if ALB closes cleanly above 190-191 with volume while forward EPS around 8.81, margins, and free cash flow remain intact, or on a controlled pullback into 180-181 that holds and turns higher. If ALB closes below 180-181, de-risk. If ALB breaks 171-172 decisively, treat that as thesis damage and exit. Time horizon: near to medium term, centered on late April to early May 2026 earnings and Q2 2026 macro and lithium updates.\n\n**Investment Thesis**: The structured underwriting is the deciding evidence for ALB. The scenario map is 30% Bull, 45% Base, and 25% Bear, conviction is only medium, the initial weight is 0.75%, the target weight is 2.0%, and max loss is 0.35%. That is a hold-sized setup, not a buy-sized one, and it is not weak enough to justify a sell while the operating trend and price trend are still improving.\n\nThe bullish evidence is real. ALB\u2019s Q4 2025 revenue improved to $1.428B, gross margin rose to 13.9% from 9.0%, pre-special-charge operating income turned positive, free cash flow stayed positive for two straight quarters and was $453.3M TTM, debt improved, and ALB remains above the 10 EMA at 180.11, the 50 SMA at 171.72, and the 200 SMA at 121.81. MACD is still positive and RSI at 58.39 is constructive rather than stretched. That supports continuing to hold ALB rather than cutting it.\n\nThe limiting evidence is equally important. ALB still has trailing EPS of -5.75, trailing net income of about -$677.4M, operating margin of only 2.3% TTM, and large unusual charges of $247.6M in 4Q25 and $183.3M in 3Q25. ALB is valued at about 21.0x forward earnings on forward EPS of 8.81, yet it already rallied sharply into the 190-191 resistance zone and failed to break out cleanly. That means the market has already priced a meaningful part of the recovery before the next hard confirmation.\n\nThe analysts\u2019 debate resolves cleanly into Hold and Neutral for ALB. The aggressive analyst is right that ALB is not broken: trend, free cash flow, and margin direction have improved, and Oppenheimer\u2019s April 15, 2026 target increase to 222 shows the rerating case is still active. The conservative analyst is right that path risk remains high: beta is 1.433, ATR is near 5% of price, and downside from 185.38 to the 171-172 thesis-break zone is too large to justify pressing size before evidence improves. The neutral analyst is right that this is a participation-with-discipline setup, not an accumulation setup.\n\nMacro and factor evidence keep ALB at Neutral rather than Overweight. A soft-landing backdrop helps, with unemployment at 4.3%, payrolls up 178k, and a positive 2Y-10Y spread of +0.50%, but March 2026 CPI of +0.87% and PPI of +1.78% argue for higher-for-longer policy that can cap multiple expansion and pressure downstream demand. The factor slate is explicitly balanced, with the strongest bullish and bearish rules pointing in opposite directions and important operating data still missing. For ALB, that supports holding earned exposure, but not increasing conviction before the next earnings and lithium-pricing catalysts.",
+  "started_at": "2026-04-15T14:41:23.920625",
+  "status": "completed",
+  "ticker": "ALB"
+}

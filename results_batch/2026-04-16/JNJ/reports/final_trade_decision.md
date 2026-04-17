@@ -1,0 +1,15 @@
+**Absolute Action:** Hold
+
+**Relative Stance:** Neutral
+
+**Executive Summary:**
+Maintain JNJ if already owned, but keep exposure near the 2.0% initial weight, not the 4.0% target weight. The numeric underwriting does not support an outright Buy: the scenario map is 30% Bull, 50% Base, and 20% Bear, so the highest-probability outcome is stability, not immediate upside, and the risk budget is explicitly capped at 0.2% max portfolio loss. Do not add aggressively while JNJ trades at 234.54 below the 10 EMA at 238.86 and the 50 SMA at 240.99 with negative MACD and RSI at 39.82. Scale only if JNJ reclaims roughly 239-241 and holds, or if it successfully defends 232-235 with improving momentum. If JNJ breaks below 232 with worsening momentum, or if 2026 revenue/EPS guidance is cut, reduce or exit. Time horizon: the next 1-2 quarters, centered on the Apr-May 2026 estimate revision window, May-Jun 2026 CPI/PPI and rates, and the Jul 2026 earnings/guidance update.
+
+**Investment Thesis:**
+The committee decision is Hold on JNJ because the business evidence is solid but the entry evidence is not. The strongest support for staying involved is fundamental quality: JNJ still has a durable 57% Innovative Medicine and 43% MedTech mix, 2025 quarterly revenue improved from $21.89B to $24.56B, profit margin is 21.83%, operating margin is 26.72%, forward P/E is 18.47x, and beta is only 0.329. That supports the aggressive and neutral analysts' core point that JNJ is not a broken thesis and still merits portfolio inclusion.
+
+But the conservative and neutral analysts are correct on timing. JNJ is below both the 10 EMA and 50 SMA, MACD has rolled negative, RSI is weak without being truly washed out, and the 10-year yield at 4.29% is a real headwind for multiple expansion in a defensive stock. The 200 SMA near 199.82 confirms the long-term trend is intact, but it does not improve the near-term setup. That is why the 80% Bull-plus-Base framing should not be treated as an 80% favorable trading outcome: the 50% Base case mainly describes a stable compounder with moderate upside, not a high-conviction Buy.
+
+The key reason this is not a Sell is that the main invalidation triggers are not yet active. There is no current evidence of a 2026 guidance cut, no material operating-margin collapse below the 26.7% area, and no major new litigation, regulatory, or product-safety shock in the supplied record. The bear case is real at 20%, mainly through faster Stelara erosion, rate pressure, or multiple compression, but it is not dominant enough to justify abandoning JNJ while the company still shows strong cash-generative, diversified, defensive characteristics.
+
+So the correct synthesis is a tightly managed Hold/Neutral on JNJ: preserve exposure to a high-quality franchise, but require price and catalyst confirmation before upgrading the stance. The burden of proof for adding is evidence-based improvement in trend, revisions, and Stelara absorption, not narrative alone.

@@ -1,9 +1,11 @@
 import functools
 
 from tradingagents.agents.utils.agent_utils import (
+    add_educational_use_context,
     build_analyst_report_context,
     build_instrument_context,
 )
+from tradingagents.agents.utils.analyst_resilience import is_claude_code_refusal_text
 
 
 def create_trader(llm, memory):
@@ -31,16 +33,21 @@ def create_trader(llm, memory):
         messages = [
             {
                 "role": "system",
-                "content": f"""You are a trading agent analyzing market data to make investment decisions. Based on your analysis, provide a specific recommendation to buy, sell, or hold. End with a firm decision and always conclude your response with 'FINAL TRANSACTION PROPOSAL: **BUY/HOLD/SELL**' to confirm your recommendation. Apply lessons from past decisions to strengthen your analysis. Here are reflections from similar situations you traded in and the lessons learned: {past_memory_str}""",
+                "content": add_educational_use_context(
+                    f"""You are a trading agent analyzing market data to make investment decisions. Based on your analysis, provide a specific recommendation to buy, sell, or hold. End with a firm decision and always conclude your response with 'FINAL TRANSACTION PROPOSAL: **BUY/HOLD/SELL**' to confirm your recommendation. Apply lessons from past decisions to strengthen your analysis. Here are reflections from similar situations you traded in and the lessons learned: {past_memory_str}"""
+                ),
             },
             context,
         ]
 
         result = llm.invoke(messages)
+        trader_plan = result.content
+        if is_claude_code_refusal_text(trader_plan):
+            trader_plan = investment_plan
 
         return {
             "messages": [result],
-            "trader_investment_plan": result.content,
+            "trader_investment_plan": trader_plan,
             "sender": name,
         }
 

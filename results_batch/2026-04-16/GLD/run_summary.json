@@ -1,0 +1,49 @@
+{
+  "analysis_date": "2026-04-16",
+  "anthropic_effort": null,
+  "backend_url": "codex://local",
+  "catalysts": [
+    {
+      "catalyst": "U.S. CPI and PPI releases following the March 2026 inflation re-acceleration",
+      "date_or_window": "Late April to mid-May 2026",
+      "expected_impact": "Hotter inflation can support gold demand but may also lift real yields; cooler prints favor consolidation unless growth worries intensify."
+    },
+    {
+      "catalyst": "Next U.S. payrolls and unemployment release",
+      "date_or_window": "Early May 2026",
+      "expected_impact": "Softer labor data would support the bull case via defensive and easing expectations; firmer data would support higher yields and the bear case."
+    },
+    {
+      "catalyst": "Next Fed policy communication window",
+      "date_or_window": "After 2026-04-16, next scheduled policy window",
+      "expected_impact": "Dovish language supports GLD, while patient or hawkish guidance reinforces rangebound or bearish outcomes."
+    },
+    {
+      "catalyst": "Treasury yield direction, especially the 10-year yield",
+      "date_or_window": "Ongoing over the next 2-6 weeks",
+      "expected_impact": "Falling long yields are a tailwind for GLD; a sustained rise above current levels is a direct headwind."
+    },
+    {
+      "catalyst": "Technical test of GLD trend support and prior high",
+      "date_or_window": "Immediate, next 1-4 weeks",
+      "expected_impact": "Holding the 50-day average supports base-to-bull outcomes; losing it raises downside risk toward the 200-day average; a breakout above 509.7 shifts odds toward the bull case."
+    }
+  ],
+  "chief_action": "Buy",
+  "chief_rating": "Neutral",
+  "chief_relative_stance": "Neutral",
+  "chief_summary": "Buy GLD as a starter, not a full allocation. Initiate 2.5% if flat, or keep GLD at starter size if already long. Do not scale before confirmation. Add only toward 5.0% after GLD reclaims and holds the 449.95 to 450.24 area, momentum keeps improving, and the 10-year yield stops rising from 4.29%. Use 436.5 as the no-add and tighten-risk line, 431 to 427 as the failure zone for reduction or exit, and around 420 as the hard stop so total portfolio loss stays within the 0.75% max-loss budget. Time horizon is tactical over the next 1 to 6 weeks across CPI, PPI, payrolls, Fed communication, and Treasury-yield moves, with medium-term upside only if GLD can work back toward 509.7.",
+  "chief_thesis": "The structured underwriting is the primary evidence and it supports controlled long exposure, not zero exposure. The scenario map is 50% base, 30% bull, and 20% bear. That distribution does not justify an Overweight stance, but it does justify a Buy because the downside case is not dominant and the sizing framework is explicit: 2.5% initial weight, 5.0% target weight, medium conviction, and 0.75% max loss. The business mix is also clean for this thesis: 95% of GLD is direct bullion exposure and only 5% is administration, so the position expresses gold directly rather than company-specific operating risk.\n\nThe aggressive analyst is right that GLD is in a repair phase, not a broken long-term trend. GLD is back above the 10 EMA at 436.54, MACD improved from -14.41 to -1.80, RSI recovered to 51.31, ATR cooled from 13.35 to 10.07, and price remains well above the 200-day average near 384.09 to 384.76. That makes Sell too weak. The conservative analyst is right that path risk is still material: GLD remains below the 50-day area at 449.95 to 450.24, the modal 50% base case is consolidation rather than breakout, and 10-year and 30-year yields at 4.29% and 4.89% keep opportunity cost elevated. That makes Hold understandable, but not the best final call, because the underwriting already specifies a starter allocation and a scale plan rather than a wait-for-perfection posture.\n\nThe neutral analyst provides the best synthesis: buy GLD, but only as a conditional starter. That is why the committee decision is Buy with a Neutral stance. Neutral reflects that GLD has not yet earned full-size exposure; Buy reflects that the evidence is strong enough to own some GLD now within tight risk limits. The factor-rule pack should carry low weight because it is explicitly mismatched to GLD as a gold-backed ETF. With no past mistake log provided, the process lesson is to avoid two errors at once: do not wait for perfect confirmation and miss GLD, but do not mistake a repair bounce for permission to go full size.",
+  "decision": "BUY",
+  "deep_think_llm": "gpt-5.4",
+  "ended_at": "2026-04-16T16:00:45.174563",
+  "error": null,
+  "openai_reasoning_effort": "high",
+  "provider": "codex_cli",
+  "quick_think_llm": "gpt-5.4",
+  "results_dir": "results_batch/2026-04-16/GLD",
+  "risk_summary": "Absolute Action: Buy\n\nRelative Stance: Neutral\n\nExecutive Summary: Buy GLD as a starter, not a full allocation. Initiate 2.5% if flat, or keep GLD at starter size if already long. Do not scale before confirmation. Add only toward 5.0% after GLD reclaims and holds the 449.95 to 450.24 area, momentum keeps improving, and the 10-year yield stops rising from 4.29%. Use 436.5 as the no-add and tighten-risk line, 431 to 427 as the failure zone for reduction or exit, and around 420 as the hard stop so total portfolio loss stays within the 0.75% max-loss budget. Time horizon is tactical over the next 1 to 6 weeks across CPI, PPI, payrolls, Fed communication, and Treasury-yield moves, with medium-term upside only if GLD can work back toward 509.7.\n\nInvestment Thesis: The structured underwriting is the primary evidence and it supports controlled long exposure, not zero exposure. The scenario map is 50% base, 30% bull, and 20% bear. That distribution does not justify an Overweight stance, but it does justify a Buy because the downside case is not dominant and the sizing framework is explicit: 2.5% initial weight, 5.0% target weight, medium conviction, and 0.75% max loss. The business mix is also clean for this thesis: 95% of GLD is direct bullion exposure and only 5% is administration, so the position expresses gold directly rather than company-specific operating risk.\n\nThe aggressive analyst is right that GLD is in a repair phase, not a broken long-term trend. GLD is back above the 10 EMA at 436.54, MACD improved from -14.41 to -1.80, RSI recovered to 51.31, ATR cooled from 13.35 to 10.07, and price remains well above the 200-day average near 384.09 to 384.76. That makes Sell too weak. The conservative analyst is right that path risk is still material: GLD remains below the 50-day area at 449.95 to 450.24, the modal 50% base case is consolidation rather than breakout, and 10-year and 30-year yields at 4.29% and 4.89% keep opportunity cost elevated. That makes Hold understandable, but not the best final call, because the underwriting already specifies a starter allocation and a scale plan rather than a wait-for-perfection posture.\n\nThe neutral analyst provides the best synthesis: buy GLD, but only as a conditional starter. That is why the committee decision is Buy with a Neutral stance. Neutral reflects that GLD has not yet earned full-size exposure; Buy reflects that the evidence is strong enough to own some GLD now within tight risk limits. The factor-rule pack should carry low weight because it is explicitly mismatched to GLD as a gold-backed ETF. With no past mistake log provided, the process lesson is to avoid two errors at once: do not wait for perfect confirmation and miss GLD, but do not mistake a repair bounce for permission to go full size.",
+  "started_at": "2026-04-16T15:46:18.065749",
+  "status": "completed",
+  "ticker": "GLD"
+}

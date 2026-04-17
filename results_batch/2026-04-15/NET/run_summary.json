@@ -1,0 +1,44 @@
+{
+  "analysis_date": "2026-04-15",
+  "anthropic_effort": null,
+  "backend_url": "codex://local",
+  "catalysts": [
+    {
+      "catalyst": "Q1 2026 earnings and guidance",
+      "date_or_window": "Late Apr to early May 2026 (inferred window)",
+      "expected_impact": "Primary company-specific catalyst for growth durability, operating leverage, and free-cash-flow quality."
+    },
+    {
+      "catalyst": "CPI/PPI releases and Treasury yield moves",
+      "date_or_window": "Next 2-6 weeks",
+      "expected_impact": "A benign inflation/rates backdrop supports NET's premium multiple; hotter prints and higher yields pressure valuation."
+    },
+    {
+      "catalyst": "Fed communication / next policy window",
+      "date_or_window": "Next 1-2 meetings",
+      "expected_impact": "Dovish expectations help long-duration software risk appetite; hawkish repricing hurts."
+    },
+    {
+      "catalyst": "Post-upgrade estimate revisions and sentiment follow-through",
+      "date_or_window": "Next 1-4 weeks",
+      "expected_impact": "Supports momentum if sell-side numbers move higher, but impact is secondary to earnings and macro."
+    }
+  ],
+  "chief_action": "",
+  "chief_rating": "",
+  "chief_relative_stance": "",
+  "chief_summary": "Hold NET only as an underweight, tracking-sized position. The structured underwriting is the anchor: Base 45%, Bull 30%, Bear 25%, with medium conviction, a 1.0% initial weight, a 2.5% target weight, and a 0.5% max loss. That argues against a fresh full-size long and also against a forced full exit. If the portfolio is larger than 1.0% in NET, trim it back to roughly that level; if already near 1.0%, maintain; if flat, wait rather than chase before Q1 2026 earnings. Add only if NET reclaims 193 to 194 and then 202 on convincing volume while Q1 shows durable growth, better operating leverage, and stronger estimate revisions. Keep the risk budget capped at 0.5% with ATR-aware stops, recognizing ATR near 13.86 means earnings gaps can exceed planned exits. Time horizon: the next 2 to 8 weeks, centered on late-April to early-May 2026 earnings plus CPI, PPI, and Treasury-yield moves.",
+  "chief_thesis": "The primary evidence does not support Buy NET. The underwriting\u2019s highest-probability outcome is Base at 45%, not Bull, and conviction is only medium. The sizing output is explicit: NET merits a 1.0% starter, not a core position, because valuation and volatility are high. That aligns most closely with the neutral analyst rather than the trader\u2019s full Sell or the aggressive analyst\u2019s push to preserve upside convexity. NET still has enough business quality to avoid a default zero: Q4 revenue rose to $614.5M from $459.9M year over year, TTM revenue is $2.168B, free cash flow is $388.0M, and gross margin remains strong at roughly 74.5%. Those figures are enough to reject an outright Sell as the base committee posture, especially with Bull at 30% and Bear at 25%.\n\nThe reasons not to add are more immediate and more actionable. NET trades at about 131.9x forward earnings despite negative TTM earnings, operating margin of -7.0%, negative EBITDA, debt-to-equity of 241.1, and gross-margin compression from 76.4% to 73.6%. The structured segment work also leaves revenue_share_pct as null across business lines, so the committee is being asked to pay for Zero Trust, networking, Workers, and AI optionality without clean segment proof. The chart remains damaged: NET is below the 10-day EMA at 193.05, the 50-day SMA at 193.83, and the 200-day SMA at 202.01; MACD is still negative at -3.70; RSI at 46.28 is only neutral after an oversold bounce. In a 4.26% 10-year Treasury backdrop with sticky inflation, that is not a setup for an overweight.\n\nThe debate resolves cleanly. The aggressive analyst is right that NET has upside convexity and that a 30% Bull case should not be ignored. The conservative analyst is right that payoff asymmetry, valuation stretch, and gap risk make a supposed 0.5% loss cap imperfect in practice. The neutral analyst lands closest to the optimal committee posture: Hold NET, but only underweight, until the evidence converges. For NET, that convergence means a clean 194 reclaim, then 202, plus a beat-and-raise or at least visibly better margin conversion and free-cash-flow quality. If those conditions appear, scale from 1.0% toward 2.5%. If Q1 is merely in line, margins fail to improve, or yields rise again, keep NET underweight and be willing to exit on a failed bounce. No prior mistake log was provided, so the discipline here is simple: do not confuse a good company with a good entry, but do not force a zero when the underwriting still supports a small monitored position.",
+  "decision": "HOLD",
+  "deep_think_llm": "gpt-5.4",
+  "ended_at": "2026-04-15T14:27:10.323068",
+  "error": null,
+  "openai_reasoning_effort": "high",
+  "provider": "codex_cli",
+  "quick_think_llm": "gpt-5.4",
+  "results_dir": "results_batch/2026-04-15/NET",
+  "risk_summary": "1. Absolute Action: Hold NET\n2. Relative Stance: Underweight NET\n3. Executive Summary: Hold NET only as an underweight, tracking-sized position. The structured underwriting is the anchor: Base 45%, Bull 30%, Bear 25%, with medium conviction, a 1.0% initial weight, a 2.5% target weight, and a 0.5% max loss. That argues against a fresh full-size long and also against a forced full exit. If the portfolio is larger than 1.0% in NET, trim it back to roughly that level; if already near 1.0%, maintain; if flat, wait rather than chase before Q1 2026 earnings. Add only if NET reclaims 193 to 194 and then 202 on convincing volume while Q1 shows durable growth, better operating leverage, and stronger estimate revisions. Keep the risk budget capped at 0.5% with ATR-aware stops, recognizing ATR near 13.86 means earnings gaps can exceed planned exits. Time horizon: the next 2 to 8 weeks, centered on late-April to early-May 2026 earnings plus CPI, PPI, and Treasury-yield moves.\n4. Investment Thesis: The primary evidence does not support Buy NET. The underwriting\u2019s highest-probability outcome is Base at 45%, not Bull, and conviction is only medium. The sizing output is explicit: NET merits a 1.0% starter, not a core position, because valuation and volatility are high. That aligns most closely with the neutral analyst rather than the trader\u2019s full Sell or the aggressive analyst\u2019s push to preserve upside convexity. NET still has enough business quality to avoid a default zero: Q4 revenue rose to $614.5M from $459.9M year over year, TTM revenue is $2.168B, free cash flow is $388.0M, and gross margin remains strong at roughly 74.5%. Those figures are enough to reject an outright Sell as the base committee posture, especially with Bull at 30% and Bear at 25%.\n\nThe reasons not to add are more immediate and more actionable. NET trades at about 131.9x forward earnings despite negative TTM earnings, operating margin of -7.0%, negative EBITDA, debt-to-equity of 241.1, and gross-margin compression from 76.4% to 73.6%. The structured segment work also leaves revenue_share_pct as null across business lines, so the committee is being asked to pay for Zero Trust, networking, Workers, and AI optionality without clean segment proof. The chart remains damaged: NET is below the 10-day EMA at 193.05, the 50-day SMA at 193.83, and the 200-day SMA at 202.01; MACD is still negative at -3.70; RSI at 46.28 is only neutral after an oversold bounce. In a 4.26% 10-year Treasury backdrop with sticky inflation, that is not a setup for an overweight.\n\nThe debate resolves cleanly. The aggressive analyst is right that NET has upside convexity and that a 30% Bull case should not be ignored. The conservative analyst is right that payoff asymmetry, valuation stretch, and gap risk make a supposed 0.5% loss cap imperfect in practice. The neutral analyst lands closest to the optimal committee posture: Hold NET, but only underweight, until the evidence converges. For NET, that convergence means a clean 194 reclaim, then 202, plus a beat-and-raise or at least visibly better margin conversion and free-cash-flow quality. If those conditions appear, scale from 1.0% toward 2.5%. If Q1 is merely in line, margins fail to improve, or yields rise again, keep NET underweight and be willing to exit on a failed bounce. No prior mistake log was provided, so the discipline here is simple: do not confuse a good company with a good entry, but do not force a zero when the underwriting still supports a small monitored position.",
+  "started_at": "2026-04-15T14:13:03.803807",
+  "status": "completed",
+  "ticker": "NET"
+}

@@ -23,6 +23,7 @@ class Propagator:
             "messages": [("human", company_name)],
             "company_of_interest": company_name,
             "trade_date": str(trade_date),
+            "prefetched_context": {},
             "investment_debate_state": InvestDebateState(
                 {
                     "bull_history": "",

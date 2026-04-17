@@ -1,0 +1,1 @@
+Research manager fallback: HOLD. Claude backend was unavailable, so no live debate-based investment plan could be produced.

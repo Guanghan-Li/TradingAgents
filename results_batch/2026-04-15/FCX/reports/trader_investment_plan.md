@@ -1,0 +1,9 @@
+FCX remains a bullish cyclical setup, but the quality of the entry matters. Technically, FCX is in a strong uptrend with price above the 10 EMA, 50 SMA, and 200 SMA, MACD firmly positive, and RSI near 68, which signals strong momentum but also warns that the stock is approaching stretched territory. Price is pressing the key 68.82 to 69.75 resistance zone, so the setup favors buying confirmation above resistance or buying a controlled pullback into support rather than chasing extended strength.
+
+The macro and sentiment backdrop supports the long case. FCX benefits from a soft-landing / reflation regime, resilient labor data, a normal 2Y-10Y curve, moderate volatility, and continued investor demand for copper-linked equities. Recent analyst target increases from multiple firms reinforce institutional sponsorship. The main risks are sticky inflation, elevated long-end yields, dollar strength, copper demand disappointment, and the fact that FCX is already pricing a meaningful earnings rebound.
+
+Fundamentally, FCX is financially sound enough to support the bullish thesis: leverage is manageable, liquidity is healthy, and forward valuation is much less demanding than trailing valuation. The caution is that Q4 2025 cash conversion weakened, free cash flow turned negative for the quarter, and noncontrolling interests reduce the value of consolidated earnings headlines. That means the thesis still depends on 2026 execution and commodity support, not just narrative momentum.
+
+Decision: BUY FCX, but only as a staged, risk-controlled buy. The preferred execution is either a clean breakout close above 69.75 or a pullback into 65.00 to 66.00 that holds support. A close back below the 10 EMA would weaken the near-term continuation case, and a break of the 50 SMA would materially damage the bull thesis.
+
+FINAL TRANSACTION PROPOSAL: **BUY**

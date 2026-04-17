@@ -1,0 +1,9 @@
+{
+  "expected_return_pct": null,
+  "fair_value_range": {
+    "high": null,
+    "low": null
+  },
+  "primary_method": "parse_error",
+  "thesis": "**VALUATION ANALYSIS FOR ASML**\n\n**Fair Value Range:** $1,200 - $1,450 per share\n\n**Expected Return:** -2% to +8% from current levels (approximately $1,485 based on market cap)\n\n**Primary Valuation Method:** DCF (Discounted Cash Flow) with peer multiple cross-check\n\n**Investment Thesis:**\n\nASML holds a monopoly position in extreme ultraviolet (EUV) lithography equipment, which is essential for cutting-edge semiconductor manufacturing. The company demonstrates exceptional profitability with 50% ROE and nearly 30% net margins, supported by $10.9B in annual free cash flow.\n\nHowever, the current valuation appears stretched:\n- Trading at 51x trailing earnings and 33x forward earnings\n- Price-to-book of 25x is extremely elevated\n- Stock is near 52-week highs after significant appreciation\n\nThe forward P/E compression from 51 to 33 suggests strong earnings growth expectations are priced in. While ASML's competitive moat is undeniable, the current multiple leaves little room for execution risk or cyclical semiconductor downturns.\n\n**Key Risks:**\n- Semiconductor industry cyclicality\n- Geopolitical tensions affecting China sales (historically 15-30% of revenue)\n- High valuation multiples vulnerable to rate changes or growth disappointments\n\n**Recommendation Context:** At current levels around $1,485, ASML appears fairly valued to slightly overvalued. The stock would be more attractive on a pullback toward $1,200-$1,300, which would bring the forward P/E closer to 28-30x and provide a better margin of safety given the cyclical nature of semiconductor capital equipment spending."
+}

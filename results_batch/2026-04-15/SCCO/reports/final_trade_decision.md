@@ -1,0 +1,19 @@
+1. **Absolute Action**: Hold
+
+2. **Relative Stance**: Neutral
+
+3. **Executive Summary**: Hold SCCO and keep exposure controlled rather than adding aggressively at the current level. The structured underwriting points to a 45% base case, ahead of a 30% bull case and 25% bear case, which supports patience: SCCO is high quality, but the highest-probability outcome is consolidation at a rich multiple, not immediate upside acceleration.
+
+For portfolio construction, keep SCCO near the 1.0% initial weight and do not scale toward the 3.0% target weight unless confirmation improves. Confirmation requires SCCO to reclaim the 193.37-196.38 resistance area, show acceptance above 201.10, and do so with stronger volume, preferably alongside firm copper prices and supportive late-April to May 2026 earnings guidance. Keep total risk inside the 0.5% max portfolio-loss budget. A closing break below the 185-188 support cluster should trigger risk reduction rather than averaging down, with 177-172 the next likely downside zone.
+
+Time horizon is tactical to intermediate term, centered on the next earnings/guidance window, copper-price trend, inflation data, and Fed expectations through April-June 2026.
+
+4. **Investment Thesis**: SCCO deserves a Hold, not a Buy or Sell, because the evidence is strong but not clean enough for incremental capital at this price. The structured scenario analysis is the primary anchor: the 45% base case says SCCO remains a quality copper compounder but trades range-bound at a premium valuation; the 30% bull case requires copper strength, upward EPS revisions, and sustained mid-50% operating margins; the 25% bear case is meaningful because valuation compression can be severe in a high-multiple cyclical.
+
+The bullish evidence is substantial. SCCO has TTM revenue of about $13.42B, EBITDA of about $7.90B, free cash flow of about $3.34B, operating margin of 54.5%, net margin of 32.3%, ROE of 42.7%, and ROA of 21.8%. Quarterly momentum is also strong, with revenue rising from $2.78B in 4Q24 to $3.87B in 4Q25 and EBITDA rising from $1.55B to $2.36B. Technically, SCCO remains above the 10 EMA at 185.57, 50 SMA at 188.07, and 200 SMA at 139.77, with positive MACD. These points argue against selling SCCO while the copper thesis and operating performance remain intact.
+
+The bearish evidence prevents a Buy. SCCO trades at roughly 36.4x trailing earnings, 30.7x forward earnings, 14.2x book, and about 20.1x EV/EBITDA, while the free-cash-flow yield is only about 2.1%. Goldman Sachs upgraded SCCO to Neutral, but its $178 target remains below the current 189.30 price. The stock has already rebounded sharply from the March 20, 2026 low near 152.71, failed near 196.38 on April 13, 2026, and remains below the broader 193.37-201.10 resistance zone. Rebound volume has also been lighter than selloff volume, reducing confidence in a clean breakout.
+
+The risk analysts converge on the same practical conclusion. The aggressive analyst is right that SCCO should retain exposure because 75% of scenarios are base-or-bull and the business quality is exceptional. The conservative analyst is right that the current setup should be treated as exposure containment because 70% of outcomes are not clean upside continuation and the 25% bear case can carry outsized downside due to premium valuation. The neutral analyst’s conditional framing is the best synthesis: maintain SCCO exposure, but require price, volume, copper, and earnings confirmation before committing more capital.
+
+Final committee decision: Hold SCCO, Neutral stance. Maintain a disciplined starter position around 1.0%, cap portfolio loss at 0.5%, reduce risk on a close below 185-188, and only consider upgrading to Buy if SCCO clears 193.37-196.38, accepts above 201.10, and fundamentals confirm that forward earnings and margins can support the premium multiple.

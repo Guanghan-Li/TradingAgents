@@ -1,0 +1,28 @@
+FINAL TRANSACTION PROPOSAL: **HOLD**
+
+For `JPM`, the most relevant non-redundant indicator set in this regime is: `close_10_ema`, `close_50_sma`, `close_200_sma`, `macd`, `rsi`, `boll_ub`, `boll_lb`, and `atr`. That mix is appropriate because it covers short-term trend, medium/long-term trend, momentum, extension, and volatility without wasting slots on overlapping derivatives like `macds`, `macdh`, or the Bollinger middle line.
+
+The technical picture for `JPM` is still constructive, but it is no longer cleanly chasing higher after the April 8 to April 13 breakout leg. On April 15, 2026, `JPM` closed at 305.93 after trading as high as 314.22 and as low as 304.26. That is an important reversal day: price rejected the 311 to 314 breakout zone, but it still finished above the 10 EMA at 304.34, above the 50 SMA at 298.33, and above the 200 SMA at 300.59. The key nuance is that price is above all major averages, which is bullish, but the 50 SMA remains slightly below the 200 SMA, which says the larger trend repair is real but not yet fully mature.
+
+Momentum remains positive, just less explosive. `macd` is 4.33 on April 15 versus -1.92 on April 2 and -0.66 on April 7, so the trend thrust over the last two weeks has been meaningful. However, MACD was slightly lower than 4.38 on April 14, which suggests momentum is still bullish but no longer accelerating. `rsi` tells the same story: it rose into the high-60s during the breakout push, reaching 69.31 on April 13, then cooled to 58.29 on April 15. That is not a bearish collapse. It is more consistent with a bullish trend digesting gains after becoming briefly stretched.
+
+The Bollinger structure reinforces that interpretation. `JPM` pushed toward the upper band during the breakout phase, and on April 15 it closed back inside the band, below `boll_ub` at 316.50. That usually means the stock is moving from expansion into consolidation rather than extending immediately. Because `boll_lb` was far lower on April 14 at 274.19, the broader band structure is still upward-biased; the issue is not trend failure, it is short-term exhaustion near resistance.
+
+Volatility is elevated but controlled. `atr` on April 15 was 7.15, so a roughly 5.2-point daily drop from the April 14 close was meaningful but still within normal recent range. That matters for interpretation: the selloff was notable, but not yet a disorderly break. Volume on April 15, about 7.9 million shares, was not trivial, but it was also not the kind of extreme distribution volume that would strongly confirm a major trend reversal.
+
+The macro overlay remains a support rather than a headwind for `JPM`. A soft-landing backdrop, firm labor, a positive 2Y-10Y curve, and a Fed pause are still better for a money-center bank than either recession or inversion. Sticky inflation is the main complication, but for `JPM` that is mixed-to-positive in the near term because it supports higher-for-longer rate expectations and core banking economics. That is why the medium-term tape can stay constructive even while the short-term chart cools off.
+
+For the committee, the right read is that `JPM` is in an intact uptrend, but the risk/reward after the recent run is no longer favorable enough for an aggressive fresh `BUY` on April 15, 2026. The stock needs to prove that the April 15 reversal was simple breakout digestion, not the start of a failed move. The first level to watch is the 10 EMA near 304.34. If `JPM` holds that area and reclaims 311.12 to 314.22, the bullish continuation case reopens and a retest of the upper Bollinger zone becomes likely. If instead `JPM` loses the 10 EMA decisively and starts closing below the 300.59 to 298.33 zone defined by the 200 SMA and 50 SMA, the odds rise that the breakout has failed and price rotates back toward the low-290s.
+
+So the best committee posture is `HOLD`: stay constructive on `JPM` while it remains above its key moving-average support cluster, but do not upgrade to `BUY` until price either stabilizes cleanly above 304 to 306 or breaks back through 311 to 314 with confirming momentum.
+
+| Area | Evidence | Read-through | Committee Takeaway |
+| --- | --- | --- | --- |
+| Trend | `JPM` close 305.93 on 2026-04-15 vs `close_10_ema` 304.34, `close_50_sma` 298.33, `close_200_sma` 300.59 | Price is above all key averages, so trend is still positive | Bullish structure intact |
+| Trend quality | `close_50_sma` is still below `close_200_sma` | Medium-term recovery is real but not fully mature | Favor patience over chasing |
+| Momentum | `macd` 4.33 on 2026-04-15, sharply improved from early April negatives | Upswing remains valid | Bullish, but momentum acceleration is cooling |
+| Stretch | `rsi` fell from 69.31 on 2026-04-13 to 58.29 on 2026-04-15 | Overbought pressure has been worked off without trend collapse | Healthy reset so far |
+| Bands | Close 305.93 sits back inside Bollinger range, below `boll_ub` 316.50 | Breakout is pausing rather than extending immediately | Near-term consolidation likely |
+| Volatility | `atr` 7.15 | Recent pullback is within normal range, not abnormal stress | Avoid overreacting to one reversal day |
+| Resistance | 311.12 to 314.22 | Area of visible supply after rejection on 2026-04-15 | Need reclaim for renewed `BUY` case |
+| Support | 304.34 first, then 300.59 to 298.33 | These are the levels that separate pullback from breakdown | `HOLD` while support holds |

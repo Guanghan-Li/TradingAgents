@@ -4,7 +4,8 @@ from tradingagents.agents.utils.agent_states import build_chief_analyst_data_def
 
 
 PORTFOLIO_MANAGER_SECTIONS = [
-    "Rating",
+    "Absolute Action",
+    "Relative Stance",
     "Executive Summary",
     "Investment Thesis",
 ]
@@ -41,11 +42,48 @@ def _extract_section(text: str, label: str) -> str:
     return _extract_section_body(text, label)
 
 
-def _extract_rating(text: str) -> str:
-    rating_body = _extract_section_body(text, "Rating")
-    if not rating_body:
+def _normalize_absolute_action(raw: str) -> str:
+    lines = (raw or "").splitlines()
+    if not lines:
         return ""
-    return rating_body.splitlines()[0].strip().strip("*").strip()
+    normalized = lines[0].strip().strip("*").strip().upper()
+    if normalized in {"BUY", "HOLD", "SELL"}:
+        return normalized.title()
+    if normalized == "OVERWEIGHT":
+        return "Buy"
+    if normalized == "UNDERWEIGHT":
+        return "Sell"
+    return ""
+
+
+def _normalize_relative_stance(raw: str) -> str:
+    lines = (raw or "").splitlines()
+    if not lines:
+        return ""
+    normalized = lines[0].strip().strip("*").strip().upper()
+    if normalized in {"OVERWEIGHT", "UNDERWEIGHT"}:
+        return normalized.title()
+    if normalized in {"NEUTRAL", "HOLD"}:
+        return "Neutral"
+    if normalized in {"BUY", "SELL"}:
+        return "Neutral"
+    return ""
+
+
+def _extract_absolute_action(text: str) -> str:
+    explicit = _extract_section_body(text, "Absolute Action")
+    if explicit:
+        return _normalize_absolute_action(explicit)
+    legacy = _extract_section_body(text, "Rating")
+    return _normalize_absolute_action(legacy)
+
+
+def _extract_relative_stance(text: str) -> str:
+    explicit = _extract_section_body(text, "Relative Stance")
+    if explicit:
+        return _normalize_relative_stance(explicit)
+    legacy = _extract_section_body(text, "Rating")
+    return _normalize_relative_stance(legacy)
 
 
 def _scenario_fair_value_map(scenario_catalyst_data: dict) -> dict:
@@ -109,7 +147,8 @@ def _format_chief_analyst_report(chief_analyst_data: dict) -> str:
             "## Chief Analyst Summary",
             "",
             "### Verdict",
-            f"- Rating: {verdict['rating']}",
+            f"- Absolute Action: {verdict['absolute_action']}",
+            f"- Relative Stance: {verdict['relative_stance']}",
             f"- Summary: {verdict['summary']}",
             f"- Thesis: {verdict['thesis']}",
             "",
@@ -150,7 +189,8 @@ def create_chief_analyst(llm, memory=None):
             analysis_date=state.get("trade_date", ""),
         )
         chief_analyst_data["verdict"] = {
-            "rating": _extract_rating(final_trade_decision),
+            "absolute_action": _extract_absolute_action(final_trade_decision),
+            "relative_stance": _extract_relative_stance(final_trade_decision),
             "summary": _extract_section(final_trade_decision, "Executive Summary"),
             "thesis": _extract_section(final_trade_decision, "Investment Thesis"),
         }

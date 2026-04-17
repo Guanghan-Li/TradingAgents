@@ -138,7 +138,9 @@ def test_chief_analyst_returns_structured_final_summary():
             "fundamentals_report": "Margins are stable and services mix is improving.",
             "investment_plan": "Research manager favors accumulation on durable earnings power.",
             "trader_investment_plan": "Build a 5% starter over several sessions and add on confirmation.",
-            "final_trade_decision": """**Rating**: Buy
+            "final_trade_decision": """**Absolute Action**: Buy
+
+**Relative Stance**: Overweight
 
 **Executive Summary**: Accumulate on weakness over a 6-12 month horizon with measured sizing.
 
@@ -195,7 +197,8 @@ def test_chief_analyst_returns_structured_final_summary():
         "ticker": "AAPL",
         "analysis_date": "2026-03-24",
         "verdict": {
-            "rating": "Buy",
+            "absolute_action": "Buy",
+            "relative_stance": "Overweight",
             "summary": "Accumulate on weakness over a 6-12 month horizon with measured sizing.",
             "thesis": "Services resilience and an AI-led upgrade cycle support upside if execution stays on track.",
         },
@@ -245,9 +248,10 @@ def test_chief_analyst_parses_numbered_portfolio_manager_output():
             "trade_date": "2026-03-24",
             "investment_plan": "Research wants to lean long on durable cloud demand.",
             "trader_investment_plan": "Scale in over two tranches and keep sizing disciplined.",
-            "final_trade_decision": """1. Rating: Overweight
-2. Executive Summary: Add on modest pullbacks, target a 6-12 month holding period, and keep sizing incremental.
-3. Investment Thesis: Azure durability and improving operating leverage support upside while consensus still underestimates monetization breadth.""",
+            "final_trade_decision": """1. Absolute Action: Buy
+2. Relative Stance: Overweight
+3. Executive Summary: Add on modest pullbacks, target a 6-12 month holding period, and keep sizing incremental.
+4. Investment Thesis: Azure durability and improving operating leverage support upside while consensus still underestimates monetization breadth.""",
             "risk_debate_state": {},
             "segment_data": {},
             "scenario_catalyst_data": {},
@@ -255,7 +259,8 @@ def test_chief_analyst_parses_numbered_portfolio_manager_output():
     )
 
     assert output["chief_analyst_data"]["verdict"] == {
-        "rating": "Overweight",
+        "absolute_action": "Buy",
+        "relative_stance": "Overweight",
         "summary": "Add on modest pullbacks, target a 6-12 month holding period, and keep sizing incremental.",
         "thesis": "Azure durability and improving operating leverage support upside while consensus still underestimates monetization breadth.",
     }
@@ -271,15 +276,17 @@ def test_chief_analyst_parses_markdown_portfolio_manager_sections():
             "trade_date": "2026-03-31",
             "investment_plan": "Research plan",
             "trader_investment_plan": "Trader plan",
-            "final_trade_decision": """1. **Rating**: **Overweight**
+            "final_trade_decision": """1. **Absolute Action**: **Buy**
 
-2. **Executive Summary**  
+2. **Relative Stance**: **Overweight**
+
+3. **Executive Summary**  
 **VICI** should be **accumulated gradually, not chased aggressively**.
 
 - Start at **1.0%-2.0%** only if support holds.
 
-3. **Investment Thesis**  
-My final decision on **VICI** is **Overweight**, not **Buy** and not **Hold**.
+4. **Investment Thesis**  
+My final decision on **VICI** is **Buy** with an **Overweight** tilt, not **Hold**.
 
 The underwriting supports a meaningful starter, but not a blind full-size entry.""",
             "risk_debate_state": {},
@@ -289,9 +296,10 @@ The underwriting supports a meaningful starter, but not a blind full-size entry.
     )
 
     assert output["chief_analyst_data"]["verdict"] == {
-        "rating": "Overweight",
+        "absolute_action": "Buy",
+        "relative_stance": "Overweight",
         "summary": "**VICI** should be **accumulated gradually, not chased aggressively**.\n\n- Start at **1.0%-2.0%** only if support holds.",
-        "thesis": "My final decision on **VICI** is **Overweight**, not **Buy** and not **Hold**.\n\nThe underwriting supports a meaningful starter, but not a blind full-size entry.",
+        "thesis": "My final decision on **VICI** is **Buy** with an **Overweight** tilt, not **Hold**.\n\nThe underwriting supports a meaningful starter, but not a blind full-size entry.",
     }
 
 
@@ -314,7 +322,8 @@ def test_chief_analyst_returns_stable_defaults_with_missing_data():
         "ticker": "AAPL",
         "analysis_date": "2026-03-24",
         "verdict": {
-            "rating": "",
+            "absolute_action": "",
+            "relative_stance": "",
             "summary": "",
             "thesis": "",
         },
@@ -350,7 +359,8 @@ def test_propagator_initial_state_seeds_chief_analyst_defaults():
         "ticker": "",
         "analysis_date": "",
         "verdict": {
-            "rating": "",
+            "absolute_action": "",
+            "relative_stance": "",
             "summary": "",
             "thesis": "",
         },
@@ -393,7 +403,7 @@ def test_debug_mode_propagate_keeps_terminal_chunk_without_messages(monkeypatch)
                 "messages": [],
                 "final_trade_decision": "Buy",
                 "chief_analyst_report": "final summary",
-                "chief_analyst_data": {"verdict": {"rating": "Buy"}},
+                "chief_analyst_data": {"verdict": {"absolute_action": "Buy", "relative_stance": "Neutral"}},
             }
 
     class DummyPropagator:
@@ -415,4 +425,4 @@ def test_debug_mode_propagate_keeps_terminal_chunk_without_messages(monkeypatch)
 
     assert decision == "Buy"
     assert final_state["chief_analyst_report"] == "final summary"
-    assert final_state["chief_analyst_data"] == {"verdict": {"rating": "Buy"}}
+    assert final_state["chief_analyst_data"] == {"verdict": {"absolute_action": "Buy", "relative_stance": "Neutral"}}

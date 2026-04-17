@@ -1,0 +1,13 @@
+QQQ factor-rule readout for 2026-04-15 is mixed, with one high-weight bullish rule, one high-weight bearish rule, and one medium-weight neutral resilience rule.
+
+The strongest bullish signal is AI capex acceleration. This matters if major QQQ constituents that benefit directly from AI infrastructure demand are still showing rising backlog and stable margins despite heavier investment. In that case, the rule supports the view that AI demand is strong enough to sustain revenue growth and preserve pricing power.
+
+The strongest bearish signal is valuation stretch under slowing growth. This is equally important because it directly challenges a growth-led bullish case: if forward growth guidance is being revised down while valuation multiples stay elevated or expand further, expectations may be ahead of fundamentals and downside risk increases.
+
+The neutral rule, balance sheet resilience, is a secondary stabilizer rather than a directional driver. Strong cash generation and healthy balance sheets would argue for durability in a drawdown, but this rule does not by itself justify upside if growth and valuation signals deteriorate.
+
+The key conflict is straightforward: QQQ can remain supported by AI-driven capex and infrastructure demand while still being vulnerable if valuation has outrun earnings revisions. For downstream analysts, the most important question is which side has fresher evidence. If AI-linked backlog, margins, and guidance remain strong, the bullish rule carries weight. If growth expectations are softening while multiples remain rich, the bearish overlay should dominate risk framing.
+
+Missing information is material. The rule set does not provide actual valuation levels, earnings revision trends, guidance changes, backlog data, margin trajectories, or balance-sheet metrics for the relevant QQQ constituents. It also does not resolve whether the AI capex beneficiaries are large enough at the index level to offset weakness elsewhere.
+
+Practical guidance for downstream analysts: treat this as a balanced but fragile setup. Verify three things before leaning either way: 1) whether AI-exposed top holdings are still showing backlog and margin confirmation, 2) whether consensus growth expectations for major constituents are being revised lower, and 3) whether current index valuation remains extended versus those revisions. If evidence is mixed, frame QQQ as quality-resilient but valuation-sensitive rather than cleanly bullish or bearish.

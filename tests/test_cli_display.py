@@ -7,6 +7,7 @@ from cli.main import (
     build_run_log_paths,
     get_progress_teams,
     normalize_selected_analyst_keys,
+    prepare_run_output_dirs,
     update_analyst_statuses,
 )
 
@@ -34,6 +35,36 @@ class CLIDisplayTests(unittest.TestCase):
         self.assertEqual(
             paths["error_log"],
             Path("/tmp/results/SOFI/2026-04-09/error_20260410_033012.log"),
+        )
+
+    def test_prepare_run_output_dirs_clears_stale_reports_but_keeps_logs(self):
+        base_dir = Path(self.id().replace(".", "_"))
+        results_root = Path("/tmp") / base_dir
+        results_dir = results_root / "MSFT" / "2026-04-12"
+        report_dir = results_dir / "reports"
+        report_dir.mkdir(parents=True, exist_ok=True)
+        (report_dir / "macro_report.md").write_text("stale macro")
+        (results_dir / "complete_report.md").write_text("stale complete")
+        (results_dir / "run_summary.json").write_text("{}")
+        old_log = results_dir / "message_tool_20260412_140000.log"
+        old_log.write_text("keep me")
+
+        prepared_results_dir, prepared_report_dir, log_paths = prepare_run_output_dirs(
+            results_root,
+            "MSFT",
+            "2026-04-12",
+            "20260412_150000",
+        )
+
+        self.assertEqual(prepared_results_dir, results_dir)
+        self.assertEqual(prepared_report_dir, report_dir)
+        self.assertFalse((report_dir / "macro_report.md").exists())
+        self.assertFalse((results_dir / "complete_report.md").exists())
+        self.assertFalse((results_dir / "run_summary.json").exists())
+        self.assertTrue(old_log.exists())
+        self.assertEqual(
+            log_paths["message_tool_log"],
+            results_dir / "message_tool_20260412_150000.log",
         )
 
     def test_normalize_selected_analyst_keys_returns_values_in_cli_order(self):

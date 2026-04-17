@@ -1,0 +1,9 @@
+{
+  "expected_return_pct": null,
+  "fair_value_range": {
+    "high": null,
+    "low": null
+  },
+  "primary_method": "parse_error",
+  "thesis": "FINAL TRANSACTION PROPOSAL: **HOLD**\n\n**Valuation Analysis for DDOG (Datadog, Inc.)**\n\n**Fair Value Range: $110 - $145 per share**\n\n**Expected Return: 5-15% from current levels (~$119)**\n\n**Primary Valuation Method: Forward P/E and Free Cash Flow Yield**\n\n**Investment Thesis:**\n\nDatadog operates in the high-growth cloud observability and monitoring space with strong competitive positioning. The company demonstrates:\n\n1. **Strong Growth Trajectory**: The dramatic compression from 356x TTM P/E to 46x forward P/E signals significant expected earnings growth, supported by $3.4B in revenue and improving operating leverage.\n\n2. **Cash Generation**: $880M in free cash flow on $3.4B revenue (26% FCF margin) is exceptional for a growth software company, indicating business model quality and scalability.\n\n3. **Valuation Context**: At 46x forward earnings, DDOG trades at a premium to mature software peers but reasonable for its growth profile. The current price near $119 sits below the 200-day average ($139), suggesting recent weakness may have created value.\n\n4. **Risk Factors**: High beta (1.29), competitive pressure in observability space, and macroeconomic sensitivity to IT spending warrant caution.\n\n**Recommendation Rationale**: HOLD reflects fair current valuation with modest upside. The stock has corrected from 52-week highs ($202) and appears reasonably priced for its growth profile. Not compelling enough for aggressive buying, but fundamentals support maintaining existing positions. A move below $110 would create a buying opportunity; above $145 would signal overvaluation."
+}

@@ -1,0 +1,11 @@
+Factor rule read for QQQ on 2026-04-16: the curated rules are balanced rather than decisively directional, with one high-weight bullish rule, one high-weight bearish rule, and one medium-weight neutral rule.
+
+Strongest bullish signal: AI capex acceleration is the main upside factor. For QQQ, this is most relevant if its largest technology and semiconductor-linked constituents are direct beneficiaries of AI infrastructure demand, with rising backlog and stable margins despite higher capex. This rule carries high weight, but it requires confirmation at the portfolio holdings level rather than being applied mechanically to the ETF.
+
+Strongest bearish signal: valuation stretch under slowing growth is the key downside overlay. If QQQ’s growth expectations are being revised lower while multiples remain elevated or continue expanding faster than earnings revisions, the risk/reward deteriorates. This rule also carries high weight and directly conflicts with the AI-growth thesis: AI optimism can support premium valuation, but that premium becomes vulnerable if earnings guidance fails to keep pace.
+
+Neutral factor: balance sheet resilience is supportive in a drawdown but less decisive for QQQ as an ETF. It matters most if the index’s dominant holdings have net cash, modest leverage, and strong free cash flow conversion, especially in tighter macro conditions. This is a durability filter, not a standalone bullish catalyst.
+
+Missing information: the rule set does not provide current QQQ valuation, earnings revision trends, constituent-level AI exposure, backlog data, margin trends, free cash flow conversion, or macro/news confirmation. Because the rules are manually curated guidance, downstream analysts should verify them against current holdings, fundamentals, market technicals, news, and macro evidence.
+
+Practical guidance: treat the factor picture as mixed with high-conviction signals on both sides. The committee should focus next on whether AI-related earnings revisions are broad and strong enough to justify QQQ’s valuation. If earnings revisions and margins confirm the AI capex thesis, the bullish rule becomes more important; if growth estimates soften while multiples stay rich, the bearish valuation rule should dominate the factor assessment.

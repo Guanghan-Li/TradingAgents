@@ -1,0 +1,26 @@
+Macro view for `DLR`: the backdrop is a mixed but tradable late-cycle soft-landing regime. Growth and labor are still holding up, with unemployment at 4.3% and payrolls still expanding, while the Fed has already eased materially from 4.09% in October 2025 to 3.64% by March 2026. That should normally help rate-sensitive equities. The complication for `DLR` is that inflation re-accelerated in the latest print and the Treasury curve has re-steepened, with the 10Y at 4.29% and the 30Y at 4.89%. For a long-duration, capital-intensive REIT like `DLR`, that means the macro is not cleanly bullish even though the policy rate has come down.
+
+My base case is that the Fed is in a pause-with-easing-bias regime, not an active cutting regime. The normal upward-sloping 2Y/10Y curve at +53 bps says recession risk is lower than it was during inversion, but it also says the market is not pricing an urgent rescue cycle. Combined with sticky CPI and especially strong PPI momentum, that argues for higher-for-longer long-end yields even if the front end stays anchored. For `DLR`, that setup is macro-neutral to slightly negative: lower short rates reduce financing pressure at the margin, but elevated long rates can still pressure REIT multiples, cap-rate expectations, and external funding economics.
+
+Cross-asset implication for `DLR`: if this regime persists, equities tied to stable nominal growth can work, but duration-sensitive real estate is likely to lag unless the 10Y backs down. In other words, `DLR` probably needs one of two things to get a stronger macro tailwind: either a cleaner disinflation trend that brings long yields lower, or a growth scare that forces faster Fed easing. Right now, neither is clearly in place. The macro desk should treat `DLR` as supported by softer front-end policy but capped by an unfriendly long end.
+
+Concrete risks other analysts should incorporate for `DLR`:
+- Rate risk: the main macro headwind is not the Fed funds rate anymore, but the long bond. If 10Y and 30Y yields continue rising, valuation pressure can outweigh any benefit from prior Fed cuts.
+- Inflation risk: March CPI and PPI sequential acceleration raises the odds that the Fed pause lasts longer, delaying any further relief for rate-sensitive assets like `DLR`.
+- Growth/risk balance: the positively sloped curve reduces recession urgency, which is good for cash-flow stability, but also reduces the probability of a rapid policy-driven multiple expansion in `DLR`.
+- Volatility regime: VIX at 18.17 is contained, so there is no obvious macro stress signal helping defensive yield trades yet.
+
+Bottom line for `DLR`: macro regime is soft-landing / sticky-inflation / paused-Fed. That is better than recession plus inversion, but not ideal for a REIT that is sensitive to long-term yields. From a pure macro lens, `DLR` looks neutral rather than outright bullish until inflation cools enough to pull the long end lower.
+
+| Macro Signal | Latest Read | Regime Interpretation | Likely Market Implication | Specific Implication for `DLR` |
+| --- | --- | --- | --- | --- |
+| Fed funds rate | 3.64% as of 2026-03-01 | Fed has already eased and is now pausing near neutral | Front-end rates less restrictive; borrowing pressure eased vs late 2025 | Mild support for `DLR`, but not enough alone to drive upside |
+| CPI | 330.29, +0.87% sequential in latest print | Inflation looks sticky/re-accelerating near term | Reduces odds of near-term Fed cuts; keeps duration pressure alive | Headwind for `DLR` valuation through higher discount rates |
+| PPI | 274.10, +1.78% sequential in latest print | Pipeline inflation pressure is notable | Raises risk that inflation remains firm and long yields stay elevated | Negative for `DLR` if funding and cap-rate expectations reset higher |
+| Unemployment | 4.30%, down 0.10% sequential | Labor market still resilient | Supports soft-landing narrative; lowers immediate recession risk | Positive for occupancy/cash-flow stability, but limits urgency for Fed easing |
+| Nonfarm payrolls | +178k sequential | Employment growth remains positive | Growth backdrop still intact | Fundamentally supportive for `DLR`, especially if demand remains steady |
+| 2Y-10Y curve | +0.53% | Normal upward slope; recession signal has faded | Better growth expectations, but less chance of aggressive cuts | Neutral for `DLR`: less recession risk, but less policy-driven multiple expansion |
+| 10Y Treasury | 4.29% | Long-end yields remain elevated | Headwind for long-duration equities and rate-sensitive sectors | Key macro headwind for `DLR` |
+| 30Y Treasury | 4.89% | Long-duration financing costs still high | Pressure on real estate valuations and external capital markets | Negative for `DLR` if investors focus on long-run cost of capital |
+| VIX | 18.17 | Risk sentiment is contained, not distressed | No broad panic bid into defensives | Neutral for `DLR`; macro is orderly, not forcing a rotation into REITs |
+| Overall macro regime | Soft landing with sticky inflation and paused Fed | Stable growth, no recession panic, but no clean disinflation | Favor selective risk, avoid blind duration exposure | `DLR` macro view is neutral to slightly constrained until long yields fall |

@@ -1,0 +1,9 @@
+{
+  "expected_return_pct": null,
+  "fair_value_range": {
+    "high": null,
+    "low": null
+  },
+  "primary_method": "parse_error",
+  "thesis": "# Amazon (AMZN) Valuation Analysis\n\n**Fair Value Range:** $220 - $270 per share\n\n**Expected Return:** Approximately 5-15% from current levels (mid-$230s to low $240s based on market cap)\n\n**Primary Valuation Method:** Forward P/E multiple with DCF cross-check\n\n**Investment Thesis:**\n\nAmazon demonstrates strong fundamental momentum with improving profitability metrics. The forward P/E of 25.4x represents a meaningful discount to the trailing 33.2x, indicating analyst expectations for 30%+ earnings growth. This is supported by:\n\n- Robust profit margins at 10.8% on $717B revenue\n- Strong ROE of 22.3% showing efficient capital deployment  \n- AWS continuing to drive high-margin growth\n- Retail operations reaching scale efficiency\n\nThe 6.2x price-to-book ratio is elevated but justified by the 22% ROE, which significantly exceeds cost of capital. Free cash flow of $23.8B provides flexibility for reinvestment and shareholder returns.\n\nKey risks include regulatory scrutiny, competitive pressure in cloud services, and the current debt-to-equity ratio of 43x, though the 1.05 current ratio suggests adequate liquidity.\n\nAt current levels near $238, the stock trades within fair value range. The forward multiple compression suggests the market is pricing in growth deceleration, creating potential upside if AWS and advertising revenue streams continue accelerating.\n\n**Recommendation context:** This analysis supports a HOLD for existing positions or selective BUY on weakness below $220. The risk/reward is balanced at current prices."
+}
