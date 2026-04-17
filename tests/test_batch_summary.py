@@ -1,6 +1,8 @@
 import json
 import subprocess
 
+import pytest
+
 
 def test_write_run_artifacts_persists_reports_and_summary(tmp_path):
     from cli.automation import write_run_artifacts
@@ -500,6 +502,254 @@ def test_build_decision_allocation_packets_does_not_promote_overweight_rating_to
     packets = build_decision_allocation_packets(results_dir=tmp_path, analysis_date="2026-04-16")
 
     assert [packet["ticker"] for packet in packets] == ["AAPL"]
+
+
+def test_generate_decision_grade_allocation_requires_committee_schema(monkeypatch):
+    from cli.automation import generate_decision_grade_allocation
+
+    captured = {}
+
+    class FakeLLM:
+        def invoke(self, messages):
+            captured["system_prompt"] = messages[0].content
+            captured["human_prompt"] = messages[1].content
+            return type(
+                "Response",
+                (),
+                {
+                    "content": json.dumps(
+                        {
+                            "executive_decision": {
+                                "summary": "Allocate to three Buy names with the best portfolio fit.",
+                                "why_this_portfolio": "These names balance secular growth, cyclical upside, and quality defense.",
+                                "weighting_principle": "Higher dollars go to stronger edge and cleaner entry quality.",
+                                "total_allocated_dollars": 200,
+                            },
+                            "selected_positions": [
+                                {
+                                    "ticker": "AMZN",
+                                    "allocated_dollars": 80,
+                                    "weight_pct": 40.0,
+                                    "selection_role": "Core growth compounder",
+                                    "core_thesis": "AWS and retail margin durability justify leadership weight.",
+                                    "key_supporting_evidence": "AWS growth and operating leverage remain strong.",
+                                    "key_disconfirming_evidence": "Entry is extended and valuation is not cheap.",
+                                    "entry_quality_assessment": "Acceptable only as a staged entry on pullback or catalyst confirmation.",
+                                    "why_it_beats_closest_rejected_buy": "It beats NVDA on portfolio diversification and beats MU on quality durability.",
+                                    "risk_controls_and_invalidation": "Reduce if AWS growth or retail margins roll over.",
+                                    "confidence": "medium-high",
+                                },
+                                {
+                                    "ticker": "MU",
+                                    "allocated_dollars": 70,
+                                    "weight_pct": 35.0,
+                                    "selection_role": "Cyclical AI memory upside",
+                                    "core_thesis": "HBM and memory-cycle inflection create asymmetric upside.",
+                                    "key_supporting_evidence": "Scenario map and earnings inflection both support Buy.",
+                                    "key_disconfirming_evidence": "Resistance and high ATR make timing fragile.",
+                                    "entry_quality_assessment": "Good only with staged adds and hard risk controls.",
+                                    "why_it_beats_closest_rejected_buy": "It beats TSM on upside asymmetry and beats NVDA on valuation support.",
+                                    "risk_controls_and_invalidation": "Cut if pricing or gross margin evidence breaks.",
+                                    "confidence": "medium",
+                                },
+                                {
+                                    "ticker": "JPM",
+                                    "allocated_dollars": 50,
+                                    "weight_pct": 25.0,
+                                    "selection_role": "Defensive quality ballast",
+                                    "core_thesis": "Broad earnings base and buybacks improve portfolio balance.",
+                                    "key_supporting_evidence": "Strong franchise returns and favorable non-bear scenario map.",
+                                    "key_disconfirming_evidence": "Premium valuation and only modest outright bull scenario.",
+                                    "entry_quality_assessment": "Best bought on constructive pullbacks near support.",
+                                    "why_it_beats_closest_rejected_buy": "It beats AMZN as a diversifier and beats XLE on quality stability.",
+                                    "risk_controls_and_invalidation": "Reduce if provisions or regulatory pressure worsen materially.",
+                                    "confidence": "medium",
+                                },
+                            ],
+                            "rejected_close_alternatives": [
+                                {
+                                    "ticker": "NVDA",
+                                    "why_it_was_close": "The business quality is elite and the scenario map is favorable.",
+                                    "why_it_lost": "It lost on entry quality and concentration overlap.",
+                                    "what_would_have_changed_the_decision": "A less extended entry or better diversification benefit.",
+                                },
+                                {
+                                    "ticker": "TSM",
+                                    "why_it_was_close": "It offers attractive semiconductor exposure with strong foundry economics.",
+                                    "why_it_lost": "It lost to MU on upside asymmetry and to JPM on portfolio balance.",
+                                    "what_would_have_changed_the_decision": "A clearer catalyst edge or stronger relative upside.",
+                                },
+                                {
+                                    "ticker": "XLE",
+                                    "why_it_was_close": "It adds macro diversification and cash-flow support.",
+                                    "why_it_lost": "It lost on long-duration upside and weaker cross-name edge.",
+                                    "what_would_have_changed_the_decision": "Better commodity setup relative to growth alternatives.",
+                                },
+                            ],
+                            "portfolio_risks": {
+                                "top_risks": ["Macro tightening", "extended growth entries"],
+                                "concentration_notes": "Two names retain material tech sensitivity.",
+                                "macro_notes": "Fed and inflation path still matter for all three.",
+                                "timing_notes": "At least two positions need staged execution, not full-size chase.",
+                            },
+                            "decision_quality": {
+                                "evidence_quality": "medium-high",
+                                "main_assumptions": ["AI demand holds", "soft-landing macro persists"],
+                                "known_weak_points": ["Entry quality is not ideal for all three"],
+                                "internal_consistency_check": "All selected names are explicit Buys and total allocation is $200.",
+                            },
+                        }
+                    )
+                },
+            )()
+
+    class FakeClient:
+        def get_llm(self):
+            return FakeLLM()
+
+    monkeypatch.setattr("cli.automation.create_llm_client", lambda **kwargs: FakeClient())
+
+    payload = generate_decision_grade_allocation(
+        analysis_date="2026-04-15",
+        daily_summary_markdown="# Daily Summary\n\nAMZN, MU, and JPM are explicit Buys.",
+        stock_packets=[
+            {
+                "ticker": "AMZN",
+                "decision": "Buy",
+                "relative_stance": "Overweight",
+                "chief_summary": "AMZN summary",
+                "chief_thesis": "AMZN thesis",
+                "risk_summary": "AMZN risk",
+            },
+            {
+                "ticker": "MU",
+                "decision": "Buy",
+                "relative_stance": "Overweight",
+                "chief_summary": "MU summary",
+                "chief_thesis": "MU thesis",
+                "risk_summary": "MU risk",
+            },
+            {
+                "ticker": "JPM",
+                "decision": "Buy",
+                "relative_stance": "Overweight",
+                "chief_summary": "JPM summary",
+                "chief_thesis": "JPM thesis",
+                "risk_summary": "JPM risk",
+            },
+            {
+                "ticker": "NVDA",
+                "decision": "Buy",
+                "relative_stance": "Neutral",
+                "chief_summary": "NVDA summary",
+                "chief_thesis": "NVDA thesis",
+                "risk_summary": "NVDA risk",
+            },
+        ],
+    )
+
+    assert len(payload["selected_positions"]) == 3
+    assert payload["executive_decision"]["total_allocated_dollars"] == 200
+    assert "investment committee decision writer" in captured["system_prompt"].lower()
+    assert "selected_positions" in captured["system_prompt"]
+    assert "rejected_close_alternatives" in captured["system_prompt"]
+    assert "allocate exactly $200" in captured["system_prompt"].lower()
+    assert "AMZN" in captured["human_prompt"]
+
+
+def test_generate_decision_grade_allocation_rejects_invalid_committee_shape(monkeypatch):
+    from cli.automation import generate_decision_grade_allocation
+
+    class FakeLLM:
+        def invoke(self, messages):
+            return type(
+                "Response",
+                (),
+                {
+                    "content": json.dumps(
+                        {
+                            "executive_decision": {
+                                "summary": "Broken payload",
+                                "why_this_portfolio": "Broken payload",
+                                "weighting_principle": "Broken payload",
+                                "total_allocated_dollars": 180,
+                            },
+                            "selected_positions": [
+                                {"ticker": "AMZN", "allocated_dollars": 100},
+                                {"ticker": "MU", "allocated_dollars": 80},
+                            ],
+                            "rejected_close_alternatives": [],
+                            "portfolio_risks": {},
+                            "decision_quality": {},
+                        }
+                    )
+                },
+            )()
+
+    class FakeClient:
+        def get_llm(self):
+            return FakeLLM()
+
+    monkeypatch.setattr("cli.automation.create_llm_client", lambda **kwargs: FakeClient())
+
+    with pytest.raises(ValueError, match="exactly 3 selected positions"):
+        generate_decision_grade_allocation(
+            analysis_date="2026-04-15",
+            daily_summary_markdown="# Daily Summary",
+            stock_packets=[
+                {"ticker": "AMZN", "decision": "Buy"},
+                {"ticker": "MU", "decision": "Buy"},
+                {"ticker": "JPM", "decision": "Buy"},
+            ],
+        )
+
+
+def test_generate_decision_grade_allocation_rejects_wrong_total_allocation(monkeypatch):
+    from cli.automation import generate_decision_grade_allocation
+
+    class FakeLLM:
+        def invoke(self, messages):
+            return type(
+                "Response",
+                (),
+                {
+                    "content": json.dumps(
+                        {
+                            "executive_decision": {
+                                "summary": "Broken total",
+                                "why_this_portfolio": "Broken total",
+                                "weighting_principle": "Broken total",
+                                "total_allocated_dollars": 180,
+                            },
+                            "selected_positions": [
+                                {"ticker": "AMZN", "allocated_dollars": 80},
+                                {"ticker": "MU", "allocated_dollars": 60},
+                                {"ticker": "JPM", "allocated_dollars": 40},
+                            ],
+                            "rejected_close_alternatives": [],
+                            "portfolio_risks": {},
+                            "decision_quality": {},
+                        }
+                    )
+                },
+            )()
+
+    class FakeClient:
+        def get_llm(self):
+            return FakeLLM()
+
+    monkeypatch.setattr("cli.automation.create_llm_client", lambda **kwargs: FakeClient())
+
+    with pytest.raises(ValueError, match="allocate exactly \\$200"):
+        generate_decision_grade_allocation(
+            analysis_date="2026-04-15",
+            daily_summary_markdown="# Daily Summary",
+            stock_packets=[
+                {"ticker": "AMZN", "decision": "Buy"},
+                {"ticker": "MU", "decision": "Buy"},
+                {"ticker": "JPM", "decision": "Buy"},
+            ],
+        )
 
 
 def test_generate_final_allocation_scores_prompt_requires_buy_candidate_comparison(monkeypatch):

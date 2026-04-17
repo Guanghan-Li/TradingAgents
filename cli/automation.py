@@ -861,6 +861,107 @@ def build_decision_allocation_packets(
     return packets
 
 
+def _extract_decision_grade_allocation_payload(payload: dict) -> dict:
+    required_top_level = {
+        "executive_decision",
+        "selected_positions",
+        "rejected_close_alternatives",
+        "portfolio_risks",
+        "decision_quality",
+    }
+    missing = sorted(required_top_level - set(payload))
+    if missing:
+        raise ValueError(f"Decision-grade allocation payload missing keys: {missing}")
+
+    selected_positions = payload.get("selected_positions")
+    if not isinstance(selected_positions, list) or len(selected_positions) != 3:
+        raise ValueError("Decision-grade allocation must contain exactly 3 selected positions.")
+
+    executive_decision = payload.get("executive_decision")
+    if not isinstance(executive_decision, dict):
+        raise ValueError("Decision-grade allocation must include an executive_decision object.")
+
+    total_allocated_dollars = executive_decision.get("total_allocated_dollars")
+    if total_allocated_dollars != 200:
+        raise ValueError("Decision-grade allocation must allocate exactly $200.")
+
+    return payload
+
+
+def generate_decision_grade_allocation(
+    *,
+    analysis_date: str,
+    daily_summary_markdown: str,
+    stock_packets: list[dict],
+    provider: str = BATCH_CODEX_PROVIDER,
+    backend_url: str = BATCH_CODEX_BACKEND_URL,
+    model: str = BATCH_CODEX_MODEL,
+    reasoning_effort: str = BATCH_CODEX_FINAL_REASONING_EFFORT,
+) -> dict:
+    if not stock_packets:
+        raise ValueError("Decision-grade allocation requires at least 3 Buy candidates.")
+
+    summary_excerpt = daily_summary_markdown.strip()
+    if len(summary_excerpt) > 2500:
+        summary_excerpt = summary_excerpt[:2500] + "\n\n[truncated]"
+
+    eligible_tickers = [
+        str(packet.get("ticker", "")).strip()
+        for packet in stock_packets
+        if str(packet.get("ticker", "")).strip()
+    ]
+
+    system_prompt = (
+        "You are an investment committee decision writer preparing a decision-grade allocation memo for a hypothetical paper portfolio. "
+        "This is not investment advice. "
+        "Use only the supplied daily summary and rich Buy-only stock packets. "
+        "Choose exactly 3 names, all of which must already be explicit Buy decisions in the supplied evidence. "
+        "Allocate exactly $200 across the 3 selected names, with all 3 positions receiving positive dollars. "
+        "Do not output a ranking-sheet response. Write a committee-quality decision payload that defends why these 3 names won and why the closest rejected Buy names lost. "
+        "You must explain weighting differences, discuss both business quality and entry quality, and name specific rejected alternatives. "
+        "Avoid generic filler such as 'stronger support', 'better profile', or 'the rest' unless followed by concrete evidence. "
+        "Return JSON only with this exact shape: "
+        "{"
+        "\"executive_decision\":{\"summary\":\"text\",\"why_this_portfolio\":\"text\",\"weighting_principle\":\"text\",\"total_allocated_dollars\":200},"
+        "\"selected_positions\":[{\"ticker\":\"TICKER\",\"allocated_dollars\":1,\"weight_pct\":0,\"selection_role\":\"text\",\"core_thesis\":\"text\",\"key_supporting_evidence\":\"text\",\"key_disconfirming_evidence\":\"text\",\"entry_quality_assessment\":\"text\",\"why_it_beats_closest_rejected_buy\":\"text\",\"risk_controls_and_invalidation\":\"text\",\"confidence\":\"low|medium|medium-high|high\"}],"
+        "\"rejected_close_alternatives\":[{\"ticker\":\"TICKER\",\"why_it_was_close\":\"text\",\"why_it_lost\":\"text\",\"what_would_have_changed_the_decision\":\"text\"}],"
+        "\"portfolio_risks\":{\"top_risks\":[\"text\"],\"concentration_notes\":\"text\",\"macro_notes\":\"text\",\"timing_notes\":\"text\"},"
+        "\"decision_quality\":{\"evidence_quality\":\"text\",\"main_assumptions\":[\"text\"],\"known_weak_points\":[\"text\"],\"internal_consistency_check\":\"text\"}"
+        "}. "
+        "The selected_positions array must contain exactly 3 objects and no duplicate tickers. "
+        "The total_allocated_dollars field must equal 200."
+    )
+    human_prompt = (
+        f"Date: {analysis_date}\n\n"
+        "Eligible Buy tickers:\n\n"
+        f"{json.dumps(eligible_tickers)}\n\n"
+        "Daily summary:\n\n"
+        f"{summary_excerpt}\n\n"
+        "Rich stock packets (JSON):\n\n"
+        f"{json.dumps(stock_packets, indent=2)}"
+    )
+
+    client = create_llm_client(
+        provider=provider,
+        model=model,
+        base_url=backend_url,
+        reasoning_effort=reasoning_effort if provider == "codex_cli" else None,
+        effort=reasoning_effort if provider == "claude_code" else None,
+        timeout=90,
+    )
+    response = client.get_llm().invoke(
+        [
+            SystemMessage(content=system_prompt),
+            HumanMessage(content=human_prompt),
+        ]
+    )
+    content = format_report_content(response.content).strip()
+    payload = _extract_json_object_from_text(content)
+    if not payload:
+        raise ValueError("Decision-grade allocation scorer did not return valid JSON.")
+    return _extract_decision_grade_allocation_payload(payload)
+
+
 def _fallback_allocation_reason(error: Exception) -> str:
     if isinstance(error, subprocess.TimeoutExpired):
         return "the automated final-allocation scorer timed out"
