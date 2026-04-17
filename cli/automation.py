@@ -1043,6 +1043,46 @@ def generate_decision_grade_allocation(
     return verify_decision_grade_allocation(payload, eligible_packets=stock_packets)
 
 
+def _retry_reasoning_effort(reasoning_effort: str) -> str:
+    if reasoning_effort == "xhigh":
+        return "high"
+    if reasoning_effort == "high":
+        return "medium"
+    return reasoning_effort
+
+
+def generate_decision_grade_allocation_with_retry(
+    *,
+    analysis_date: str,
+    daily_summary_markdown: str,
+    stock_packets: list[dict],
+    provider: str = BATCH_CODEX_PROVIDER,
+    backend_url: str = BATCH_CODEX_BACKEND_URL,
+    model: str = BATCH_CODEX_MODEL,
+    reasoning_effort: str = BATCH_CODEX_FINAL_REASONING_EFFORT,
+) -> dict:
+    try:
+        return generate_decision_grade_allocation(
+            analysis_date=analysis_date,
+            daily_summary_markdown=daily_summary_markdown,
+            stock_packets=stock_packets,
+            provider=provider,
+            backend_url=backend_url,
+            model=model,
+            reasoning_effort=reasoning_effort,
+        )
+    except (subprocess.TimeoutExpired, RuntimeError, ValueError):
+        return generate_decision_grade_allocation(
+            analysis_date=analysis_date,
+            daily_summary_markdown=daily_summary_markdown,
+            stock_packets=stock_packets,
+            provider=provider,
+            backend_url=backend_url,
+            model=model,
+            reasoning_effort=_retry_reasoning_effort(reasoning_effort),
+        )
+
+
 def _fallback_allocation_reason(error: Exception) -> str:
     if isinstance(error, subprocess.TimeoutExpired):
         return "the automated final-allocation scorer timed out"

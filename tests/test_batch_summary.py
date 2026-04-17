@@ -921,6 +921,85 @@ def test_verify_decision_grade_allocation_rejects_invalid_rejected_alternative()
         verify_decision_grade_allocation(payload, eligible_packets=_eligible_decision_packets())
 
 
+def test_generate_decision_grade_allocation_with_retry_retries_after_timeout(monkeypatch):
+    from cli.automation import generate_decision_grade_allocation_with_retry
+
+    calls = []
+
+    def fake_generate_decision_grade_allocation(**kwargs):
+        calls.append(kwargs["reasoning_effort"])
+        if len(calls) == 1:
+            raise subprocess.TimeoutExpired(["codex", "exec"], 90)
+        return _valid_decision_grade_payload()
+
+    monkeypatch.setattr(
+        "cli.automation.generate_decision_grade_allocation",
+        fake_generate_decision_grade_allocation,
+    )
+
+    payload = generate_decision_grade_allocation_with_retry(
+        analysis_date="2026-04-15",
+        daily_summary_markdown="# Daily Summary",
+        stock_packets=_eligible_decision_packets(),
+        reasoning_effort="xhigh",
+    )
+
+    assert payload["executive_decision"]["total_allocated_dollars"] == 200
+    assert calls == ["xhigh", "high"]
+
+
+def test_generate_decision_grade_allocation_with_retry_retries_after_invalid_schema(monkeypatch):
+    from cli.automation import generate_decision_grade_allocation_with_retry
+
+    calls = []
+
+    def fake_generate_decision_grade_allocation(**kwargs):
+        calls.append(kwargs["reasoning_effort"])
+        if len(calls) == 1:
+            raise ValueError("Decision-grade allocation must contain exactly 3 selected positions.")
+        return _valid_decision_grade_payload()
+
+    monkeypatch.setattr(
+        "cli.automation.generate_decision_grade_allocation",
+        fake_generate_decision_grade_allocation,
+    )
+
+    payload = generate_decision_grade_allocation_with_retry(
+        analysis_date="2026-04-15",
+        daily_summary_markdown="# Daily Summary",
+        stock_packets=_eligible_decision_packets(),
+        reasoning_effort="xhigh",
+    )
+
+    assert payload["selected_positions"][0]["ticker"] == "AMZN"
+    assert calls == ["xhigh", "high"]
+
+
+def test_generate_decision_grade_allocation_with_retry_raises_after_two_failures(monkeypatch):
+    from cli.automation import generate_decision_grade_allocation_with_retry
+
+    calls = []
+
+    def fake_generate_decision_grade_allocation(**kwargs):
+        calls.append(kwargs["reasoning_effort"])
+        raise ValueError("Decision-grade allocation must contain exactly 3 selected positions.")
+
+    monkeypatch.setattr(
+        "cli.automation.generate_decision_grade_allocation",
+        fake_generate_decision_grade_allocation,
+    )
+
+    with pytest.raises(ValueError, match="exactly 3 selected positions"):
+        generate_decision_grade_allocation_with_retry(
+            analysis_date="2026-04-15",
+            daily_summary_markdown="# Daily Summary",
+            stock_packets=_eligible_decision_packets(),
+            reasoning_effort="xhigh",
+        )
+
+    assert calls == ["xhigh", "high"]
+
+
 def test_generate_final_allocation_scores_prompt_requires_buy_candidate_comparison(monkeypatch):
     from cli.automation import generate_final_allocation_scores
 
