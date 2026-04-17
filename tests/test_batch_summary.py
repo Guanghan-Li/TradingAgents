@@ -179,7 +179,7 @@ def test_generate_final_allocation_artifacts_writes_markdown_and_pdf(tmp_path, m
     results_dir = tmp_path / "results_batch"
     date_dir = results_dir / "2026-04-13"
 
-    for ticker in ("AAPL", "MSFT"):
+    for ticker in ("AAPL", "MSFT", "NVDA", "AMZN"):
         report_dir = date_dir / ticker / "reports"
         report_dir.mkdir(parents=True)
         (report_dir / "chief_analyst_report.md").write_text(
@@ -194,6 +194,8 @@ def test_generate_final_allocation_artifacts_writes_markdown_and_pdf(tmp_path, m
                     "chief_action": "Buy",
                     "chief_relative_stance": "Overweight",
                     "chief_summary": f"Buy {ticker}",
+                    "chief_thesis": f"{ticker} thesis",
+                    "risk_summary": f"{ticker} risk",
                 }
             )
         )
@@ -202,9 +204,12 @@ def test_generate_final_allocation_artifacts_writes_markdown_and_pdf(tmp_path, m
     summary_dir.mkdir(parents=True)
     (summary_dir / "daily_summary.md").write_text("# Daily Summary: 2026-04-13\n\n- AAPL\n- MSFT")
 
+    def fake_generate_decision_grade_allocation_with_retry(**kwargs):
+        return _valid_decision_grade_payload()
+
     monkeypatch.setattr(
-        "cli.automation.generate_final_allocation_markdown",
-        lambda **kwargs: "# Final Allocation\n\n| Asset | Dollars |\n| --- | ---: |\n| AAPL | $120 |\n| MSFT | $80 |",
+        "cli.automation.generate_decision_grade_allocation_with_retry",
+        fake_generate_decision_grade_allocation_with_retry,
     )
 
     def fake_write_allocation_pdf(*, markdown_text, output_path, analysis_date):
@@ -221,6 +226,7 @@ def test_generate_final_allocation_artifacts_writes_markdown_and_pdf(tmp_path, m
     assert result["pdf_path"] == str(date_dir / "final_allocation.pdf")
     assert (date_dir / "final_allocation.md").exists()
     assert (date_dir / "final_allocation.pdf").exists()
+    assert "## Executive Decision" in (date_dir / "final_allocation.md").read_text()
 
 
 def test_generate_final_allocation_artifacts_falls_back_after_scorer_timeout(tmp_path, monkeypatch):
@@ -259,15 +265,13 @@ def test_generate_final_allocation_artifacts_falls_back_after_scorer_timeout(tmp
     summary_dir.mkdir(parents=True)
     (summary_dir / "daily_summary.md").write_text("# Daily Summary: 2026-04-13\n\n- AAPL\n- MSFT\n- NVDA\n- AMZN")
 
-    class FakeLLM:
-        def invoke(self, messages):
-            raise subprocess.TimeoutExpired(["codex", "exec"], 180)
+    def fake_generate_decision_grade_allocation_with_retry(**kwargs):
+        raise subprocess.TimeoutExpired(["codex", "exec"], 180)
 
-    class FakeClient:
-        def get_llm(self):
-            return FakeLLM()
-
-    monkeypatch.setattr("cli.automation.create_llm_client", lambda **kwargs: FakeClient())
+    monkeypatch.setattr(
+        "cli.automation.generate_decision_grade_allocation_with_retry",
+        fake_generate_decision_grade_allocation_with_retry,
+    )
 
     def fake_write_allocation_pdf(*, markdown_text, output_path, analysis_date):
         output_path.write_text(f"PDF {analysis_date}\n{markdown_text}")
@@ -285,7 +289,8 @@ def test_generate_final_allocation_artifacts_falls_back_after_scorer_timeout(tmp
     assert result["pdf_path"] == str(date_dir / "final_allocation.pdf")
     assert (date_dir / "final_allocation.md").exists()
     assert (date_dir / "final_allocation.pdf").exists()
-    assert "Fallback allocation" in markdown
+    assert "Fallback Allocation Memo" in markdown
+    assert "## Executive Decision" in markdown
     assert "| AAPL |" in markdown
     assert "| MSFT |" in markdown
     assert "| NVDA |" in markdown

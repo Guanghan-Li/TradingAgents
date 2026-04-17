@@ -1896,19 +1896,30 @@ def generate_final_allocation_artifacts(
     date_dir = results_root / analysis_date
     summary_path = results_root / "daily_summaries" / analysis_date / "daily_summary.md"
     daily_summary_markdown = summary_path.read_text() if summary_path.exists() else ""
-    stock_packets = build_allocation_packets(
+    stock_packets = build_decision_allocation_packets(
         results_dir=results_root,
         analysis_date=analysis_date,
     )
 
-    markdown_text = generate_final_allocation_markdown(
+    try:
+        allocation_payload = generate_decision_grade_allocation_with_retry(
+            analysis_date=analysis_date,
+            daily_summary_markdown=daily_summary_markdown,
+            stock_packets=stock_packets,
+            provider=provider,
+            backend_url=backend_url,
+            model=model,
+            reasoning_effort=reasoning_effort,
+        )
+    except (subprocess.TimeoutExpired, RuntimeError, ValueError) as exc:
+        allocation_payload = build_fallback_decision_grade_allocation(
+            stock_packets=stock_packets,
+            error=exc,
+        )
+
+    markdown_text = render_decision_grade_allocation_markdown(
+        allocation_payload,
         analysis_date=analysis_date,
-        daily_summary_markdown=daily_summary_markdown,
-        stock_packets=stock_packets,
-        provider=provider,
-        backend_url=backend_url,
-        model=model,
-        reasoning_effort=reasoning_effort,
     )
     markdown_path = date_dir / "final_allocation.md"
     markdown_path.write_text(markdown_text)
