@@ -467,6 +467,41 @@ def test_build_decision_allocation_packets_keeps_only_completed_buys_and_collect
     assert packets[0]["invalidation"]["condition"] == "AWS growth stalls"
 
 
+def test_build_decision_allocation_packets_does_not_promote_overweight_rating_to_buy(tmp_path):
+    from cli.automation import build_decision_allocation_packets
+
+    date_dir = tmp_path / "2026-04-16"
+    for payload in [
+        {
+            "ticker": "AAPL",
+            "analysis_date": "2026-04-16",
+            "status": "completed",
+            "decision": "BUY",
+            "chief_action": "Buy",
+            "chief_rating": "Overweight",
+            "chief_summary": "Explicit Buy should remain eligible.",
+            "chief_thesis": "Explicit Buy thesis.",
+            "risk_summary": "Explicit Buy risk.",
+        },
+        {
+            "ticker": "META",
+            "analysis_date": "2026-04-16",
+            "status": "completed",
+            "chief_rating": "Overweight",
+            "chief_summary": "Rating-only Overweight should not be eligible.",
+            "chief_thesis": "Rating-only thesis.",
+            "risk_summary": "Rating-only risk.",
+        },
+    ]:
+        stock_dir = date_dir / payload["ticker"]
+        stock_dir.mkdir(parents=True, exist_ok=True)
+        (stock_dir / "run_summary.json").write_text(json.dumps(payload))
+
+    packets = build_decision_allocation_packets(results_dir=tmp_path, analysis_date="2026-04-16")
+
+    assert [packet["ticker"] for packet in packets] == ["AAPL"]
+
+
 def test_generate_final_allocation_scores_prompt_requires_buy_candidate_comparison(monkeypatch):
     from cli.automation import generate_final_allocation_scores
 

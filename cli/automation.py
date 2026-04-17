@@ -836,7 +836,7 @@ def build_decision_allocation_packets(
             continue
 
         absolute_action = _normalize_summary_action(
-            payload.get("chief_action") or payload.get("decision") or payload.get("chief_rating") or ""
+            payload.get("chief_action") or payload.get("decision") or ""
         )
         if absolute_action != "BUY":
             continue
