@@ -1083,6 +1083,123 @@ def generate_decision_grade_allocation_with_retry(
         )
 
 
+def _decision_packet_sort_key(packet: dict) -> tuple[int, int, str]:
+    stance_rank = _fallback_relative_stance_rank(packet.get("relative_stance", ""))
+    support_words = len(
+        (
+            f"{packet.get('chief_summary', '')} {packet.get('chief_thesis', '')}"
+        ).split()
+    )
+    return (-stance_rank, -support_words, str(packet.get("ticker", "")).strip().upper())
+
+
+def _allocate_exact_200_for_three(ranked_packets: list[dict]) -> list[int]:
+    scores = []
+    for idx, packet in enumerate(ranked_packets[:3]):
+        stance_rank = _fallback_relative_stance_rank(packet.get("relative_stance", ""))
+        base_score = 92 if stance_rank == 2 else 78 if stance_rank == 1 else 64
+        scores.append(max(base_score - idx * 4, 1))
+    total_score = sum(scores)
+    raw_amounts = [score / total_score * 200 for score in scores]
+    dollars = [int(amount) for amount in raw_amounts]
+    remainder = 200 - sum(dollars)
+    order = sorted(
+        range(len(dollars)),
+        key=lambda idx: (raw_amounts[idx] - dollars[idx], scores[idx]),
+        reverse=True,
+    )
+    for idx in order[:remainder]:
+        dollars[idx] += 1
+    return dollars
+
+
+def build_fallback_decision_grade_allocation(*, stock_packets: list[dict], error: Exception) -> dict:
+    eligible_packets = [
+        packet
+        for packet in stock_packets
+        if _normalize_summary_action(packet.get("decision") or packet.get("chief_action") or "") == "BUY"
+    ]
+    if len(eligible_packets) < 3:
+        raise ValueError("Fallback allocation requires at least 3 eligible Buy candidates.")
+
+    ranked_packets = sorted(eligible_packets, key=_decision_packet_sort_key)
+    selected_packets = ranked_packets[:3]
+    rejected_packets = ranked_packets[3:]
+    dollars = _allocate_exact_200_for_three(selected_packets)
+    fallback_reason = _fallback_allocation_reason(error)
+    rejected_names = [
+        str(packet.get("ticker", "")).strip().upper()
+        for packet in rejected_packets[:3]
+        if str(packet.get("ticker", "")).strip()
+    ]
+    closest_rejected = rejected_names[0] if rejected_names else "the next eligible Buy candidate"
+
+    selected_positions = []
+    for packet, allocated_dollars in zip(selected_packets, dollars):
+        ticker = str(packet.get("ticker", "")).strip().upper()
+        rationale = _fallback_packet_snippet(packet, max_length=160)
+        selected_positions.append(
+            {
+                "ticker": ticker,
+                "allocated_dollars": allocated_dollars,
+                "weight_pct": round(allocated_dollars / 200 * 100, 1),
+                "selection_role": "Fallback-selected eligible Buy candidate",
+                "core_thesis": rationale,
+                "key_supporting_evidence": rationale,
+                "key_disconfirming_evidence": str(packet.get("risk_summary") or "Fallback path did not complete full comparative review.").strip(),
+                "entry_quality_assessment": "Fallback memo did not complete the preferred entry-quality committee review.",
+                "why_it_beats_closest_rejected_buy": f"{ticker} ranked ahead of {closest_rejected} under the fallback continuity rules; this is not a full committee comparison.",
+                "risk_controls_and_invalidation": str(packet.get("risk_summary") or "Review the source run before acting on this fallback allocation.").strip(),
+                "confidence": "fallback-limited",
+            }
+        )
+
+    rejected_close_alternatives = []
+    for packet in rejected_packets[:3]:
+        ticker = str(packet.get("ticker", "")).strip().upper()
+        rejected_close_alternatives.append(
+            {
+                "ticker": ticker,
+                "why_it_was_close": _fallback_packet_snippet(packet, max_length=120),
+                "why_it_lost": "It ranked below the selected names under fallback continuity rules.",
+                "what_would_have_changed_the_decision": "A successful decision-grade scorer pass is required for a full comparative conclusion.",
+            }
+        )
+
+    payload = {
+        "fallback": {
+            "used": True,
+            "title": "Fallback Allocation Memo",
+            "reason": fallback_reason,
+            "limitations": "This continuity artifact is rule-compliant but not the preferred decision-grade committee memo.",
+        },
+        "executive_decision": {
+            "summary": f"Fallback allocation generated because {fallback_reason}.",
+            "why_this_portfolio": "The selected names were chosen by deterministic continuity rules from eligible Buy candidates.",
+            "weighting_principle": "Fallback weights are score-normalized from relative stance and available supporting detail.",
+            "total_allocated_dollars": 200,
+        },
+        "selected_positions": selected_positions,
+        "rejected_close_alternatives": rejected_close_alternatives,
+        "portfolio_risks": {
+            "top_risks": [
+                "Fallback allocation did not complete the preferred decision-grade comparative review.",
+                "Review the source reports before relying on this output.",
+            ],
+            "concentration_notes": "Fallback path does not perform full concentration analysis.",
+            "macro_notes": "Use the underlying reports for macro-specific risk details.",
+            "timing_notes": "Fallback path does not replace the preferred entry-quality assessment.",
+        },
+        "decision_quality": {
+            "evidence_quality": "fallback-limited",
+            "main_assumptions": ["Eligible Buy source reports are internally reliable."],
+            "known_weak_points": ["No full committee scorer result was available."],
+            "internal_consistency_check": "Fallback selected exactly 3 eligible Buy names and allocated exactly $200.",
+        },
+    }
+    return verify_decision_grade_allocation(payload, eligible_packets=eligible_packets)
+
+
 def _fallback_allocation_reason(error: Exception) -> str:
     if isinstance(error, subprocess.TimeoutExpired):
         return "the automated final-allocation scorer timed out"

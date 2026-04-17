@@ -1000,6 +1000,69 @@ def test_generate_decision_grade_allocation_with_retry_raises_after_two_failures
     assert calls == ["xhigh", "high"]
 
 
+def test_build_fallback_decision_grade_allocation_is_labeled_exact_three_and_sums_to_200():
+    from cli.automation import build_fallback_decision_grade_allocation
+
+    payload = build_fallback_decision_grade_allocation(
+        stock_packets=[
+            {
+                "ticker": "AMZN",
+                "decision": "Buy",
+                "relative_stance": "Overweight",
+                "chief_summary": "AMZN summary",
+                "chief_thesis": "AMZN thesis with durable growth evidence.",
+                "risk_summary": "AMZN risk",
+            },
+            {
+                "ticker": "MU",
+                "decision": "Buy",
+                "relative_stance": "Overweight",
+                "chief_summary": "MU summary",
+                "chief_thesis": "MU thesis with memory cycle evidence.",
+                "risk_summary": "MU risk",
+            },
+            {
+                "ticker": "JPM",
+                "decision": "Buy",
+                "relative_stance": "Overweight",
+                "chief_summary": "JPM summary",
+                "chief_thesis": "JPM thesis with defensive quality evidence.",
+                "risk_summary": "JPM risk",
+            },
+            {
+                "ticker": "NVDA",
+                "decision": "Buy",
+                "relative_stance": "Neutral",
+                "chief_summary": "NVDA summary",
+                "chief_thesis": "NVDA thesis",
+                "risk_summary": "NVDA risk",
+            },
+        ],
+        error=subprocess.TimeoutExpired(["codex", "exec"], 90),
+    )
+
+    assert payload["fallback"]["used"] is True
+    assert "fallback" in payload["fallback"]["title"].lower()
+    assert len(payload["selected_positions"]) == 3
+    assert [position["ticker"] for position in payload["selected_positions"]] == ["AMZN", "JPM", "MU"]
+    assert sum(position["allocated_dollars"] for position in payload["selected_positions"]) == 200
+    assert payload["executive_decision"]["total_allocated_dollars"] == 200
+    assert payload["rejected_close_alternatives"][0]["ticker"] == "NVDA"
+
+
+def test_build_fallback_decision_grade_allocation_rejects_fewer_than_three_buys():
+    from cli.automation import build_fallback_decision_grade_allocation
+
+    with pytest.raises(ValueError, match="at least 3 eligible Buy"):
+        build_fallback_decision_grade_allocation(
+            stock_packets=[
+                {"ticker": "AMZN", "decision": "Buy", "chief_summary": "AMZN"},
+                {"ticker": "MU", "decision": "Buy", "chief_summary": "MU"},
+            ],
+            error=RuntimeError("scorer failed"),
+        )
+
+
 def test_generate_final_allocation_scores_prompt_requires_buy_candidate_comparison(monkeypatch):
     from cli.automation import generate_final_allocation_scores
 
