@@ -1516,6 +1516,120 @@ def allocate_dollars_from_scores(
     return allocations
 
 
+def render_decision_grade_allocation_markdown(payload: dict, *, analysis_date: str) -> str:
+    def cell(value) -> str:
+        cleaned = str(value or "").replace("\n", " ").replace("|", "/").strip()
+        return cleaned or " "
+
+    lines = [f"# Final Allocation: {analysis_date}", ""]
+
+    fallback = payload.get("fallback") or {}
+    if fallback.get("used"):
+        lines.extend(
+            [
+                f"## {cell(fallback.get('title') or 'Fallback Allocation Memo')}",
+                "",
+                f"- Reason: {cell(fallback.get('reason'))}",
+                f"- Limitations: {cell(fallback.get('limitations'))}",
+                "",
+            ]
+        )
+
+    executive = payload.get("executive_decision") or {}
+    lines.extend(
+        [
+            "## Executive Decision",
+            "",
+            f"- Summary: {cell(executive.get('summary'))}",
+            f"- Why this portfolio: {cell(executive.get('why_this_portfolio'))}",
+            f"- Weighting principle: {cell(executive.get('weighting_principle'))}",
+            f"- Total allocated: ${cell(executive.get('total_allocated_dollars'))}",
+            "",
+            "## Selected Positions and Allocations",
+            "",
+            "| Asset | Dollars | Weight | Role |",
+            "| --- | ---: | ---: | --- |",
+        ]
+    )
+    for position in payload.get("selected_positions") or []:
+        lines.append(
+            f"| {cell(position.get('ticker'))} | "
+            f"${cell(position.get('allocated_dollars'))} | "
+            f"{cell(position.get('weight_pct'))}% | "
+            f"{cell(position.get('selection_role'))} |"
+        )
+
+    lines.extend(
+        [
+            "",
+            "## Why This Portfolio, Not The Next-Best Portfolio",
+            "",
+            cell(executive.get("why_this_portfolio")),
+            "",
+            "## Position Memos",
+            "",
+        ]
+    )
+    for position in payload.get("selected_positions") or []:
+        lines.extend(
+            [
+                f"### {cell(position.get('ticker'))}",
+                "",
+                f"- Role: {cell(position.get('selection_role'))}",
+                f"- Core thesis: {cell(position.get('core_thesis'))}",
+                f"- Supporting evidence: {cell(position.get('key_supporting_evidence'))}",
+                f"- Disconfirming evidence: {cell(position.get('key_disconfirming_evidence'))}",
+                f"- Entry quality: {cell(position.get('entry_quality_assessment'))}",
+                f"- Why it beat a close rejected Buy: {cell(position.get('why_it_beats_closest_rejected_buy'))}",
+                f"- Risk controls and invalidation: {cell(position.get('risk_controls_and_invalidation'))}",
+                f"- Confidence: {cell(position.get('confidence'))}",
+                "",
+            ]
+        )
+
+    lines.extend(
+        [
+            "## Closest Rejected Buy Alternatives",
+            "",
+            "| Asset | Why It Was Close | Why It Lost | What Would Change The Decision |",
+            "| --- | --- | --- | --- |",
+        ]
+    )
+    for rejected in payload.get("rejected_close_alternatives") or []:
+        lines.append(
+            f"| {cell(rejected.get('ticker'))} | "
+            f"{cell(rejected.get('why_it_was_close'))} | "
+            f"{cell(rejected.get('why_it_lost'))} | "
+            f"{cell(rejected.get('what_would_have_changed_the_decision'))} |"
+        )
+
+    risks = payload.get("portfolio_risks") or {}
+    lines.extend(["", "## Portfolio Risks", ""])
+    top_risks = risks.get("top_risks") or []
+    if top_risks:
+        lines.extend(f"- {cell(risk)}" for risk in top_risks)
+    lines.extend(
+        [
+            f"- Concentration: {cell(risks.get('concentration_notes'))}",
+            f"- Macro: {cell(risks.get('macro_notes'))}",
+            f"- Timing: {cell(risks.get('timing_notes'))}",
+            "",
+            "## Decision Quality and Key Assumptions",
+            "",
+        ]
+    )
+
+    quality = payload.get("decision_quality") or {}
+    lines.append(f"- Evidence quality: {cell(quality.get('evidence_quality'))}")
+    for assumption in quality.get("main_assumptions") or []:
+        lines.append(f"- Assumption: {cell(assumption)}")
+    for weak_point in quality.get("known_weak_points") or []:
+        lines.append(f"- Known weak point: {cell(weak_point)}")
+    lines.append(f"- Internal consistency: {cell(quality.get('internal_consistency_check'))}")
+
+    return "\n".join(lines)
+
+
 def render_final_allocation_markdown(
     *,
     analysis_date: str,

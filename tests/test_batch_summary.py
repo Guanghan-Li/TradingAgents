@@ -1063,6 +1063,48 @@ def test_build_fallback_decision_grade_allocation_rejects_fewer_than_three_buys(
         )
 
 
+def test_render_decision_grade_allocation_markdown_uses_committee_sections():
+    from cli.automation import render_decision_grade_allocation_markdown
+
+    markdown = render_decision_grade_allocation_markdown(_valid_decision_grade_payload(), analysis_date="2026-04-16")
+
+    assert "# Final Allocation: 2026-04-16" in markdown
+    assert "## Executive Decision" in markdown
+    assert "## Selected Positions and Allocations" in markdown
+    assert "## Why This Portfolio, Not The Next-Best Portfolio" in markdown
+    assert "## Position Memos" in markdown
+    assert "## Closest Rejected Buy Alternatives" in markdown
+    assert "## Portfolio Risks" in markdown
+    assert "## Decision Quality and Key Assumptions" in markdown
+    assert "Fallback Allocation Memo" not in markdown
+    assert "| AMZN | $80 | 40.0% | Core growth compounder |" in markdown
+    assert "AMZN beats NVDA" in markdown
+
+
+def test_render_decision_grade_allocation_markdown_includes_fallback_banner():
+    from cli.automation import (
+        build_fallback_decision_grade_allocation,
+        render_decision_grade_allocation_markdown,
+    )
+
+    payload = build_fallback_decision_grade_allocation(
+        stock_packets=[
+            {"ticker": "AMZN", "decision": "Buy", "relative_stance": "Overweight", "chief_summary": "AMZN", "chief_thesis": "AMZN thesis", "risk_summary": "AMZN risk"},
+            {"ticker": "MU", "decision": "Buy", "relative_stance": "Overweight", "chief_summary": "MU", "chief_thesis": "MU thesis", "risk_summary": "MU risk"},
+            {"ticker": "JPM", "decision": "Buy", "relative_stance": "Overweight", "chief_summary": "JPM", "chief_thesis": "JPM thesis", "risk_summary": "JPM risk"},
+            {"ticker": "NVDA", "decision": "Buy", "relative_stance": "Neutral", "chief_summary": "NVDA", "chief_thesis": "NVDA thesis", "risk_summary": "NVDA risk"},
+        ],
+        error=RuntimeError("scorer failed"),
+    )
+
+    markdown = render_decision_grade_allocation_markdown(payload, analysis_date="2026-04-16")
+
+    assert "## Fallback Allocation Memo" in markdown
+    assert "continuity artifact" in markdown
+    assert "## Executive Decision" in markdown
+    assert sum(1 for line in markdown.splitlines() if line.startswith("| ") and "selected" not in line.lower()) >= 3
+
+
 def test_generate_final_allocation_scores_prompt_requires_buy_candidate_comparison(monkeypatch):
     from cli.automation import generate_final_allocation_scores
 
