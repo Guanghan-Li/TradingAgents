@@ -888,6 +888,87 @@ def _extract_decision_grade_allocation_payload(payload: dict) -> dict:
     return payload
 
 
+def _non_empty_value(value) -> bool:
+    if isinstance(value, str):
+        return bool(value.strip())
+    if isinstance(value, (list, tuple, set, dict)):
+        return bool(value)
+    return value is not None
+
+
+def verify_decision_grade_allocation(payload: dict, *, eligible_packets: list[dict]) -> dict:
+    payload = _extract_decision_grade_allocation_payload(payload)
+    selected_positions = payload["selected_positions"]
+    selected_tickers = [
+        str(item.get("ticker", "")).strip().upper()
+        for item in selected_positions
+    ]
+    if len(set(selected_tickers)) != 3:
+        raise ValueError("Decision-grade allocation selected positions must be unique.")
+
+    eligible_tickers = {
+        str(packet.get("ticker", "")).strip().upper()
+        for packet in eligible_packets
+        if str(packet.get("ticker", "")).strip()
+    }
+    selected_ticker_set = set(selected_tickers)
+    for ticker in selected_tickers:
+        if ticker not in eligible_tickers:
+            raise ValueError(f"Selected ticker {ticker} is not an eligible Buy.")
+
+    rejected_alternatives = payload.get("rejected_close_alternatives") or []
+    rejected_tickers = {
+        str(item.get("ticker", "")).strip().upper()
+        for item in rejected_alternatives
+        if str(item.get("ticker", "")).strip()
+    }
+    invalid_rejected = sorted(rejected_tickers - eligible_tickers)
+    if invalid_rejected:
+        raise ValueError(f"Decision-grade allocation includes invalid rejected Buy alternatives: {invalid_rejected}")
+    rejected_selected_overlap = sorted(rejected_tickers & selected_ticker_set)
+    if rejected_selected_overlap:
+        raise ValueError(f"Rejected Buy alternatives include selected tickers: {rejected_selected_overlap}")
+
+    required_position_fields = {
+        "ticker",
+        "allocated_dollars",
+        "weight_pct",
+        "selection_role",
+        "core_thesis",
+        "key_supporting_evidence",
+        "key_disconfirming_evidence",
+        "entry_quality_assessment",
+        "why_it_beats_closest_rejected_buy",
+        "risk_controls_and_invalidation",
+        "confidence",
+    }
+    total_allocated = 0
+    for position in selected_positions:
+        missing = [
+            field
+            for field in sorted(required_position_fields)
+            if not _non_empty_value(position.get(field))
+        ]
+        if missing:
+            raise ValueError(f"Selected position {position.get('ticker', '')} missing required fields: {missing}")
+        allocated_dollars = position.get("allocated_dollars")
+        if not isinstance(allocated_dollars, int) or allocated_dollars <= 0:
+            raise ValueError("Each selected position must have a positive dollar allocation.")
+        total_allocated += allocated_dollars
+        comparison = str(position.get("why_it_beats_closest_rejected_buy", "")).upper()
+        if not any(ticker and ticker in comparison for ticker in rejected_tickers):
+            raise ValueError("Each selected position must include a named rejected Buy comparison.")
+
+    if total_allocated != 200:
+        raise ValueError("Selected position allocations must sum to $200.")
+
+    executive_total = payload["executive_decision"].get("total_allocated_dollars")
+    if executive_total != total_allocated:
+        raise ValueError("Executive decision total must match selected position allocations.")
+
+    return payload
+
+
 def generate_decision_grade_allocation(
     *,
     analysis_date: str,
@@ -959,7 +1040,7 @@ def generate_decision_grade_allocation(
     payload = _extract_json_object_from_text(content)
     if not payload:
         raise ValueError("Decision-grade allocation scorer did not return valid JSON.")
-    return _extract_decision_grade_allocation_payload(payload)
+    return verify_decision_grade_allocation(payload, eligible_packets=stock_packets)
 
 
 def _fallback_allocation_reason(error: Exception) -> str:

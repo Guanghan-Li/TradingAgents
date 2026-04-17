@@ -645,6 +645,22 @@ def test_generate_decision_grade_allocation_requires_committee_schema(monkeypatc
                 "chief_thesis": "NVDA thesis",
                 "risk_summary": "NVDA risk",
             },
+            {
+                "ticker": "TSM",
+                "decision": "Buy",
+                "relative_stance": "Neutral",
+                "chief_summary": "TSM summary",
+                "chief_thesis": "TSM thesis",
+                "risk_summary": "TSM risk",
+            },
+            {
+                "ticker": "XLE",
+                "decision": "Buy",
+                "relative_stance": "Neutral",
+                "chief_summary": "XLE summary",
+                "chief_thesis": "XLE thesis",
+                "risk_summary": "XLE risk",
+            },
         ],
     )
 
@@ -750,6 +766,159 @@ def test_generate_decision_grade_allocation_rejects_wrong_total_allocation(monke
                 {"ticker": "JPM", "decision": "Buy"},
             ],
         )
+
+
+def _valid_decision_grade_payload():
+    return {
+        "executive_decision": {
+            "summary": "Allocate to three Buy names.",
+            "why_this_portfolio": "The portfolio balances growth, cyclicality, and defense.",
+            "weighting_principle": "Highest allocation goes to strongest risk-adjusted edge.",
+            "total_allocated_dollars": 200,
+        },
+        "selected_positions": [
+            {
+                "ticker": "AMZN",
+                "allocated_dollars": 80,
+                "weight_pct": 40.0,
+                "selection_role": "Core growth compounder",
+                "core_thesis": "AWS and retail margins support compounding.",
+                "key_supporting_evidence": "AWS growth and operating leverage.",
+                "key_disconfirming_evidence": "Valuation and entry risk.",
+                "entry_quality_assessment": "Staged entry required due to extended setup.",
+                "why_it_beats_closest_rejected_buy": "AMZN beats NVDA on diversification and entry discipline.",
+                "risk_controls_and_invalidation": "Reduce if AWS or retail margins weaken.",
+                "confidence": "medium-high",
+            },
+            {
+                "ticker": "MU",
+                "allocated_dollars": 70,
+                "weight_pct": 35.0,
+                "selection_role": "Cyclical AI memory upside",
+                "core_thesis": "HBM cycle improves upside asymmetry.",
+                "key_supporting_evidence": "Memory pricing and scenario support.",
+                "key_disconfirming_evidence": "High ATR and resistance.",
+                "entry_quality_assessment": "Needs staged adds and stop discipline.",
+                "why_it_beats_closest_rejected_buy": "MU beats TSM on upside asymmetry.",
+                "risk_controls_and_invalidation": "Reduce if pricing rolls over.",
+                "confidence": "medium",
+            },
+            {
+                "ticker": "JPM",
+                "allocated_dollars": 50,
+                "weight_pct": 25.0,
+                "selection_role": "Defensive quality ballast",
+                "core_thesis": "Franchise returns add portfolio balance.",
+                "key_supporting_evidence": "ROE, buybacks, and earnings breadth.",
+                "key_disconfirming_evidence": "Premium valuation and credit risk.",
+                "entry_quality_assessment": "Prefer support-zone accumulation.",
+                "why_it_beats_closest_rejected_buy": "JPM beats XLE on quality stability.",
+                "risk_controls_and_invalidation": "Reduce on worse provisions.",
+                "confidence": "medium",
+            },
+        ],
+        "rejected_close_alternatives": [
+            {
+                "ticker": "NVDA",
+                "why_it_was_close": "Elite business quality.",
+                "why_it_lost": "Entry quality and concentration overlap.",
+                "what_would_have_changed_the_decision": "Cleaner entry.",
+            },
+            {
+                "ticker": "TSM",
+                "why_it_was_close": "Strong foundry economics.",
+                "why_it_lost": "Less upside asymmetry than MU.",
+                "what_would_have_changed_the_decision": "More differentiated catalyst.",
+            },
+            {
+                "ticker": "XLE",
+                "why_it_was_close": "Macro diversification.",
+                "why_it_lost": "Weaker role in the 3-name portfolio.",
+                "what_would_have_changed_the_decision": "Stronger commodity setup.",
+            },
+        ],
+        "portfolio_risks": {
+            "top_risks": ["macro", "valuation"],
+            "concentration_notes": "Two names retain tech sensitivity.",
+            "macro_notes": "Fed path matters.",
+            "timing_notes": "Entries require staging.",
+        },
+        "decision_quality": {
+            "evidence_quality": "medium-high",
+            "main_assumptions": ["AI demand holds"],
+            "known_weak_points": ["Entry quality is mixed"],
+            "internal_consistency_check": "All selected names are Buy and total is $200.",
+        },
+    }
+
+
+def _eligible_decision_packets():
+    return [
+        {"ticker": "AMZN", "decision": "Buy"},
+        {"ticker": "MU", "decision": "Buy"},
+        {"ticker": "JPM", "decision": "Buy"},
+        {"ticker": "NVDA", "decision": "Buy"},
+        {"ticker": "TSM", "decision": "Buy"},
+        {"ticker": "XLE", "decision": "Buy"},
+    ]
+
+
+def test_verify_decision_grade_allocation_accepts_valid_payload():
+    from cli.automation import verify_decision_grade_allocation
+
+    payload = _valid_decision_grade_payload()
+
+    assert verify_decision_grade_allocation(payload, eligible_packets=_eligible_decision_packets()) == payload
+
+
+def test_verify_decision_grade_allocation_rejects_non_buy_selection():
+    from cli.automation import verify_decision_grade_allocation
+
+    payload = _valid_decision_grade_payload()
+    payload["selected_positions"][0]["ticker"] = "CRM"
+
+    with pytest.raises(ValueError, match="not an eligible Buy"):
+        verify_decision_grade_allocation(payload, eligible_packets=_eligible_decision_packets())
+
+
+def test_verify_decision_grade_allocation_rejects_wrong_dollar_total():
+    from cli.automation import verify_decision_grade_allocation
+
+    payload = _valid_decision_grade_payload()
+    payload["selected_positions"][0]["allocated_dollars"] = 81
+
+    with pytest.raises(ValueError, match="sum to \\$200"):
+        verify_decision_grade_allocation(payload, eligible_packets=_eligible_decision_packets())
+
+
+def test_verify_decision_grade_allocation_rejects_zero_dollar_selection():
+    from cli.automation import verify_decision_grade_allocation
+
+    payload = _valid_decision_grade_payload()
+    payload["selected_positions"][2]["allocated_dollars"] = 0
+
+    with pytest.raises(ValueError, match="positive dollar"):
+        verify_decision_grade_allocation(payload, eligible_packets=_eligible_decision_packets())
+
+
+def test_verify_decision_grade_allocation_rejects_missing_rejected_comparison():
+    from cli.automation import verify_decision_grade_allocation
+
+    payload = _valid_decision_grade_payload()
+    payload["selected_positions"][1]["why_it_beats_closest_rejected_buy"] = "MU has better upside."
+
+    with pytest.raises(ValueError, match="named rejected Buy comparison"):
+        verify_decision_grade_allocation(payload, eligible_packets=_eligible_decision_packets())
+
+
+def test_verify_decision_grade_allocation_rejects_invalid_rejected_alternative():
+    from cli.automation import verify_decision_grade_allocation
+
+    payload = _valid_decision_grade_payload()
+    payload["rejected_close_alternatives"][0]["ticker"] = "CRM"
+
+    with pytest.raises(ValueError, match="invalid rejected Buy"):
+        verify_decision_grade_allocation(payload, eligible_packets=_eligible_decision_packets())
 
 
 def test_generate_final_allocation_scores_prompt_requires_buy_candidate_comparison(monkeypatch):
