@@ -478,7 +478,8 @@ def get_income_statement(
 
 
 def get_insider_transactions(
-    ticker: Annotated[str, "ticker symbol of the company"]
+    ticker: Annotated[str, "ticker symbol of the company"],
+    curr_date: Annotated[str, "current date in YYYY-MM-DD format"] = None,
 ):
     """Get insider transactions data from yfinance."""
     try:
@@ -487,10 +488,23 @@ def get_insider_transactions(
             "insider_transactions",
             timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
         )
-        
+
         if data is None or data.empty:
             return f"No insider transactions data found for symbol '{ticker}'"
-            
+
+        if curr_date:
+            import pandas as pd
+            cutoff = pd.Timestamp(curr_date)
+            date_col = next(
+                (c for c in ("Start Date", "Date", "Transaction Date") if c in data.columns),
+                None,
+            )
+            if date_col is not None:
+                data = data[pd.to_datetime(data[date_col], errors="coerce") <= cutoff]
+
+        if data.empty:
+            return f"No insider transactions for '{ticker}' on or before {curr_date}"
+
         # Convert to CSV string for consistency with other functions
         csv_string = data.to_csv()
         
