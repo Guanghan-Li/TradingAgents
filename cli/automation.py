@@ -17,6 +17,20 @@ from typing import Optional
 from langchain_core.messages import HumanMessage, SystemMessage
 import yaml
 
+try:
+    from anthropic import APIError as _AnthropicAPIError
+except ImportError:
+    _AnthropicAPIError = ()
+try:
+    from openai import APIError as _OpenAIAPIError
+except ImportError:
+    _OpenAIAPIError = ()
+
+_LLM_TRANSIENT_ERRORS = tuple(
+    err for err in (subprocess.TimeoutExpired, RuntimeError, ValueError, _AnthropicAPIError, _OpenAIAPIError)
+    if isinstance(err, type)
+)
+
 from cli.batch_progress import (
     BatchDashboardState,
     BatchWorkerSlot,
@@ -60,7 +74,16 @@ BATCH_CODEX_FINAL_REASONING_EFFORT = "xhigh"
 BATCH_CLAUDE_PROVIDER = "anthropic"
 BATCH_CLAUDE_BACKEND_URL = "https://api.routeai.cc"
 BATCH_CLAUDE_MODEL = "claude-sonnet-4-6"
-BATCH_CLAUDE_REASONING_EFFORT = "high"
+BATCH_CLAUDE_REASONING_EFFORT = "medium"
+BATCH_CLAUDE_FINAL_REASONING_EFFORT = "high"
+BATCH_FINAL_ALLOCATION_TIMEOUT_SECONDS = 600
+BATCH_CLAUDE_CARD_MODEL = "claude-sonnet-4-6"
+BATCH_CLAUDE_CARD_REASONING_EFFORT = "medium"
+BATCH_CLAUDE_COMMITTEE_MODEL = "claude-opus-4-7"
+BATCH_CLAUDE_COMMITTEE_REASONING_EFFORT = "high"
+BATCH_DECISION_CARD_TIMEOUT_SECONDS = 180
+BATCH_DECISION_CARD_MAX_WORKERS = 8
+BATCH_DECISION_CARD_SOURCE_CHAR_LIMIT = 14000
 BATCH_RESULTS_DIR = "results_batch"
 BATCH_RESULTS_LAYOUT = "date_first"
 DEPTH_PRESET_TO_ROUNDS = {
@@ -151,7 +174,10 @@ def resolve_batch_agent_preset(agent_cli: Optional[str] = None) -> dict:
             "quick_model": BATCH_CLAUDE_MODEL,
             "deep_model": BATCH_CLAUDE_MODEL,
             "reasoning_effort": BATCH_CLAUDE_REASONING_EFFORT,
-            "final_reasoning_effort": BATCH_CLAUDE_REASONING_EFFORT,
+            "final_reasoning_effort": BATCH_CLAUDE_COMMITTEE_REASONING_EFFORT,
+            "final_model": BATCH_CLAUDE_COMMITTEE_MODEL,
+            "card_model": BATCH_CLAUDE_CARD_MODEL,
+            "card_reasoning_effort": BATCH_CLAUDE_CARD_REASONING_EFFORT,
         }
     raise ValueError("agent_cli must be either 'codex' or 'claude'")
 
@@ -510,8 +536,10 @@ def run_batch_command(
         analysis_date=resolved_analysis_date,
         provider=preset["provider"],
         backend_url=preset["backend_url"],
-        model=preset["model"],
+        model=preset.get("final_model") or preset["model"],
         reasoning_effort=preset["final_reasoning_effort"],
+        card_model=preset.get("card_model"),
+        card_reasoning_effort=preset.get("card_reasoning_effort"),
     )
     return {
         "jobs": jobs,
@@ -995,6 +1023,186 @@ def verify_decision_grade_allocation(payload: dict, *, eligible_packets: list[di
     return payload
 
 
+def _read_decision_source_markdown(run_dir: Path) -> str:
+    candidates = [
+        run_dir / "reports" / "chief_analyst_report.md",
+        run_dir / "reports" / "final_trade_decision.md",
+        run_dir / "reports" / "investment_plan.md",
+        run_dir / "complete_report.md",
+    ]
+    for path in candidates:
+        if path.exists():
+            text = path.read_text().strip()
+            if text:
+                return text
+    return ""
+
+
+def _distill_decision_card(
+    *,
+    ticker: str,
+    analysis_date: str,
+    source_markdown: str,
+    run_summary: dict,
+    provider: str,
+    backend_url: str,
+    model: str,
+    reasoning_effort: str,
+    timeout_seconds: int = BATCH_DECISION_CARD_TIMEOUT_SECONDS,
+) -> dict:
+    trimmed_source = source_markdown.strip()
+    if len(trimmed_source) > BATCH_DECISION_CARD_SOURCE_CHAR_LIMIT:
+        trimmed_source = trimmed_source[:BATCH_DECISION_CARD_SOURCE_CHAR_LIMIT] + "\n\n[truncated]"
+
+    system_prompt = (
+        "You are a research analyst distilling a completed portfolio-manager memo into a compact decision card "
+        "for a downstream committee. This is not investment advice. "
+        "Read only the supplied memo for one ticker and return a tight JSON card. "
+        "Every field must be concrete, comparative, and numerically specific where the memo supports it. "
+        "Do not copy long passages verbatim; summarize in your own words. "
+        "Return JSON only with this exact shape: "
+        "{"
+        "\"ticker\":\"TICKER\","
+        "\"absolute_action\":\"Buy|Hold|Sell\","
+        "\"relative_stance\":\"Overweight|Neutral|Underweight\","
+        "\"conviction\":\"low|medium|medium-high|high\","
+        "\"core_thesis\":\"2-4 sentence plain-English thesis\","
+        "\"top_supporting_evidence\":[\"concrete point\",\"concrete point\",\"concrete point\"],"
+        "\"top_disconfirming_evidence\":[\"concrete point\",\"concrete point\"],"
+        "\"entry_quality\":\"price, technical setup, timing window in 1-2 sentences\","
+        "\"position_sizing_note\":\"starter %, target %, stop, time horizon\","
+        "\"key_catalysts\":[\"dated catalyst\",\"dated catalyst\"],"
+        "\"invalidation_triggers\":[\"specific trigger\",\"specific trigger\"],"
+        "\"scenario_summary\":\"bull/base/bear in one compact line with probabilities if present\","
+        "\"risk_controls\":\"stop level and max portfolio loss budget\""
+        "}. "
+        "Keep every string under 320 characters. Arrays must have 2-4 concise entries. "
+        "If the memo does not support a field, write a short honest caveat instead of inventing data."
+    )
+    human_prompt = (
+        f"Date: {analysis_date}\nTicker: {ticker}\n\n"
+        "Run-summary snapshot (for cross-reference only):\n\n"
+        f"{json.dumps({k: run_summary.get(k) for k in ('chief_action','chief_relative_stance','chief_summary') if run_summary.get(k)}, indent=2)}\n\n"
+        "Portfolio-manager memo (primary source):\n\n"
+        f"{trimmed_source if trimmed_source else '[no memo available]'}"
+    )
+
+    client = create_llm_client(
+        provider=provider,
+        model=model,
+        base_url=backend_url,
+        reasoning_effort=reasoning_effort if provider in {"codex_cli", "openai"} else None,
+        effort=reasoning_effort if provider in {"claude_code", "anthropic"} else None,
+        timeout=timeout_seconds,
+    )
+    response = client.get_llm().invoke(
+        [
+            SystemMessage(content=system_prompt),
+            HumanMessage(content=human_prompt),
+        ]
+    )
+    content = format_report_content(response.content).strip()
+    payload = _extract_json_object_from_text(content)
+    if not isinstance(payload, dict):
+        raise ValueError(f"Decision card for {ticker} did not return valid JSON.")
+    payload["ticker"] = ticker
+    return payload
+
+
+def _fallback_decision_card(*, ticker: str, run_summary: dict, source_markdown: str) -> dict:
+    snippet = (source_markdown or "").strip()
+    if len(snippet) > 800:
+        snippet = snippet[:800].rstrip() + "..."
+    return {
+        "ticker": ticker,
+        "absolute_action": _normalize_summary_action(run_summary.get("chief_action") or "").title() or "Buy",
+        "relative_stance": _normalize_summary_relative_stance(run_summary.get("chief_relative_stance") or "") or "Neutral",
+        "conviction": "medium",
+        "core_thesis": (run_summary.get("chief_thesis") or run_summary.get("chief_summary") or snippet or "")[:320],
+        "top_supporting_evidence": [(run_summary.get("chief_summary") or snippet or "")[:320]],
+        "top_disconfirming_evidence": [(run_summary.get("risk_summary") or "No explicit disconfirming evidence captured.")[:320]],
+        "entry_quality": "Distillation fallback: entry-quality not summarized.",
+        "position_sizing_note": "Distillation fallback: sizing not summarized.",
+        "key_catalysts": [],
+        "invalidation_triggers": [],
+        "scenario_summary": "Distillation fallback: scenario view unavailable.",
+        "risk_controls": (run_summary.get("risk_summary") or "")[:320] or "Distillation fallback: risk controls unavailable.",
+        "distillation_status": "fallback",
+    }
+
+
+def build_decision_cards(
+    *,
+    results_dir: str | Path,
+    analysis_date: str,
+    provider: str,
+    backend_url: str,
+    model: str = BATCH_CLAUDE_CARD_MODEL,
+    reasoning_effort: str = BATCH_CLAUDE_CARD_REASONING_EFFORT,
+    max_workers: int = BATCH_DECISION_CARD_MAX_WORKERS,
+) -> list[dict]:
+    results_root = Path(results_dir)
+    date_dir = results_root / analysis_date
+    targets: list[tuple[str, Path, dict, str]] = []
+    for run_summary_path in sorted(date_dir.glob("*/run_summary.json")):
+        try:
+            run_summary = json.loads(run_summary_path.read_text())
+        except json.JSONDecodeError:
+            continue
+        if (run_summary.get("status") or "").strip().lower() != "completed":
+            continue
+        action = _normalize_summary_action(
+            run_summary.get("chief_action") or run_summary.get("decision") or ""
+        )
+        if action != "BUY":
+            continue
+        ticker = str(run_summary.get("ticker") or run_summary_path.parent.name).strip().upper()
+        if not ticker:
+            continue
+        source_markdown = _read_decision_source_markdown(run_summary_path.parent)
+        targets.append((ticker, run_summary_path.parent, run_summary, source_markdown))
+
+    cards: dict[str, dict] = {}
+
+    def _run_one(entry):
+        ticker, run_dir, run_summary, source_markdown = entry
+        cache_path = run_dir / "decision_card.json"
+        try:
+            card = _distill_decision_card(
+                ticker=ticker,
+                analysis_date=analysis_date,
+                source_markdown=source_markdown,
+                run_summary=run_summary,
+                provider=provider,
+                backend_url=backend_url,
+                model=model,
+                reasoning_effort=reasoning_effort,
+            )
+            card["distillation_status"] = "ok"
+        except Exception as exc:  # noqa: BLE001 - we want a per-ticker fallback
+            card = _fallback_decision_card(
+                ticker=ticker,
+                run_summary=run_summary,
+                source_markdown=source_markdown,
+            )
+            card["distillation_error"] = f"{exc.__class__.__name__}: {exc}"
+        try:
+            cache_path.write_text(json.dumps(card, indent=2, sort_keys=True))
+        except OSError:
+            pass
+        return ticker, card
+
+    if not targets:
+        return []
+
+    with ThreadPoolExecutor(max_workers=max(1, min(max_workers, len(targets)))) as pool:
+        for ticker, card in pool.map(_run_one, targets):
+            cards[ticker] = card
+
+    ordered = [cards[ticker] for ticker, *_ in targets if ticker in cards]
+    return ordered
+
+
 def generate_decision_grade_allocation(
     *,
     analysis_date: str,
@@ -1019,14 +1227,22 @@ def generate_decision_grade_allocation(
     ]
 
     system_prompt = (
-        "You are an investment committee decision writer preparing a decision-grade allocation memo for a hypothetical paper portfolio. "
+        "You are the final investment-committee decision writer for a hypothetical $200 paper portfolio. "
         "This is not investment advice. "
-        "Use only the supplied daily summary and rich Buy-only stock packets. "
-        "Choose exactly 3 names, all of which must already be explicit Buy decisions in the supplied evidence. "
-        "Allocate exactly $200 across the 3 selected names, with all 3 positions receiving positive dollars. "
-        "Do not output a ranking-sheet response. Write a committee-quality decision payload that defends why these 3 names won and why the closest rejected Buy names lost. "
-        "You must explain weighting differences, discuss both business quality and entry quality, and name specific rejected alternatives. "
-        "Avoid generic filler such as 'stronger support', 'better profile', or 'the rest' unless followed by concrete evidence. "
+        "You are given a set of compact decision cards, one per Buy-rated candidate. Each card already summarizes "
+        "the portfolio-manager memo for that ticker (thesis, supporting/disconfirming evidence, entry quality, "
+        "sizing, catalysts, invalidation triggers, and risk controls). Trust the cards as your evidence base. "
+        "Select exactly 3 names from the eligible Buy list. Allocate exactly $200, with each of the 3 selected "
+        "positions receiving positive integer dollars that sum to 200. Weight by conviction, entry quality, and "
+        "catalyst proximity, not by equal-weight default. "
+        "Write a committee-quality memo: each selected position's core_thesis, supporting evidence, disconfirming "
+        "evidence, entry-quality assessment, risk controls, and why_it_beats_closest_rejected_buy must be concrete, "
+        "comparative, and synthesized (not copy-pasted from one card). "
+        "Every selected position's why_it_beats_closest_rejected_buy MUST name a specific rejected Buy ticker from "
+        "the rejected_close_alternatives list by its uppercase ticker symbol. Pick the 3-5 strongest non-selected "
+        "Buys as rejected_close_alternatives and explain concretely why each lost. "
+        "Avoid generic filler such as 'stronger support', 'better profile', or 'the rest'. Cite numbers, levels, "
+        "catalysts, and probabilities where the cards supply them. "
         "Return JSON only with this exact shape: "
         "{"
         "\"executive_decision\":{\"summary\":\"text\",\"why_this_portfolio\":\"text\",\"weighting_principle\":\"text\",\"total_allocated_dollars\":200},"
@@ -1035,8 +1251,8 @@ def generate_decision_grade_allocation(
         "\"portfolio_risks\":{\"top_risks\":[\"text\"],\"concentration_notes\":\"text\",\"macro_notes\":\"text\",\"timing_notes\":\"text\"},"
         "\"decision_quality\":{\"evidence_quality\":\"text\",\"main_assumptions\":[\"text\"],\"known_weak_points\":[\"text\"],\"internal_consistency_check\":\"text\"}"
         "}. "
-        "The selected_positions array must contain exactly 3 objects and no duplicate tickers. "
-        "The total_allocated_dollars field must equal 200."
+        "selected_positions must contain exactly 3 unique tickers drawn from the eligible Buy list. "
+        "total_allocated_dollars must equal 200 and equal the sum of selected_positions.allocated_dollars."
     )
     human_prompt = (
         f"Date: {analysis_date}\n\n"
@@ -1044,18 +1260,22 @@ def generate_decision_grade_allocation(
         f"{json.dumps(eligible_tickers)}\n\n"
         "Daily summary:\n\n"
         f"{summary_excerpt}\n\n"
-        "Rich stock packets (JSON):\n\n"
+        "Decision cards (one JSON card per eligible Buy; this is your evidence base):\n\n"
         f"{json.dumps(stock_packets, indent=2)}"
     )
 
-    client = create_llm_client(
+    client_kwargs = dict(
         provider=provider,
         model=model,
         base_url=backend_url,
         reasoning_effort=reasoning_effort if provider in {"codex_cli", "openai"} else None,
         effort=reasoning_effort if provider in {"claude_code", "anthropic"} else None,
-        timeout=90,
+        timeout=BATCH_FINAL_ALLOCATION_TIMEOUT_SECONDS,
     )
+    if provider in {"anthropic", "claude_code"}:
+        client_kwargs["max_tokens"] = 16000
+        client_kwargs["streaming"] = True
+    client = create_llm_client(**client_kwargs)
     response = client.get_llm().invoke(
         [
             SystemMessage(content=system_prompt),
@@ -1097,7 +1317,7 @@ def generate_decision_grade_allocation_with_retry(
             model=model,
             reasoning_effort=reasoning_effort,
         )
-    except (subprocess.TimeoutExpired, RuntimeError, ValueError):
+    except _LLM_TRANSIENT_ERRORS:
         return generate_decision_grade_allocation(
             analysis_date=analysis_date,
             daily_summary_markdown=daily_summary_markdown,
@@ -1113,7 +1333,7 @@ def _decision_packet_sort_key(packet: dict) -> tuple[int, int, str]:
     stance_rank = _fallback_relative_stance_rank(packet.get("relative_stance", ""))
     support_words = len(
         (
-            f"{packet.get('chief_summary', '')} {packet.get('chief_thesis', '')}"
+            f"{packet.get('chief_summary', '')} {packet.get('chief_thesis', '')} {packet.get('core_thesis', '')}"
         ).split()
     )
     return (-stance_rank, -support_words, str(packet.get("ticker", "")).strip().upper())
@@ -1143,7 +1363,12 @@ def build_fallback_decision_grade_allocation(*, stock_packets: list[dict], error
     eligible_packets = [
         packet
         for packet in stock_packets
-        if _normalize_summary_action(packet.get("decision") or packet.get("chief_action") or "") == "BUY"
+        if _normalize_summary_action(
+            packet.get("decision")
+            or packet.get("chief_action")
+            or packet.get("absolute_action")
+            or ""
+        ) == "BUY"
     ]
     if len(eligible_packets) < 3:
         raise ValueError("Fallback allocation requires at least 3 eligible Buy candidates.")
@@ -1247,7 +1472,8 @@ def _fallback_relative_stance_rank(value: str) -> int:
 
 def _fallback_packet_snippet(packet: dict, *, max_length: int = 120) -> str:
     text = (
-        (packet.get("chief_thesis") or "").strip()
+        (packet.get("core_thesis") or "").strip()
+        or (packet.get("chief_thesis") or "").strip()
         or (packet.get("chief_summary") or "").strip()
         or (packet.get("risk_summary") or "").strip()
     )
@@ -1447,7 +1673,7 @@ def generate_final_allocation_scores(
         base_url=backend_url,
         reasoning_effort=reasoning_effort if provider in {"codex_cli", "openai"} else None,
         effort=reasoning_effort if provider in {"claude_code", "anthropic"} else None,
-        timeout=90,
+        timeout=BATCH_FINAL_ALLOCATION_TIMEOUT_SECONDS,
     )
     response = client.get_llm().invoke(
         [
@@ -1917,15 +2143,30 @@ def generate_final_allocation_artifacts(
     backend_url: str = BATCH_CODEX_BACKEND_URL,
     model: str = BATCH_CODEX_MODEL,
     reasoning_effort: str = BATCH_CODEX_FINAL_REASONING_EFFORT,
+    card_model: Optional[str] = None,
+    card_reasoning_effort: Optional[str] = None,
 ) -> dict:
     results_root = Path(results_dir)
     date_dir = results_root / analysis_date
     summary_path = results_root / "daily_summaries" / analysis_date / "daily_summary.md"
     daily_summary_markdown = summary_path.read_text() if summary_path.exists() else ""
-    stock_packets = build_decision_allocation_packets(
-        results_dir=results_root,
-        analysis_date=analysis_date,
-    )
+
+    if provider == "anthropic":
+        effective_card_model = card_model or BATCH_CLAUDE_CARD_MODEL
+        effective_card_effort = card_reasoning_effort or BATCH_CLAUDE_CARD_REASONING_EFFORT
+        stock_packets = build_decision_cards(
+            results_dir=results_root,
+            analysis_date=analysis_date,
+            provider=provider,
+            backend_url=backend_url,
+            model=effective_card_model,
+            reasoning_effort=effective_card_effort,
+        )
+    else:
+        stock_packets = build_decision_allocation_packets(
+            results_dir=results_root,
+            analysis_date=analysis_date,
+        )
 
     try:
         allocation_payload = generate_decision_grade_allocation_with_retry(
@@ -1937,7 +2178,7 @@ def generate_final_allocation_artifacts(
             model=model,
             reasoning_effort=reasoning_effort,
         )
-    except (subprocess.TimeoutExpired, RuntimeError, ValueError) as exc:
+    except _LLM_TRANSIENT_ERRORS as exc:
         allocation_payload = build_fallback_decision_grade_allocation(
             stock_packets=stock_packets,
             error=exc,

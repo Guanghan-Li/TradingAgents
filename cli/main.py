@@ -27,8 +27,10 @@ from cli.announcements import display_announcements, fetch_announcements
 from cli.automation import (
     build_degraded_stock_final_state,
     DEFAULT_BATCH_LAUNCH_STAGGER_SECONDS,
+    generate_final_allocation_artifacts,
     probe_llm_backend,
     resolve_analysis_date,
+    resolve_batch_agent_preset,
     run_batch_command,
     run_stock_command,
     summarize_runs_for_date,
@@ -1766,6 +1768,28 @@ def summarize(
         results_dir=results_dir,
     )
     console.print(f"[green]Summary complete[/green]: {result['analysis_date']}")
+
+
+@app.command("final-allocation")
+def final_allocation(
+    analysis_date: Optional[str] = typer.Option(None, "--date", help="Analysis date in YYYY-MM-DD format."),
+    results_dir: Path = typer.Option(Path(DEFAULT_CONFIG["results_dir"]), "--results-dir", help="Results directory root."),
+    agent_cli: str = typer.Option("codex", "--agent", help="Agent preset for the final-allocation LLM call ('codex' or 'claude')."),
+    claude: bool = typer.Option(False, "--claude", help="Shortcut for --agent claude."),
+):
+    preset = resolve_batch_agent_preset("claude" if claude else agent_cli)
+    result = generate_final_allocation_artifacts(
+        results_dir=results_dir,
+        analysis_date=resolve_analysis_date(analysis_date),
+        provider=preset["provider"],
+        backend_url=preset["backend_url"],
+        model=preset.get("final_model") or preset["model"],
+        reasoning_effort=preset["final_reasoning_effort"],
+        card_model=preset.get("card_model"),
+        card_reasoning_effort=preset.get("card_reasoning_effort"),
+    )
+    console.print(f"[green]Final allocation written[/green]: {result['markdown_path']}")
+    console.print(f"[green]Final allocation PDF[/green]: {result['pdf_path']}")
 
 
 if __name__ == "__main__":

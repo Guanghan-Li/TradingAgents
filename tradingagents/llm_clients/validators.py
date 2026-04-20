@@ -32,7 +32,9 @@ VALID_MODELS = {
         "gpt-4.1-nano",
     ],
     "anthropic": [
-        # Claude 4.6 series (latest)
+        # Claude 4.7 series (latest)
+        "claude-opus-4-7",
+        # Claude 4.6 series
         "claude-opus-4-6",
         "claude-sonnet-4-6",
         # Claude 4.5 series
@@ -41,6 +43,7 @@ VALID_MODELS = {
         "claude-haiku-4-5",
     ],
     "claude_code": [
+        "claude-opus-4-7",
         "claude-opus-4-6",
         "claude-sonnet-4-6",
         "claude-opus-4-5",
