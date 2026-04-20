@@ -36,7 +36,7 @@ DEFAULT_CONFIG = {
     "google_thinking_level": None,      # "high", "minimal", etc.
     "openai_reasoning_effort": None,    # "medium", "high", "low"
     "anthropic_effort": "medium",       # "high", "medium", "low"
-    "llm_timeout_seconds": 60,
+    "llm_timeout_seconds": 600,
     # Debate and discussion settings
     "max_debate_rounds": 2,
     "max_risk_discuss_rounds": 2,

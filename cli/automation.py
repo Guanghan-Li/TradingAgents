@@ -6,6 +6,7 @@ from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from contextlib import nullcontext
 from datetime import date, datetime
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -46,25 +47,25 @@ DEFAULT_BATCH_PROVIDER = "anthropic"
 DEFAULT_BATCH_BACKEND_URL = "https://api.routeai.cc"
 DEFAULT_BATCH_MODEL = "claude-sonnet-4-6"
 DEFAULT_REASONING_EFFORT = "medium"
-DEFAULT_DEPTH_PRESET = "deep"
+DEFAULT_DEPTH_PRESET = "medium"
 DEFAULT_BATCH_LAUNCH_STAGGER_SECONDS = 0.0
 BATCH_CODEX_AGENT_CLI = "codex"
 BATCH_CLAUDE_AGENT_CLI = "claude"
 DEFAULT_BATCH_AGENT_CLI = BATCH_CODEX_AGENT_CLI
-BATCH_CODEX_PROVIDER = "codex_cli"
-BATCH_CODEX_BACKEND_URL = "codex://local"
+BATCH_CODEX_PROVIDER = "openai"
+BATCH_CODEX_BACKEND_URL = "https://api.routeai.cc"
 BATCH_CODEX_MODEL = "gpt-5.4"
 BATCH_CODEX_REASONING_EFFORT = "high"
 BATCH_CODEX_FINAL_REASONING_EFFORT = "xhigh"
-BATCH_CLAUDE_PROVIDER = "claude_code"
-BATCH_CLAUDE_BACKEND_URL = "claude://local"
+BATCH_CLAUDE_PROVIDER = "anthropic"
+BATCH_CLAUDE_BACKEND_URL = "https://api.routeai.cc"
 BATCH_CLAUDE_MODEL = "claude-sonnet-4-6"
 BATCH_CLAUDE_REASONING_EFFORT = "high"
 BATCH_RESULTS_DIR = "results_batch"
 BATCH_RESULTS_LAYOUT = "date_first"
 DEPTH_PRESET_TO_ROUNDS = {
     "shallow": 1,
-    "medium": 3,
+    "medium": 2,
     "deep": 5,
 }
 ALL_STOCK_ANALYSTS = [analyst.value for _, analyst in ANALYST_ORDER]
@@ -228,18 +229,41 @@ def build_run_stock_argv(job: dict) -> list[str]:
 
 
 def run_cli_stock_job(job: dict) -> dict:
-    completed = subprocess.run(
-        build_run_stock_argv(job),
-        capture_output=True,
-        text=True,
-        check=False,
-    )
+    log_dir = build_job_run_dir(job) / "_batch_logs"
+    log_dir.mkdir(parents=True, exist_ok=True)
+    attempt = int(job.get("_attempt", 1))
+    stdout_path = log_dir / f"attempt_{attempt}.stdout.log"
+    stderr_path = log_dir / f"attempt_{attempt}.stderr.log"
+
+    env = os.environ.copy()
+    env.setdefault("PYTHONUNBUFFERED", "1")
+
+    with stdout_path.open("w", buffering=1) as out_f, stderr_path.open("w", buffering=1) as err_f:
+        completed = subprocess.run(
+            build_run_stock_argv(job),
+            stdout=out_f,
+            stderr=err_f,
+            text=True,
+            check=False,
+            env=env,
+        )
+
+    try:
+        stdout_text = stdout_path.read_text()
+    except OSError:
+        stdout_text = ""
+    try:
+        stderr_text = stderr_path.read_text()
+    except OSError:
+        stderr_text = ""
+
     return {
         "ticker": job["ticker"],
         "status": "completed" if completed.returncode == 0 else "failed",
         "returncode": completed.returncode,
-        "stdout": completed.stdout,
-        "stderr": completed.stderr,
+        "stdout": stdout_text,
+        "stderr": stderr_text,
+        "_streamed_logs": True,
     }
 
 
@@ -261,8 +285,10 @@ def write_batch_attempt_logs(job: dict, *, attempt: int, result: dict) -> None:
 def run_cli_stock_job_with_retry(job: dict, *, max_attempts: int = 2) -> dict:
     last_result = None
     for attempt in range(1, max_attempts + 1):
+        job["_attempt"] = attempt
         result = run_cli_stock_job(job)
-        write_batch_attempt_logs(job, attempt=attempt, result=result)
+        if not result.get("_streamed_logs"):
+            write_batch_attempt_logs(job, attempt=attempt, result=result)
         last_result = result
         if result["returncode"] == 0:
             result["attempts"] = attempt
@@ -1026,8 +1052,8 @@ def generate_decision_grade_allocation(
         provider=provider,
         model=model,
         base_url=backend_url,
-        reasoning_effort=reasoning_effort if provider == "codex_cli" else None,
-        effort=reasoning_effort if provider == "claude_code" else None,
+        reasoning_effort=reasoning_effort if provider in {"codex_cli", "openai"} else None,
+        effort=reasoning_effort if provider in {"claude_code", "anthropic"} else None,
         timeout=90,
     )
     response = client.get_llm().invoke(
@@ -1419,8 +1445,8 @@ def generate_final_allocation_scores(
         provider=provider,
         model=model,
         base_url=backend_url,
-        reasoning_effort=reasoning_effort if provider == "codex_cli" else None,
-        effort=reasoning_effort if provider == "claude_code" else None,
+        reasoning_effort=reasoning_effort if provider in {"codex_cli", "openai"} else None,
+        effort=reasoning_effort if provider in {"claude_code", "anthropic"} else None,
         timeout=90,
     )
     response = client.get_llm().invoke(

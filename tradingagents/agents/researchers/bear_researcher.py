@@ -4,6 +4,7 @@ from tradingagents.agents.utils.agent_utils import (
     build_analyst_report_context,
     build_structured_stock_priority_context,
 )
+from tradingagents.agents.utils.llm_timing import timed_invoke
 
 
 def create_bear_researcher(llm, memory):
@@ -48,7 +49,7 @@ Reflections from similar situations and lessons learned: {past_memory_str}
 Use this information to deliver a compelling bear argument, refute the bull's claims, and engage in a dynamic debate that demonstrates the risks and weaknesses of investing in the stock. You must also address reflections and learn from lessons and mistakes you made in the past.
 """)
 
-        response = llm.invoke(prompt)
+        response = timed_invoke("Bear Researcher", llm, prompt)
 
         argument = f"Bear Analyst: {response.content}"
 

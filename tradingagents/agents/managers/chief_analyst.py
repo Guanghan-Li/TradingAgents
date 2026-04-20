@@ -14,7 +14,7 @@ PORTFOLIO_MANAGER_SECTIONS = [
 def _section_heading_pattern() -> re.Pattern[str]:
     section_union = "|".join(re.escape(section) for section in PORTFOLIO_MANAGER_SECTIONS)
     return re.compile(
-        rf"^\s*(?:\d+\.\s*)?(?:\*\*(?P<label>{section_union})\*\*|(?P<plain>{section_union}))\s*(?::\s*(?P<inline>.*?))?\s*$",
+        rf"^\s*#{{0,6}}\s*(?:\d+\.\s*)?(?:\*\*(?P<label>{section_union})\*\*|(?P<plain>{section_union}))\s*(?::\s*(?P<inline>.*?))?\s*$",
         re.IGNORECASE | re.MULTILINE,
     )
 
@@ -94,7 +94,8 @@ def _scenario_fair_value_map(scenario_catalyst_data: dict) -> dict:
     }
     scenario_map = scenario_catalyst_data.get("scenario_map", [])
     for scenario in scenario_map:
-        scenario_name = str(scenario.get("name", "")).strip().lower()
+        raw_name = str(scenario.get("name", "")).strip().lower()
+        scenario_name = raw_name.split()[0] if raw_name else ""
         valuation_implication = scenario.get("valuation_implication", "")
         if scenario_name in {"bull", "base", "bear"} and valuation_implication:
             fair_value[f"{scenario_name}_case"] = valuation_implication

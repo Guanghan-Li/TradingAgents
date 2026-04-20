@@ -5,6 +5,7 @@ from tradingagents.agents.utils.agent_utils import (
     build_instrument_context,
     build_structured_stock_priority_context,
 )
+from tradingagents.agents.utils.llm_timing import timed_invoke
 
 
 def create_research_manager(llm, memory):
@@ -53,7 +54,7 @@ Structured stock underwriting outputs to prioritize:
 Here is the debate:
 Debate History:
 {history}""")
-        response = llm.invoke(prompt)
+        response = timed_invoke("Research Manager", llm, prompt)
 
         new_investment_debate_state = {
             "judge_decision": response.content,

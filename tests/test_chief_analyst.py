@@ -303,6 +303,56 @@ The underwriting supports a meaningful starter, but not a blind full-size entry.
     }
 
 
+def test_chief_analyst_parses_h2_heading_portfolio_manager_output():
+    from tradingagents.agents.managers.chief_analyst import create_chief_analyst
+
+    node = create_chief_analyst(llm=object())
+    output = node(
+        {
+            "company_of_interest": "NVDA",
+            "trade_date": "2026-04-19",
+            "investment_plan": "Research plan",
+            "trader_investment_plan": "Trader plan",
+            "final_trade_decision": """# PORTFOLIO MANAGER DECISION
+
+## ABSOLUTE ACTION: **Hold**
+
+## RELATIVE STANCE: **Neutral**
+
+---
+
+## EXECUTIVE SUMMARY
+
+Calibrated middle position that respects both the structural AI thesis and near-term execution risks.
+
+## INVESTMENT THESIS
+
+### Why Not Sell
+
+Structural fundamentals remain intact.""",
+            "risk_debate_state": {},
+            "segment_data": {},
+            "scenario_catalyst_data": {
+                "scenario_map": [
+                    {"name": "Bull Case", "valuation_implication": "$240-$280"},
+                    {"name": "Base Case", "valuation_implication": "$180-$220"},
+                    {"name": "Bear Case", "valuation_implication": "$120-$160"},
+                ]
+            },
+        }
+    )
+
+    assert output["chief_analyst_data"]["verdict"]["absolute_action"] == "Hold"
+    assert output["chief_analyst_data"]["verdict"]["relative_stance"] == "Neutral"
+    assert "Calibrated middle position" in output["chief_analyst_data"]["verdict"]["summary"]
+    assert "Structural fundamentals" in output["chief_analyst_data"]["verdict"]["thesis"]
+    assert output["chief_analyst_data"]["fair_value"] == {
+        "bull_case": "$240-$280",
+        "base_case": "$180-$220",
+        "bear_case": "$120-$160",
+    }
+
+
 def test_chief_analyst_returns_stable_defaults_with_missing_data():
     from tradingagents.agents.managers.chief_analyst import create_chief_analyst
 

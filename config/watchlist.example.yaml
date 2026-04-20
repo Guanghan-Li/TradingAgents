@@ -3,7 +3,7 @@ defaults:
   backend_url: https://api.itgpt.chat/v1
   model: gpt-5.4
   reasoning_effort: high
-  depth: deep
+  depth: medium
 
 tickers:
   # Growth - Mega & Large Cap Tech

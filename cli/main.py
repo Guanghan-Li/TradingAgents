@@ -1702,8 +1702,8 @@ def batch(
     reasoning_effort: Optional[str] = typer.Option(None, "--reasoning-effort", help="OpenAI reasoning effort."),
     depth: Optional[str] = typer.Option(None, "--depth", help="Research depth preset: shallow, medium, or deep."),
     results_dir: Optional[Path] = typer.Option(None, "--results-dir", help="Results directory override."),
-    codex: bool = typer.Option(False, "--codex", help="Run batch through the local Codex CLI."),
-    claude: bool = typer.Option(False, "--claude", help="Run batch through the local Claude CLI."),
+    codex: bool = typer.Option(False, "--codex", help="Run batch using the direct OpenAI API via RouteAI."),
+    claude: bool = typer.Option(False, "--claude", help="Run batch using the direct Anthropic API via RouteAI."),
 ):
     if codex and claude:
         raise typer.BadParameter("Choose only one of --codex or --claude.")
