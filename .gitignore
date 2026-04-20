@@ -217,3 +217,30 @@ __marimo__/
 
 # Cache
 **/data_cache/
+<<<<<<< HEAD
+=======
+
+# Project-local generated outputs
+.DS_Store
+output/
+tmp/
+reports/
+results-*/
+results/
+results_batch/
+eval_results/
+daily_summaries/
+docs/superpowers/
+.omc/
+
+# Local AI tooling
+.mempalace/
+.mcp.json
+.codex-plugin/
+.claude/settings.local.json
+# MemPalace local setup
+.mempalace/
+.mcp.json
+.codex-plugin/
+.claude/settings.local.json
+>>>>>>> c4058a8 (chore: stop tracking generated outputs and local planning docs)
