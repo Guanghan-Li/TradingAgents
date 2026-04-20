@@ -1,0 +1,11 @@
+AVGO factor-rule readout is balanced with one high-weight bullish rule and one high-weight bearish rule offsetting each other, plus a medium-weight resilience overlay.
+
+Strongest bullish signal: AI capex acceleration. This is the most constructive rule because it is high weight and tied to AVGO as a likely AI infrastructure beneficiary. It matters most if backlog is still rising and margins are holding despite higher capex, since that would support both revenue durability and pricing power.
+
+Strongest bearish signal: valuation stretch under slowing growth. This is equally important because it is also high weight and directly challenges a bullish AI narrative if expectations have already run ahead of fundamentals. It matters most if forward growth guidance is being revised lower while the valuation multiple stays elevated or expands.
+
+Neutral support: balance sheet resilience. This does not create a directional edge on its own, but it can reduce downside severity if AVGO has net cash or only modest leverage and continues to convert earnings into free cash flow well.
+
+Key conflict: the rule set implies the main debate is strong AI-driven demand versus the risk that the stock is already priced for too much of that demand. Missing information is decisive here: there is no actual evidence in the prompt on backlog trend, margin stability, capex trajectory, revised guidance, earnings revisions, valuation level, leverage, or free cash flow conversion. There is also no market, news, or macro context to resolve which high-weight rule is currently dominating.
+
+Practical guidance for downstream analysts: treat this as a conditional split case rather than a clean factor call. First verify backlog, margins, and capex to test the bullish rule. Then check forward guidance revisions and current valuation versus earnings revisions to test the bearish overlay. Finally use leverage and free cash flow quality as a durability check, not a primary driver. If bullish operating data is strong but valuation is stretched, frame the name as fundamentally strong but risk-sensitive to expectation resets.

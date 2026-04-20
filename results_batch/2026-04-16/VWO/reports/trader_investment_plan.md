@@ -1,0 +1,9 @@
+`VWO` merits a `HOLD` decision here. The technical regime is clearly improved: price is above the 10-day EMA, 50-day SMA, and 200-day SMA, MACD has turned strongly positive, RSI is strong without being decisively overbought, and ATR has cooled as the advance held. That combination supports maintaining existing exposure rather than exiting.
+
+The reason not to upgrade `VWO` to `BUY` is entry quality. At `58.21`, `VWO` is pressing into the `58.8` to `59.1` resistance zone near the February highs and sitting close to the upper Bollinger Band after an approximately `11%` run from late March. Macro is only cautiously constructive: soft landing and contained volatility help, but sticky U.S. inflation, elevated long-end yields, and USD strength risk can cap EM upside. Social/news sentiment is neutral to mildly constructive, with no fund-specific red flag, but also no clear catalyst strong enough to justify chasing broad EM beta into resistance.
+
+Actionably, keep current `VWO` exposure, but do not add aggressively here. A tactical `BUY` becomes more defensible only on a confirmed close above `59.09` with supportive dollar/yield behavior, or on a controlled pullback that holds the `56.6` to `55.9` support zone. If `VWO` loses the 50-day area with worsening macro conditions, reduce risk; if it breaks decisively below the 200-day area near `54.00`, the bullish structure is materially damaged.
+
+Net assessment: trend bullish, valuation/fundamentals acceptable, macro mixed, and immediate reward-to-risk for new capital is not attractive enough at current levels. Existing holders should stay with the position; new buyers should wait for confirmation.
+
+FINAL TRANSACTION PROPOSAL: **HOLD**

@@ -1,0 +1,9 @@
+{
+  "expected_return_pct": null,
+  "fair_value_range": {
+    "high": null,
+    "low": null
+  },
+  "primary_method": "parse_error",
+  "thesis": "**VALUATION ANALYSIS FOR META (Meta Platforms, Inc.)**\n\n**Fair Value Range:** $680 - $780 per share\n\n**Expected Return:** Approximately 8-24% upside from current levels (~$630 implied)\n\n**Primary Valuation Method:** Forward P/E multiple with DCF cross-check\n\n**Investment Thesis:**\n\nMeta demonstrates exceptional operational performance with a 30% profit margin and 41% operating margin, significantly above industry averages. The company generates substantial free cash flow ($23.4B TTM) and maintains a healthy balance sheet with a current ratio of 2.6.\n\nThe forward P/E of 17.6x represents a meaningful discount to the trailing P/E of 26.8x, reflecting strong earnings growth expectations (forward EPS of $35.74 vs TTM EPS of $23.49, implying ~52% growth). This multiple is reasonable for a company with:\n- 30%+ ROE indicating efficient capital allocation\n- Dominant market position in social media and digital advertising\n- Growing AI infrastructure investments with monetization potential\n- Strong cash generation supporting both reinvestment and shareholder returns\n\nKey risks include regulatory headwinds, competition in AI/metaverse, and elevated capex requirements. However, the valuation appears attractive relative to growth prospects and cash generation capability.\n\n**Recommendation Context:** At current levels around $630, META trades below the 200-day average ($682.71) and well below the 52-week high ($796.25), suggesting a favorable entry point for long-term investors focused on quality growth at reasonable valuations."
+}

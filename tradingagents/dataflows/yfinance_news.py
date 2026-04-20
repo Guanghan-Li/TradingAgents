@@ -1,8 +1,7 @@
 """yfinance-based news data fetching functions."""
-
-import yfinance as yf
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from .yfinance_subprocess import fetch_search_news, fetch_ticker_news
 
 
 def _extract_article_data(article: dict) -> dict:
@@ -71,15 +70,13 @@ def get_news_yfinance(
         label = ticker or query or "query"
 
         if ticker:
-            stock = yf.Ticker(ticker)
-            news = stock.get_news(count=20)
+            news = fetch_ticker_news(ticker, count=20)
         elif query:
-            search = yf.Search(
+            news = fetch_search_news(
                 query=query,
                 news_count=20,
                 enable_fuzzy_query=True,
             )
-            news = search.news
         else:
             raise ValueError("ticker or query is required")
 
@@ -148,14 +145,13 @@ def get_global_news_yfinance(
 
     try:
         for query in search_queries:
-            search = yf.Search(
+            news_items = fetch_search_news(
                 query=query,
                 news_count=limit,
                 enable_fuzzy_query=True,
             )
-
-            if search.news:
-                for article in search.news:
+            if news_items:
+                for article in news_items:
                     # Handle both flat and nested structures
                     if "content" in article:
                         data = _extract_article_data(article)

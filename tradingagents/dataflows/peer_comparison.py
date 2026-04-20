@@ -6,8 +6,9 @@ from datetime import datetime
 from typing import Optional
 
 import pandas as pd
-import yfinance as yf
+from .yfinance_subprocess import fetch_download_frame, fetch_ticker_info
 
+YFINANCE_TIMEOUT_SECONDS = 30
 
 _SECTOR_ETFS: dict[str, str] = {
     "technology": "XLK",
@@ -100,12 +101,16 @@ def _download_history(symbols: list[str], curr_date: str = None) -> pd.DataFrame
         kwargs["end"] = end_ts.strftime("%Y-%m-%d")
     else:
         kwargs["period"] = "6mo"
-    return yf.download(symbols, **kwargs)
+    return fetch_download_frame(
+        symbols,
+        timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
+        **kwargs,
+    )
 
 
 def get_sector_peers(ticker: str) -> tuple[str, str, list[str]]:
     try:
-        info = yf.Ticker(ticker.upper()).info
+        info = fetch_ticker_info(ticker.upper(), timeout_seconds=YFINANCE_TIMEOUT_SECONDS)
     except Exception:
         return "Unknown", "", []
 

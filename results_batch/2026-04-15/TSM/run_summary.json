@@ -1,0 +1,44 @@
+{
+  "analysis_date": "2026-04-15",
+  "anthropic_effort": null,
+  "backend_url": "codex://local",
+  "catalysts": [
+    {
+      "catalyst": "TSM next quarterly results and guidance",
+      "date_or_window": "Late Apr 2026 (inferred; exact date not provided)",
+      "expected_impact": "Primary company-specific validation of AI demand durability, margins, and the forward EPS ramp."
+    },
+    {
+      "catalyst": "Fed and inflation readthrough after March 2026 CPI/PPI data",
+      "date_or_window": "Apr-May 2026",
+      "expected_impact": "Persistent inflation or firmer yields can restrain valuation multiples for long-duration semiconductor leaders."
+    },
+    {
+      "catalyst": "ASML and export-control news flow tied to China demand",
+      "date_or_window": "Q2 2026 ongoing",
+      "expected_impact": "Constructive equipment demand supports the bull case; broader China restrictions or weakness support the bear case."
+    },
+    {
+      "catalyst": "AI semiconductor peer earnings and capex commentary",
+      "date_or_window": "Apr-May 2026",
+      "expected_impact": "Sector readthrough can reinforce or weaken confidence in utilization and pricing power for TSM."
+    }
+  ],
+  "chief_action": "Buy",
+  "chief_rating": "Overweight",
+  "chief_relative_stance": "Overweight",
+  "chief_summary": "Buy `TSM` as a staged position, not an aggressive chase. Start with the structured 3.0% initial weight now because the underwriting is already pro-ownership, then add only if late-April 2026 results and guidance validate the forward EPS ramp and margin stability, or if `TSM` clears 383 on strong volume and holds the breakout. Build toward the 6.0% target only after confirmation, cap portfolio risk at 0.4%, use 360-363 as the stop-adding and reassess zone, and treat a break of 350-353 or failed guidance as a reduce or cut trigger. Time horizon: the next several weeks for catalyst validation, then 6-12 months for the earnings and AI demand thesis.",
+  "chief_thesis": "The primary numeric evidence supports ownership. The structured scenario map is 35% Bull, 45% Base, and 20% Bear, so 80% of outcomes are constructive or at least not thesis-breaking, and the sizing model assigns medium-high conviction with a 3.0% starter, 6.0% target, and 0.4% max portfolio loss. That is stronger than a pure Hold signal. `TSM` also has the operating profile to justify a Buy: revenue rose from 839.3B to 1,046.1B through 2025, gross margin reached 62.3%, operating margin 54.0%, net margin 48.3%, and liquidity is strong at roughly 3.13T cash and short-term investments versus 1.06T debt. The technical backdrop is supportive as well: `TSM` closed at 375.10 on 2026-04-15, above the 10 EMA at 362.45, the 50 SMA at 352.26, and the 200 SMA at 294.87, with positive MACD and RSI near 63.\n\nThe conservative objections are still valid and should shape implementation. The 45% Base case is the modal outcome, `TSM` has already rebounded about 18.5% from the 2026-03-30 low, resistance near 383 is close, ATR is about 3.3% of price, and late-April 2026 guidance is the key validation event. Trailing valuation at 36.0x earnings is rich, and the more reasonable 20.3x forward P/E only works if the implied EPS step-up is delivered. Sticky inflation, a 4.87% 30-year Treasury yield, and China or export-control risk can also block multiple expansion even if `TSM` keeps executing. The missing segment `revenue_share_pct` data further limits how precisely the AI mix can be quantified today.\n\nThe right synthesis is therefore Buy `TSM`, but only through controlled accumulation. The aggressive analyst is right that the underwriting already says own `TSM`; the conservative and neutral analysts are right that the setup is not de-risked enough to chase. No past decision lessons were provided, so discipline has to come from the trading plan itself: start with the modeled 3.0%, demand proof before adding, and cut exposure if guidance fails, margins compress, `TSM` loses 350-353, or China and export-control pressure broadens into demand. On balance, the committee should be Overweight `TSM` because the company quality, scenario skew, and sizing framework all lean positive, but the implementation has to stay catalyst-aware and risk-budgeted.",
+  "decision": "BUY",
+  "deep_think_llm": "gpt-5.4",
+  "ended_at": "2026-04-15T13:40:59.037813",
+  "error": null,
+  "openai_reasoning_effort": "high",
+  "provider": "codex_cli",
+  "quick_think_llm": "gpt-5.4",
+  "results_dir": "results_batch/2026-04-15/TSM",
+  "risk_summary": "1. **Absolute Action**: Buy\n2. **Relative Stance**: Overweight\n3. **Executive Summary**: Buy `TSM` as a staged position, not an aggressive chase. Start with the structured 3.0% initial weight now because the underwriting is already pro-ownership, then add only if late-April 2026 results and guidance validate the forward EPS ramp and margin stability, or if `TSM` clears 383 on strong volume and holds the breakout. Build toward the 6.0% target only after confirmation, cap portfolio risk at 0.4%, use 360-363 as the stop-adding and reassess zone, and treat a break of 350-353 or failed guidance as a reduce or cut trigger. Time horizon: the next several weeks for catalyst validation, then 6-12 months for the earnings and AI demand thesis.\n4. **Investment Thesis**: The primary numeric evidence supports ownership. The structured scenario map is 35% Bull, 45% Base, and 20% Bear, so 80% of outcomes are constructive or at least not thesis-breaking, and the sizing model assigns medium-high conviction with a 3.0% starter, 6.0% target, and 0.4% max portfolio loss. That is stronger than a pure Hold signal. `TSM` also has the operating profile to justify a Buy: revenue rose from 839.3B to 1,046.1B through 2025, gross margin reached 62.3%, operating margin 54.0%, net margin 48.3%, and liquidity is strong at roughly 3.13T cash and short-term investments versus 1.06T debt. The technical backdrop is supportive as well: `TSM` closed at 375.10 on 2026-04-15, above the 10 EMA at 362.45, the 50 SMA at 352.26, and the 200 SMA at 294.87, with positive MACD and RSI near 63.\n\nThe conservative objections are still valid and should shape implementation. The 45% Base case is the modal outcome, `TSM` has already rebounded about 18.5% from the 2026-03-30 low, resistance near 383 is close, ATR is about 3.3% of price, and late-April 2026 guidance is the key validation event. Trailing valuation at 36.0x earnings is rich, and the more reasonable 20.3x forward P/E only works if the implied EPS step-up is delivered. Sticky inflation, a 4.87% 30-year Treasury yield, and China or export-control risk can also block multiple expansion even if `TSM` keeps executing. The missing segment `revenue_share_pct` data further limits how precisely the AI mix can be quantified today.\n\nThe right synthesis is therefore Buy `TSM`, but only through controlled accumulation. The aggressive analyst is right that the underwriting already says own `TSM`; the conservative and neutral analysts are right that the setup is not de-risked enough to chase. No past decision lessons were provided, so discipline has to come from the trading plan itself: start with the modeled 3.0%, demand proof before adding, and cut exposure if guidance fails, margins compress, `TSM` loses 350-353, or China and export-control pressure broadens into demand. On balance, the committee should be Overweight `TSM` because the company quality, scenario skew, and sizing framework all lean positive, but the implementation has to stay catalyst-aware and risk-budgeted.",
+  "started_at": "2026-04-15T13:27:57.306019",
+  "status": "completed",
+  "ticker": "TSM"
+}

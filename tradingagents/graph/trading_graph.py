@@ -10,14 +10,8 @@ from langgraph.prebuilt import ToolNode
 
 from tradingagents.llm_clients import create_llm_client
 
-from tradingagents.agents import *
 from tradingagents.default_config import DEFAULT_CONFIG, normalize_llm_routing
 from tradingagents.agents.utils.memory import FinancialSituationMemory
-from tradingagents.agents.utils.agent_states import (
-    AgentState,
-    InvestDebateState,
-    RiskDebateState,
-)
 from tradingagents.dataflows.config import set_config
 
 # Import the new abstract tool methods from agent_utils
@@ -125,6 +119,7 @@ class TradingAgentsGraph:
         self.deep_thinking_llm = self._create_legacy_llm("deep")
         self.role_llms = self._create_role_llms(selected_analysts)
         self.social_sentiment_available = has_social_sentiment_support()
+        provider = self._normalize_provider(self.config["llm_provider"])
         
         # Initialize memories
         self.bull_memory = FinancialSituationMemory("bull_memory", self.config)
@@ -153,6 +148,8 @@ class TradingAgentsGraph:
             self.conditional_logic,
             role_llms=self.role_llms,
             social_sentiment_available=self.social_sentiment_available,
+            single_pass_pipeline=provider in {"claude_code", "codex_cli"},
+            enable_resilience_wrappers=provider not in {"claude_code", "codex_cli"},
         )
 
         self.propagator = Propagator()
@@ -210,10 +207,12 @@ class TradingAgentsGraph:
             llm_config = self._resolve_llm_config(role, thinker_depth)
             if self._uses_legacy_llm(llm_config, thinker_depth):
                 continue
+            route_kwargs = self._get_provider_kwargs(llm_config["provider"], llm_config)
             cache_key = (
                 llm_config["provider"],
                 llm_config["model"],
                 llm_config.get("base_url"),
+                json.dumps(route_kwargs, sort_keys=True),
             )
             if cache_key not in llm_cache:
                 llm_cache[cache_key] = self._create_llm_from_config(llm_config)
@@ -224,7 +223,7 @@ class TradingAgentsGraph:
         return self.ALWAYS_ON_ROLES | set(selected_analysts)
 
     def _create_llm_from_config(self, llm_config: Dict[str, Any]):
-        llm_kwargs = self._get_provider_kwargs(llm_config["provider"])
+        llm_kwargs = self._get_provider_kwargs(llm_config["provider"], llm_config)
         if self.callbacks:
             llm_kwargs["callbacks"] = self.callbacks
 
@@ -238,10 +237,12 @@ class TradingAgentsGraph:
 
     def _uses_legacy_llm(self, llm_config: Dict[str, Any], thinker_depth: str) -> bool:
         model_key = "deep_think_llm" if thinker_depth == "deep" else "quick_think_llm"
+        provider = self._normalize_provider(self.config["llm_provider"])
         return (
-            llm_config["provider"] == self._normalize_provider(self.config["llm_provider"])
+            llm_config["provider"] == provider
             and llm_config["model"] == self.config[model_key]
             and llm_config.get("base_url") == self.config.get("backend_url")
+            and self._get_provider_kwargs(provider, llm_config) == self._get_provider_kwargs(provider)
         )
 
     def _resolve_llm_config(
@@ -268,23 +269,48 @@ class TradingAgentsGraph:
             route["base_url"] = None
         return route
 
-    def _get_provider_kwargs(self, provider: Optional[str] = None) -> Dict[str, Any]:
+    def _get_provider_kwargs(
+        self,
+        provider: Optional[str] = None,
+        llm_config: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
         """Get provider-specific kwargs for LLM client creation."""
         kwargs = {}
         provider = (provider or self.config.get("llm_provider", "")).lower()
+        timeout_seconds = self.config.get("llm_timeout_seconds")
+        if timeout_seconds:
+            if provider == "claude_code":
+                # Local Claude CLI needs extended timeout for long analyst steps
+                kwargs["timeout"] = max(timeout_seconds, 180)
+            elif provider == "codex_cli":
+                kwargs["timeout"] = max(timeout_seconds, 180)
+            else:
+                kwargs["timeout"] = timeout_seconds
 
         if provider == "google":
-            thinking_level = self.config.get("google_thinking_level")
+            thinking_level = (
+                llm_config.get("thinking_level")
+                if llm_config and "thinking_level" in llm_config
+                else self.config.get("google_thinking_level")
+            )
             if thinking_level:
                 kwargs["thinking_level"] = thinking_level
 
-        elif provider == "openai":
-            reasoning_effort = self.config.get("openai_reasoning_effort")
+        elif provider in {"openai", "codex_cli"}:
+            reasoning_effort = (
+                llm_config.get("reasoning_effort")
+                if llm_config and "reasoning_effort" in llm_config
+                else self.config.get("openai_reasoning_effort")
+            )
             if reasoning_effort:
                 kwargs["reasoning_effort"] = reasoning_effort
 
-        elif provider == "anthropic":
-            effort = self.config.get("anthropic_effort")
+        elif provider in {"anthropic", "claude_code"}:
+            effort = (
+                llm_config.get("effort")
+                if llm_config and "effort" in llm_config
+                else self.config.get("anthropic_effort")
+            )
             if effort:
                 kwargs["effort"] = effort
 
@@ -362,7 +388,7 @@ class TradingAgentsGraph:
             ),
         }
 
-    def propagate(self, company_name, trade_date):
+    def propagate(self, company_name, trade_date, prefetched_context=None):
         """Run the trading agents graph for a company on a specific date."""
 
         self.ticker = company_name
@@ -371,6 +397,8 @@ class TradingAgentsGraph:
         init_agent_state = self.propagator.create_initial_state(
             company_name, trade_date
         )
+        if prefetched_context:
+            init_agent_state["prefetched_context"] = prefetched_context
         args = self.propagator.get_graph_args()
 
         if self.debug:

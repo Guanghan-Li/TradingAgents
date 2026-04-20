@@ -1,0 +1,26 @@
+FINAL TRANSACTION PROPOSAL: **HOLD**
+
+For `VYM`, the most relevant indicator set in this regime is `close_10_ema`, `close_50_sma`, `close_200_sma`, `macd`, `rsi`, `boll_ub`, `boll_lb`, and `atr`. That mix is appropriate because it covers short-, medium-, and long-term trend, momentum acceleration, stretch versus range, and risk/volatility without overloading on redundant MACD variants.
+
+The technical picture on `2026-04-16` is constructive, but slightly extended near resistance. `VYM` closed at `153.83`, above the `close_10_ema` at `151.80`, above the latest available `close_50_sma` print at `150.92` on `2026-04-14` (this is an inference anchor because the `2026-04-16` field is blank in the prefetched feed), and well above the `close_200_sma` at `142.13`. That is a bullish trend stack. The important nuance is that this is not a fresh breakout from a base; it is a late-stage recovery leg after the March downdraft. Price has retraced almost all of the decline from the late-February highs and is now trading just under the upper end of the recent range.
+
+Momentum confirms the recovery. `macd` improved from `-1.37` on `2026-03-30` to `+1.07` on `2026-04-16`, including a zero-line cross between `2026-04-08` and `2026-04-09`. That is a meaningful shift from bearish to bullish momentum, not just a minor bounce. `rsi` also rose from `35.32` on `2026-03-30` to `66.64` on `2026-04-16`. That says the move has strength, but it is nearing the part of the range where upside often slows unless a new catalyst appears. In other words: momentum is good enough to support continuation, but not so early that chasing is attractive.
+
+The Bollinger structure reinforces that read. On `2026-04-16`, `boll_ub` was `155.09` and `boll_lb` was `143.34`, putting `VYM` close to the upper band. That usually means one of two things: either strong trend persistence, or near-term exhaustion if follow-through fails. Given the rising `macd` and still-sub-70 `rsi`, this looks more like trend persistence than immediate reversal, but the reward-to-risk is less favorable here than it was near the `147-149` zone in late March and early April. `atr` has also declined from `1.97` on `2026-03-31` to `1.62` on `2026-04-16`, which is constructive because it implies the rally is becoming more orderly rather than more frantic.
+
+The macro overlay supports a bullish-but-not-aggressive stance. The regime is explicitly `RISK-ON`, the curve is positively sloped, labor is still stable, and falling policy restraint has helped value/carry trades. That backdrop fits `VYM` well, especially through financials and mature cash-flow sectors. The constraint is rates: the `10Y` at `4.29%` and `30Y` at `4.89%` keep dividend alternatives competitive and limit how much multiple expansion a dividend-heavy ETF should get. That macro headwind is exactly why the chart looks healthy but not explosive.
+
+Actionably, `VYM` looks like a name to keep, not to dump, but current levels are less attractive for initiating size. For existing holders, the tape argues for staying long while `VYM` remains above the rising `close_10_ema` and especially above the `close_50_sma` area around `151`. For new exposure, the better setups are either a pullback into `151.8-150.9` that holds, or a confirmed breakout through `155.1` with continued momentum. If `VYM` loses the `150.9` area decisively, the next support zone is roughly `148.7-147.9`, and a failure there would suggest the recovery leg is rolling over rather than consolidating.
+
+One additional nuance: the `2026-03-20` dividend distribution (`0.862`) likely exaggerated part of the visible March drop in raw price terms, so some of that weakness was mechanical rather than purely risk-off selling. That makes the subsequent recovery slightly cleaner than the unadjusted chart alone would imply.
+
+| Key Point | Evidence | Interpretation | Trading Implication for `VYM` |
+| --- | --- | --- | --- |
+| Primary trend | Close `153.83` vs `close_200_sma` `142.13` on `2026-04-16` | Long-term uptrend remains intact | Strategic bias stays constructive |
+| Medium-term trend | Close above latest available `close_50_sma` `150.92` on `2026-04-14` | Recovery has reclaimed medium-term trend control | `150.9-151.0` is key support |
+| Short-term trend | Close `153.83` vs `close_10_ema` `151.80` | Near-term momentum remains positive | Pullbacks to `10 EMA` are buy-the-dip zones if they hold |
+| Momentum shift | `macd` from `-1.37` (`2026-03-30`) to `+1.07` (`2026-04-16`) | Strong upside acceleration after March weakness | Bullish continuation is still favored |
+| Momentum stretch | `rsi` `66.64` on `2026-04-16` | Strong, but nearing overbought territory | Upside remains open, but chasing is less attractive |
+| Range position | Close near `boll_ub` `155.09` | Price is pressing the upper band, near resistance | Watch for breakout through `155.1` or short pause/pullback |
+| Volatility | `atr` down to `1.62` from `1.97` on `2026-03-31` | Rally is becoming more orderly | Supports holding trend exposure with disciplined stops |
+| Macro overlay | `RISK-ON`, stable labor, positive curve, but `10Y` at `4.29%` | Macro is supportive, though higher yields cap valuation upside | Best stance is `HOLD`, with selective adds on pullback or breakout |

@@ -1,0 +1,9 @@
+DDOG merits a tactical BUY, but not an aggressive full-size entry. The technical picture has improved materially: DDOG closed at 123.47 above the 10 EMA at 116.68 and the 50 SMA at 119.24, RSI has recovered to 56.95, and MACD is still negative but improving quickly. The macro tape is also supportive for a rebound trade, with a risk-on regime and contained volatility, even though long-end yields remain a valuation headwind.
+
+The fundamental case is strong enough to justify ownership in controlled size. DDOG is still growing revenue near 29% year over year, holding gross margin around 80%, generating about $879.6M in TTM free cash flow, and carrying a strong net cash position. The main reason not to go all-in is valuation and margin quality: GAAP operating margin is still about 1%, stock-based compensation remains high, and the stock is still below the 200-day SMA at 138.64, so this is a trend-repair setup rather than a fully confirmed long-term breakout.
+
+Best implementation: buy a starter position now and add only if DDOG continues to hold the 116.7 to 119.2 support zone and then clears 130 to 132 with continued momentum or strong earnings commentary. Risk management matters because ATR is 7.21 and the stock is volatile. If DDOG loses 116.7 to 119.2 decisively, reduce. If it breaks below 110, the rebound thesis is weakening materially. Upside checkpoints are 132 first, then 138.64 near the 200-day SMA.
+
+On balance, the evidence is stronger for a controlled bullish entry than for waiting completely on the sidelines. The business quality, balance sheet, and improving tape outweigh the still-real valuation and margin risks, provided sizing stays disciplined.
+
+FINAL TRANSACTION PROPOSAL: **BUY**

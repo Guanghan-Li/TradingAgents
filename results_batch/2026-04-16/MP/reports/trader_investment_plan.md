@@ -1,0 +1,7 @@
+MP is a HOLD. The setup has improved materially, but it is not a clean fresh-buy entry. Technically, MP has reclaimed its 10 EMA, 50 SMA, and 200 SMA, MACD has turned positive, and RSI at 64 confirms strong momentum without full overbought exhaustion. The problem is entry quality: MP closed at 62.30, above the upper Bollinger Band, after a roughly 36.7% rebound from the March 30 low, so near-term chase risk is elevated.
+
+Fundamentally, MP is still a future-state story rather than a proven operating turnaround. The balance sheet is strong with about 1.83B in cash, but operating performance remains weak, free cash flow is deeply negative, dilution increased materially in 2025, and valuation already discounts a major recovery. Macro and geopolitical conditions remain supportive for a strategic U.S. rare-earth and magnet name like MP, but sticky inflation, elevated long yields, and rising expectations into the 2026-05-07 earnings report limit room for multiple expansion without hard execution proof.
+
+For existing holders, MP is worth keeping while the stock stays above the reclaimed 200-day area near 61.66 and ideally above the 59.5 to 60.6 breakout zone. For new capital, the better setup is either a controlled pullback that holds support or post-earnings confirmation that magnet-ramp progress, margins, and cash burn are improving. If MP loses the 59.5 to 60.6 zone on volume or management disappoints on downstream execution, the stance should be reconsidered more bearishly.
+
+FINAL TRANSACTION PROPOSAL: **HOLD**

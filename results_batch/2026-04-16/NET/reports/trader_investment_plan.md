@@ -1,0 +1,7 @@
+NET merits a cautious accumulation rather than a full-size risk-on entry. The strongest positives are still intact: Q4 2025 revenue growth of 33.6% YoY, high gross margin around 74.5%, positive TTM free cash flow of $388M, strong liquidity, and a near-term catalyst on May 7, 2026 with Q1 earnings plus Investor Day. Technically, NET has repaired above its 10 EMA and 50 SMA, which argues the April 10 low may have been a tradable washout rather than the start of a deeper breakdown.
+
+The reason not to be aggressive is equally clear. NET remains below its 200 SMA near 202, MACD is still negative, RSI is only neutral around 50, ATR is elevated, relative performance versus XLK has been weak, and valuation is still extremely demanding at roughly 32x sales and 136.9x forward EPS. Macro also supports the business backdrop more than the stock multiple: soft landing helps demand, but a 4.29% 10Y keeps pressure on long-duration growth valuations.
+
+Decision framework: buy NET only as a starter position. Current evidence supports initial exposure because the business quality and catalyst path are good enough to justify participation, but not enough to justify a full allocation before confirmation. Best execution is a small entry now, then add only if NET reclaims and holds above the 200-day area around 202 or if the May 7, 2026 update delivers a clear beat-and-raise with improving margin or enterprise/AI demand commentary. If NET loses the 50-day zone near 194.4 on weakening momentum, the thesis should be downgraded quickly.
+
+FINAL TRANSACTION PROPOSAL: **BUY**

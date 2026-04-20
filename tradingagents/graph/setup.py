@@ -5,15 +5,191 @@ from langchain_openai import ChatOpenAI
 from langgraph.graph import END, StateGraph, START
 from langgraph.prebuilt import ToolNode
 
-from tradingagents.agents import *
-from tradingagents.agents.utils.agent_states import AgentState
+from tradingagents.agents import (
+    create_aggressive_debator,
+    create_bear_researcher,
+    create_bull_researcher,
+    create_conservative_debator,
+    create_factor_rule_analyst,
+    create_fundamentals_analyst,
+    create_macro_analyst,
+    create_market_analyst,
+    create_msg_delete,
+    create_neutral_debator,
+    create_news_analyst,
+    create_portfolio_manager,
+    create_position_sizing_analyst,
+    create_research_manager,
+    create_scenario_catalyst_analyst,
+    create_segment_analyst,
+    create_social_media_analyst,
+    create_trader,
+    create_valuation_analyst,
+)
 from tradingagents.agents.managers.chief_analyst import create_chief_analyst
+from tradingagents.agents.utils.agent_states import (
+    AgentState,
+    make_default_position_sizing_data,
+    make_default_scenario_catalyst_data,
+    make_default_segment_data,
+    make_default_valuation_data,
+)
+from tradingagents.agents.utils.analyst_resilience import wrap_quick_analyst_node
 
 from .conditional_logic import ConditionalLogic
 
 
 class GraphSetup:
     """Handles the setup and configuration of the agent graph."""
+
+    QUICK_ANALYST_RESILIENCE = {
+        "market": {"analyst_name": "Market Analyst", "report_key": "market_report"},
+        "social": {"analyst_name": "Social Analyst", "report_key": "sentiment_report"},
+        "news": {"analyst_name": "News Analyst", "report_key": "news_report"},
+        "fundamentals": {
+            "analyst_name": "Fundamentals Analyst",
+            "report_key": "fundamentals_report",
+        },
+        "macro": {"analyst_name": "Macro Analyst", "report_key": "macro_report"},
+        "factor_rules": {
+            "analyst_name": "Factor Rules Analyst",
+            "report_key": "factor_rules_report",
+        },
+        "valuation": {
+            "analyst_name": "Valuation Analyst",
+            "extra_state_factory": lambda state, report: {
+                "valuation_data": {
+                    **make_default_valuation_data(),
+                    "primary_method": "degraded_backend_error",
+                    "thesis": report,
+                }
+            },
+        },
+        "segment": {
+            "analyst_name": "Segment Analyst",
+            "report_key": "segment_report",
+            "extra_state_factory": lambda state, report: {
+                "segment_data": {
+                    **make_default_segment_data(),
+                    "ticker": state.get("company_of_interest", ""),
+                    "analysis_date": state.get("trade_date", ""),
+                }
+            },
+        },
+        "scenario": {
+            "analyst_name": "Scenario Analyst",
+            "report_key": "scenario_catalyst_report",
+            "extra_state_factory": lambda state, report: {
+                "scenario_catalyst_data": {
+                    **make_default_scenario_catalyst_data(),
+                    "ticker": state.get("company_of_interest", ""),
+                    "analysis_date": state.get("trade_date", ""),
+                }
+            },
+        },
+        "position_sizing": {
+            "analyst_name": "Position Sizing Analyst",
+            "report_key": "position_sizing_report",
+            "extra_state_factory": lambda state, report: {
+                "position_sizing_data": {
+                    **make_default_position_sizing_data(),
+                    "ticker": state.get("company_of_interest", ""),
+                    "analysis_date": state.get("trade_date", ""),
+                    "sizing_rationale": report,
+                }
+            },
+        },
+        "bull_researcher": {
+            "analyst_name": "Bull Researcher",
+            "extra_state_factory": lambda state, report: {
+                "investment_debate_state": {
+                    **state["investment_debate_state"],
+                    "history": state["investment_debate_state"].get("history", "") + "\nBull Analyst: " + report,
+                    "bull_history": state["investment_debate_state"].get("bull_history", "") + "\nBull Analyst: " + report,
+                    "current_response": "Bull Analyst: " + report,
+                    "count": state["investment_debate_state"]["count"] + 1,
+                }
+            },
+        },
+        "bear_researcher": {
+            "analyst_name": "Bear Researcher",
+            "extra_state_factory": lambda state, report: {
+                "investment_debate_state": {
+                    **state["investment_debate_state"],
+                    "history": state["investment_debate_state"].get("history", "") + "\nBear Analyst: " + report,
+                    "bear_history": state["investment_debate_state"].get("bear_history", "") + "\nBear Analyst: " + report,
+                    "current_response": "Bear Analyst: " + report,
+                    "count": state["investment_debate_state"]["count"] + 1,
+                }
+            },
+        },
+        "research_manager": {
+            "analyst_name": "Research Manager",
+            "report_key": "investment_plan",
+            "extra_state_factory": lambda state, report: {
+                "investment_debate_state": {
+                    **state["investment_debate_state"],
+                    "judge_decision": report,
+                    "current_response": report,
+                }
+            },
+        },
+        "trader": {
+            "analyst_name": "Trader",
+            "report_key": "trader_investment_plan",
+            "extra_state_factory": lambda state, report: {"sender": "Trader"},
+        },
+        "aggressive_analyst": {
+            "analyst_name": "Aggressive Analyst",
+            "extra_state_factory": lambda state, report: {
+                "risk_debate_state": {
+                    **state["risk_debate_state"],
+                    "history": state["risk_debate_state"].get("history", "") + "\nAggressive Analyst: " + report,
+                    "aggressive_history": state["risk_debate_state"].get("aggressive_history", "") + "\nAggressive Analyst: " + report,
+                    "latest_speaker": "Aggressive",
+                    "current_aggressive_response": "Aggressive Analyst: " + report,
+                    "count": state["risk_debate_state"]["count"] + 1,
+                }
+            },
+        },
+        "neutral_analyst": {
+            "analyst_name": "Neutral Analyst",
+            "extra_state_factory": lambda state, report: {
+                "risk_debate_state": {
+                    **state["risk_debate_state"],
+                    "history": state["risk_debate_state"].get("history", "") + "\nNeutral Analyst: " + report,
+                    "neutral_history": state["risk_debate_state"].get("neutral_history", "") + "\nNeutral Analyst: " + report,
+                    "latest_speaker": "Neutral",
+                    "current_neutral_response": "Neutral Analyst: " + report,
+                    "count": state["risk_debate_state"]["count"] + 1,
+                }
+            },
+        },
+        "conservative_analyst": {
+            "analyst_name": "Conservative Analyst",
+            "extra_state_factory": lambda state, report: {
+                "risk_debate_state": {
+                    **state["risk_debate_state"],
+                    "history": state["risk_debate_state"].get("history", "") + "\nConservative Analyst: " + report,
+                    "conservative_history": state["risk_debate_state"].get("conservative_history", "") + "\nConservative Analyst: " + report,
+                    "latest_speaker": "Conservative",
+                    "current_conservative_response": "Conservative Analyst: " + report,
+                    "count": state["risk_debate_state"]["count"] + 1,
+                }
+            },
+        },
+        "portfolio_manager": {
+            "analyst_name": "Portfolio Manager",
+            "report_key": "final_trade_decision",
+            "extra_state_factory": lambda state, report: {
+                "risk_debate_state": {
+                    **state["risk_debate_state"],
+                    "judge_decision": report,
+                    "latest_speaker": "Judge",
+                }
+            },
+        },
+    }
 
     @staticmethod
     def _order_selected_analysts(selected_analysts):
@@ -35,6 +211,8 @@ class GraphSetup:
         conditional_logic: ConditionalLogic,
         role_llms: Dict[str, Any] | None = None,
         social_sentiment_available: bool = False,
+        single_pass_pipeline: bool = False,
+        enable_resilience_wrappers: bool = True,
     ):
         """Initialize with required components."""
         self.quick_thinking_llm = quick_thinking_llm
@@ -48,6 +226,8 @@ class GraphSetup:
         self.portfolio_manager_memory = portfolio_manager_memory
         self.conditional_logic = conditional_logic
         self.social_sentiment_available = social_sentiment_available
+        self.single_pass_pipeline = single_pass_pipeline
+        self.enable_resilience_wrappers = enable_resilience_wrappers
         self.market_analyst_llm = self._get_role_llm("market", self.quick_thinking_llm)
         self.social_analyst_llm = self._get_role_llm("social", self.quick_thinking_llm)
         self.news_analyst_llm = self._get_role_llm("news", self.quick_thinking_llm)
@@ -206,6 +386,17 @@ class GraphSetup:
             delete_nodes["macro"] = create_msg_delete()
             tool_nodes["macro"] = self.tool_nodes["macro"]
 
+        if self.enable_resilience_wrappers:
+            for analyst_type, node in list(analyst_nodes.items()):
+                resilience = self.QUICK_ANALYST_RESILIENCE.get(analyst_type)
+                if resilience:
+                    analyst_nodes[analyst_type] = wrap_quick_analyst_node(
+                        node,
+                        analyst_name=resilience["analyst_name"],
+                        report_key=resilience.get("report_key"),
+                        extra_state_factory=resilience.get("extra_state_factory"),
+                    )
+
         # Create researcher and manager nodes
         bull_researcher_node = create_bull_researcher(
             self.bull_researcher_llm, self.bull_memory
@@ -228,6 +419,51 @@ class GraphSetup:
             self.portfolio_manager_llm, self.portfolio_manager_memory
         )
         chief_analyst_node = create_chief_analyst(self.chief_analyst_llm)
+
+        if self.enable_resilience_wrappers:
+            bull_researcher_node = wrap_quick_analyst_node(
+                bull_researcher_node,
+                analyst_name=self.QUICK_ANALYST_RESILIENCE["bull_researcher"]["analyst_name"],
+                extra_state_factory=self.QUICK_ANALYST_RESILIENCE["bull_researcher"]["extra_state_factory"],
+            )
+            bear_researcher_node = wrap_quick_analyst_node(
+                bear_researcher_node,
+                analyst_name=self.QUICK_ANALYST_RESILIENCE["bear_researcher"]["analyst_name"],
+                extra_state_factory=self.QUICK_ANALYST_RESILIENCE["bear_researcher"]["extra_state_factory"],
+            )
+            research_manager_node = wrap_quick_analyst_node(
+                research_manager_node,
+                analyst_name=self.QUICK_ANALYST_RESILIENCE["research_manager"]["analyst_name"],
+                report_key=self.QUICK_ANALYST_RESILIENCE["research_manager"]["report_key"],
+                extra_state_factory=self.QUICK_ANALYST_RESILIENCE["research_manager"]["extra_state_factory"],
+            )
+            trader_node = wrap_quick_analyst_node(
+                trader_node,
+                analyst_name=self.QUICK_ANALYST_RESILIENCE["trader"]["analyst_name"],
+                report_key=self.QUICK_ANALYST_RESILIENCE["trader"]["report_key"],
+                extra_state_factory=self.QUICK_ANALYST_RESILIENCE["trader"]["extra_state_factory"],
+            )
+            aggressive_analyst = wrap_quick_analyst_node(
+                aggressive_analyst,
+                analyst_name=self.QUICK_ANALYST_RESILIENCE["aggressive_analyst"]["analyst_name"],
+                extra_state_factory=self.QUICK_ANALYST_RESILIENCE["aggressive_analyst"]["extra_state_factory"],
+            )
+            neutral_analyst = wrap_quick_analyst_node(
+                neutral_analyst,
+                analyst_name=self.QUICK_ANALYST_RESILIENCE["neutral_analyst"]["analyst_name"],
+                extra_state_factory=self.QUICK_ANALYST_RESILIENCE["neutral_analyst"]["extra_state_factory"],
+            )
+            conservative_analyst = wrap_quick_analyst_node(
+                conservative_analyst,
+                analyst_name=self.QUICK_ANALYST_RESILIENCE["conservative_analyst"]["analyst_name"],
+                extra_state_factory=self.QUICK_ANALYST_RESILIENCE["conservative_analyst"]["extra_state_factory"],
+            )
+            portfolio_manager_node = wrap_quick_analyst_node(
+                portfolio_manager_node,
+                analyst_name=self.QUICK_ANALYST_RESILIENCE["portfolio_manager"]["analyst_name"],
+                report_key=self.QUICK_ANALYST_RESILIENCE["portfolio_manager"]["report_key"],
+                extra_state_factory=self.QUICK_ANALYST_RESILIENCE["portfolio_manager"]["extra_state_factory"],
+            )
 
         # Create workflow
         workflow = StateGraph(AgentState)
@@ -282,48 +518,57 @@ class GraphSetup:
                 workflow.add_edge(current_clear, "Bull Researcher")
 
         # Add remaining edges
-        workflow.add_conditional_edges(
-            "Bull Researcher",
-            self.conditional_logic.should_continue_debate,
-            {
-                "Bear Researcher": "Bear Researcher",
-                "Research Manager": "Research Manager",
-            },
-        )
-        workflow.add_conditional_edges(
-            "Bear Researcher",
-            self.conditional_logic.should_continue_debate,
-            {
-                "Bull Researcher": "Bull Researcher",
-                "Research Manager": "Research Manager",
-            },
-        )
-        workflow.add_edge("Research Manager", "Trader")
-        workflow.add_edge("Trader", "Aggressive Analyst")
-        workflow.add_conditional_edges(
-            "Aggressive Analyst",
-            self.conditional_logic.should_continue_risk_analysis,
-            {
-                "Conservative Analyst": "Conservative Analyst",
-                "Portfolio Manager": "Portfolio Manager",
-            },
-        )
-        workflow.add_conditional_edges(
-            "Conservative Analyst",
-            self.conditional_logic.should_continue_risk_analysis,
-            {
-                "Neutral Analyst": "Neutral Analyst",
-                "Portfolio Manager": "Portfolio Manager",
-            },
-        )
-        workflow.add_conditional_edges(
-            "Neutral Analyst",
-            self.conditional_logic.should_continue_risk_analysis,
-            {
-                "Aggressive Analyst": "Aggressive Analyst",
-                "Portfolio Manager": "Portfolio Manager",
-            },
-        )
+        if self.single_pass_pipeline:
+            workflow.add_edge("Bull Researcher", "Bear Researcher")
+            workflow.add_edge("Bear Researcher", "Research Manager")
+            workflow.add_edge("Research Manager", "Trader")
+            workflow.add_edge("Trader", "Aggressive Analyst")
+            workflow.add_edge("Aggressive Analyst", "Conservative Analyst")
+            workflow.add_edge("Conservative Analyst", "Neutral Analyst")
+            workflow.add_edge("Neutral Analyst", "Portfolio Manager")
+        else:
+            workflow.add_conditional_edges(
+                "Bull Researcher",
+                self.conditional_logic.should_continue_debate,
+                {
+                    "Bear Researcher": "Bear Researcher",
+                    "Research Manager": "Research Manager",
+                },
+            )
+            workflow.add_conditional_edges(
+                "Bear Researcher",
+                self.conditional_logic.should_continue_debate,
+                {
+                    "Bull Researcher": "Bull Researcher",
+                    "Research Manager": "Research Manager",
+                },
+            )
+            workflow.add_edge("Research Manager", "Trader")
+            workflow.add_edge("Trader", "Aggressive Analyst")
+            workflow.add_conditional_edges(
+                "Aggressive Analyst",
+                self.conditional_logic.should_continue_risk_analysis,
+                {
+                    "Conservative Analyst": "Conservative Analyst",
+                    "Portfolio Manager": "Portfolio Manager",
+                },
+            )
+            workflow.add_conditional_edges(
+                "Conservative Analyst",
+                self.conditional_logic.should_continue_risk_analysis,
+                {
+                    "Neutral Analyst": "Neutral Analyst",
+                    "Portfolio Manager": "Portfolio Manager",
+                },
+            )
+            workflow.add_conditional_edges(
+                "Neutral Analyst",
+                self.conditional_logic.should_continue_risk_analysis,
+                {
+                    "Aggressive Analyst": "Aggressive Analyst",
+                    "Portfolio Manager": "Portfolio Manager",
+                },
+            )
 
         workflow.add_edge("Portfolio Manager", "Chief Analyst")
         workflow.add_edge("Chief Analyst", END)

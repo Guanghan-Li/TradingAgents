@@ -1,0 +1,18 @@
+Macro view for `AVGO`: the backdrop as of April 15, 2026 looks like a non-recessionary, positive-growth regime with sticky inflation pressure rather than a clean disinflation trend. Labor is still holding up, with unemployment at 4.3% on 2026-03-01 and payrolls up 178k, while the Treasury curve is positively sloped with 2Y-10Y at +50 bps. That combination argues against an imminent recession signal.
+
+The complication is inflation. March 2026 CPI rose 0.87% sequentially and PPI rose 1.78% sequentially, which is too hot for an easy Fed easing path. The Fed already moved from 4.09% in October 2025 to 3.64% by January-March 2026, but the recent pause suggests policy is now closer to "wait and assess" than an active cutting cycle. With the 10Y at 4.26% and the 30Y at 4.87%, the long end is pricing firmer nominal growth, inflation risk, and/or higher term premium.
+
+For `AVGO`, this is mixed but still broadly constructive. The growth side of the macro regime supports semiconductor, networking, and AI infrastructure demand, which helps revenue and capex-linked exposure. But the rates side is less friendly: a higher long-end yield environment compresses valuation multiples for long-duration growth equities, especially mega-cap and AI-adjacent names. In practice, that means macro is supportive for `AVGO` earnings resilience but less supportive for multiple expansion.
+
+Base case: near-term Fed hold, no recession signal from the curve, and continued nominal growth. That favors staying constructive on `AVGO` fundamentally, while respecting downside risk from any further backup in long yields or a renewed inflation scare that pushes the market to reprice fewer cuts. Key risks for the rest of the team to incorporate are: 1) inflation re-acceleration causing higher discount rates, 2) long-bond yield pressure hitting AI/semiconductor valuations even without earnings deterioration, and 3) any growth slowdown that would weaken enterprise and hyperscaler spending.
+
+| Macro Signal | Latest Read | Regime Message | Market Implication | `AVGO` Read-Through |
+| --- | --- | --- | --- | --- |
+| Fed funds rate | 3.64% on 2026-03-01, unchanged vs prior month | Fed has eased since late 2025 but is now paused | Near-term hold is more likely than aggressive cuts | Stable policy helps demand visibility, but fewer cuts cap valuation upside |
+| CPI | 330.29 on 2026-03-01, +0.87% sequentially | Disinflation is not clean; inflation pressure re-firmed | Raises odds of higher-for-longer pricing | Negative for duration-heavy multiple expansion |
+| PPI | 274.10 on 2026-03-01, +1.78% sequentially | Pipeline inflation is hot | Margin and rate pressure risk across equities | Watch for valuation sensitivity more than demand damage initially |
+| Unemployment | 4.30% on 2026-03-01, down 0.10 ppt | Labor market remains resilient | Supports soft-landing narrative | Positive for enterprise and consumer tech demand backdrop |
+| Nonfarm payrolls | 158,637k on 2026-03-01, +178k | Job growth remains positive | Growth scare is not the base case | Supports ongoing semiconductor/networking demand |
+| 2Y-10Y curve | +0.50% on 2026-04-14 | Normal upward slope, not recessionary | Better signal for continued expansion than contraction | Fundamental backdrop remains supportive |
+| 10Y Treasury | 4.26% on 2026-04-14 | Long-end yields are elevated | Headwind for equity multiples, especially growth | Main macro risk to `AVGO` valuation |
+| 30Y Treasury | 4.87% on 2026-04-14 | Term premium/inflation risk remains high | Tightens financial conditions at the margin | Limits upside from sentiment even if earnings stay firm |

@@ -1,0 +1,3 @@
+I'll analyze SLV (iShares Silver Trust) for you. Let me gather current social sentiment data first.
+
+Requesting social sentiment analysis for SLV over the past week...

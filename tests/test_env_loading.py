@@ -27,3 +27,28 @@ def test_load_project_dotenv_finds_repo_env_outside_cwd(tmp_path, monkeypatch):
 
     assert loaded_path == env_path
     assert os.environ["OPENAI_API_KEY"] == "test-key"
+
+
+def test_load_project_dotenv_merges_parent_repo_env_without_overriding_worktree(tmp_path, monkeypatch):
+    from tradingagents.env import load_project_dotenv
+
+    repo_root = tmp_path / "repo"
+    worktree_root = repo_root / ".worktrees" / "production"
+    package_root = worktree_root / "tradingagents"
+    package_root.mkdir(parents=True)
+
+    root_env = repo_root / ".env"
+    root_env.write_text("FRED_API_KEY=fred-key\nOPENAI_API_KEY=root-openai\n", encoding="utf-8")
+
+    worktree_env = worktree_root / ".env"
+    worktree_env.write_text("OPENAI_API_KEY=worktree-openai\n", encoding="utf-8")
+
+    monkeypatch.chdir(worktree_root)
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("FRED_API_KEY", raising=False)
+
+    loaded_path = load_project_dotenv(start_dir=package_root)
+
+    assert loaded_path == worktree_env
+    assert os.environ["OPENAI_API_KEY"] == "worktree-openai"
+    assert os.environ["FRED_API_KEY"] == "fred-key"

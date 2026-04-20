@@ -1,0 +1,5 @@
+PLTR presents a high-quality business with extreme valuation and only partial technical repair. Fundamentals are the strongest part of the case: about 70% YoY Q4 2025 revenue growth, major margin expansion, strong free cash flow, and a fortress balance sheet. Macro is mixed, but not hostile enough to offset company execution. Technically, PLTR is above the 10 EMA but still below the 50 SMA and well below the 200 SMA, so this is not a clean breakout; it is an improving rebound. Sentiment is supportive, but crowded.
+
+That mix does not justify a full-size aggressive entry, but it does justify controlled exposure. The best decision is to treat PLTR as a staged BUY: initiate small near current levels, add only if PLTR reclaims and holds the 143.3 to 145.0 zone with improving volume and momentum, and invalidate the rebound thesis on a break of 128.06. If PLTR loses 140.10 quickly, do not add.
+
+Decision: buy PLTR as a starter position only, with strict sizing and confirmation-based adds. FINAL TRANSACTION PROPOSAL: **BUY**

@@ -1,0 +1,26 @@
+FINAL TRANSACTION PROPOSAL: **HOLD**
+
+For `O` on April 16, 2026, the technical picture has improved materially from the March selloff, but it still looks more like a late-stage recovery into resistance than a clean, high-conviction re-acceleration. The best indicator set for this regime is `close_10_ema`, `close_50_sma`, `close_200_sma`, `macd`, `rsi`, `boll_ub`, `boll_lb`, and `atr`. That mix covers short-term momentum, medium-term trend repair, long-term regime, momentum confirmation, overbought/oversold context, volatility envelope, and risk sizing without unnecessary overlap.
+
+Trend first: `O` closed at 64.64, above its `close_10_ema` at 63.31, above its `close_50_sma` at 63.60, and well above its `close_200_sma` at 58.50. That is constructive. It says the long-term trend is still intact, the medium-term damage from March is being repaired, and price has reclaimed key moving-average support. The important nuance is that the `close_10_ema` is still slightly below the `close_50_sma`. So while price is above both averages, the short-term trend has not yet fully outpaced the medium-term baseline. This is bullish repair, not yet decisive trend leadership.
+
+Momentum confirms the rebound but also argues against chasing. `macd` has improved from deeply negative readings in late March and early April to +0.283 on April 16, after turning positive between April 13 and April 14. That is a real momentum shift, not just a one-day bounce. `rsi` has climbed from 38.2 on March 30 to 64.0 on April 16. That shows strong upside thrust, but not an overbought extreme. In practice, this means `O` still has room to move higher, but the easy part of the reversal has already happened. Momentum is supportive, but entry quality is worse now than it was near the late-March lows.
+
+The Bollinger structure is the key near-term tell. `O` closed at 64.64 versus `boll_ub` at 64.94 and `boll_lb` at 59.03. Price is pressing the upper band after a steady recovery from the March trough near 59.79. At the same time, the bands have narrowed from late March, and `atr` has eased from about 1.11 on March 30 to 0.96 on April 16. That combination usually means volatility has compressed while price has climbed toward the top of the range. In a risk-on macro tape, that can resolve upward, but in `O` specifically the macro backdrop is still rate-constrained, so a tag of the upper band can just as easily become short-term exhaustion or sideways digestion.
+
+That macro overlay matters a lot for `O`. The economy is stable enough to support occupancy, rent collection, and tenant credit, which reduces downside tail risk. But `O` is still a duration-sensitive REIT, and the 10-year Treasury at 4.29% and 30-year at 4.89% remain a valuation headwind. In other words, the macro regime supports operational stability, but it does not strongly support multiple expansion. That makes technical breakouts in `O` less trustworthy than they would be in a cyclical stock under the same risk-on regime.
+
+Actionably, `O` looks like a `HOLD`, not an outright `BUY`, because price is already near a short-term extension zone. The first resistance area is the current `boll_ub` around 64.9 to 65.0. If `O` can close cleanly above that area and hold it, the next upside zone is roughly 66.1 to 66.7, which lines up with the late-February and early-March price shelf. On the downside, first support is the `close_50_sma` / `close_10_ema` cluster around 63.3 to 63.6. If that fails, 62.2 and then 61.2 become reasonable retracement checkpoints. With `atr` near 0.96, a normal daily swing is still about 1 point, so stops and sizing should respect that range rather than assume a straight-line grind higher.
+
+The cleanest interpretation is this: `O` has repaired enough technical damage to avoid a bearish stance, but it has not yet produced the kind of breakout structure that overrides the still-restrictive rates backdrop. Existing holders can stay with it while price remains above the 10 EMA and 50 SMA. New buyers would get a better setup either on a confirmed close above 65 with follow-through, or on a pullback that holds the 63.3 to 63.6 support zone. Until one of those happens, upside exists, but risk/reward is only middling.
+
+| Area | Reading for `O` | Interpretation | Trading implication |
+| --- | --- | --- | --- |
+| Short-term trend | Close 64.64 vs `close_10_ema` 63.31 | Near-term momentum is positive | Constructive for holders |
+| Medium-term trend | Close 64.64 vs `close_50_sma` 63.60 | Trend repair is underway | Support zone now matters |
+| Long-term trend | Close 64.64 vs `close_200_sma` 58.50 | Long-term structure remains intact | Not a secular breakdown |
+| Momentum | `macd` +0.283 and rising | Bullish momentum reversal confirmed | Positive, but much of the snapback already occurred |
+| Momentum stretch | `rsi` 64.0 | Strong but not overbought | Some upside room remains |
+| Volatility envelope | Close near `boll_ub` 64.94 | Price is testing upper-range resistance | Do not chase blindly into band resistance |
+| Volatility/risk | `atr` 0.96, down from late March | Tape is calming after the selloff | Use about 1 point as a realistic swing unit |
+| Macro overlay | Soft landing, but long yields still high | Fundamentals stable, valuation still capped | Supports `HOLD` more than aggressive `BUY` |

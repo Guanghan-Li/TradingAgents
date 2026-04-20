@@ -1,11 +1,25 @@
 # TradingAgents/prediction_market/graph/setup.py
 
-from typing import Dict, Any
+from typing import Dict
 from langchain_openai import ChatOpenAI
 from langgraph.graph import END, StateGraph, START
 from langgraph.prebuilt import ToolNode
 
-from tradingagents.prediction_market.agents import *
+from tradingagents.prediction_market.agents import (
+    create_event_analyst,
+    create_information_analyst,
+    create_msg_delete,
+    create_no_researcher,
+    create_odds_analyst,
+    create_pm_aggressive_debator,
+    create_pm_conservative_debator,
+    create_pm_neutral_debator,
+    create_pm_research_manager,
+    create_pm_risk_manager,
+    create_pm_trader,
+    create_sentiment_analyst,
+    create_yes_researcher,
+)
 from tradingagents.prediction_market.agents.utils.pm_agent_states import PMAgentState
 
 from .conditional_logic import PMConditionalLogic

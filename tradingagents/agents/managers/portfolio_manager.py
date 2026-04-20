@@ -1,5 +1,6 @@
 from tradingagents.agents.utils.agent_utils import (
-    build_analyst_report_context,
+    add_educational_use_context,
+    build_compact_risk_handoff_context,
     build_instrument_context,
     build_structured_stock_priority_context,
 )
@@ -9,7 +10,7 @@ def create_portfolio_manager(llm, memory):
     def portfolio_manager_node(state) -> dict:
 
         instrument_context = build_instrument_context(state["company_of_interest"])
-        analyst_report_context = build_analyst_report_context(state)
+        analyst_report_context = build_compact_risk_handoff_context(state)
         factor_rules_report = state.get("factor_rules_report", "")
         factor_rules_context = f"Factor rules summary: {factor_rules_report}"
 
@@ -27,18 +28,15 @@ def create_portfolio_manager(llm, memory):
         for i, rec in enumerate(past_memories, 1):
             past_memory_str += rec["recommendation"] + "\n\n"
 
-        prompt = f"""As the Portfolio Manager, synthesize the risk analysts' debate and deliver the final trading decision.
+        prompt = add_educational_use_context(f"""As the Portfolio Manager, synthesize the risk analysts' debate and deliver the final trading decision.
 
 {instrument_context}
 
 ---
 
-**Rating Scale** (use exactly one):
-- **Buy**: Strong conviction to enter or add to position
-- **Overweight**: Favorable outlook, gradually increase exposure
-- **Hold**: Maintain current position, no action needed
-- **Underweight**: Reduce exposure, take partial profits
-- **Sell**: Exit position or avoid entry
+**Recommendation Dimensions** (use exactly one from each):
+- **Absolute Action**: **Buy**, **Hold**, or **Sell**
+- **Relative Stance**: **Overweight**, **Neutral**, or **Underweight**
 
 **Context:**
 - Trader's proposed plan: **{trader_plan}**
@@ -48,9 +46,10 @@ def create_portfolio_manager(llm, memory):
 - Lessons from past decisions: **{past_memory_str}**
 
 **Required Output Structure:**
-1. **Rating**: State one of Buy / Overweight / Hold / Underweight / Sell.
-2. **Executive Summary**: A concise action plan covering entry strategy, position sizing, key risk levels, and time horizon.
-3. **Investment Thesis**: Detailed reasoning anchored in the analysts' debate and past reflections.
+1. **Absolute Action**: State one of Buy / Hold / Sell.
+2. **Relative Stance**: State one of Overweight / Neutral / Underweight.
+3. **Executive Summary**: A concise action plan covering entry strategy, position sizing, key risk levels, and time horizon.
+4. **Investment Thesis**: Detailed reasoning anchored in the analysts' debate and past reflections.
 
 ---
 
@@ -59,7 +58,7 @@ def create_portfolio_manager(llm, memory):
 
 ---
 
-Be decisive and ground every conclusion in specific evidence from the analysts."""
+Be decisive and ground every conclusion in specific evidence from the analysts.""")
 
         response = llm.invoke(prompt)
 

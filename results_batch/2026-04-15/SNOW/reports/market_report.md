@@ -1,0 +1,31 @@
+FINAL TRANSACTION PROPOSAL: **HOLD**
+
+For `SNOW`, the most relevant indicator set in this market condition is: `close_10_ema`, `close_50_sma`, `close_200_sma`, `macd`, `rsi`, `boll_ub`, `boll_lb`, and `atr`. This mix is appropriate because it covers short-, medium-, and long-term trend, momentum quality, mean-reversion context, and volatility/risk sizing without leaning too heavily on any one signal family.
+
+The technical picture is a sharp oversold rebound inside a still-damaged primary trend. `SNOW` closed at `144.48` on `2026-04-15`, up sharply from the `121.11` close on `2026-04-10`, but it remains well below the `close_50_sma` at `164.98` and far below the `close_200_sma` at `211.50`. That means the stock has improved tactically, but not structurally. The key near-term positive is that price has just reclaimed the `close_10_ema` at `142.18`, which suggests forced selling has eased and a reflex recovery is underway. The problem is that the larger trend stack is still bearish: spot is roughly `12.4%` below the 50-day and `31.7%` below the 200-day, so the burden of proof remains on the bulls.
+
+Momentum confirms that interpretation. `macd` is still deeply negative at `-10.05`, so trend momentum is bearish in absolute terms, but it has improved from `-10.94` on `2026-04-13` and `-10.92` on `2026-04-14`. That tells you downside momentum is no longer accelerating; it is decelerating. `rsi` has recovered from `21.17` on `2026-04-10` to `43.00` on `2026-04-15`, which is exactly what a credible oversold bounce should look like. But an RSI in the low 40s is recovery, not strength. It says the stock has moved out of capitulation territory, not that it has entered a durable bullish impulse.
+
+The Bollinger structure also points to rebound rather than confirmed reversal. `boll_lb` is `123.58` and `boll_ub` is `181.78`; price has bounced decisively away from the lower band after the April 9-10 washout, which supports the mean-reversion case. But `SNOW` is still below the implied Bollinger midline, approximately `152.68` by inference from the upper and lower bands. Until price can reclaim that central band area and hold it, the move should be treated as repair within a downtrend rather than a clean trend change.
+
+Volatility remains elevated. `atr` is `9.56`, which is about `6.6%` of the current price. That is a very wide daily risk envelope. In practical terms, this is not a tape for aggressive sizing or tight stops. It is a tape where position size should be smaller and confirmation thresholds should be higher, because single-session reversals can be large enough to invalidate weak setups.
+
+Volume adds nuance. The breakdown was heavy and institutionally meaningful: volume surged to `15.49M` on `2026-04-09` and `23.32M` on `2026-04-10`, versus roughly `3M` to `8M` in the prior stretch. The rebound also attracted real interest, with `14.83M` shares on `2026-04-13`, but follow-through volume moderated to `8.55M` and then `7.57M`. That pattern is consistent with panic liquidation followed by a solid reflex bid, but not yet with a fully proven accumulation trend.
+
+The macro overlay is modestly constructive for `SNOW`, but not strongly supportive of multiple expansion. The soft-landing / neutral-policy backdrop and medium-confidence `RISK-ON` regime help demand-sensitive growth names more than a recessionary or tightening backdrop would. That matters positively for enterprise software spending durability. But elevated long-end yields, with the `10Y` at `4.26%` and the `30Y` at `4.87%`, still create a valuation headwind for duration-sensitive software. So the macro environment supports a rebound attempt, but it does not justify blind chasing. `SNOW` still needs technical confirmation and execution strength to overcome discount-rate pressure.
+
+Actionably, this looks like a `HOLD`, not a fresh aggressive `BUY`. The strongest short-term bullish evidence is the reclaim of the `10 EMA` and the RSI rebound out of deeply oversold territory. The strongest bearish evidence is that price is still below the 50-day, far below the 200-day, and MACD remains materially negative. For traders, the next upside checkpoint is the `150-153` area, which roughly aligns with the recent congestion zone and the inferred Bollinger mid-band. A clean reclaim and hold there would upgrade the setup from oversold bounce to base-building. Above that, the real trend test is the `close_50_sma` near `165`. If `SNOW` can push into that zone while `RSI` moves through `50` and `MACD` continues to improve, the technical case becomes much stronger.
+
+On the downside, losing the `142` area would weaken the fresh EMA reclaim. A break back through `135-132` would suggest the rebound is fading. A retest of `123.6-121.1` would be a serious failure signal and would reopen the possibility that the April washout was only partially resolved.
+
+| Area | Evidence | Technical Read-Through | Trading Implication |
+| --- | --- | --- | --- |
+| Short-term trend | Close `144.48` vs `close_10_ema` `142.18` | Price has just regained short-term control | Positive, but needs follow-through |
+| Medium-term trend | Close `144.48` vs `close_50_sma` `164.98` | Still clearly below medium-term trend resistance | Bounce not yet a trend reversal |
+| Long-term trend | Close `144.48` vs `close_200_sma` `211.50` | Structural trend remains bearish | Position traders should stay cautious |
+| Momentum | `macd -10.05`, improving from worse levels | Bearish momentum is easing, not fully reversed | Early stabilization, not confirmation |
+| RSI | `43.00`, up from `21.17` on `2026-04-10` | Oversold condition has normalized | Good rebound quality, limited proof of strength |
+| Bollinger context | `boll_lb 123.58`, `boll_ub 181.78`, close below implied mid-band | Mean-reversion bounce off lower extreme | Needs reclaim of mid-band near `152.7` |
+| Volatility | `atr 9.56` | Daily ranges remain very wide | Use smaller size and wider stops |
+| Macro overlay | Soft landing, paused Fed, but high long yields | Demand backdrop is okay; valuation backdrop is still restrictive | Favors selective participation, not chasing |
+| Stance | Tactical recovery inside bearish higher-timeframe structure | Evidence supports patience over aggression | `HOLD` until price proves itself above `150-153`, then `165` |

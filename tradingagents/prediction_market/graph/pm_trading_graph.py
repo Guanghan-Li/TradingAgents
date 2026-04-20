@@ -3,21 +3,14 @@
 import os
 from pathlib import Path
 import json
-from datetime import date
-from typing import Dict, Any, Tuple, List, Optional
+from typing import Dict, Any, List, Optional
 
 from langgraph.prebuilt import ToolNode
 
 from tradingagents.llm_clients import create_llm_client
 
-from tradingagents.prediction_market.agents import *
 from tradingagents.prediction_market.pm_config import PM_DEFAULT_CONFIG
 from tradingagents.agents.utils.memory import FinancialSituationMemory
-from tradingagents.prediction_market.agents.utils.pm_agent_states import (
-    PMAgentState,
-    PMInvestDebateState,
-    PMRiskDebateState,
-)
 
 # Import PM tool functions
 from tradingagents.prediction_market.agents.utils.pm_agent_utils import (
@@ -143,6 +136,10 @@ class PMTradingAgentsGraph:
             reasoning_effort = self.config.get("openai_reasoning_effort")
             if reasoning_effort:
                 kwargs["reasoning_effort"] = reasoning_effort
+        elif provider in {"anthropic", "claude_code"}:
+            effort = self.config.get("anthropic_effort")
+            if effort:
+                kwargs["effort"] = effort
 
         return kwargs
 

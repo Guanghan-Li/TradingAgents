@@ -1,0 +1,9 @@
+SCCO should remain a HOLD based on the combined analyst evidence. The stock has strong underlying business quality, excellent profitability, positive free cash flow, low net leverage, and an intact long-term uptrend, which argues against selling into the current consolidation. Momentum has recovered meaningfully from the March low, MACD is positive, RSI is neutral-positive, and price remains above the 200-day average.
+
+The issue is entry quality rather than business quality. SCCO is trading near its 50-day average after a large rebound, remains below the 193.37 to 196.51 resistance zone, and carries demanding valuation multiples at roughly 36x trailing earnings and 30x forward earnings. Sentiment and news flow are constructive, but not early: the Goldman upgrade to Neutral removes a bearish overhang but does not create a clear upside endorsement, and the market is already aware of SCCO's copper-cycle strength.
+
+Macro conditions are supportive enough for cyclical materials exposure, with resilient employment, a normal yield curve, and calmer volatility, but sticky inflation and elevated long-end yields limit conviction. SCCO remains highly sensitive to copper prices, China/global industrial demand, rates, and USD conditions. That makes aggressive accumulation unattractive unless the stock either breaks decisively above 196.51 with stronger volume and copper confirmation, or pulls back into support while fundamentals remain intact.
+
+For existing holders, maintain exposure but avoid adding aggressively. For new capital, wait for either a confirmed breakout or a better risk/reward pullback. A loss of the 187.58 to 185.58 support zone, especially with weakening copper or RSI below 50, would reduce the hold thesis and require reassessment. Current evidence supports patience, not chasing and not exiting.
+
+FINAL TRANSACTION PROPOSAL: **HOLD**

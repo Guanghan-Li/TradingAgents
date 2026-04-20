@@ -1,0 +1,5 @@
+JPM supports a staged long entry. The setup is constructive across the main pillars: price is above the 10 EMA, 50 SMA, and 200 SMA; MACD is positive; RSI is bullish but not stretched; the yield curve is positively sloped; and JPM’s franchise quality, buybacks, and earnings power remain stronger than most large-bank peers. The main negatives are valuation, incomplete full Q1 detail, and regulatory/private-credit overhangs, but those argue for sizing discipline rather than standing aside entirely.
+
+The clean trade is to buy JPM in measured size rather than chase it aggressively. Current levels are acceptable for an initial position, with better add zones near 305-306 and then 298-301 if the stock pulls back constructively. Invalidation is a decisive break back below the 200-day area around 300.72 or materially worse credit/reserve/regulatory commentary. On balance, the base case still favors owning JPM because quality, curve support, and capital return should outweigh the current caution flags.
+
+FINAL TRANSACTION PROPOSAL: **BUY**

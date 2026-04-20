@@ -1,10 +1,6 @@
-from typing import Annotated, Any, Sequence
-from datetime import date, timedelta, datetime
-from typing_extensions import TypedDict, Optional
-from langchain_openai import ChatOpenAI
-from tradingagents.agents import *
-from langgraph.prebuilt import ToolNode
-from langgraph.graph import END, StateGraph, START, MessagesState
+from typing import Annotated, Any
+from typing_extensions import Optional, TypedDict
+from langgraph.graph import MessagesState
 
 
 # Researcher team state
@@ -159,7 +155,8 @@ def build_chief_analyst_data_defaults(
         "ticker": ticker,
         "analysis_date": analysis_date,
         "verdict": {
-            "rating": "",
+            "absolute_action": "",
+            "relative_stance": "",
             "summary": "",
             "thesis": "",
         },
@@ -198,6 +195,7 @@ def make_default_structured_stock_underwriting_state() -> dict[str, Any]:
 class AgentState(MessagesState):
     company_of_interest: Annotated[str, "Company that we are interested in trading"]
     trade_date: Annotated[str, "What date we are trading at"]
+    prefetched_context: Annotated[dict[str, str], "Prefetched analyst context blocks"]
 
     sender: Annotated[str, "Agent that sent this message"]
 

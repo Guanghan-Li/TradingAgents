@@ -1,0 +1,54 @@
+{
+  "analysis_date": "2026-04-15",
+  "anthropic_effort": null,
+  "backend_url": "codex://local",
+  "catalysts": [
+    {
+      "catalyst": "TSLA earnings and forward guidance",
+      "date_or_window": "Late April 2026 to early May 2026",
+      "expected_impact": "Decisive near-term catalyst for margins, free cash flow, and credibility of the high-valuation narrative."
+    },
+    {
+      "catalyst": "AI5 tape-out follow-through and roadmap detail",
+      "date_or_window": "Next 30-90 days",
+      "expected_impact": "Supports upside if management links silicon progress to FSD capability, cost, or launch timing."
+    },
+    {
+      "catalyst": "U.S. Nonfarm Payrolls",
+      "date_or_window": "Early May 2026",
+      "expected_impact": "Affects long-end yields and therefore valuation support for TSLA as a duration-sensitive growth stock."
+    },
+    {
+      "catalyst": "U.S. CPI and PPI releases",
+      "date_or_window": "Mid-May 2026",
+      "expected_impact": "Sticky inflation would likely pressure multiples; softer inflation would relieve discount-rate pressure."
+    },
+    {
+      "catalyst": "Fed policy meeting and messaging",
+      "date_or_window": "Early-to-mid May 2026 window",
+      "expected_impact": "Tone on rates matters more than spot fundamentals for a richly valued name like TSLA."
+    },
+    {
+      "catalyst": "Terafab and capex clarity",
+      "date_or_window": "Next 1-2 months",
+      "expected_impact": "Can either strengthen the industrial/AI scale thesis or intensify concerns about capital intensity and returns."
+    }
+  ],
+  "chief_action": "Sell",
+  "chief_rating": "Underweight",
+  "chief_relative_stance": "Underweight",
+  "chief_summary": "Sell TSLA into the April 15 strength rather than add. If already long TSLA, use the rebound toward the 398-400 resistance and 200 SMA zone to trim or exit; if not long TSLA, do not initiate here. If mandate constraints require TSLA exposure, keep TSLA capped at the structured 0.75% initial weight, not the 2.0% target weight, and enforce the 16% max-loss framework. Key levels for TSLA are 398-400 as the upside confirmation zone, 391.05 as the reclaimed 50 SMA, 363.32 as the 10 EMA, and ATR near 15.59 as a reminder that TSLA remains a high-volatility name. Time horizon for this TSLA decision is the next 30-90 days through late-April to early-May earnings, AI5 roadmap follow-through, CPI/PPI, and Fed messaging.",
+  "chief_thesis": "The final TSLA decision is Sell and Underweight because the structured underwriting still shows a business whose current economics do not justify its valuation without much stronger proof. TSLA is still 80% automotive revenue, 10% energy, 10% services, and 0% current revenue from FSD, AI, robotaxi, and robotics optionality. Yet TSLA is valued at about $1.47T on only $3.79B of TTM net income and $3.73B of TTM free cash flow, with trailing P/E at 359.6x and forward P/E at 141.4x. That is the core reason the conservative case wins the committee debate.\n\nThe bullish offsets in TSLA are real, but they are not strong enough to overturn that conclusion today. TSLA recovered gross margin from about 16.3% in Q1 2025 to about 20.1% in Q4 2025, operating margin improved from about 2.5% to about 6.3%, and TSLA holds $44.06B of cash plus short-term investments. Technically, TSLA closed at 391.95 on 111.6M shares, reclaimed the 10 EMA at 363.32, and slightly cleared the 50 SMA at 391.05. Those are constructive changes, and they explain why the aggressive analyst pushed back against an overly linear bearish read.\n\nBut the neutral and conservative analysts are right that TSLA still has not delivered the confirmation needed to justify paying up. TSLA remains below the 398.00 200 SMA, MACD is still negative, and price is already pushing into the upper Bollinger and resistance cluster after an 8% catalyst-driven jump. In other words, TSLA looks like a high-volume repair rally, not a completed trend reversal. The factor framework points the same way: the bullish AI capex acceleration rule is only supportive if backlog is rising and margins are holding through higher investment, while the bearish valuation-stretch-under-slowing-growth rule is already directly visible in the provided numbers.\n\nThe scenario map also argues against adding TSLA risk here. The highest-probability outcome for TSLA is the 45% base case, which is explicitly range-bound and assumes mixed results, no major margin inflection, and limited multiple expansion while yields stay elevated. The bull case is only 30% and the bear case is 25%, so there is no decisive probability edge that justifies leaning long into a dense catalyst calendar. That matters even more because TSLA sizing conviction is only medium-low, with a 0.75% starter weight, 2.0% target weight, and 16% max-loss framework. Those sizing outputs read as caution, not as an invitation to chase.\n\nMacro also remains a headwind for TSLA. CPI and PPI have reaccelerated, and the 10-year yield around 4.30% is not friendly to a richly valued, duration-sensitive stock. TSLA does not need a collapse in operations to fall from here; it only needs earnings, guidance, or capex commentary to show that the autonomy and AI narrative is still running ahead of cash generation. That is why Hold is less attractive than Sell for TSLA in this setup: Hold would mean carrying event risk through earnings and macro releases without enough valuation support.\n\nThe decision rule for changing this TSLA stance is clear. I would only move off Sell on TSLA if TSLA delivers both technical and fundamental confirmation together: a decisive close and hold above 398-400 and the 200 SMA on continued volume, plus earnings and guidance that show better gross margin, operating margin, free cash flow, and forward EPS. If TSLA produces that evidence, the committee can revisit TSLA toward Neutral or better. Until then, the disciplined portfolio-manager conclusion is Sell TSLA and keep TSLA Underweight.",
+  "decision": "SELL",
+  "deep_think_llm": "gpt-5.4",
+  "ended_at": "2026-04-15T13:27:50.469033",
+  "error": null,
+  "openai_reasoning_effort": "high",
+  "provider": "codex_cli",
+  "quick_think_llm": "gpt-5.4",
+  "results_dir": "results_batch/2026-04-15/TSLA",
+  "risk_summary": "1. Absolute Action: Sell\n2. Relative Stance: Underweight\n3. Executive Summary: Sell TSLA into the April 15 strength rather than add. If already long TSLA, use the rebound toward the 398-400 resistance and 200 SMA zone to trim or exit; if not long TSLA, do not initiate here. If mandate constraints require TSLA exposure, keep TSLA capped at the structured 0.75% initial weight, not the 2.0% target weight, and enforce the 16% max-loss framework. Key levels for TSLA are 398-400 as the upside confirmation zone, 391.05 as the reclaimed 50 SMA, 363.32 as the 10 EMA, and ATR near 15.59 as a reminder that TSLA remains a high-volatility name. Time horizon for this TSLA decision is the next 30-90 days through late-April to early-May earnings, AI5 roadmap follow-through, CPI/PPI, and Fed messaging.\n4. Investment Thesis: The final TSLA decision is Sell and Underweight because the structured underwriting still shows a business whose current economics do not justify its valuation without much stronger proof. TSLA is still 80% automotive revenue, 10% energy, 10% services, and 0% current revenue from FSD, AI, robotaxi, and robotics optionality. Yet TSLA is valued at about $1.47T on only $3.79B of TTM net income and $3.73B of TTM free cash flow, with trailing P/E at 359.6x and forward P/E at 141.4x. That is the core reason the conservative case wins the committee debate.\n\nThe bullish offsets in TSLA are real, but they are not strong enough to overturn that conclusion today. TSLA recovered gross margin from about 16.3% in Q1 2025 to about 20.1% in Q4 2025, operating margin improved from about 2.5% to about 6.3%, and TSLA holds $44.06B of cash plus short-term investments. Technically, TSLA closed at 391.95 on 111.6M shares, reclaimed the 10 EMA at 363.32, and slightly cleared the 50 SMA at 391.05. Those are constructive changes, and they explain why the aggressive analyst pushed back against an overly linear bearish read.\n\nBut the neutral and conservative analysts are right that TSLA still has not delivered the confirmation needed to justify paying up. TSLA remains below the 398.00 200 SMA, MACD is still negative, and price is already pushing into the upper Bollinger and resistance cluster after an 8% catalyst-driven jump. In other words, TSLA looks like a high-volume repair rally, not a completed trend reversal. The factor framework points the same way: the bullish AI capex acceleration rule is only supportive if backlog is rising and margins are holding through higher investment, while the bearish valuation-stretch-under-slowing-growth rule is already directly visible in the provided numbers.\n\nThe scenario map also argues against adding TSLA risk here. The highest-probability outcome for TSLA is the 45% base case, which is explicitly range-bound and assumes mixed results, no major margin inflection, and limited multiple expansion while yields stay elevated. The bull case is only 30% and the bear case is 25%, so there is no decisive probability edge that justifies leaning long into a dense catalyst calendar. That matters even more because TSLA sizing conviction is only medium-low, with a 0.75% starter weight, 2.0% target weight, and 16% max-loss framework. Those sizing outputs read as caution, not as an invitation to chase.\n\nMacro also remains a headwind for TSLA. CPI and PPI have reaccelerated, and the 10-year yield around 4.30% is not friendly to a richly valued, duration-sensitive stock. TSLA does not need a collapse in operations to fall from here; it only needs earnings, guidance, or capex commentary to show that the autonomy and AI narrative is still running ahead of cash generation. That is why Hold is less attractive than Sell for TSLA in this setup: Hold would mean carrying event risk through earnings and macro releases without enough valuation support.\n\nThe decision rule for changing this TSLA stance is clear. I would only move off Sell on TSLA if TSLA delivers both technical and fundamental confirmation together: a decisive close and hold above 398-400 and the 200 SMA on continued volume, plus earnings and guidance that show better gross margin, operating margin, free cash flow, and forward EPS. If TSLA produces that evidence, the committee can revisit TSLA toward Neutral or better. Until then, the disciplined portfolio-manager conclusion is Sell TSLA and keep TSLA Underweight.",
+  "started_at": "2026-04-15T13:14:18.342410",
+  "status": "completed",
+  "ticker": "TSLA"
+}

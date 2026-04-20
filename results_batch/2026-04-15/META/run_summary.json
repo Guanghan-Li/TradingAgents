@@ -1,0 +1,44 @@
+{
+  "analysis_date": "2026-04-15",
+  "anthropic_effort": null,
+  "backend_url": "codex://local",
+  "catalysts": [
+    {
+      "catalyst": "`META` Q1 2026 earnings and guidance",
+      "date_or_window": "Late April 2026 window",
+      "expected_impact": "High; likely the key near-term decision point on AI payoff, capex, and ad resilience."
+    },
+    {
+      "catalyst": "Broadcom AI-chip deal execution and infrastructure updates",
+      "date_or_window": "Next 1-2 quarters",
+      "expected_impact": "Medium-high positive if execution improves AI rollout speed and reduces supply uncertainty."
+    },
+    {
+      "catalyst": "EU WhatsApp third-party AI assistant access order / follow-on remedies",
+      "date_or_window": "Ongoing over coming weeks/months",
+      "expected_impact": "Medium-high negative if the issue broadens into product restrictions or monetization limits."
+    },
+    {
+      "catalyst": "Fed/rates and long-yield backdrop",
+      "date_or_window": "April-June 2026",
+      "expected_impact": "Medium; affects multiple tolerance for a high-capex megacap even with good fundamentals."
+    }
+  ],
+  "chief_action": "Buy",
+  "chief_rating": "Neutral",
+  "chief_relative_stance": "Neutral",
+  "chief_summary": "Initiate or maintain a 2.0% starter position in META now. Do not pre-position the full 4.0% target ahead of late-April 2026 earnings or before a decisive reclaim of 680-685 near the 200-day SMA with supportive volume. Add only on confirmation: either a breakout above that zone or a clean beat-and-raise with specific AI monetization evidence and disciplined capex commentary. Use 625-630 as the closing risk line; if META loses that area, reduce or exit to keep portfolio loss near the 0.5% cap. Time horizon: next 1-2 quarters, with late-April earnings as the key decision point.",
+  "chief_thesis": "The primary structured underwriting supports ownership, but not aggressive sizing. Family of Apps is 98% of META revenue and remains the economic engine. Scenario probabilities are Bull 30%, Base 50%, Bear 20%, so the probability-weighted setup favors participation, but the 50% base case is only range-bound to modest upside, not a full-throttle bullish outcome. The sizing model is explicit: 2.0% initial weight, 4.0% target weight, and 0.5% max loss. That makes Sell too bearish and a pure Hold too passive.\n\nThe aggressive analyst is right on business quality. META still posts about $201.0B of TTM revenue, $101.9B of EBITDA, $60.5B of net income, 41.3% operating margin, and 30.2% ROE. The Broadcom AI chip deal can improve infrastructure control and reduce supply bottlenecks, which matters because even modest AI-driven gains in engagement, conversion, or ad pricing can move results when 98% of revenue sits inside the core apps.\n\nThe conservative analyst is right on timing and event risk. META has already rebounded 27.8% from 525.72 on 2026-03-27 to 671.58 on 2026-04-15, RSI is 67.11, price is near the upper Bollinger Band, and the stock is still below the 200-day SMA near 680.72. The high-severity bull invalidation trigger is also clear: if late-April earnings show another material capex step-up without measurable AI monetization, the thesis weakens quickly. Elevated long yields, with the 10-year at 4.30% and 30-year at 4.90%, also limit valuation expansion.\n\nThe neutral analyst has the best synthesis. The market research HOLD call is respected through the Neutral stance and the refusal to chase a full position into resistance, but it should not override the structured sizing work that explicitly supports a starter position now. Final committee decision: Buy META, but keep the portfolio stance Neutral until price or earnings confirm the thesis. Move toward the 4.0% target only after a decisive close above 680-685 with volume or after earnings prove durable ad growth, concrete AI monetization, controlled capex, and no broader regulatory deterioration.",
+  "decision": "BUY",
+  "deep_think_llm": "gpt-5.4",
+  "ended_at": "2026-04-15T13:15:27.867140",
+  "error": null,
+  "openai_reasoning_effort": "high",
+  "provider": "codex_cli",
+  "quick_think_llm": "gpt-5.4",
+  "results_dir": "results_batch/2026-04-15/META",
+  "risk_summary": "Absolute Action: Buy\nRelative Stance: Neutral\n\nExecutive Summary: Initiate or maintain a 2.0% starter position in META now. Do not pre-position the full 4.0% target ahead of late-April 2026 earnings or before a decisive reclaim of 680-685 near the 200-day SMA with supportive volume. Add only on confirmation: either a breakout above that zone or a clean beat-and-raise with specific AI monetization evidence and disciplined capex commentary. Use 625-630 as the closing risk line; if META loses that area, reduce or exit to keep portfolio loss near the 0.5% cap. Time horizon: next 1-2 quarters, with late-April earnings as the key decision point.\n\nInvestment Thesis: The primary structured underwriting supports ownership, but not aggressive sizing. Family of Apps is 98% of META revenue and remains the economic engine. Scenario probabilities are Bull 30%, Base 50%, Bear 20%, so the probability-weighted setup favors participation, but the 50% base case is only range-bound to modest upside, not a full-throttle bullish outcome. The sizing model is explicit: 2.0% initial weight, 4.0% target weight, and 0.5% max loss. That makes Sell too bearish and a pure Hold too passive.\n\nThe aggressive analyst is right on business quality. META still posts about $201.0B of TTM revenue, $101.9B of EBITDA, $60.5B of net income, 41.3% operating margin, and 30.2% ROE. The Broadcom AI chip deal can improve infrastructure control and reduce supply bottlenecks, which matters because even modest AI-driven gains in engagement, conversion, or ad pricing can move results when 98% of revenue sits inside the core apps.\n\nThe conservative analyst is right on timing and event risk. META has already rebounded 27.8% from 525.72 on 2026-03-27 to 671.58 on 2026-04-15, RSI is 67.11, price is near the upper Bollinger Band, and the stock is still below the 200-day SMA near 680.72. The high-severity bull invalidation trigger is also clear: if late-April earnings show another material capex step-up without measurable AI monetization, the thesis weakens quickly. Elevated long yields, with the 10-year at 4.30% and 30-year at 4.90%, also limit valuation expansion.\n\nThe neutral analyst has the best synthesis. The market research HOLD call is respected through the Neutral stance and the refusal to chase a full position into resistance, but it should not override the structured sizing work that explicitly supports a starter position now. Final committee decision: Buy META, but keep the portfolio stance Neutral until price or earnings confirm the thesis. Move toward the 4.0% target only after a decisive close above 680-685 with volume or after earnings prove durable ad growth, concrete AI monetization, controlled capex, and no broader regulatory deterioration.",
+  "started_at": "2026-04-15T13:02:07.116599",
+  "status": "completed",
+  "ticker": "META"
+}

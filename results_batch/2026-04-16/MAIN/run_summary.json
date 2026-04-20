@@ -1,0 +1,49 @@
+{
+  "analysis_date": "2026-04-16",
+  "anthropic_effort": null,
+  "backend_url": "codex://local",
+  "catalysts": [
+    {
+      "catalyst": "Q1 2026 preliminary operating results and distributable NII update",
+      "date_or_window": "April 2026 earnings window",
+      "expected_impact": "High"
+    },
+    {
+      "catalyst": "Management update on NAV, portfolio marks, and credit quality",
+      "date_or_window": "April to May 2026",
+      "expected_impact": "High"
+    },
+    {
+      "catalyst": "Next CPI, PPI, and payroll releases",
+      "date_or_window": "Late April to early May 2026",
+      "expected_impact": "Medium"
+    },
+    {
+      "catalyst": "Next Fed communication or policy meeting window",
+      "date_or_window": "Next 4 to 8 weeks",
+      "expected_impact": "Medium"
+    },
+    {
+      "catalyst": "Dividend declaration and supplemental payout outlook",
+      "date_or_window": "Next 1 to 2 months",
+      "expected_impact": "Medium"
+    }
+  ],
+  "chief_action": "Hold",
+  "chief_rating": "Underweight",
+  "chief_relative_stance": "Underweight",
+  "chief_summary": "Hold `MAIN`, but keep it capped around the structured `1.0%` initial weight and do not add ahead of the full Q1 2026 release on `May 7, 2026` and the call on `May 8, 2026`. Treat `MAIN` as a conditional hold, not an accumulation. Only scale toward the `2.0%` target weight if two things happen together: fundamentals confirm that distributable NII still covers the regular dividend with NAV flat to up and credit commentary still clean, and price repairs by reclaiming roughly `54.5` and preferably the falling `50-day` area near `55.9`. Respect the `0.6%` max-loss budget. If `MAIN` closes below the `53.01` April 16 intraday low and earnings also show weaker coverage, a sequential NAV decline, or worsening non-accruals, the recommendation should move to Sell. Time horizon: the next `3-8 weeks`, centered on earnings, the call, and immediate post-event confirmation.",
+  "chief_thesis": "The correct synthesis is that `MAIN` is still good enough to keep, but not attractive enough to own at full size. The aggressive analyst is right on franchise durability: `73%` of economics come from recurring net investment income, that core earnings stream improved from `$105.9M` in Q1 2025 to `$113.7M` in Q4 2025, non-accruals are only about `1.2%` of fair value, and the structured scenario map is still `50%` base, `30%` bull, `20%` bear rather than a clear impairment setup. Preliminary NAV around `33.42-33.50` versus `33.33` after the supplemental dividend also says the credit story is not broken.\n\nBut the conservative analyst is more right about present opportunity cost. `MAIN` still trades around `1.60x` book despite preliminary Q1 2026 NII of `0.91-0.95`, Q4 2025 operating cash flow and free cash flow both at negative `$218.5M`, and debt up to about `$2.46B`. The tape is also damaged: `MAIN` closed at `53.46` on April 16, 2026 below the `10 EMA` (`54.47`), `50 SMA` (`55.94`), and `200 SMA` (`58.70`), with `MACD` below zero, `RSI` at `46.03`, and `ATR` up around `1.81`. That is not a setup for pressing risk before confirmation.\n\nThe neutral analyst had the right synthesis: the bear case is not proven enough for a forced exit, because the actual invalidation triggers have not fired yet. Dividend coverage has not clearly broken, NAV is not clearly rolling over, and there is no supplied evidence of a meaningful jump in non-accruals or broader credit stress. Macro is mildly supportive but not enough to override valuation and tape: `4.3%` unemployment, payroll growth of `178k`, and a `+53 bp` 2s10s curve argue against imminent recession, but late-cycle conditions, firmer CPI/PPI, and prior Fed cuts still argue for restraint.\n\nFinal decision: Hold `MAIN` as an underweight position. The underwriting says resilience, not urgency. Keep existing exposure small, do not initiate fresh risk before May confirmation, and only upgrade if both the fundamentals and the price action repair together.",
+  "decision": "HOLD",
+  "deep_think_llm": "gpt-5.4",
+  "ended_at": "2026-04-16T15:37:21.650956",
+  "error": null,
+  "openai_reasoning_effort": "high",
+  "provider": "codex_cli",
+  "quick_think_llm": "gpt-5.4",
+  "results_dir": "results_batch/2026-04-16/MAIN",
+  "risk_summary": "**Absolute Action**: Hold\n\n**Relative Stance**: Underweight\n\n**Executive Summary**: Hold `MAIN`, but keep it capped around the structured `1.0%` initial weight and do not add ahead of the full Q1 2026 release on `May 7, 2026` and the call on `May 8, 2026`. Treat `MAIN` as a conditional hold, not an accumulation. Only scale toward the `2.0%` target weight if two things happen together: fundamentals confirm that distributable NII still covers the regular dividend with NAV flat to up and credit commentary still clean, and price repairs by reclaiming roughly `54.5` and preferably the falling `50-day` area near `55.9`. Respect the `0.6%` max-loss budget. If `MAIN` closes below the `53.01` April 16 intraday low and earnings also show weaker coverage, a sequential NAV decline, or worsening non-accruals, the recommendation should move to Sell. Time horizon: the next `3-8 weeks`, centered on earnings, the call, and immediate post-event confirmation.\n\n**Investment Thesis**: The correct synthesis is that `MAIN` is still good enough to keep, but not attractive enough to own at full size. The aggressive analyst is right on franchise durability: `73%` of economics come from recurring net investment income, that core earnings stream improved from `$105.9M` in Q1 2025 to `$113.7M` in Q4 2025, non-accruals are only about `1.2%` of fair value, and the structured scenario map is still `50%` base, `30%` bull, `20%` bear rather than a clear impairment setup. Preliminary NAV around `33.42-33.50` versus `33.33` after the supplemental dividend also says the credit story is not broken.\n\nBut the conservative analyst is more right about present opportunity cost. `MAIN` still trades around `1.60x` book despite preliminary Q1 2026 NII of `0.91-0.95`, Q4 2025 operating cash flow and free cash flow both at negative `$218.5M`, and debt up to about `$2.46B`. The tape is also damaged: `MAIN` closed at `53.46` on April 16, 2026 below the `10 EMA` (`54.47`), `50 SMA` (`55.94`), and `200 SMA` (`58.70`), with `MACD` below zero, `RSI` at `46.03`, and `ATR` up around `1.81`. That is not a setup for pressing risk before confirmation.\n\nThe neutral analyst had the right synthesis: the bear case is not proven enough for a forced exit, because the actual invalidation triggers have not fired yet. Dividend coverage has not clearly broken, NAV is not clearly rolling over, and there is no supplied evidence of a meaningful jump in non-accruals or broader credit stress. Macro is mildly supportive but not enough to override valuation and tape: `4.3%` unemployment, payroll growth of `178k`, and a `+53 bp` 2s10s curve argue against imminent recession, but late-cycle conditions, firmer CPI/PPI, and prior Fed cuts still argue for restraint.\n\nFinal decision: Hold `MAIN` as an underweight position. The underwriting says resilience, not urgency. Keep existing exposure small, do not initiate fresh risk before May confirmation, and only upgrade if both the fundamentals and the price action repair together.",
+  "started_at": "2026-04-16T15:24:13.146309",
+  "status": "completed",
+  "ticker": "MAIN"
+}

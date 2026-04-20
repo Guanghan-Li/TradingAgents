@@ -1,6 +1,6 @@
-from langchain_core.messages import AIMessage
-import time
-import json
+
+
+from tradingagents.agents.utils.agent_utils import add_educational_use_context
 
 
 def create_no_researcher(llm, memory):
@@ -22,7 +22,7 @@ def create_no_researcher(llm, memory):
         for i, rec in enumerate(past_memories, 1):
             past_memory_str += rec["recommendation"] + "\n\n"
 
-        prompt = f"""You are a NO Analyst making the case that the prediction market event will NOT occur. Your goal is to present a well-reasoned argument that the YES probability should be lower than the current market price. Leverage the provided research and data to highlight potential obstacles and counter YES arguments effectively.
+        prompt = add_educational_use_context(f"""You are a NO Analyst making the case that the prediction market event will NOT occur. Your goal is to present a well-reasoned argument that the YES probability should be lower than the current market price. Leverage the provided research and data to highlight potential obstacles and counter YES arguments effectively.
 
 Key points to focus on:
 
@@ -42,7 +42,7 @@ Conversation history of the debate: {history}
 Last YES argument: {current_response}
 Reflections from similar situations and lessons learned: {past_memory_str}
 Use this information to deliver a compelling NO argument, refute the YES analyst's claims, and engage in a dynamic debate that demonstrates why the event is less likely to occur than the market currently implies. You must also address reflections and learn from lessons and mistakes you made in the past.
-"""
+""")
 
         response = llm.invoke(prompt)
 

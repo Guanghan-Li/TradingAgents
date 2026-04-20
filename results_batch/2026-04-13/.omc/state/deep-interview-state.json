@@ -1,0 +1,28 @@
+{
+  "active": true,
+  "current_phase": "deep-interview",
+  "state": {
+    "interview_id": "di-20260417-001",
+    "type": "brownfield",
+    "initial_idea": "analyse this codebase for me",
+    "rounds": [],
+    "current_ambiguity": 1.0,
+    "threshold": 0.2,
+    "codebase_context": {
+      "classification": "brownfield",
+      "location": "parent repository (../../)",
+      "branch": "prod",
+      "components": [
+        "tradingagents/agents/ (analysts, managers, researchers)",
+        "tradingagents/llm_clients/ (Anthropic, OpenAI)",
+        "tradingagents/dataflows/",
+        "cli/",
+        "tests/"
+      ],
+      "current_dir_type": "results batch output folder (2026-04-13)",
+      "recent_work": "decision-grade allocation pipeline, committee memo rendering"
+    },
+    "challenge_modes_used": [],
+    "ontology_snapshots": []
+  }
+}

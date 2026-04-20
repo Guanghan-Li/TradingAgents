@@ -1,0 +1,13 @@
+Factor Rule Analyst Report for MP, trade date 2026-04-16
+
+The curated rule set is balanced rather than directional: one high-weight bullish rule, one high-weight bearish rule, and one medium-weight neutral resilience rule. The strongest bullish signal is the AI capex acceleration rule, but its usefulness depends on confirming that MP is a direct beneficiary of AI infrastructure demand and that backlog is rising while margins remain stable despite higher capex. Without those confirmations, this should remain a conditional upside framework rather than an active bullish conclusion.
+
+The strongest bearish signal is valuation stretch under slowing growth. This rule carries high weight and is the main cautionary overlay. It matters most if forward growth guidance has been revised lower or if valuation multiples have expanded faster than earnings expectations. If those conditions are present, downside risk could dominate even if the AI demand narrative remains compelling.
+
+The balance sheet resilience rule is neutral and medium weight. It does not create a bullish case by itself, but it can reduce downside concern if MP has net cash or modest leverage and healthy free cash flow conversion. This rule becomes more important in a tighter macro or risk-off environment.
+
+Key conflict: the two high-weight rules point in opposite directions. The bullish case is narrative-and-demand driven, while the bearish case is expectations-and-valuation driven. Downstream analysts should not resolve this conflict from the rules alone. The decisive evidence should be whether actual backlog, margin stability, guidance revisions, earnings estimates, and valuation multiples support one side more strongly.
+
+Missing information to verify: current backlog trend, gross and operating margin trajectory, capex plans, customer exposure to AI infrastructure demand, forward revenue or EBITDA guidance changes, earnings revision trend, valuation versus peers and history, leverage/net cash position, and free cash flow conversion.
+
+Practical guidance: treat MP as a conditional, evidence-sensitive setup. Prioritize fundamental validation before assigning directional conviction. If backlog growth and margin stability are confirmed without valuation excess, the bullish AI capex rule deserves more weight. If guidance is weakening while multiples remain elevated, the bearish valuation rule should dominate. If evidence is mixed, classify the factor view as balanced or conflicted rather than bullish or bearish.

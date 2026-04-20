@@ -1,0 +1,11 @@
+ARM factor view is mixed with one high-weight bullish rule and one high-weight bearish rule directly opposing each other.
+
+Strongest bullish signal: AI capex acceleration. This is the main upside driver because it carries high weight and links ARM to AI infrastructure demand, with the key checkpoints being rising backlog and stable margins despite higher capex. If those conditions are confirmed, the rule supports revenue durability and pricing power.
+
+Strongest bearish signal: valuation stretch under slowing growth. This matters just as much because it is also high weight and explicitly warns that elevated expectations can create downside if forward growth is revised lower or if the multiple keeps expanding faster than earnings expectations. For a name like ARM, this rule can dominate quickly if sentiment remains rich while fundamentals soften.
+
+Secondary factor: balance sheet resilience. The neutral medium-weight rule improves downside durability if net cash and free cash flow conversion are healthy, but it does not by itself resolve the core debate between growth-driven upside and valuation-driven downside.
+
+Main conflict: the rule set is split between a strong thematic growth tailwind and a strong valuation-risk overlay. Missing information is decisive here: there is no evidence in the provided context on backlog trend, margin stability, forward guidance revisions, multiple behavior, leverage, or free cash flow conversion. Without those inputs, the rules should be treated as a framework, not a conclusion.
+
+Guidance for downstream analysts: verify which of the two high-weight rules has live confirmation first. Prioritize current backlog and margin data, then compare forward growth revisions against valuation expansion. If AI demand indicators are strengthening without margin erosion, the bullish rule has more support. If guidance is softening while valuation remains stretched, the bearish overlay should take priority. Use balance sheet quality only as a modifier to downside resilience, not as the primary directional signal.

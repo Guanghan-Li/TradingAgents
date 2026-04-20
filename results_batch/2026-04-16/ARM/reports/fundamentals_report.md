@@ -1,0 +1,52 @@
+ARM fundamental report as of 2026-04-16
+
+ARM is Arm Holdings plc, a semiconductor IP company in the Technology sector. The core fundamental setup is a high-margin, asset-light licensing and royalty model with strong liquidity, modest absolute debt, and rapid recent revenue growth, but the stock is priced for very aggressive future execution. On the prefetched live snapshot, ARM has a market cap of about $172.4B, TTM revenue of $4.67B, TTM net income of $801M, TTM EPS of $0.75, and free cash flow of about $824.8M. Gross profit of $4.55B on $4.67B of revenue implies an extremely high gross margin profile consistent with a royalty-heavy model. Profit margin is 17.1%, operating margin 15.4%, ROE 11.3%, and ROA 5.9%.
+
+Valuation is the first major fundamental constraint. ARM trades at 216.44x trailing earnings, 75.71x forward earnings, and 22.11x book value. That combination says the market is discounting a long runway of royalty growth, strong AI and edge-compute relevance, and continued operating leverage. Forward EPS of 2.1441 versus trailing EPS of 0.75 implies the market expects a large earnings step-up, but the current multiple still leaves little room for operational disappointment, slower royalty conversion, or margin pressure from heavy R&D.
+
+Income statement trends remain constructive overall. Quarterly revenue rose from $983M in 2024-12-31 to $1.242B in 2025-12-31, a year-over-year increase of roughly 26%. Gross profit rose from $955M to $1.212B over the same period, also about 27%, showing ARM preserved its strong gross economics while scaling. Operating income improved from $175M to $191M, but not as fast as revenue because ARM is investing heavily: R&D increased from $533M to $737M year over year, about 38%, and SG&A rose from $247M to $284M. That spending pattern is important: ARM is still in growth-investment mode rather than near-term margin maximization.
+
+Quarterly earnings were somewhat uneven beneath the surface. Net income was $223M in 2025-12-31, down from $252M in 2024-12-31, but the comparison is distorted by non-operating and unusual items. Normalized income improved to about $223M from about $215.3M. In 2025-03-31, EBITDA and EBIT were elevated by unusual items and a large operating gains/losses swing in cash flow, so traders should not extrapolate that quarter’s reported profitability too mechanically. The cleaner read is that ARM’s core operations are growing, but reported earnings can be noisy because of investment gains/losses, tax effects, and one-off items.
+
+Per-share fundamentals are gradually improving, though dilution needs monitoring. Diluted average shares increased from 1.064B to 1.069B across the latest year-end comparison, and issued shares also moved higher over the quarterly series. Diluted EPS was $0.21 in the latest quarter versus $0.24 in the year-ago quarter, but again the normalized income picture was firmer than the headline EPS comparison suggests. If ARM continues issuing stock-based compensation at the recent pace, part of future operating growth will be absorbed by share count expansion.
+
+The balance sheet is a real strength. ARM ended 2025-12-31 with $2.807B in cash and equivalents and $3.542B in cash plus short-term investments. Current assets were $5.736B against current liabilities of $1.057B, producing very strong working capital of $4.679B and a current ratio of 5.427. Total assets climbed to $10.176B from $8.496B a year earlier, while stockholders’ equity increased to $7.798B from $6.419B. Retained earnings rose to $4.134B from $3.333B, showing profit accumulation is strengthening book value over time.
+
+Debt is manageable in absolute terms, despite the headline debt-to-equity figure in the snapshot looking elevated. Total debt was $461M at 2025-12-31 against $7.798B of equity and over $3.5B of cash plus short-term investments. Long-term debt and capital lease obligations were $397M, with current debt/capital lease obligations only $64M. On the raw balance sheet, leverage risk looks low; the business appears net cash-rich and financially flexible. For traders, that reduces solvency risk and supports the premium growth narrative.
+
+Cash flow quality is good, although quarterly free cash flow is lumpy because capex has accelerated. Operating cash flow was $365M in the latest quarter, down from $423M a year earlier, and free cash flow was $181M versus $360M a year earlier. The main reason is heavier capital spending: capex was $184M in 2025-12-31 versus $63M in 2024-12-31. Net PPE also rose sharply over the year, from $599M to $1.189B, confirming ARM is stepping up infrastructure or operational investment. That is not automatically negative, but it means near-term free cash flow conversion may look weaker even while the franchise expands. Stock-based compensation is also material at $285M in the latest quarter, which supports operating cash flow but dilutes owners over time.
+
+Working capital swings have become a short-term cash flow variable. In the latest quarter, operating cash flow absorbed a $179M working capital outflow, driven by higher receivables and prepaid assets alongside some tax-payable and payable changes. Receivables remain large at $2.011B, up from $1.592B a year earlier. That is not necessarily a red flag for a company scaling revenue quickly, but traders should watch whether receivables growth stays aligned with revenue growth or begins to outpace it materially.
+
+From a market-structure standpoint, ARM has strong momentum. Relative performance data show ARM was up 8.37% over 1 week, 27.51% over 1 month, 54.61% over 3 months, and 41.49% YTD. ARM ranked 1st out of 9 in the peer set over 3 months. Against XLK, ARM generated 18.43 points of alpha over 1 month and 49.43 points over 3 months. That tells traders the market is rewarding ARM’s growth narrative and AI/semiconductor exposure. The caution is that this kind of outperformance often compresses future upside unless fundamentals keep surprising positively.
+
+The macro backdrop is supportive but not effortless. The effective Fed funds rate is 3.64% as of 2026-03-01, the yield curve is upward sloping with a 2Y-10Y spread of 0.53 points, unemployment is 4.3%, and VIX is a moderate 18.17. That combination is consistent with a stable risk backdrop rather than a stress regime. For ARM, a normal upward-sloping curve and neutral-ish policy setting are better than a restrictive shock environment, but rising CPI and PPI in the latest readings mean long-duration growth stocks can still be sensitive to rate repricing.
+
+Actionable trader takeaways for ARM:
+
+1. ARM’s business quality is strong. Very high gross margins, large cash reserves, low absolute leverage, and rising retained earnings support the fundamental story.
+2. ARM’s revenue growth is real. Latest quarterly revenue grew about 26% year over year, and gross profit scaled with it.
+3. ARM’s earnings quality needs normalization. Reported net income and EBITDA have periodic noise from gains/losses and unusual items; normalized operating trends are better than some headline comparisons.
+4. ARM is spending aggressively. R&D growth near 38% year over year and higher capex show management is prioritizing platform expansion, which helps the long-term thesis but can delay margin expansion.
+5. ARM’s valuation is the main risk. At 216x trailing EPS and 75.7x forward EPS, execution needs to remain exceptionally strong.
+6. ARM’s balance sheet lowers downside from financial stress, but not from multiple compression. The key bear case is valuation reset, not balance-sheet fragility.
+7. ARM’s stock-based compensation and rising share count should stay on the watchlist. Strong business performance can be partially offset if dilution remains elevated.
+8. ARM’s recent outperformance means traders should be alert to post-rally sensitivity around the next earnings print, royalty commentary, guidance, and any sign that revenue growth is moderating.
+
+Overall, ARM’s fundamentals support a high-quality growth classification: strong top-line expansion, premium gross economics, clean liquidity, and low solvency risk. The challenge is not whether ARM is fundamentally healthy; it is whether ARM can grow fast enough for long enough to justify a still-extreme valuation. For traders, the most important near-term fundamental variables are revenue growth durability, normalized operating margin progression, cash conversion after capex, and whether dilution stays contained.
+
+| Area | ARM fundamental read | Why it matters for traders |
+|---|---|---|
+| Company profile | ARM is a semiconductor IP and royalty business with asset-light economics | Supports premium margins and scalable earnings if end demand stays strong |
+| Revenue | TTM revenue $4.67B; latest quarter $1.242B, up about 26% YoY | Confirms strong current growth momentum |
+| Profitability | Gross profit $4.55B; profit margin 17.1%; operating margin 15.4% | Core business is highly profitable, though opex is rising fast |
+| Earnings quality | Latest net income $223M; normalized income stronger than headline comps suggest | Traders should focus on normalized trends, not just reported EPS |
+| Valuation | 216.44x TTM P/E, 75.71x forward P/E, 22.11x P/B | Very high expectations raise downside risk if growth slows |
+| R&D intensity | R&D $737M in latest quarter, up sharply YoY | Shows reinvestment for long-term growth, but pressures near-term margins |
+| Balance sheet | $3.54B cash plus short-term investments; current ratio 5.427 | Strong liquidity reduces financial-risk concerns |
+| Debt | Total debt $461M versus equity of $7.80B | Low absolute leverage; solvency risk appears limited |
+| Cash flow | TTM FCF about $824.8M; latest quarter FCF $181M | Positive cash generation remains intact, though capex is weighing on near-term FCF |
+| Capex/PPE | Capex $184M latest quarter; net PPE nearly doubled YoY to $1.189B | Indicates heavier investment cycle that may support future growth |
+| Dilution | Share count has trended higher; SBC $285M latest quarter | Per-share upside can be diluted if issuance remains elevated |
+| Relative performance | ARM up 54.61% over 3 months; peer rank 1/9 | Momentum is strong, but expectations are now demanding |
+| Macro sensitivity | Neutral-ish Fed backdrop, normal yield curve, moderate VIX | Supports risk appetite, but high-multiple names remain rate-sensitive |

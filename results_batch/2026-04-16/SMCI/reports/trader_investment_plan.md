@@ -1,0 +1,5 @@
+SMCI remains a high-volatility rebound with conflicting signals: short-term momentum has improved materially, but price is still pressing into the 28.62 to 29.27 resistance cluster, MACD remains negative, and earnings plus governance risk are unresolved. Fundamentally, SMCI is inexpensive on forward estimates and still leveraged to AI/server demand, but weak cash conversion, thin margins, and very large receivables, inventory, and payables mean the quality of the rebound is not yet fully proven.
+
+Decision: BUY SMCI, but only as a starter position. The reason to buy rather than hold is the asymmetric setup: 0.61x sales and 9.51x forward earnings leave room for rerating if backlog, margins, and credibility stabilize, while the recent rebound shows capital is rotating back into the name. This is not a full-conviction long. Keep sizing small until SMCI clears 29.27 on strong volume or earnings confirms the forward EPS and margin thesis; if SMCI loses the 25.0 to 25.6 area or guidance/accounting quality worsens, step aside quickly.
+
+FINAL TRANSACTION PROPOSAL: **BUY**

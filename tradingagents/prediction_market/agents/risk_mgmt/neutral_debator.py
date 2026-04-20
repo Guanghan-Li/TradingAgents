@@ -1,3 +1,6 @@
+from tradingagents.agents.utils.agent_utils import invoke_committee_debate_llm
+
+
 def create_pm_neutral_debator(llm):
     def neutral_node(state) -> dict:
         risk_debate_state = state["risk_debate_state"]
@@ -14,7 +17,7 @@ def create_pm_neutral_debator(llm):
 
         trader_decision = state["trader_investment_plan"]
 
-        prompt = f"""As the Neutral Risk Analyst for prediction markets, your role is to provide a balanced perspective, weighing both the potential upside of the trade and the legitimate risks. You prioritize a well-rounded approach, evaluating the trader's probability estimate, the appropriateness of the position sizing, and whether the risk/reward truly justifies the position.
+        prompt = f"""As the Neutral Risk Analyst for prediction markets, evaluate the proposed trade through a balanced risk-reward lens. Weigh the potential upside and legitimate risks fairly, evaluate the trader's probability estimate, and assess whether the sizing and risk/reward truly justify the position.
 
 Key areas to focus on:
 - BALANCED RISK/REWARD ASSESSMENT: Does the identified edge truly compensate for the risks involved? Is the trader's probability estimate reasonable given the available evidence, or could it be biased by selective analysis?
@@ -27,7 +30,7 @@ Here is the trader's decision:
 
 {trader_decision}
 
-Your task is to challenge both the Aggressive and Conservative Analysts, pointing out where each perspective may be overly optimistic or overly cautious. Use insights from the following data sources to support a moderate, well-calibrated approach:
+Your task is to challenge both the Aggressive and Conservative Analysts, pointing out where each perspective may be overstating or understating the risk/reward. Use insights from the following data sources to support a calibrated middle-ground interpretation:
 
 Event Analysis Report: {event_report}
 Odds Analysis Report: {odds_report}
@@ -35,9 +38,9 @@ Information Analysis Report: {information_report}
 Sentiment Analysis Report: {sentiment_report}
 Here is the current conversation history: {history} Here is the last response from the aggressive analyst: {current_aggressive_response} Here is the last response from the conservative analyst: {current_conservative_response}. If there are no responses from the other viewpoints, do not hallucinate and just present your point.
 
-Engage actively by analyzing both sides critically, addressing weaknesses in the aggressive and conservative arguments to advocate for a properly calibrated approach. Challenge each of their points to illustrate why a balanced assessment of edge, sizing, and timing leads to the most reliable outcomes. Focus on debating rather than simply presenting data, aiming to show that careful calibration of both direction and size produces the best risk-adjusted returns. Output conversationally as if you are speaking without any special formatting."""
+Analyze both sides critically, address weaknesses in the aggressive and conservative arguments, and explain what balanced sizing or conditions would make sense if the trade proceeds. Focus on rigorous committee debate, not persuasion tactics. Output conversationally as if you are speaking without any special formatting."""
 
-        response = llm.invoke(prompt)
+        response = invoke_committee_debate_llm(llm, "Neutral Risk Analyst", prompt)
 
         argument = f"Neutral Analyst: {response.content}"
 

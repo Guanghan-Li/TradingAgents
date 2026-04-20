@@ -5,6 +5,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 from tradingagents.agents.utils.agent_states import make_default_valuation_data
 from tradingagents.agents.utils.agent_utils import (
+    add_educational_use_context,
     build_instrument_context,
     get_valuation_inputs,
 )
@@ -70,6 +71,9 @@ def _parse_valuation_data(content):
     if not parsed:
         valuation_data["primary_method"] = "parse_error"
         valuation_data["thesis"] = raw_text or "[empty model response]"
+    elif valuation_data == make_default_valuation_data():
+        valuation_data["primary_method"] = "empty_response"
+        valuation_data["thesis"] = "[empty model response]"
 
     return valuation_data
 
@@ -78,6 +82,7 @@ def create_valuation_analyst(llm):
     def valuation_analyst_node(state):
         current_date = state["trade_date"]
         instrument_context = build_instrument_context(state["company_of_interest"])
+        prefetched_context = (state.get("prefetched_context") or {}).get("valuation", "").strip()
         tools = [get_valuation_inputs]
 
         system_message = (
@@ -90,6 +95,7 @@ def create_valuation_analyst(llm):
             '"primary_method":"","thesis":""}. '
             "Use null for unknown numeric values and do not add any extra keys."
         )
+        system_message = add_educational_use_context(system_message)
 
         prompt = ChatPromptTemplate.from_messages(
             [
@@ -113,7 +119,14 @@ def create_valuation_analyst(llm):
         prompt = prompt.partial(current_date=current_date)
         prompt = prompt.partial(instrument_context=instrument_context)
 
-        chain = prompt | llm.bind_tools(tools)
+        if prefetched_context:
+            prompt = prompt.partial(
+                system_message=system_message
+                + f"\n\nUse this prefetched live valuation context as your primary evidence.\n\n{prefetched_context}"
+            )
+            chain = prompt | llm
+        else:
+            chain = prompt | llm.bind_tools(tools)
         result = chain.invoke(state["messages"])
 
         payload = {"messages": [result]}

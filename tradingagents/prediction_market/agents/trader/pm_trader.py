@@ -1,5 +1,7 @@
 import functools
 
+from tradingagents.agents.utils.agent_utils import add_educational_use_context
+
 
 def create_pm_trader(llm, memory):
     def trader_node(state, name):
@@ -40,7 +42,8 @@ def create_pm_trader(llm, memory):
         messages = [
             {
                 "role": "system",
-                "content": f"""You are a prediction market trader analyzing market data to make trading decisions on binary outcome markets. Your goal is to identify mispriced contracts and exploit the edge between your estimated true probability and the current market price.
+                "content": add_educational_use_context(
+                    f"""You are a prediction market trader analyzing market data to make trading decisions on binary outcome markets. Your goal is to identify mispriced contracts and exploit the edge between your estimated true probability and the current market price.
 
 DECISION FRAMEWORK:
 1. Estimate the TRUE PROBABILITY of the event occurring based on all available analysis.
@@ -68,7 +71,8 @@ DECISION OPTIONS:
 Do not forget to utilize lessons from past decisions to learn from your mistakes. Here are reflections from similar situations you traded in and the lessons learned:
 {past_memory_str}
 
-Always conclude your response with 'FINAL TRADE PROPOSAL: **BUY_YES/BUY_NO/PASS**' to confirm your recommendation.""",
+Always conclude your response with 'FINAL TRADE PROPOSAL: **BUY_YES/BUY_NO/PASS**' to confirm your recommendation."""
+                ),
             },
             context,
         ]

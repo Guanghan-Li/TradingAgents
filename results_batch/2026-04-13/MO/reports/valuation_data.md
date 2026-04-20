@@ -1,0 +1,9 @@
+{
+  "expected_return_pct": null,
+  "fair_value_range": {
+    "high": null,
+    "low": null
+  },
+  "primary_method": "parse_error",
+  "thesis": "# Valuation Analysis for MO (Altria Group, Inc.)\n\n## Fair Value Range\n**Low estimate: $62 per share**  \n**High estimate: $72 per share**\n\n## Expected Return\nApproximately **5-8%** from current levels (assuming current price near $66-67 based on 50-day average)\n\n## Primary Valuation Method\n**Dividend Discount Model (DDM) / Free Cash Flow Yield**\n\nGiven Altria's mature business model, stable cash generation, and high dividend yield (6.29%), a cash-flow-based approach is most appropriate. The forward PE of 11.49 suggests the market is pricing in modest growth expectations.\n\n## Investment Thesis\n\n**Core view:** Altria is a mature, cash-generative tobacco company trading at a reasonable valuation with an attractive dividend yield. The business generates strong free cash flow ($9.2B) with exceptional profit margins (34.5%), supporting its 6.29% dividend.\n\n**Key considerations:**\n\n- **Strengths:** Defensive characteristics (beta 0.447), consistent cash generation, high dividend yield provides downside support\n- **Risks:** Secular decline in smoking rates, regulatory pressures, negative book value (-$2.09) reflects past impairments and industry headwinds\n- **Valuation:** Forward PE of 11.49 is below historical tobacco multiples, suggesting the market has priced in structural decline. However, the FCF yield (~8.3% based on market cap) remains attractive for income-focused investors\n\n**Conclusion:** Fair value range of $62-72 reflects a modest premium to current trading levels, justified by the stable cash flows and dividend. This is a **HOLD** for income investors; the high yield provides compensation for industry risks, but limited upside exists given structural headwinds."
+}

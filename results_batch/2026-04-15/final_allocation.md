@@ -1,0 +1,84 @@
+# Final Allocation: 2026-04-15
+
+## Allocation Table
+
+| Asset | Dollars | Weight | Why |
+| --- | ---: | ---: | --- |
+| NVDA | $71 | 35.5% | 3.0% initial weight, Overweight stance, dominant AI/datacenter position with 35% Bull/45% Base scenarios, strongest structural thesis |
+| TSM | $67 | 33.5% | 3.0% initial weight, Overweight stance, 80% constructive scenarios (35% Bull + 45% Base), critical foundry position for AI/HPC |
+| MU | $62 | 31.0% | Overweight stance, earnings-driven upside from HBM/datacenter memory, current earnings power not multiple expansion |
+
+## Candidate Ranking
+
+| Rank | Asset | Reported Action | Relative Stance | Numeric Relative Weight Score | Sizing Evidence | Key Evidence | Allocation Result |
+| ---: | --- | --- | --- | ---: | --- | --- | --- |
+| 1 | NVDA | Buy | Overweight | 95 | 3.0% initial, 6.0% target, 0.45% max portfolio loss | Dominant AI accelerator position, 35% Bull/45% Base scenarios, staged accumulation discipline | selected $71 |
+| 2 | TSM | Buy | Overweight | 90 | 3.0% initial, 6.0% target, 80% constructive scenarios | Critical foundry for AI/HPC, 35% Bull/45% Base/20% Bear map, 3.0% initial weight matches NVDA | selected $67 |
+| 3 | MU | Buy | Overweight | 82 | Staged overweight, earnings-driven not multiple expansion | HBM/datacenter memory thesis, current earnings power, Overweight stance | selected $62 |
+| 4 | ANET | Buy | Overweight | 75 | Staged accumulation, 67% revenue in strong segment | Overweight stance, structured underwriting favorable, but lower initial sizing than NVDA/TSM | rejected $0 |
+| 5 | FCX | Buy | Overweight | 72 | 2.0% initial, staged risk-controlled position | Overweight stance, copper exposure, but 2.0% initial weight below NVDA/TSM/MU conviction | rejected $0 |
+| 6 | DDOG | Buy | Overweight | 68 | 1.25% initial to 3.0% target, controlled starter | Overweight stance, but smallest initial weight (1.25%) among Overweight names | rejected $0 |
+| 7 | MSFT | Buy | Neutral | 65 | 3.0% starter, 35% Bull/45% Base/20% Bear | Matches NVDA/TSM initial sizing but Neutral stance, not Overweight | rejected $0 |
+| 8 | META | Buy | Neutral | 62 | 2.0% starter to 4.0% target, 98% revenue from Family of Apps | Neutral stance, 2.0% initial weight, awaiting late-April earnings catalyst | rejected $0 |
+| 9 | AMZN | Buy | Neutral | 60 | 2.5% initial not 5% target, 50% Base/30% Bull/20% Bear | Neutral stance, extended tape (RSI 75.59), staged starter only | rejected $0 |
+| 10 | EQIX | Buy | Neutral | 58 | 2.0% initial, 30% Bull/50% Base/20% Bear | Neutral stance, 2.0% initial weight, datacenter exposure but not aggressive | rejected $0 |
+| 11 | VICI | Buy | Neutral | 55 | 2.0% starter to 4.0% target, controlled accumulation | Neutral stance, REIT exposure, 2.0% initial weight | rejected $0 |
+| 12 | O | Buy | Neutral | 53 | 2.0% starter, 25% Bull/55% Base/20% Bear | Neutral stance, REIT, scenario map not strong enough for Overweight | rejected $0 |
+| 13 | DLR | Buy | Neutral | 52 | 1.5% initial not 3.0% target, Neutral stance | Datacenter REIT, but Neutral stance and 1.5% initial weight | rejected $0 |
+| 14 | JNJ | Buy | Neutral | 50 | Staged starter, 64% revenue from strong segments | Neutral stance, defensive healthcare, not chart-driven | rejected $0 |
+| 15 | CRWD | Buy | Neutral | 48 | Controlled starter, not full allocation | Neutral stance, cybersecurity exposure, controlled starter only | rejected $0 |
+| 16 | DELL | Buy | Neutral | 46 | Staged starter, operating evidence not narrative | Neutral stance, AI server exposure but staged starter only | rejected $0 |
+| 17 | ARM | Buy | Neutral | 45 | 1.25% weight, starter position only | Neutral stance, 1.25% initial weight, do not chase into resistance | rejected $0 |
+| 18 | AMD | Buy | Neutral | 44 | 1.5% initial to 4.0% max, 0.75% max portfolio loss | Neutral stance, AI/datacenter thesis but risk-controlled starter, awaiting earnings validation | rejected $0 |
+| 19 | PLTR | Buy | Neutral | 42 | 1.5% starter, keep at 1.5% into May 4 earnings | Neutral stance, 1.5% starter, 30% Bull/45% Base/25% Bear, awaiting May 4 catalyst | rejected $0 |
+| 20 | VALE | Buy | Neutral | 40 | Starter cyclical position, not aggressive | Neutral stance, cyclical materials exposure, improved operations but Neutral sizing | rejected $0 |
+| 21 | MAIN | Buy | Neutral | 38 | 1.0% initial weight, staged starter | Neutral stance, 1.0% initial weight, tightly risk-budgeted | rejected $0 |
+| 22 | GLD | Buy | Neutral | 35 | Staged accumulation | Neutral stance, gold exposure, defensive hedge | rejected $0 |
+| 23 | ALB | Buy | Neutral | 32 | 0.75% starter weight, small exposure | Neutral stance, 0.75% starter, lithium recovery thesis but awaiting earnings/guidance confirmation, do not chase at 185.38 | rejected $0 |
+
+## Thesis
+
+- NVDA, TSM, and MU form the strongest AI/datacenter infrastructure trio: NVDA dominates accelerators, TSM controls foundry capacity, MU supplies HBM/datacenter memory
+- All three carry Overweight stances or highest initial weights (NVDA/TSM at 3.0%), signaling structural conviction versus Neutral-rated names
+- Scenario probabilities favor constructive outcomes: NVDA 35% Bull/45% Base, TSM 80% constructive (35% Bull + 45% Base), MU earnings-driven not multiple expansion
+- Other Overweight candidates (ANET, FCX, DDOG) carry lower initial weights (1.25%-2.0%) or weaker near-term catalysts versus the selected three
+- Neutral-rated names (MSFT, META, AMZN, AMD) lack Overweight conviction or await earnings validation before aggressive sizing
+
+## Why These Three Beat The Rest
+
+- **NVDA**: NVDA has the highest initial weight (3.0%) tied with TSM, but edges ahead on structural dominance in AI accelerators and datacenter buildout, with clearer near-term catalysts than TSM's foundry exposure
+- **TSM**: TSM matches NVDA's 3.0% initial sizing and Overweight stance, with 80% constructive scenario probability beating MU's profile, and superior initial sizing versus ANET/DDOG/FCX
+- **MU**: MU's Overweight stance and earnings-driven thesis (HBM/datacenter memory) beat other Overweights (ANET, DDOG, FCX) on cyclical positioning and beat all Neutral-rated names on relative conviction
+
+## Rejected Buy Candidates
+
+| Asset | Reported Action | Relative Stance | Why It Lost | What Would Change The Decision |
+| --- | --- | --- | --- | --- |
+| ANET | Buy | Overweight | ANET is Overweight but lost to NVDA, TSM, and MU on initial sizing and structural positioning. NVDA and TSM both carry 3.0% initial weights versus ANET's staged accumulation, and MU's earnings-driven HBM thesis has clearer near-term catalysts than ANET's 67% revenue concentration. | ANET would move into top three if initial weight increased to 3.0%+ matching NVDA/TSM, or if scenario probabilities shifted to 40%+ Bull with confirmed datacenter AI networking wins exceeding current 67% revenue base. |
+| FCX | Buy | Overweight | FCX is Overweight but carries only 2.0% initial weight versus NVDA/TSM at 3.0%, and its copper cyclical thesis lacks the structural AI/datacenter tailwinds driving NVDA, TSM, and MU. Scenario probabilities and conviction are lower than the selected three. | FCX would enter top three if copper demand accelerated with confirmed AI infrastructure buildout driving 40%+ Bull scenario probability, or if initial weight increased to 3.0%+ with tighter risk budget and clearer near-term catalysts. |
+| DDOG | Buy | Overweight | DDOG is Overweight but has the smallest initial weight (1.25%) among all Overweight candidates, well below NVDA/TSM (3.0%) and FCX (2.0%). The controlled starter sizing signals lower conviction than the selected three despite Overweight stance. | DDOG would move into top three if initial weight increased to 2.5%+ with confirmed observability/monitoring revenue acceleration, or if scenario map shifted to 40%+ Bull with validated AI/cloud infrastructure adoption exceeding current base case. |
+| MSFT | Buy | Neutral | MSFT matches NVDA/TSM on 3.0% initial sizing but carries Neutral stance not Overweight, and its 35% Bull/45% Base/20% Bear scenario map is constructive but not aggressive. The selected three all carry Overweight stances or higher structural conviction. | MSFT would enter top three if stance upgraded to Overweight after earnings/guidance validate Azure AI revenue acceleration and forward EPS ramp, or if scenario map shifted to 40%+ Bull with confirmed AI infrastructure monetization. |
+| META | Buy | Neutral | META is Neutral stance with 2.0% initial weight, below NVDA/TSM (3.0%) and awaiting late-April earnings catalyst. The 98% Family of Apps revenue concentration is strong but not enough to overcome Neutral stance versus Overweight on NVDA/TSM/MU. | META would move into top three if late-April earnings confirm AI monetization acceleration, stance upgrades to Overweight, and initial weight increases to 3.0%+ with validated forward revenue/margin guidance. |
+| AMZN | Buy | Neutral | AMZN is Neutral stance with 2.5% initial weight (not 5% target), and tape is extended (RSI 75.59, 7% above 10-day EMA). The 50% Base/30% Bull/20% Bear scenario map is constructive but not aggressive enough versus the selected three. | AMZN would enter top three if it pulls back constructively into $240-242 support, stance upgrades to Overweight after AWS/AI revenue confirmation, and scenario map shifts to 40%+ Bull with validated forward guidance. |
+| EQIX | Buy | Neutral | EQIX is Neutral stance with 2.0% initial weight and 30% Bull/50% Base/20% Bear scenario map. Datacenter REIT exposure is relevant but not aggressive enough versus NVDA/TSM/MU's structural AI positioning and Overweight stances. | EQIX would move into top three if datacenter leasing accelerates with confirmed AI infrastructure demand, stance upgrades to Overweight, and scenario map shifts to 40%+ Bull with validated forward FFO/occupancy guidance. |
+| VICI | Buy | Neutral | VICI is Neutral stance with 2.0% initial weight, gaming REIT exposure lacks the structural AI/datacenter tailwinds driving the selected three. Scenario probabilities and conviction are lower than NVDA/TSM/MU. | VICI would enter top three if gaming recovery accelerates with confirmed regional/Las Vegas strength, stance upgrades to Overweight, and initial weight increases to 3.0%+ with validated forward FFO/dividend coverage. |
+| O | Buy | Neutral | O is Neutral stance with 2.0% initial weight and 25% Bull/55% Base/20% Bear scenario map. REIT exposure is defensive but scenario probabilities are not strong enough for Overweight, and conviction is lower than the selected three. | O would move into top three if retail/commercial real estate recovery accelerates, stance upgrades to Overweight with 40%+ Bull scenario probability, and initial weight increases to 3.0%+ with validated forward FFO/occupancy guidance. |
+| DLR | Buy | Neutral | DLR is Neutral stance with 1.5% initial weight (not 3.0% target), datacenter REIT exposure is relevant but sizing and stance are below NVDA/TSM/MU. Conviction is lower despite datacenter tailwinds. | DLR would enter top three if datacenter leasing accelerates with confirmed AI infrastructure demand, stance upgrades to Overweight, and initial weight increases to 3.0%+ with validated forward FFO/occupancy guidance exceeding current base case. |
+| JNJ | Buy | Neutral | JNJ is Neutral stance, staged starter position, defensive healthcare exposure lacks the structural AI/datacenter tailwinds driving NVDA/TSM/MU. Scenario map (64% revenue from strong segments) is constructive but not aggressive. | JNJ would move into top three if pharmaceutical/MedTech revenue accelerates with confirmed pipeline wins, stance upgrades to Overweight, and initial weight increases to 3.0%+ with validated forward EPS/margin guidance. |
+| CRWD | Buy | Neutral | CRWD is Neutral stance, controlled starter position, cybersecurity exposure is relevant but sizing and stance are below the selected three. Conviction is lower despite structural tailwinds. | CRWD would enter top three if cybersecurity ARR/NRR accelerates with confirmed enterprise wins, stance upgrades to Overweight, and initial weight increases to 2.5%+ with validated forward revenue/margin guidance. |
+| DELL | Buy | Neutral | DELL is Neutral stance, staged starter position, AI server exposure is relevant but sizing and stance are below NVDA/TSM/MU. Operating evidence is constructive but not aggressive enough for Overweight. | DELL would move into top three if AI server revenue accelerates with confirmed enterprise/hyperscaler wins, stance upgrades to Overweight, and initial weight increases to 3.0%+ with validated forward margin/EPS guidance. |
+| ARM | Buy | Neutral | ARM is Neutral stance with 1.25% initial weight, smallest among tech names, and guidance is to not chase into resistance. Conviction is lower than NVDA/TSM/MU despite semiconductor exposure. | ARM would enter top three if royalty revenue accelerates with confirmed AI/datacenter chip adoption, stance upgrades to Overweight, and initial weight increases to 2.5%+ with validated forward EPS/margin guidance. |
+| AMD | Buy | Neutral | AMD is Neutral stance with 1.5% initial weight (to 4.0% max) and 0.75% max portfolio loss, awaiting earnings validation. AI/datacenter thesis is relevant but conviction is lower than NVDA/TSM/MU until forward EPS ramp is confirmed. | AMD would move into top three if earnings/guidance validate MI450/EPYC traction with confirmed AI/datacenter revenue acceleration, stance upgrades to Overweight, and initial weight increases to 3.0%+ with validated forward gross margin/EPS guidance. |
+| PLTR | Buy | Neutral | PLTR is Neutral stance with 1.5% initial weight, keep at 1.5% into May 4 earnings catalyst. Scenario map is 30% Bull/45% Base/25% Bear, constructive but not aggressive enough versus the selected three. | PLTR would enter top three if May 4 earnings confirm AIP/government revenue acceleration, stance upgrades to Overweight with 40%+ Bull scenario probability, and initial weight increases to 3.0%+ with validated forward revenue/margin guidance. |
+| VALE | Buy | Neutral | VALE is Neutral stance, starter cyclical position, materials exposure lacks the structural AI/datacenter tailwinds driving NVDA/TSM/MU. Improved operations are constructive but not aggressive enough for Overweight. | VALE would move into top three if iron ore/base metals demand accelerates with confirmed infrastructure buildout, stance upgrades to Overweight, and initial weight increases to 2.5%+ with validated forward margin/cash flow guidance. |
+| MAIN | Buy | Neutral | MAIN is Neutral stance with 1.0% initial weight, smallest among all buy candidates, tightly risk-budgeted. BDC exposure is defensive but conviction is much lower than the selected three. | MAIN would enter top three if portfolio yield/NAV accelerates with confirmed credit quality, stance upgrades to Overweight, and initial weight increases to 2.5%+ with validated forward dividend coverage/NAV guidance. |
+| GLD | Buy | Neutral | GLD is Neutral stance, staged accumulation, gold exposure is defensive hedge but lacks the structural AI/datacenter tailwinds driving NVDA/TSM/MU. Conviction is lower for offensive allocation. | GLD would move into top three if macro uncertainty accelerates with confirmed inflation/geopolitical risk, stance upgrades to Overweight as defensive hedge, and initial weight increases to 3.0%+ with validated forward gold price/volatility outlook. |
+| ALB | Buy | Neutral | ALB is Neutral stance with 0.75% starter weight, smallest initial sizing among all candidates, awaiting earnings/guidance confirmation on lithium recovery. Guidance is to not chase at 185.38, conviction is much lower than the selected three. | ALB would enter top three if lithium pricing/demand accelerates with confirmed EV/battery recovery, stance upgrades to Overweight, and initial weight increases to 2.5%+ with validated forward EPS/margin/free cash flow guidance exceeding current base case. |
+
+## Risk Notes
+
+- All three selections are semiconductor/tech concentrated, creating sector risk if AI/datacenter spending slows or earnings disappoint
+- NVDA and TSM are extended on technicals (NVDA RSI elevated, TSM above upper Bollinger), requiring disciplined entry on pullbacks not chases
+- MU is cyclical memory exposure, vulnerable to inventory corrections or HBM demand disappointment if hyperscaler capex slows
+- Rejected Overweight names (ANET, FCX, DDOG) could outperform if their catalysts accelerate and initial weights increase post-confirmation
+- Neutral-rated names with 3.0% initial weights (MSFT) or strong theses (META, AMZN) are viable alternatives if earnings validate Overweight upgrades

@@ -1,14 +1,24 @@
 from typing import Annotated
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-import yfinance as yf
 import os
 from .stockstats_utils import (
     StockstatsUtils,
     _clean_dataframe,
     to_yfinance_exclusive_end,
-    yf_retry,
 )
+from .yfinance_subprocess import (
+    fetch_download_frame,
+    fetch_ticker_attr,
+    fetch_ticker_history,
+    fetch_ticker_info,
+)
+
+
+MAX_LLM_STOCK_ROWS = 40
+MAX_LLM_INDICATOR_POINTS = 20
+YFINANCE_TIMEOUT_SECONDS = 30
+TECHNICAL_HISTORY_YEARS = 3
 
 def get_YFin_data_online(
     symbol: Annotated[str, "ticker symbol of the company"],
@@ -20,14 +30,11 @@ def get_YFin_data_online(
     datetime.strptime(end_date, "%Y-%m-%d")
 
     # Create ticker object
-    ticker = yf.Ticker(symbol.upper())
-
-    # Fetch historical data for the specified date range
-    data = yf_retry(
-        lambda: ticker.history(
-            start=start_date,
-            end=to_yfinance_exclusive_end(end_date),
-        )
+    data = fetch_ticker_history(
+        symbol.upper(),
+        start=start_date,
+        end=to_yfinance_exclusive_end(end_date),
+        timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
     )
 
     # Check if data is empty
@@ -46,12 +53,21 @@ def get_YFin_data_online(
         if col in data.columns:
             data[col] = data[col].round(2)
 
+    total_records = len(data)
+    truncated = total_records > MAX_LLM_STOCK_ROWS
+    if truncated:
+        data = data.tail(MAX_LLM_STOCK_ROWS)
+
     # Convert DataFrame to CSV string
     csv_string = data.to_csv()
 
     # Add header information
     header = f"# Stock data for {symbol.upper()} from {start_date} to {end_date}\n"
-    header += f"# Total records: {len(data)}\n"
+    header += f"# Total records: {total_records}\n"
+    if truncated:
+        header += (
+            f"# Displaying latest {MAX_LLM_STOCK_ROWS} records for LLM context\n"
+        )
     header += f"# Data retrieved on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
 
     return header + csv_string
@@ -146,6 +162,7 @@ def get_stock_stats_indicators_window(
     end_date = curr_date
     curr_date_dt = datetime.strptime(curr_date, "%Y-%m-%d")
     before = curr_date_dt - relativedelta(days=look_back_days)
+    date_values = []
 
     # Optimized: Get stock data once and calculate indicators for all dates
     try:
@@ -153,7 +170,6 @@ def get_stock_stats_indicators_window(
         
         # Generate the date range we need
         current_dt = curr_date_dt
-        date_values = []
         
         while current_dt >= before:
             date_str = current_dt.strftime('%Y-%m-%d')
@@ -175,17 +191,30 @@ def get_stock_stats_indicators_window(
     except Exception as e:
         print(f"Error getting bulk stockstats data: {e}")
         # Fallback to original implementation if bulk method fails
-        ind_string = ""
-        curr_date_dt = datetime.strptime(curr_date, "%Y-%m-%d")
-        while curr_date_dt >= before:
+        current_dt = datetime.strptime(curr_date, "%Y-%m-%d")
+        while current_dt >= before:
             indicator_value = get_stockstats_indicator(
-                symbol, indicator, curr_date_dt.strftime("%Y-%m-%d")
+                symbol, indicator, current_dt.strftime("%Y-%m-%d")
             )
-            ind_string += f"{curr_date_dt.strftime('%Y-%m-%d')}: {indicator_value}\n"
-            curr_date_dt = curr_date_dt - relativedelta(days=1)
+            date_values.append((current_dt.strftime("%Y-%m-%d"), indicator_value))
+            current_dt = current_dt - relativedelta(days=1)
+
+    truncated = len(date_values) > MAX_LLM_INDICATOR_POINTS
+    displayed_values = date_values[:MAX_LLM_INDICATOR_POINTS]
+
+    ind_string = ""
+    for date_str, value in displayed_values:
+        ind_string += f"{date_str}: {value}\n"
+
+    truncation_header = ""
+    if truncated:
+        truncation_header = (
+            f"## Showing latest {MAX_LLM_INDICATOR_POINTS} dates for LLM context\n\n"
+        )
 
     result_str = (
         f"## {indicator} values from {before.strftime('%Y-%m-%d')} to {end_date}:\n\n"
+        + truncation_header
         + ind_string
         + "\n\n"
         + best_ind_params.get(indicator, "No description available.")
@@ -207,7 +236,6 @@ def _get_stock_stats_bulk(
     from .config import get_config
     import pandas as pd
     from stockstats import wrap
-    import os
     
     config = get_config()
     online = config["data_vendors"]["technical_indicators"] != "local"
@@ -229,7 +257,7 @@ def _get_stock_stats_bulk(
         today_date = pd.Timestamp.today()
 
         end_date = today_date
-        start_date = today_date - pd.DateOffset(years=15)
+        start_date = today_date - pd.DateOffset(years=TECHNICAL_HISTORY_YEARS)
         start_date_str = start_date.strftime("%Y-%m-%d")
         end_date_str = to_yfinance_exclusive_end(end_date)
 
@@ -243,14 +271,15 @@ def _get_stock_stats_bulk(
         if os.path.exists(data_file):
             data = pd.read_csv(data_file, on_bad_lines="skip")
         else:
-            data = yf_retry(lambda: yf.download(
+            data = fetch_download_frame(
                 symbol,
                 start=start_date_str,
                 end=end_date_str,
                 multi_level_index=False,
                 progress=False,
                 auto_adjust=True,
-            ))
+                timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
+            )
             data = data.reset_index()
             data.to_csv(data_file, index=False)
 
@@ -308,8 +337,7 @@ def get_fundamentals(
 ):
     """Get company fundamentals overview from yfinance."""
     try:
-        ticker_obj = yf.Ticker(ticker.upper())
-        info = yf_retry(lambda: ticker_obj.info)
+        info = fetch_ticker_info(ticker.upper(), timeout_seconds=YFINANCE_TIMEOUT_SECONDS)
 
         if not info:
             return f"No fundamentals data found for symbol '{ticker}'"
@@ -366,12 +394,18 @@ def get_balance_sheet(
 ):
     """Get balance sheet data from yfinance."""
     try:
-        ticker_obj = yf.Ticker(ticker.upper())
-
         if freq.lower() == "quarterly":
-            data = yf_retry(lambda: ticker_obj.quarterly_balance_sheet)
+            data = fetch_ticker_attr(
+                ticker.upper(),
+                "quarterly_balance_sheet",
+                timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
+            )
         else:
-            data = yf_retry(lambda: ticker_obj.balance_sheet)
+            data = fetch_ticker_attr(
+                ticker.upper(),
+                "balance_sheet",
+                timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
+            )
             
         if data.empty:
             return f"No balance sheet data found for symbol '{ticker}'"
@@ -396,12 +430,18 @@ def get_cashflow(
 ):
     """Get cash flow data from yfinance."""
     try:
-        ticker_obj = yf.Ticker(ticker.upper())
-
         if freq.lower() == "quarterly":
-            data = yf_retry(lambda: ticker_obj.quarterly_cashflow)
+            data = fetch_ticker_attr(
+                ticker.upper(),
+                "quarterly_cashflow",
+                timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
+            )
         else:
-            data = yf_retry(lambda: ticker_obj.cashflow)
+            data = fetch_ticker_attr(
+                ticker.upper(),
+                "cashflow",
+                timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
+            )
             
         if data.empty:
             return f"No cash flow data found for symbol '{ticker}'"
@@ -426,12 +466,18 @@ def get_income_statement(
 ):
     """Get income statement data from yfinance."""
     try:
-        ticker_obj = yf.Ticker(ticker.upper())
-
         if freq.lower() == "quarterly":
-            data = yf_retry(lambda: ticker_obj.quarterly_income_stmt)
+            data = fetch_ticker_attr(
+                ticker.upper(),
+                "quarterly_income_stmt",
+                timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
+            )
         else:
-            data = yf_retry(lambda: ticker_obj.income_stmt)
+            data = fetch_ticker_attr(
+                ticker.upper(),
+                "income_stmt",
+                timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
+            )
             
         if data.empty:
             return f"No income statement data found for symbol '{ticker}'"
@@ -454,8 +500,11 @@ def get_insider_transactions(
 ):
     """Get insider transactions data from yfinance."""
     try:
-        ticker_obj = yf.Ticker(ticker.upper())
-        data = yf_retry(lambda: ticker_obj.insider_transactions)
+        data = fetch_ticker_attr(
+            ticker.upper(),
+            "insider_transactions",
+            timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
+        )
         
         if data is None or data.empty:
             return f"No insider transactions data found for symbol '{ticker}'"

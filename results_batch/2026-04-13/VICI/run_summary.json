@@ -1,0 +1,57 @@
+{
+  "analysis_date": "2026-04-13",
+  "anthropic_effort": null,
+  "backend_url": "claude://local",
+  "catalysts": [
+    {
+      "catalyst": "Q1 2026 Earnings Release",
+      "date_or_window": "Late April / Early May 2026",
+      "expected_impact": "FFO guidance, occupancy metrics, and dividend sustainability commentary will confirm or refute base case assumptions. Beat + raised guidance supports Bull; miss triggers Bear concerns."
+    },
+    {
+      "catalyst": "May 2026 FOMC Meeting",
+      "date_or_window": "May 6\u20137, 2026 (estimated)",
+      "expected_impact": "Dot plot and Powell press conference will clarify rate path. Any dovish pivot (2+ cuts priced for 2026) supports Bull case; hawkish hold reinforces Base/Bear."
+    },
+    {
+      "catalyst": "Q2 2026 Dividend Declaration",
+      "date_or_window": "May 2026",
+      "expected_impact": "9th consecutive annual increase would reinforce income thesis and validate Bull case. Flat or cut would trigger Bear scenario and likely 10%+ selloff."
+    },
+    {
+      "catalyst": "10Y Treasury Breakout Above 4.50%",
+      "date_or_window": "Ongoing (monitor daily)",
+      "expected_impact": "Sustained move above 4.50% compresses REIT multiples sector-wide and raises VICI's refinancing risk. Invalidates Bull case."
+    },
+    {
+      "catalyst": "April 2026 Gaming Revenue Data (Nevada)",
+      "date_or_window": "Mid-April 2026",
+      "expected_impact": "Nevada Gaming Control Board monthly report; YoY growth > 3% supports Bull, flat/negative signals consumer stress and Bear risk."
+    },
+    {
+      "catalyst": "Caesars Lease Renewal / Modification",
+      "date_or_window": "Q2\u2013Q3 2026 (estimated)",
+      "expected_impact": "Caesars represents significant tenant concentration. Favorable renewal terms support Base/Bull; unfavorable or default risk triggers Bear."
+    },
+    {
+      "catalyst": "April 2026 CPI Print",
+      "date_or_window": "May 14, 2026 (estimated)",
+      "expected_impact": "Sticky inflation (CPI > 3.0% YoY) keeps Fed hawkish and supports higher-for-longer narrative, pressuring rate-sensitive REITs."
+    }
+  ],
+  "chief_rating": "",
+  "chief_summary": "",
+  "chief_thesis": "",
+  "decision": "BUY",
+  "deep_think_llm": "claude-sonnet-4-6",
+  "ended_at": "2026-04-13T12:49:01.794636",
+  "error": null,
+  "openai_reasoning_effort": null,
+  "provider": "claude_code",
+  "quick_think_llm": "claude-sonnet-4-6",
+  "results_dir": "results_batch/2026-04-13/VICI",
+  "risk_summary": "```json\n{\n  \"rating\": \"Underweight\",\n  \"executive_summary\": \"Reduce VICI exposure to 1.5-2.0% from current levels. Take partial profits on any bounce toward $28.50-29.00. Maintain a defensive position with a hard stop at $27.50 (2.3% downside risk). The Q1 earnings release in late April is the critical decision point: strong FFO and dividend sustainability commentary warrant rebuilding to 2.5%, while a miss or guidance cut triggers full exit. The 6.34% yield provides income cushion, but the 78% payout ratio, weak recovery volume, and hostile rate environment (10Y at 4.29%) create asymmetric near-term risk that the base case fair value of $28-32 does not adequately compensate for.\",\n  \"investment_thesis\": \"The Conservative analyst is correct that the risks are real and near-term, but wrong to recommend an outright sell at $28.15 when we're already at the low end of the base case range. The Aggressive analyst is right that the Wolfe $33 target implies value here, but underweights the execution risk embedded in that 17.5% downgrade and the fragility of the 78% payout ratio.\\n\\nThe Neutral analyst has the strongest framework: this is a position sizing and risk management decision, not a binary buy/sell. Here's why UNDERWEIGHT is the right call:\\n\\n**What the data actually shows:**\\n\\n1. **Valuation is fair, not cheap**: At $28.15, we're at the bottom of the 55% probability base case range of $28-32. The Wolfe $33 target implies 17% upside, but that same analyst just slashed their target by 17.5% in a single revision. The market is pricing in execution risk that may not be fully captured yet.\\n\\n2. **Dividend sustainability is the binary risk**: The 78% payout ratio with $1.47B FCF leaves only $323M of discretionary cash flow. The Q2-Q4 net income decline from $865M to $604M (-30%) is not just noise\u2014it's a deteriorating trend. The Conservative analyst is right that we have zero margin for error. If Q1 earnings disappoint, the payout ratio pushes toward 85-90%, forcing a dividend cut or increased leverage in a 4.29% 10Y environment. Neither is acceptable.\\n\\n3. **The technical recovery lacks conviction**: Recovery volume of 3.79M shares versus 15-19M on the selloff is not bullish\u2014it's ambiguous at best. The Aggressive analyst's claim that light volume means supply has dried up ignores that strong hands aren't stepping in either. Price is above the 10 EMA but below both the 50 and 200 SMAs. This is consolidation, not reversal.\\n\\n4. **The rate environment is hostile, not transitory**: The base case (55% probability) assumes the 10Y stays at 4.0-4.5% and the Fed holds steady through mid-2026. The Aggressive analyst is overweighting the 25% bull case that requires 2+ Fed cuts and a 10Y below 4%. The macro data shows PPI up 2.08% MoM and CPI up 0.87%\u2014inflation is sticky, not rolling over. The May FOMC could just as easily deliver a hawkish hold.\\n\\n5. **The structured position sizing tells the real story**: The recommendation is 2.5% initial weight with a stop at $26.92 (4.4% below current price) and max loss of 1.2%. If this were a high-conviction buy, the stop wouldn't be so tight. The defensive posture reflects real downside risk.\\n\\n**Why not SELL outright?**\\n\\nThe trader's sell recommendation locks in losses from the March highs and forces us to buy back higher if Q1 earnings validate the thesis. We're already at fair value ($28.15 in a $28-32 range), and the 6.34% yield provides income while we wait for clarity. The Neutral analyst is correct that selling here is premature\u2014but so is holding at full weight.\\n\\n**Why UNDERWEIGHT is the right call:**\\n\\nThis rating balances the Conservative analyst's valid concerns (dividend risk, weak technicals, hostile rates) with the Neutral analyst's insight that we're at the low end of fair value. Reducing to 1.5-2% weight with a $27.50 stop limits portfolio risk to ~0.3-0.4% while maintaining optionality. If Q1 earnings show flat or growing FFO and management reaffirms dividend sustainability below 80% payout, we rebuild to 2.5-3%. If they disappoint, we exit cleanly.\\n\\nThe re-entry conditions are: (1) Q1 earnings beat with positive guidance, (2) 10Y breaks below 4.15%, or (3) price capitulates below $26.50 on high volume with reversal. These are more realistic than waiting for 2+ Fed cuts.\\n\\n**The bottom line**: The 6.34% yield and defensive characteristics (0.728 beta, 69% margins, $1.47B FCF) justify maintaining a small position. But the 78% payout ratio, 30% net income decline Q2-Q4, weak recovery volume, and 4.29% 10Y create near-term risk that warrants reducing exposure until Q1 earnings provide clarity. This is not capitulation\u2014it's disciplined risk management.\"\n}\n```",
+  "started_at": "2026-04-13T12:27:31.692214",
+  "status": "completed",
+  "ticker": "VICI"
+}

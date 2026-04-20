@@ -1,6 +1,6 @@
-from langchain_core.messages import AIMessage
-import time
-import json
+
+
+from tradingagents.agents.utils.agent_utils import add_educational_use_context
 
 
 def create_yes_researcher(llm, memory):
@@ -22,7 +22,7 @@ def create_yes_researcher(llm, memory):
         for i, rec in enumerate(past_memories, 1):
             past_memory_str += rec["recommendation"] + "\n\n"
 
-        prompt = f"""You are a YES Analyst advocating that the prediction market event WILL occur. Your task is to build a strong, evidence-based case that the YES probability should be higher than the current market price. Leverage the provided research and data to address concerns and counter NO arguments effectively.
+        prompt = add_educational_use_context(f"""You are a YES Analyst advocating that the prediction market event WILL occur. Your task is to build a strong, evidence-based case that the YES probability should be higher than the current market price. Leverage the provided research and data to address concerns and counter NO arguments effectively.
 
 Key points to focus on:
 - Supporting Evidence: Highlight concrete indicators, trends, and data points that suggest the event is likely to occur.
@@ -40,7 +40,7 @@ Conversation history of the debate: {history}
 Last NO argument: {current_response}
 Reflections from similar situations and lessons learned: {past_memory_str}
 Use this information to deliver a compelling YES argument, refute the NO analyst's concerns, and engage in a dynamic debate that demonstrates why the event is more likely to occur than the market currently implies. You must also address reflections and learn from lessons and mistakes you made in the past.
-"""
+""")
 
         response = llm.invoke(prompt)
 

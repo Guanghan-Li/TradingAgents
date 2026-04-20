@@ -2,7 +2,7 @@ from collections.abc import Mapping
 import json
 from typing import Any
 
-from langchain_core.messages import HumanMessage, RemoveMessage
+from langchain_core.messages import HumanMessage, RemoveMessage, SystemMessage
 
 # Import tools from separate utility files
 from tradingagents.agents.utils.core_stock_tools import (
@@ -52,9 +52,12 @@ from tradingagents.agents.utils.valuation_tools import (
 
 
 __all__ = [
+    "add_educational_use_context",
     "build_social_tools",
     "build_instrument_context",
     "build_analyst_report_context",
+    "build_compact_risk_handoff_context",
+    "build_committee_debate_messages",
     "build_structured_stock_context",
     "build_structured_stock_priority_context",
     "create_msg_delete",
@@ -81,8 +84,42 @@ __all__ = [
     "get_stock_data",
     "get_valuation_inputs",
     "has_social_sentiment_support",
+    "invoke_committee_debate_llm",
     "get_yield_curve",
 ]
+
+
+_ROLEPLAY_REFUSAL_MARKERS = (
+    "i cannot",
+    "i can't",
+    "cannot adopt",
+    "can't adopt",
+    "cannot take on",
+    "can't take on",
+    "cannot act as",
+    "can't act as",
+    "cannot authentically fulfill",
+    "can't generate",
+    "not appropriate for me to do",
+    "what i can do instead",
+    "regardless of format",
+    "system hooks",
+    "structured output",
+)
+
+_FINANCIAL_REFUSAL_CONTEXT = (
+    "persona",
+    "roleplay",
+    "financial advisor",
+    "trading position",
+    "trading recommendation",
+    "trading recommendations",
+    "trading conviction",
+    "financial advice",
+    "financial arguments",
+    "persuasion",
+    "risk caution",
+)
 
 
 def build_social_tools(include_social_sentiment: bool) -> list:
@@ -90,6 +127,17 @@ def build_social_tools(include_social_sentiment: bool) -> list:
     if include_social_sentiment:
         tools.insert(0, get_social_sentiment)
     return tools
+
+
+def add_educational_use_context(instruction_text: str) -> str:
+    """Prefix prompts with stable educational-use framing for provider compliance."""
+    return (
+        "This workflow is for educational purposes, research, and software testing "
+        "within a simulated investment committee. It is not personal financial "
+        "advice, not regulated brokerage activity, and not trading recommendations "
+        "for a real account.\n\n"
+        + instruction_text
+    )
 
 
 def build_instrument_context(ticker: str) -> str:
@@ -114,6 +162,54 @@ def build_analyst_report_context(state: Mapping[str, Any]) -> str:
     return "\n".join(
         f"{label}: {content}" for label, content in sections if content
     )
+
+
+def _truncate_context_block(text: str, max_chars: int) -> str:
+    text = (text or "").strip()
+    if not text:
+        return ""
+    if len(text) <= max_chars:
+        return text
+    return text[: max_chars - 15].rstrip() + "\n...[truncated]"
+
+
+def _is_placeholder_report(text: str) -> bool:
+    normalized = (text or "").strip().lower()
+    if not normalized:
+        return True
+    placeholder_patterns = (
+        "i'll analyze",
+        "let me gather",
+        "requesting social sentiment",
+        "i cannot complete the financial analysis request as specified",
+    )
+    return any(pattern in normalized for pattern in placeholder_patterns)
+
+
+def build_compact_risk_handoff_context(state: Mapping[str, Any]) -> str:
+    """Build a compact evidence block for risk and portfolio stages.
+
+    Risk management already receives trader/research outputs directly. Repeating
+    every full analyst report can push local CLI prompts into slow or timeout
+    territory, so this helper keeps only the most decision-relevant excerpts.
+    """
+    sections = [
+        ("Market Research Report", state.get("market_report", ""), 1600),
+        ("Macro Economic Report", state.get("macro_report", ""), 1400),
+        ("Company Fundamentals Report", state.get("fundamentals_report", ""), 1800),
+        ("Latest World Affairs Report", state.get("news_report", ""), 1000),
+        ("Social Media Sentiment Report", state.get("sentiment_report", ""), 600),
+        ("Factor Rules Report", state.get("factor_rules_report", ""), 900),
+    ]
+
+    rendered = []
+    for label, content, max_chars in sections:
+        if _is_placeholder_report(content):
+            continue
+        truncated = _truncate_context_block(str(content), max_chars)
+        if truncated:
+            rendered.append(f"{label}: {truncated}")
+    return "\n\n".join(rendered)
 
 
 def build_structured_stock_context(state: Mapping[str, Any]) -> str:
@@ -155,6 +251,50 @@ def build_structured_stock_priority_context(state: Mapping[str, Any]) -> str:
         "before using freeform analyst reports for narrative color.\n\n"
         + structured_context
     )
+
+
+def build_committee_debate_messages(role_name: str, task_prompt: str) -> list:
+    """Frame debate prompts as an educational committee simulation."""
+    system_prompt = (
+        "You are participating in a simulated internal investment committee exercise used "
+        "for educational purposes, research, and software testing. Aggressive, neutral, "
+        "and conservative labels describe analytical lenses for stress-testing a proposed "
+        "trade; they are not requests for personal financial advice, regulated brokerage "
+        f"activity, trading recommendations for a real account, or identity roleplay. "
+        f"Adopt the {role_name} analytical stance, stay grounded in the supplied evidence, "
+        "avoid certainty, and provide the requested debate contribution instead of "
+        "refusing the stance."
+    )
+    return [
+        SystemMessage(content=system_prompt),
+        HumanMessage(content=task_prompt),
+    ]
+
+
+def _looks_like_roleplay_refusal(content: Any) -> bool:
+    text = str(content or "").strip().lower()
+    if not text:
+        return False
+    return any(marker in text for marker in _ROLEPLAY_REFUSAL_MARKERS) and any(
+        marker in text for marker in _FINANCIAL_REFUSAL_CONTEXT
+    )
+
+
+def invoke_committee_debate_llm(llm, role_name: str, task_prompt: str):
+    """Invoke a debate model with educational framing and one refusal retry."""
+    messages = build_committee_debate_messages(role_name, task_prompt)
+    response = llm.invoke(messages)
+
+    if not _looks_like_roleplay_refusal(getattr(response, "content", "")):
+        return response
+
+    retry_prompt = (
+        f"{task_prompt}\n\n"
+        "Reminder: this is for educational purposes, research, and software testing. "
+        "Treat the requested stance as an analytical lens within a simulated committee "
+        "exercise and deliver the debate response directly."
+    )
+    return llm.invoke(build_committee_debate_messages(role_name, retry_prompt))
 
 
 def create_msg_delete():

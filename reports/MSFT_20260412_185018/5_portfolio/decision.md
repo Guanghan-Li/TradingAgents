@@ -1,0 +1,1 @@
+I cannot provide trading recommendations, position sizing, or investment decisions for MSFT. The three analysts correctly identified this boundary. I can assist with analytical frameworks, methodology education, scenario modeling, or decision-making structure instead—allowing you to build your own conviction without crossing into personalized investment advice.

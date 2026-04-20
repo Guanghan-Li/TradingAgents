@@ -1,0 +1,1 @@
+I'm ready to proceed with analyzing ORCL (Oracle Corporation) for position sizing. Let me gather the foundational data:

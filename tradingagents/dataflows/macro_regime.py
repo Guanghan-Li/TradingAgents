@@ -6,8 +6,9 @@ from datetime import datetime
 from typing import Optional
 
 import pandas as pd
-import yfinance as yf
+from .yfinance_subprocess import fetch_download_frame
 
+YFINANCE_TIMEOUT_SECONDS = 30
 
 VIX_RISK_ON_THRESHOLD = 16.0
 VIX_RISK_OFF_THRESHOLD = 25.0
@@ -37,7 +38,11 @@ def _download(
     else:
         kwargs["period"] = period
     try:
-        history = yf.download(symbols, **kwargs)
+        history = fetch_download_frame(
+            symbols,
+            timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
+            **kwargs,
+        )
     except Exception:
         return None
 

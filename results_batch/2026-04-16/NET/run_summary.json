@@ -1,0 +1,49 @@
+{
+  "analysis_date": "2026-04-16",
+  "anthropic_effort": null,
+  "backend_url": "codex://local",
+  "catalysts": [
+    {
+      "catalyst": "NET Q1 2026 earnings and forward guidance",
+      "date_or_window": "Late April to early May 2026",
+      "expected_impact": "Highest-impact company-specific event; guidance, billings, and margin trajectory likely drive the next repricing."
+    },
+    {
+      "catalyst": "U.S. CPI release",
+      "date_or_window": "Mid-April to mid-May 2026 cadence",
+      "expected_impact": "Softer inflation supports premium software multiples; sticky inflation raises rate-pressure risk."
+    },
+    {
+      "catalyst": "U.S. PPI release",
+      "date_or_window": "Mid-April to mid-May 2026 cadence",
+      "expected_impact": "Producer inflation can reinforce or soften concerns about the path of rates and valuation compression."
+    },
+    {
+      "catalyst": "Fed communication / policy signaling",
+      "date_or_window": "Q2 2026 ongoing",
+      "expected_impact": "Dovish signals help duration-sensitive software; hawkish signals pressure multiples."
+    },
+    {
+      "catalyst": "10Y Treasury yield trend",
+      "date_or_window": "Daily / ongoing",
+      "expected_impact": "Rising yields increase discount-rate headwinds; stable or declining yields support valuation resilience."
+    }
+  ],
+  "chief_action": "Buy",
+  "chief_rating": "Neutral",
+  "chief_relative_stance": "Neutral",
+  "chief_summary": "Initiate NET at the structured 0.75% starter weight now, with a 2.0% hard cap only after confirmation. The entry is justified by the underwriting, not by a claim that the chart is already clean: NET closed at 197.38, back above the 10 EMA at 194.03 and 50 SMA at 194.39, but still below the 200 SMA near 202.02. Keep total portfolio risk capped at 0.50%, respect ATR near 13.84, do not average down mechanically, freeze adds on a loss of the 50-day area around 194.4, and add only if NET reclaims and holds above 202 or the May 7, 2026 earnings and Investor Day delivers a clear beat-and-raise with better billings, margin, or EBITDA commentary. Time horizon is tactical into the May 7 catalyst, with medium-term follow-through only if operating leverage and demand confirmation improve.",
+  "chief_thesis": "The decision is Buy, not Hold or Sell, because the primary evidence supports limited participation: the structured scenario map is 50% base, 25% bull, 25% bear, and the sizing output still calls for a 0.75% initial weight, 2.0% target weight, and 0.50% max-loss budget. That is a risk-budgeted long, not a full-risk bet. The aggressive analyst is right that NET has real business quality behind the premium: Q4 2025 revenue grew 33.6% year over year, gross margin remains about 74.5%, TTM free cash flow is $388M, and normalized EBITDA improved from $26.8M to $45.0M, reaching $54.2M in late 2025. The segment work also supports durability, with Application/Network Security and Zero Trust / SASE identified as the strongest strategic growth engines.\n\nThe conservative analyst is also right that conviction must stay capped. NET still trades around 32x sales and 136.9x forward EPS, trailing EPS and operating margin remain negative, gross margin has compressed, and the chart is only partially repaired. NET is below the 200 SMA, MACD is still negative at -3.13 even if improving, RSI is neutral, relative strength has lagged XLK, and ATR near 13.84 means event risk can overwhelm tight stop logic. Macro adds another constraint: firm labor and subdued VIX support demand, but sticky CPI/PPI and a 10Y yield near 4.29% are not a friendly setup for major multiple expansion in a long-duration software name.\n\nThat is why the neutral analyst's framing is the correct synthesis. NET is investable now because fundamentals and catalyst quality justify a starter, but it is not an Overweight because the base case is still range-bound and the stock has not yet earned full-size exposure. Buy NET as a starter position and keep the stance Neutral: participate ahead of the May 7, 2026 earnings and Investor Day, but require either price acceptance above 202 or a clear fundamental beat-and-raise before adding toward 2.0%. If earnings are merely in line, guidance softens, margins fail to improve, or NET loses the 50-day area with rising yields, exit rather than rationalize the valuation.",
+  "decision": "BUY",
+  "deep_think_llm": "gpt-5.4",
+  "ended_at": "2026-04-16T15:28:16.139386",
+  "error": null,
+  "openai_reasoning_effort": "high",
+  "provider": "codex_cli",
+  "quick_think_llm": "gpt-5.4",
+  "results_dir": "results_batch/2026-04-16/NET",
+  "risk_summary": "Absolute Action: Buy\nRelative Stance: Neutral\n\nExecutive Summary: Initiate NET at the structured 0.75% starter weight now, with a 2.0% hard cap only after confirmation. The entry is justified by the underwriting, not by a claim that the chart is already clean: NET closed at 197.38, back above the 10 EMA at 194.03 and 50 SMA at 194.39, but still below the 200 SMA near 202.02. Keep total portfolio risk capped at 0.50%, respect ATR near 13.84, do not average down mechanically, freeze adds on a loss of the 50-day area around 194.4, and add only if NET reclaims and holds above 202 or the May 7, 2026 earnings and Investor Day delivers a clear beat-and-raise with better billings, margin, or EBITDA commentary. Time horizon is tactical into the May 7 catalyst, with medium-term follow-through only if operating leverage and demand confirmation improve.\n\nInvestment Thesis: The decision is Buy, not Hold or Sell, because the primary evidence supports limited participation: the structured scenario map is 50% base, 25% bull, 25% bear, and the sizing output still calls for a 0.75% initial weight, 2.0% target weight, and 0.50% max-loss budget. That is a risk-budgeted long, not a full-risk bet. The aggressive analyst is right that NET has real business quality behind the premium: Q4 2025 revenue grew 33.6% year over year, gross margin remains about 74.5%, TTM free cash flow is $388M, and normalized EBITDA improved from $26.8M to $45.0M, reaching $54.2M in late 2025. The segment work also supports durability, with Application/Network Security and Zero Trust / SASE identified as the strongest strategic growth engines.\n\nThe conservative analyst is also right that conviction must stay capped. NET still trades around 32x sales and 136.9x forward EPS, trailing EPS and operating margin remain negative, gross margin has compressed, and the chart is only partially repaired. NET is below the 200 SMA, MACD is still negative at -3.13 even if improving, RSI is neutral, relative strength has lagged XLK, and ATR near 13.84 means event risk can overwhelm tight stop logic. Macro adds another constraint: firm labor and subdued VIX support demand, but sticky CPI/PPI and a 10Y yield near 4.29% are not a friendly setup for major multiple expansion in a long-duration software name.\n\nThat is why the neutral analyst's framing is the correct synthesis. NET is investable now because fundamentals and catalyst quality justify a starter, but it is not an Overweight because the base case is still range-bound and the stock has not yet earned full-size exposure. Buy NET as a starter position and keep the stance Neutral: participate ahead of the May 7, 2026 earnings and Investor Day, but require either price acceptance above 202 or a clear fundamental beat-and-raise before adding toward 2.0%. If earnings are merely in line, guidance softens, margins fail to improve, or NET loses the 50-day area with rising yields, exit rather than rationalize the valuation.",
+  "started_at": "2026-04-16T15:12:26.308983",
+  "status": "completed",
+  "ticker": "NET"
+}

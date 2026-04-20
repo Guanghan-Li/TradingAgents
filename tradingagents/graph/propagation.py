@@ -2,7 +2,6 @@
 
 from typing import Dict, Any, List, Optional
 from tradingagents.agents.utils.agent_states import (
-    AgentState,
     InvestDebateState,
     RiskDebateState,
     make_default_structured_stock_underwriting_state,
@@ -24,6 +23,7 @@ class Propagator:
             "messages": [("human", company_name)],
             "company_of_interest": company_name,
             "trade_date": str(trade_date),
+            "prefetched_context": {},
             "investment_debate_state": InvestDebateState(
                 {
                     "bull_history": "",

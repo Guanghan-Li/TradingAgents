@@ -1,14 +1,22 @@
 import questionary
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
+from urllib.parse import urlparse
 
 from rich.console import Console
 
 from cli.models import AnalysisMode, AnalystType, PMAnalystType
-from tradingagents.env import DEFAULT_OPENAI_BASE_URL, get_openai_base_url
+from tradingagents.env import (
+    DEFAULT_ANTHROPIC_BASE_URL,
+    DEFAULT_OPENAI_BASE_URL,
+    get_anthropic_base_url,
+    get_openai_base_url,
+)
 
 console = Console()
 
 TICKER_INPUT_EXAMPLES = "Examples: SPY, CNC.TO, 7203.T, 0700.HK"
+OPENAI_COMPATIBLE_QUICK_MODEL = "gpt-5-mini"
+_NON_NATIVE_OPENAI_HEAVY_MODELS = {"gpt-5.4", "gpt-5.4-pro"}
 
 ANALYST_ORDER = [
     ("Market Analyst", AnalystType.MARKET),
@@ -29,6 +37,18 @@ PM_ANALYST_ORDER = [
     ("Information Analyst", PMAnalystType.INFORMATION),
     ("Sentiment Analyst", PMAnalystType.SENTIMENT),
 ]
+
+
+def normalize_provider_key(provider: str) -> str:
+    """Normalize UI/display provider labels to canonical provider keys."""
+    provider_key = provider.strip().lower()
+    if provider_key.startswith("openai"):
+        return "openai"
+    if provider_key.startswith("claude cli"):
+        return "claude_code"
+    if provider_key.startswith("codex cli"):
+        return "codex_cli"
+    return provider_key
 
 
 def select_analysis_mode() -> AnalysisMode:
@@ -309,6 +329,14 @@ def select_shallow_thinking_agent(provider) -> str:
     # Ordering: medium → light → heavy (balanced first for quick tasks)
     # Within same tier, newer models first
     SHALLOW_AGENT_OPTIONS = {
+        "codex_cli": [
+            ("GPT-5.4 - Codex CLI local", "gpt-5.4"),
+        ],
+        "claude_code": [
+            ("Claude Sonnet 4.6 - Best speed and intelligence balance", "claude-sonnet-4-6"),
+            ("Claude Haiku 4.5 - Fast, near-instant responses", "claude-haiku-4-5"),
+            ("Claude Sonnet 4.5 - Agents and coding", "claude-sonnet-4-5"),
+        ],
         "openai": [
             ("GPT-5 Mini - Balanced speed, cost, and capability", "gpt-5-mini"),
             ("GPT-5 Nano - High-throughput, simple tasks", "gpt-5-nano"),
@@ -374,6 +402,15 @@ def select_deep_thinking_agent(provider) -> str:
     # Ordering: heavy → medium → light (most capable first for deep tasks)
     # Within same tier, newer models first
     DEEP_AGENT_OPTIONS = {
+        "codex_cli": [
+            ("GPT-5.4 - Codex CLI local", "gpt-5.4"),
+        ],
+        "claude_code": [
+            ("Claude Opus 4.6 - Most intelligent, agents and coding", "claude-opus-4-6"),
+            ("Claude Opus 4.5 - Premium, max intelligence", "claude-opus-4-5"),
+            ("Claude Sonnet 4.6 - Best speed and intelligence balance", "claude-sonnet-4-6"),
+            ("Claude Sonnet 4.5 - Agents and coding", "claude-sonnet-4-5"),
+        ],
         "openai": [
             ("GPT-5.4 - Latest frontier, 1M context", "gpt-5.4"),
             ("GPT-5.2 - Strong reasoning, cost-effective", "gpt-5.2"),
@@ -437,22 +474,28 @@ def select_llm_provider() -> tuple[str, str]:
     openai_label = "OpenAI"
     if openai_base_url != DEFAULT_OPENAI_BASE_URL:
         openai_label = f"OpenAI Compatible ({openai_base_url})"
+    anthropic_base_url = get_anthropic_base_url()
+    anthropic_label = "Anthropic"
+    if anthropic_base_url != DEFAULT_ANTHROPIC_BASE_URL:
+        anthropic_label = f"Anthropic Compatible ({anthropic_base_url})"
 
     # Define OpenAI api options with their corresponding endpoints
     BASE_URLS = [
-        (openai_label, openai_base_url),
-        ("Google", "https://generativelanguage.googleapis.com/v1"),
-        ("Anthropic", "https://api.anthropic.com/"),
-        ("xAI", "https://api.x.ai/v1"),
-        ("Openrouter", "https://openrouter.ai/api/v1"),
-        ("Ollama", "http://localhost:11434/v1"),
+        ("Claude CLI (local auth)", "claude_code", "claude://local"),
+        ("Codex CLI (local auth)", "codex_cli", "codex://local"),
+        (openai_label, "openai", openai_base_url),
+        ("Google", "google", "https://generativelanguage.googleapis.com/v1"),
+        (anthropic_label, "anthropic", anthropic_base_url),
+        ("xAI", "xai", "https://api.x.ai/v1"),
+        ("Openrouter", "openrouter", "https://openrouter.ai/api/v1"),
+        ("Ollama", "ollama", "http://localhost:11434/v1"),
     ]
     
     choice = questionary.select(
         "Select your LLM Provider:",
         choices=[
-            questionary.Choice(display, value=(display.split(" ", 1)[0].lower(), value))
-            for display, value in BASE_URLS
+            questionary.Choice(display, value=(provider_key, value))
+            for display, provider_key, value in BASE_URLS
         ],
         instruction="\n- Use arrow keys to navigate\n- Press Enter to select",
         style=questionary.Style(
@@ -470,7 +513,7 @@ def select_llm_provider() -> tuple[str, str]:
     
     provider_key, url = choice
     display_name = next(
-        (display for display, candidate_url in BASE_URLS if candidate_url == url),
+        (display for display, _provider_key, candidate_url in BASE_URLS if candidate_url == url),
         provider_key,
     )
     print(f"You selected: {display_name}\tURL: {url}")
@@ -484,12 +527,62 @@ def build_llm_routing_config(
     deep_model: str,
     backend_url: Optional[str] = None,
 ) -> Dict[str, Any]:
+    provider_key = normalize_provider_key(provider)
+
+    if provider_key == "codex_cli":
+        default_route: Dict[str, Any] = {
+            "provider": provider_key,
+            "model": "gpt-5.4",
+            "reasoning_effort": "high",
+        }
+        if backend_url:
+            default_route["base_url"] = backend_url
+
+        xhigh_route = {
+            **default_route,
+            "reasoning_effort": "xhigh",
+        }
+
+        return {
+            "default": default_route,
+            "roles": {
+                "research_manager": xhigh_route.copy(),
+                "portfolio_manager": xhigh_route.copy(),
+                "chief_analyst": xhigh_route.copy(),
+            },
+        }
+
+    if provider_key == "claude_code":
+        default_route = {
+            "provider": provider_key,
+            "model": shallow_model,
+            "effort": "medium",
+        }
+        deep_route = {
+            "provider": provider_key,
+            "model": deep_model,
+            "effort": "high",
+        }
+
+        if backend_url:
+            default_route["base_url"] = backend_url
+            deep_route["base_url"] = backend_url
+
+        return {
+            "default": default_route,
+            "roles": {
+                "research_manager": deep_route.copy(),
+                "portfolio_manager": deep_route.copy(),
+                "chief_analyst": deep_route.copy(),
+            },
+        }
+
     default_route: Dict[str, Any] = {
-        "provider": provider.lower(),
+        "provider": provider_key,
         "model": shallow_model,
     }
     deep_route: Dict[str, Any] = {
-        "provider": provider.lower(),
+        "provider": provider_key,
         "model": deep_model,
     }
 
@@ -502,8 +595,31 @@ def build_llm_routing_config(
         "roles": {
             "research_manager": deep_route.copy(),
             "portfolio_manager": deep_route.copy(),
+            "chief_analyst": deep_route.copy(),
         },
     }
+
+
+def resolve_gateway_model_pair(
+    provider: str,
+    backend_url: Optional[str],
+    shallow_model: str,
+    deep_model: str,
+) -> tuple[str, str]:
+    provider_lower = normalize_provider_key(provider)
+    hostname = urlparse(backend_url).hostname if backend_url else None
+    is_non_native_openai = provider_lower == "openai" and bool(
+        hostname and hostname.lower() != "api.openai.com"
+    )
+
+    if (
+        is_non_native_openai
+        and shallow_model == deep_model
+        and shallow_model in _NON_NATIVE_OPENAI_HEAVY_MODELS
+    ):
+        return OPENAI_COMPATIBLE_QUICK_MODEL, deep_model
+
+    return shallow_model, deep_model
 
 
 def ask_openai_reasoning_effort() -> str:

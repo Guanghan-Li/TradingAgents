@@ -1,0 +1,57 @@
+{
+  "analysis_date": "2026-04-13",
+  "anthropic_effort": null,
+  "backend_url": "claude://local",
+  "catalysts": [
+    {
+      "catalyst": "AVGO Q2 FY26 Earnings",
+      "date_or_window": "~June 5, 2026",
+      "expected_impact": "AI revenue guidance, VMware synergy update, inventory commentary"
+    },
+    {
+      "catalyst": "Hyperscaler Earnings (GOOGL, META, MSFT, AMZN)",
+      "date_or_window": "Late April 2026",
+      "expected_impact": "Capex guidance for H2 2026; custom silicon commentary"
+    },
+    {
+      "catalyst": "FOMC June Meeting",
+      "date_or_window": "June 17\u201318, 2026",
+      "expected_impact": "Rate path clarity; recession risk assessment"
+    },
+    {
+      "catalyst": "TSMC Q2 Earnings & 3nm Yield Update",
+      "date_or_window": "Mid-July 2026",
+      "expected_impact": "Supply-chain health; advanced-node capacity"
+    },
+    {
+      "catalyst": "VMware Analyst Day (if scheduled)",
+      "date_or_window": "Q3 2026 (TBD)",
+      "expected_impact": "Long-term software synergy roadmap"
+    },
+    {
+      "catalyst": "Semiconductor Equipment Orders (SEMI)",
+      "date_or_window": "Monthly releases",
+      "expected_impact": "Leading indicator for chip cycle turn"
+    },
+    {
+      "catalyst": "U.S.-China Tech Policy Developments",
+      "date_or_window": "Ongoing",
+      "expected_impact": "Export control expansions; supply-chain risk"
+    }
+  ],
+  "chief_rating": "",
+  "chief_summary": "",
+  "chief_thesis": "",
+  "decision": "HOLD",
+  "deep_think_llm": "claude-sonnet-4-6",
+  "ended_at": "2026-04-13T11:45:33.585477",
+  "error": null,
+  "openai_reasoning_effort": null,
+  "provider": "claude_code",
+  "quick_think_llm": "claude-sonnet-4-6",
+  "results_dir": "results_batch/2026-04-13/AVGO",
+  "risk_summary": "```json\n{\n  \"rating\": \"UNDERWEIGHT\",\n  \"executive_summary\": \"Trim existing positions from 1.75% to 1.0-1.25% to lock in gains from the 28% rally. Set a tight trailing stop at $365 (10 EMA support). The current price of $377 sits at the floor of the base case range ($380-415, 50% probability), offering minimal upside with asymmetric downside risk. Technical indicators are at extremes: RSI 72, MACD at dataset highs, and volume declining post-breakout. While fundamentals remain strong (35% revenue from AI with 20%+ growth, margins expanding to 68% gross/45% operating), the risk/reward does not justify maintaining full exposure after a parabolic move. Re-evaluate scaling back toward 1.75-2.5% only after: (1) hyperscaler earnings in late April confirm stable/rising capex guidance, or (2) healthy consolidation above $360 with RSI reset below 65. Reserve the move to 3.5% target weight for either a pullback to $350-360 with fundamentals intact, or a volume-confirmed breakout above $400. Time horizon: 2-3 months until Q2 earnings (early June) provide clarity on AI revenue sustainability.\",\n  \"investment_thesis\": \"The Neutral analyst correctly identifies the core tension: this is not a binary choice between 'strong fundamentals' and 'extended technicals'\u2014it's about position sizing and entry discipline relative to probability-weighted outcomes. The structured scenario analysis reveals the critical flaw in the Aggressive analyst's argument: while the bull case (35% probability) offers 33-49% upside to $500-560, the base case (50% probability) targets $380-415, meaning current levels of $377 are already at fair value for the most likely outcome. The expected value calculation across all scenarios from here is flat to slightly negative, not bullish.\\n\\nThe Conservative analyst is correct that the technical setup is flashing warning signs. Volume on April 13 was 13.3M versus 30M+ on early April breakout days\u2014this is not 'healthy consolidation,' it's distribution. When RSI hits 72 after a 28% move in 10 days and MACD reaches the highest reading in the dataset, history says mean reversion is more likely than continuation. The technical report explicitly states 'DO NOT CHASE at current levels' and the trader's own recommendation is 'Take profits above $375.' We're at $377.\\n\\nHowever, the Aggressive analyst is right that the fundamental momentum is real and multi-year. The structured underwriting shows 35% of revenue from AI chips with 3-5 year contracted visibility from Google TPU and Meta. Operating margins jumped 300 bps in one quarter (42% to 45%), demonstrating VMware synergies are materializing. The company generates $25.5B in free cash flow with 36.6% net margins. This is not speculative\u2014it's a cash machine with pricing power.\\n\\nThe decisive evidence for UNDERWEIGHT rather than HOLD or SELL:\\n\\n1. **Probability-weighted math doesn't support full exposure here.** The base case (50% probability) shows we're already at the bottom of the fair value range. The bull case requires everything to go right\u2014hyperscaler capex acceleration, AI revenue above $15B annually, gross margins above 77%, and 800G design wins at 3+ customers. That's a 35% probability bet. The bear case (15% probability) targets $225-270, representing 40-28% downside. The asymmetry favors reducing exposure, not maintaining it.\\n\\n2. **The macro backdrop is deteriorating, not improving.** PPI spiked 2.08% MoM, CPI is sticky at 0.87%, and the macro report explicitly states 'the next move is more likely a hike than a cut.' The Fed's easing cycle is over. The 10-year yield at 4.29% may not be prohibitive for a company with $25.5B FCF, but it's a headwind for a stock at 73x PE. The RISK-ON regime has medium confidence, not high\u2014meaning it's fragile.\\n\\n3. **Customer concentration risk is underpriced.** The factor rules analysis flags 'major custom chip customer announces in-house alternative' as a high-severity invalidation trigger. Amazon already designs Trainium in-house. Microsoft is working with AMD. Google has been incrementally bringing TPU design internal. The Aggressive analyst dismisses this as 'tail risk,' but when 60% of AI revenue comes from 2-3 customers who are actively trying to reduce dependence, that's not a tail\u2014it's a structural vulnerability. The switching costs are high today, but the incentive to switch is enormous for hyperscalers.\\n\\n4. **The volume divergence is a red flag, not noise.** The Neutral analyst is correct that 'what happens next' with volume matters more than a single data point. But the pattern is clear: institutional volume dried up as the stock went parabolic. The technical report states 'smart money is stepping back while retail chases.' That's not a setup where you want to be maintaining full exposure.\\n\\n5. **The structured analysis itself recommends partial profit-taking.** The initial weight is 1.75% with a target of 3.5%, but the max loss is capped at 1.5% with a stop at $350. From $377, that's a 7.2% decline to hit the stop. If you're at 1.75% position size, that's a 0.13% portfolio hit\u2014well within budget. But the question is: why risk that 7.2% decline when the most likely outcome (base case, 50% probability) is sideways to 10% upside? The math says trim exposure and wait for better risk/reward.\\n\\nThe Neutral analyst's framework is sound: maintain discipline on when and how to scale. But they recommend HOLD at 1.75%, which ignores that we're already above the profit-taking level. The correct move is to trim to 1.0-1.25%, lock in gains from the 28% rally, and set a tighter stop at $365 (10 EMA) rather than $350 (50 SMA). By the time you're testing the 50 SMA, you've given back significant gains and the technical structure is broken.\\n\\n**Conditions to scale back toward 1.75-2.5%:**\\n\\n1. Hyperscaler earnings in late April (GOOGL, META, MSFT, AMZN) confirm capex guidance is stable or increasing. This validates the 35% revenue segment growth assumption and removes the biggest invalidation risk.\\n\\n2. The stock consolidates above $360 for 10+ trading days with RSI resetting below 65. This shows the rally can digest gains without breaking the uptrend.\\n\\n3. Q2 earnings in early June show AI revenue growth above 15% YoY with gross margins holding above 68%. This confirms the margin expansion story is sustainable and not just a one-quarter VMware synergy pop.\\n\\n**Conditions to scale to 3.5% target weight:**\\n\\n1. A pullback to $350-360 (50 SMA support) with the fundamental story intact. This offers the 10-15% margin of safety that's currently absent.\\n\\n2. A volume-confirmed breakout above $400 with RSI resetting and re-accelerating. This would signal the bull case is playing out and institutional money is re-engaging.\\n\\n**Invalidation triggers to exit entirely:**\\n\\n1. Hyperscaler capex cuts exceeding 15% aggregate in late April earnings.\\n2. AI revenue growth below 10% YoY for two consecutive quarters.\\n3. Gross margin compression below 76% for two quarters (signals VMware integration stumbling or pricing pressure).\\n4. A major custom chip customer (Google, Meta, Amazon) announces in-house alternative with production timeline.\\n5. Break below $340 (50 SMA) on rising volume\u2014this invalidates the bullish technical structure.\\n\\nThe trader's SELL recommendation is too aggressive given the fundamental strength and multi-year revenue visibility. But the Aggressive analyst's argument to maintain or add is FOMO masquerading as conviction. The Neutral analyst's HOLD is closer, but doesn't respect that we're at the explicit profit-taking level. UNDERWEIGHT is the disciplined middle ground: acknowledge the 28% rally was real, lock in partial gains, tighten risk management, and wait for either confirmation from catalysts or a better entry point. The opportunity cost of missing another 10% move is far lower than the risk of riding a 20-30% pullback after ignoring clear technical warnings and probability-weighted math that says fair value is here.\"\n}\n```",
+  "started_at": "2026-04-13T11:20:47.012443",
+  "status": "completed",
+  "ticker": "AVGO"
+}

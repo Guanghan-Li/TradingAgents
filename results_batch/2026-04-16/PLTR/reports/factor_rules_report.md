@@ -1,0 +1,13 @@
+Factor rule read-through for PLTR on 2026-04-16: the curated rule set is balanced but high-conviction on both sides, with one high-weight bullish AI demand rule and one high-weight bearish valuation-risk rule. The neutral balance sheet rule adds downside resilience but does not resolve the core growth-versus-valuation conflict.
+
+Strongest bullish signal: AI capex acceleration. This matters most if PLTR is showing rising backlog and stable margins while AI-related spending expands. Under that condition set, the rule supports the view that AI infrastructure and enterprise AI demand could sustain revenue growth and pricing power.
+
+Strongest bearish signal: valuation stretch under slowing growth. This is equally high weight and should be treated as the main cautionary overlay. It becomes especially important if forward growth guidance is revised lower or if the stock multiple expands faster than earnings expectations. In that setup, expectations may be outrunning fundamentals, increasing downside risk.
+
+Neutral resilience factor: balance sheet resilience. Net cash or modest leverage plus healthy free cash flow conversion would improve durability in drawdowns, especially if macro conditions tighten. This is supportive for risk management, but it is not enough by itself to justify a bullish conclusion if growth slows or valuation remains stretched.
+
+Key conflict: the bullish AI demand thesis and bearish valuation thesis can both be true at the same time. Downstream analysts should not treat AI exposure alone as sufficient; they should verify whether backlog, guidance, margins, earnings revisions, and valuation multiples are moving in a consistent direction.
+
+Missing information: current backlog trend, margin trajectory, updated forward guidance, earnings revision trend, valuation multiples versus history and peers, free cash flow conversion, net cash position, and recent market/news/macro evidence. Without these inputs, the factor rules indicate competing scenarios rather than a decisive directional call.
+
+Practical guidance: prioritize checking whether AI demand is translating into measurable backlog and revenue visibility, then compare that against valuation and earnings revision momentum. If backlog and margins are improving while revisions rise, the bullish rule deserves more weight. If guidance softens or multiples expand without earnings support, the bearish valuation rule should dominate the committee discussion.

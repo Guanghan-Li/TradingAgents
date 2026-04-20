@@ -1,0 +1,44 @@
+{
+  "analysis_date": "2026-04-16",
+  "anthropic_effort": null,
+  "backend_url": "codex://local",
+  "catalysts": [
+    {
+      "catalyst": "AMD earnings report and guidance",
+      "date_or_window": "May 2026",
+      "expected_impact": "Primary near-term catalyst for validating AI revenue ramp, margin progression, and forward EPS assumptions."
+    },
+    {
+      "catalyst": "MI450 product launch/timing updates",
+      "date_or_window": "2026 launch window; likely discussed in upcoming earnings/product events",
+      "expected_impact": "Concrete launch/adoption updates would support the bull case; delays or vague messaging would favor the bear case."
+    },
+    {
+      "catalyst": "TSMC demand and supply-chain follow-through",
+      "date_or_window": "April to May 2026",
+      "expected_impact": "Positive semiconductor foundry data helps confirm industry demand health and reduces supply-chain skepticism."
+    },
+    {
+      "catalyst": "US inflation and rates data cycle",
+      "date_or_window": "Late April to June 2026",
+      "expected_impact": "Higher inflation or long yields could cap valuation even if company execution remains solid."
+    }
+  ],
+  "chief_action": "Hold",
+  "chief_rating": "Neutral",
+  "chief_relative_stance": "Neutral",
+  "chief_summary": "Hold existing AMD exposure, but do not chase AMD at 278.26 after its run from 196.04 on 2026-03-30. If already long AMD, keep sizing controlled and trail thesis risk against the 255 to 258 zone; a decisive break there, especially with weak May 2026 earnings, softer MI450 commentary, or gross-margin slippage, is the signal to cut exposure. If flat AMD, wait for either a constructive consolidation above 269 with cooling volatility or a pullback into 255 to 258 that holds. Start no larger than the 2.5% initial weight, scale only toward the 6.5% target weight after a beat-and-raise in May 2026 confirms stronger AI and data-center monetization, and keep max portfolio loss near 0.5%. Time horizon: tactical through the May 2026 catalyst, with a 6 to 12 month follow-through only if execution validates the thesis.",
+  "chief_thesis": "The committee should not sell AMD because the fundamental evidence is too strong. The aggressive and neutral analysts are right that AMD's business quality improved materially: Data Center is 50% of revenue, Client is 24%, quarterly revenue climbed from 7.44B to 10.27B through 2025, Q4 gross margin recovered to 54.3%, Q4 free cash flow reached 2.38B, and AMD holds 10.55B of cash and short-term investments against 3.85B of debt. That is why the scenario map still leans constructive overall: Bull 30%, Base 50%, Bear 20%. The stock still deserves capital on watch, and existing exposure is justified.\n\nThe committee also should not buy or overweight AMD here because the entry is materially worse than the company. The conservative and neutral analysts are right on payoff asymmetry: AMD is at 278.26, TTM P/E is 106.61, RSI is 79.95, price is above the upper Bollinger Band, ATR is 10.44, and beta is about 1.96. In that setup, the 50% Base case is mostly AMD growing into the current price, not an easy additional rerating. That means even a merely in-line May 2026 result can disappoint because expectations have already moved up with the AI narrative, all-time highs, and momentum-heavy sentiment.\n\nThe clean synthesis of the debate is this: Rule 1, AI capex acceleration, is real and keeps AMD out of Sell; Rule 2, valuation stretch under slowing growth, is equally real and keeps AMD out of Buy; Rule 3, balance-sheet resilience, lowers fragility but does not justify pressing exposure by itself. With no prior mistake log provided, the right discipline is to separate company quality from entry quality. AMD is a strong company in a strong segment mix, but this exact spot is crowded and high expectation. Final committee decision: Hold AMD, stay Neutral, defend 255 to 258, and require proof before adding. The proof threshold is specific: May 2026 earnings must show stronger AI and data-center conversion, gross margin holding near or above 54.3%, forward EPS support around the 10.9 path or better, and concrete MI450 timing and customer adoption. If AMD delivers that, moving from 2.5% toward 6.5% becomes reasonable. If AMD misses those tests or loses 255 to 258 decisively, the right response is defense, not averaging down.",
+  "decision": "HOLD",
+  "deep_think_llm": "gpt-5.4",
+  "ended_at": "2026-04-16T15:12:21.693069",
+  "error": null,
+  "openai_reasoning_effort": "high",
+  "provider": "codex_cli",
+  "quick_think_llm": "gpt-5.4",
+  "results_dir": "results_batch/2026-04-16/AMD",
+  "risk_summary": "1. Absolute Action: Hold\n2. Relative Stance: Neutral\n3. Executive Summary: Hold existing AMD exposure, but do not chase AMD at 278.26 after its run from 196.04 on 2026-03-30. If already long AMD, keep sizing controlled and trail thesis risk against the 255 to 258 zone; a decisive break there, especially with weak May 2026 earnings, softer MI450 commentary, or gross-margin slippage, is the signal to cut exposure. If flat AMD, wait for either a constructive consolidation above 269 with cooling volatility or a pullback into 255 to 258 that holds. Start no larger than the 2.5% initial weight, scale only toward the 6.5% target weight after a beat-and-raise in May 2026 confirms stronger AI and data-center monetization, and keep max portfolio loss near 0.5%. Time horizon: tactical through the May 2026 catalyst, with a 6 to 12 month follow-through only if execution validates the thesis.\n4. Investment Thesis: The committee should not sell AMD because the fundamental evidence is too strong. The aggressive and neutral analysts are right that AMD's business quality improved materially: Data Center is 50% of revenue, Client is 24%, quarterly revenue climbed from 7.44B to 10.27B through 2025, Q4 gross margin recovered to 54.3%, Q4 free cash flow reached 2.38B, and AMD holds 10.55B of cash and short-term investments against 3.85B of debt. That is why the scenario map still leans constructive overall: Bull 30%, Base 50%, Bear 20%. The stock still deserves capital on watch, and existing exposure is justified.\n\nThe committee also should not buy or overweight AMD here because the entry is materially worse than the company. The conservative and neutral analysts are right on payoff asymmetry: AMD is at 278.26, TTM P/E is 106.61, RSI is 79.95, price is above the upper Bollinger Band, ATR is 10.44, and beta is about 1.96. In that setup, the 50% Base case is mostly AMD growing into the current price, not an easy additional rerating. That means even a merely in-line May 2026 result can disappoint because expectations have already moved up with the AI narrative, all-time highs, and momentum-heavy sentiment.\n\nThe clean synthesis of the debate is this: Rule 1, AI capex acceleration, is real and keeps AMD out of Sell; Rule 2, valuation stretch under slowing growth, is equally real and keeps AMD out of Buy; Rule 3, balance-sheet resilience, lowers fragility but does not justify pressing exposure by itself. With no prior mistake log provided, the right discipline is to separate company quality from entry quality. AMD is a strong company in a strong segment mix, but this exact spot is crowded and high expectation. Final committee decision: Hold AMD, stay Neutral, defend 255 to 258, and require proof before adding. The proof threshold is specific: May 2026 earnings must show stronger AI and data-center conversion, gross margin holding near or above 54.3%, forward EPS support around the 10.9 path or better, and concrete MI450 timing and customer adoption. If AMD delivers that, moving from 2.5% toward 6.5% becomes reasonable. If AMD misses those tests or loses 255 to 258 decisively, the right response is defense, not averaging down.",
+  "started_at": "2026-04-16T14:57:07.560019",
+  "status": "completed",
+  "ticker": "AMD"
+}

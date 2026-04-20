@@ -1,0 +1,9 @@
+For the simulated investment committee, my decision for AMZN is a disciplined **BUY**, not a full-size chase. The analyst pack is heavily aligned around strong fundamentals, improving operating leverage, positive AWS/AI optionality, constructive sentiment, and confirmed technical leadership. The main objection is entry quality: AMZN is extended near $249.70, with RSI above 70 and price near the upper Bollinger band, so the trade should be sized and staged rather than treated as a low-risk immediate accumulation.
+
+The reason I would upgrade from HOLD to BUY is that the risk/reward is still favorable when sized correctly. AMZN has strong revenue scale, rising profitability, forward EPS growth, sector-leading relative strength, and a supportive but not euphoric news backdrop across retail essentials, AWS connectivity, and Anthropic-related AI exposure. Macro is mixed because inflation and the paused Fed limit multiple expansion, but labor resilience and risk-on conditions still support AMZN's consumer and enterprise demand base.
+
+Execution plan: initiate or maintain a 2.0% AMZN starter position, with a target weight of 4.0% only if confirmation improves. Add on a controlled pullback toward $240-$235 if AMZN holds trend support and RSI cools, or add on a decisive close above $250-$253 with strong volume. Keep the maximum portfolio risk near 0.6%. Use a break below $234-$235 as the first risk-control trigger, and treat a loss of $225 with momentum deterioration as a major exit signal.
+
+The key lesson is to avoid confusing overbought with bearish. AMZN is stretched, but the trend, fundamentals, and sentiment do not support selling, and the probability-weighted scenario map favors participation. The correct response is staged exposure with tight discipline, not avoidance.
+
+FINAL TRANSACTION PROPOSAL: **BUY**

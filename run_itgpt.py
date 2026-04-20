@@ -77,17 +77,30 @@ def build_config(
     max_risk_discuss_rounds: int = 1,
 ) -> dict:
     from tradingagents.default_config import DEFAULT_CONFIG
+    from cli.utils import build_llm_routing_config, resolve_gateway_model_pair
 
     config = DEFAULT_CONFIG.copy()
+    quick_model, deep_model = resolve_gateway_model_pair(
+        "openai",
+        "https://api.itgpt.chat/v1",
+        "gpt-5.4",
+        "gpt-5.4",
+    )
     config.update(
         {
             "llm_provider": "openai",
             "backend_url": "https://api.itgpt.chat/v1",
-            "deep_think_llm": "gpt-5.4",
-            "quick_think_llm": "gpt-5.4",
+            "deep_think_llm": deep_model,
+            "quick_think_llm": quick_model,
             "openai_reasoning_effort": "xhigh",
             "max_debate_rounds": max_debate_rounds,
             "max_risk_discuss_rounds": max_risk_discuss_rounds,
+            "llm_routing": build_llm_routing_config(
+                provider="openai",
+                shallow_model=quick_model,
+                deep_model=deep_model,
+                backend_url="https://api.itgpt.chat/v1",
+            ),
         }
     )
     return config

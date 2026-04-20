@@ -1,5 +1,6 @@
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from tradingagents.agents.utils.agent_utils import (
+    add_educational_use_context,
     build_social_tools,
     build_instrument_context,
     has_social_sentiment_support,
@@ -10,6 +11,7 @@ def create_social_media_analyst(llm, social_sentiment_available: bool | None = N
     def social_media_analyst_node(state):
         current_date = state["trade_date"]
         instrument_context = build_instrument_context(state["company_of_interest"])
+        prefetched_context = (state.get("prefetched_context") or {}).get("social", "").strip()
 
         social_sentiment_enabled = social_sentiment_available
         if social_sentiment_enabled is None:
@@ -28,6 +30,7 @@ def create_social_media_analyst(llm, social_sentiment_available: bool | None = N
             + " Then use the get_news(query, start_date, end_date) tool to add company-specific news context. Provide specific, actionable insights with supporting evidence to help traders make informed decisions."
             + """ Make sure to append a Markdown table at the end of the report to organize key points in the report, organized and easy to read."""
         )
+        system_message = add_educational_use_context(system_message)
 
         prompt = ChatPromptTemplate.from_messages(
             [
@@ -51,9 +54,16 @@ def create_social_media_analyst(llm, social_sentiment_available: bool | None = N
         prompt = prompt.partial(current_date=current_date)
         prompt = prompt.partial(instrument_context=instrument_context)
 
-        chain = prompt | llm.bind_tools(tools)
-
-        result = chain.invoke(state["messages"])
+        if prefetched_context:
+            prompt = prompt.partial(
+                system_message=system_message
+                + f"\n\nUse this prefetched live social/news context as your primary evidence.\n\n{prefetched_context}"
+            )
+            chain = prompt | llm
+            result = chain.invoke(state["messages"])
+        else:
+            chain = prompt | llm.bind_tools(tools)
+            result = chain.invoke(state["messages"])
 
         report = ""
 

@@ -1,0 +1,17 @@
+Macro regime for META: soft-landing / late-cycle expansion with restrictive-but-stable policy and a positively sloped Treasury curve. The available live macro context does not show an imminent recession signal: unemployment is 4.30% as of 2026-03-01, down 0.10 pp sequentially, VIX is moderate at 18.36 as of 2026-04-14, and the 3m/10y curve is positive at roughly +59 bps. However, the long end remains elevated, with the 10y at 4.30% and 30y at 4.90%, which is a meaningful valuation headwind for long-duration growth equities like META.
+
+Policy view: the latest federal funds rate is 3.64% as of 2026-03-01 and unchanged sequentially. The curve suggests the market is not pricing an urgent easing cycle; front-end yields around 3.69%-3.71% are close to the policy rate, while longer maturities rise steadily. This points to a Fed that is likely on hold unless inflation or labor weakens materially. Because CPI, PPI, payrolls, and ISM data failed to fetch in the provided window, inflation persistence and growth momentum are the key unresolved macro risks.
+
+META implications: the macro backdrop is broadly supportive for ad demand and risk appetite if labor remains firm and volatility contained. A non-inverted curve and stable unemployment reduce near-term recession risk, which helps cyclical digital advertising revenue. The main offset is rates: a 10y yield above 4% and a 30y near 5% raise the discount rate applied to META's future cash flows and may compress multiples, especially if AI infrastructure capex remains high. Macro contribution to the investment debate is therefore constructive on fundamentals but not unambiguously bullish on valuation.
+
+Trading usable macro stance for META: mildly constructive / HOLD-to-positive bias from a macro-only lens. Upside macro scenario is stable labor plus lower inflation enabling Fed cuts and multiple expansion. Downside macro scenario is sticky inflation or renewed long-end yield pressure, which would hurt growth-stock multiples even if META execution remains strong.
+
+| Macro Signal | Latest Evidence | Regime Read | META / Market Implication |
+| --- | ---: | --- | --- |
+| Fed policy rate | Fed funds 3.64% on 2026-03-01, unchanged sequentially | Restrictive but stable | Supports risk assets if cuts remain optional, but limits valuation expansion while rates stay elevated |
+| Labor market | Unemployment 4.30% on 2026-03-01, down 0.10 pp | Still resilient | Positive for consumer spending and digital ad demand; recession risk not acute |
+| Treasury curve | 3m 3.71%, 10y 4.30%, 30y 4.90% | Positive slope, higher long-end term premium | No classic 3m/10y inversion recession warning, but high discount rates pressure META's multiple |
+| Volatility | VIX 18.36 on 2026-04-14, down 3.97% sequentially | Moderate risk appetite | Supportive for mega-cap tech positioning and liquidity conditions |
+| Inflation data | CPI and PPI unavailable in provided fetch | Key uncertainty | Sticky inflation would delay easing and pressure META valuation; softer inflation would be a major tailwind |
+| Growth data | Nominal GDP 31422.53B as of 2025-10-01; ISM unavailable | Growth not fully observable | Base case remains soft landing, but missing PMI/payrolls data limits conviction |
+| Fed calendar / path | FOMC calendar unavailable; recent rate path used as proxy | Hold-biased policy path | META likely remains sensitive to incoming CPI, payrolls, and long-end yield moves |

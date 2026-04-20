@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 from tradingagents.agents.utils.agent_utils import (
+    add_educational_use_context,
     build_instrument_context,
     get_sizing_fundamentals,
     get_sizing_indicator,
@@ -80,6 +81,7 @@ def create_position_sizing_analyst(llm):
         current_date = state["trade_date"]
         ticker = state["company_of_interest"]
         instrument_context = build_instrument_context(ticker)
+        prefetched_context = (state.get("prefetched_context") or {}).get("position_sizing", "").strip()
         current_dt = datetime.strptime(current_date, "%Y-%m-%d")
         start_date = (current_dt - timedelta(days=60)).strftime("%Y-%m-%d")
 
@@ -104,6 +106,7 @@ def create_position_sizing_analyst(llm):
             f"Use `{start_date}` as the default start date when requesting recent stock data unless the "
             "conversation requires a different window."
         )
+        system_message = add_educational_use_context(system_message)
 
         prompt = ChatPromptTemplate.from_messages(
             [
@@ -127,7 +130,14 @@ def create_position_sizing_analyst(llm):
         prompt = prompt.partial(current_date=current_date)
         prompt = prompt.partial(instrument_context=instrument_context)
 
-        chain = prompt | llm.bind_tools(tools)
+        if prefetched_context:
+            prompt = prompt.partial(
+                system_message=system_message
+                + f"\n\nUse this prefetched live position sizing context as your primary evidence.\n\n{prefetched_context}"
+            )
+            chain = prompt | llm
+        else:
+            chain = prompt | llm.bind_tools(tools)
         result = chain.invoke(state["messages"])
 
         tool_calls = getattr(result, "tool_calls", None) or []

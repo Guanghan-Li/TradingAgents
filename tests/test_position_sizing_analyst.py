@@ -1,4 +1,3 @@
-import json
 
 from tradingagents.graph.setup import GraphSetup
 from tradingagents.graph.trading_graph import TradingAgentsGraph

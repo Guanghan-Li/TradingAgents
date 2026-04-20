@@ -1,0 +1,9 @@
+{
+  "expected_return_pct": null,
+  "fair_value_range": {
+    "high": null,
+    "low": null
+  },
+  "primary_method": "parse_error",
+  "thesis": "# TSLA Valuation Analysis\n\n**Fair Value Range:** $180 - $280 per share\n\n**Expected Return:** -35% to -20% (downside risk from current levels around $353)\n\n**Primary Valuation Method:** Forward P/E comparison with auto sector peers and growth-adjusted multiples\n\n**Investment Thesis:**\n\nTesla is significantly overvalued at current levels. With a trailing P/E of 327.6x and forward P/E of 129.5x, the stock is priced for flawless execution and sustained hypergrowth that appears increasingly difficult to justify.\n\nKey concerns:\n\n1. **Valuation disconnect**: Even the forward P/E of 129x is roughly 10-15x higher than traditional auto manufacturers and 3-4x higher than high-growth tech companies with similar margins\n\n2. **Margin pressure**: 4% profit margin is thin for a company commanding such a premium multiple. Auto manufacturing is capital-intensive with structural margin constraints\n\n3. **Growth deceleration**: Revenue growth has slowed considerably from prior years while competition in EVs has intensified globally\n\n4. **Execution risk**: The valuation assumes successful deployment of autonomous driving, robotics, and energy storage at scale - all unproven at commercial scale\n\nUsing a more reasonable forward P/E of 40-50x (still generous for an auto manufacturer) on forward EPS of $2.73 suggests fair value in the $110-$137 range. Being more generous and assuming some premium for the energy/tech optionality brings the range to $180-$280.\n\n**Recommendation: SELL or significantly reduce exposure**\n\nThe risk/reward is unfavorable. Even in a bull case, upside is limited while downside to fair value represents 35-50% decline risk."
+}

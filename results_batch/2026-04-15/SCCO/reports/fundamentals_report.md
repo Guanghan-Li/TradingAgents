@@ -1,0 +1,50 @@
+Southern Copper Corporation (`SCCO`) fundamental report based on the prefetched live fundamentals context dated April 15, 2026.
+
+Southern Copper is a large-cap copper producer in the Basic Materials sector with a market capitalization of about $156.4 billion. The company is currently being valued as a high-quality, high-margin copper franchise rather than a deep-value miner: `P/E 36.4x`, `forward P/E 30.7x`, `price/book 14.2x`, inferred `price/sales ~11.7x`, and inferred `EV/EBITDA ~20.1x`. That valuation is rich for a cyclical commodity business, so the key question for traders is whether operating momentum and copper-cycle strength are durable enough to justify that premium.
+
+From a business-quality standpoint, the latest numbers are very strong. `SCCO` generated `TTM revenue $13.42B`, `gross profit $8.17B`, `EBITDA $7.90B`, `net income $4.33B`, and `free cash flow $3.34B`. Margins remain exceptional: `gross margin ~60.9%`, `operating margin 54.5%`, `net margin 32.3%`, and inferred `FCF margin ~24.9%`. Profitability metrics are also unusually high, with `ROE 42.7%` and `ROA 21.8%`. For a mining company, those are standout returns and imply strong asset quality, favorable realized pricing, and tight cost control.
+
+The latest quarterly trend is also favorable. In `Q4 2025`, revenue was `3.87B`, up about `14.6%` sequentially from `Q3 2025` and about `39.0%` year over year from `Q4 2024`. Net income in `Q4 2025` was `1.31B`, up about `18.1%` sequentially and `64.7%` year over year. Diluted EPS rose to `1.55` from `1.33` in the prior quarter and `0.97` a year earlier. EBITDA increased to `2.36B` from `2.02B` in `Q3` and `1.55B` in `Q4 2024`. This is not a marginal improvement; it shows clear earnings acceleration into year-end 2025.
+
+Quarterly operating efficiency stayed very high. `Q4 2025` gross profit was `2.17B` on `3.87B` of revenue, implying a `56.0%` gross margin. Operating income was `2.11B`, implying a `54.5%` operating margin. Net margin was about `33.8%`. Those levels suggest the company still has substantial operating leverage to copper prices and a cost position that remains highly competitive. SG&A is very small relative to revenue, only `39.9M` in `Q4 2025`, reinforcing that most of the investment case is driven by production economics rather than overhead efficiency programs.
+
+Cash generation supports the earnings story. Operating cash flow was `1.49B` in `Q4 2025`, and free cash flow was `1.07B` after `422.6M` of capex. Over the last five reported quarters, free cash flow was `1.125B`, `403.6M`, `741.1M`, `1.2104B`, and `1.0717B`. That pattern shows some volatility, but the direction improved materially through the back half of 2025. `Q4 2025` FCF conversion was about `82%` of net income, which is solid given the capital intensity of mining. On a TTM basis, `FCF yield` against market cap is only about `2.1%`, which again highlights that strong fundamentals are already heavily capitalized into the stock.
+
+Balance sheet quality is good and improved through 2025. At `2025-12-31`, total debt was `7.41B`, cash plus short-term investments was `4.91B`, and net debt was `2.45B`. That implies `net debt/EBITDA ~0.31x` and `total debt/EBITDA ~0.94x`, both conservative. Liquidity is strong: `current ratio 3.89`, working capital `6.21B`, and cash plus short-term investments cover current liabilities by about `2.29x`. Net debt also declined from `3.00B` at `2024-12-31` to `2.45B` at `2025-12-31`, so leverage moved in the right direction even while dividends remained large.
+
+The asset base continues to expand. Total assets increased from `18.71B` at `2024-12-31` to `21.38B` at `2025-12-31`. Net PPE rose to `11.05B` from `10.70B`, and construction in progress was `1.82B` in the latest quarter, indicating active reinvestment. Equity also grew, with stockholders' equity rising from `9.17B` to `11.04B` over the same period. This combination of rising asset base, rising equity, and falling net debt is fundamentally constructive.
+
+There are, however, a few items traders should watch closely. First, receivables rose sharply to `2.02B` from `1.24B` a year earlier. Some of that likely reflects higher sales volumes and pricing, but it is still a meaningful working-capital swing that deserves monitoring if copper prices soften. Second, current liabilities jumped to `2.15B` from `1.33B` in the prior quarter, mainly from payables/accruals and taxes payable. Liquidity easily covers this, but it is evidence that cash generation can still move around with working-capital timing. Third, diluted average shares increased to `845.3M` from `823.2M` a year earlier, so per-share growth has not benefited from meaningful share-count shrinkage.
+
+Capital allocation remains shareholder-friendly but is not cheap. Dividend payments were heavy across 2025: `553.3M`, `557.4M`, `643.3M`, and `731.1M` by quarter, totaling roughly `2.49B` over the year. The indicated dividend yield is `2.07%`, which is reasonable but not especially high relative to the stock's premium valuation and cyclical exposure. The positive interpretation is that `SCCO` has enough cash flow to fund both dividends and capex while still reducing net leverage. The cautious interpretation is that payout support may be less protective if copper prices normalize downward.
+
+Relative performance shows the market has already recognized the improving fundamentals. `SCCO` outperformed the sector ETF `XLB` by `+1.85%` over one week, `+2.60%` over one month, `+4.05%` over three months, `+28.45%` over six months, and `+17.05%` YTD. The stock is up `46.04%` over six months and `28.95%` YTD. That confirms strong momentum, but it also raises the bar for future results. When a miner is both operationally strong and expensive, traders need continued commodity support and clean execution to avoid multiple compression.
+
+The macro backdrop is mixed but still broadly supportive. Rates have eased versus late 2025, with the effective fed funds rate at `3.64%`, and the yield curve is upward sloping with a `2Y-10Y spread of +0.50%`, which is typically consistent with normal growth expectations. Unemployment is `4.3%`, payroll growth remains positive, and VIX at `18.36` suggests a manageable risk backdrop. Inflation metrics are still rising, with CPI up `0.87%` sequentially and PPI up `1.78%`, which can matter for mining input costs. Still, `SCCO`'s current margins are wide enough that modest cost inflation is unlikely to be the primary near-term risk; copper price direction is more important.
+
+Actionable takeaways for traders:
+
+1. Fundamentally, `SCCO` is strong. Earnings, EBITDA, free cash flow, liquidity, and leverage all support a bullish quality assessment.
+2. The latest quarter was clearly better both sequentially and year over year, so the near-term earnings trend is positive rather than merely stable.
+3. The stock is expensive on earnings, book, sales, and cash-flow yield versus what traders usually pay for a cyclical miner. That means future upside likely depends on copper staying strong and on management sustaining exceptional margins.
+4. Balance sheet risk is low. If traders want copper exposure with less financial-stress risk, `SCCO` screens well.
+5. The main fundamental watch items are receivables growth, working-capital volatility, and whether elevated dividends remain fully supported if pricing cools.
+
+Bottom line: the fundamental picture for `SCCO` is strong and improving, but the stock already reflects much of that strength. For traders, this is a high-quality momentum-backed copper name with low leverage and elite margins, but it is no longer a cheap cyclical. The bull case is continued copper strength and sustained margin leadership; the bear case is valuation compression if commodity pricing or working-capital quality slips.
+
+| Category | Key Points |
+|---|---|
+| Company Profile | `SCCO` is a large-cap copper producer in Basic Materials/Copper with market cap `~$156.4B` and beta `1.17`. |
+| Valuation | `P/E 36.4x`, `forward P/E 30.7x`, `P/B 14.2x`, inferred `P/S ~11.7x`, inferred `EV/EBITDA ~20.1x`; valuation is premium for a cyclical miner. |
+| TTM Financials | Revenue `13.42B`, gross profit `8.17B`, EBITDA `7.90B`, net income `4.33B`, free cash flow `3.34B`. |
+| Profitability | Gross margin `~60.9%`, operating margin `54.5%`, net margin `32.3%`, ROE `42.7%`, ROA `21.8%`; profitability is exceptionally strong. |
+| Latest Quarter | `Q4 2025` revenue `3.87B` `(+14.6% QoQ, +39.0% YoY)`, net income `1.31B` `(+18.1% QoQ, +64.7% YoY)`, diluted EPS `1.55`. |
+| Cash Flow | `Q4 2025` operating cash flow `1.49B`, capex `422.6M`, free cash flow `1.07B`; TTM FCF margin `~24.9%`. |
+| Balance Sheet | Cash plus short-term investments `4.91B`, total debt `7.41B`, net debt `2.45B`, current ratio `3.89`, working capital `6.21B`; liquidity is strong. |
+| Leverage | Inferred `net debt/EBITDA ~0.31x` and `total debt/EBITDA ~0.94x`; leverage is conservative. |
+| Capital Allocation | Dividend yield `2.07%`; quarterly dividends were consistently large through 2025, totaling roughly `2.49B` for the year. |
+| Growth / Reinvestment | Total assets rose to `21.38B`, net PPE to `11.05B`, and construction in progress to `1.82B`, showing continued investment. |
+| Watch Items | Receivables rose to `2.02B` from `1.24B` YoY; current liabilities increased in `Q4 2025`; diluted share count also drifted higher YoY. |
+| Relative Performance | Stock beat `XLB` across 1W, 1M, 3M, 6M, and YTD; strongest alpha was `+28.45%` over 6 months. |
+| Macro Context | Fed funds `3.64%`, normal upward-sloping yield curve, moderate volatility, and still-rising inflation; generally supportive but commodity pricing remains the core driver. |
+| Trader Readthrough | Strong fundamentals and low balance-sheet risk support the name, but premium valuation leaves less room for disappointment. |

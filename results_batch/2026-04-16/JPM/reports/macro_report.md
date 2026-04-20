@@ -1,0 +1,18 @@
+Macro view for `JPM`: the backdrop looks like a soft-landing / mild reflation regime, not a recession regime. Labor is still firm (`4.3%` unemployment, `+178k` payrolls), policy has eased from late 2025 but is now paused (`3.64%` effective fed funds in February and March 2026), and the Treasury curve has re-steepened materially (`2Y-10Y +53 bp`). That combination is generally constructive for `JPM` because a positively sloped curve supports core lending economics and credit conditions are not yet signaling a broad deterioration.
+
+The main macro complication for `JPM` is inflation stickiness. Headline CPI and PPI both accelerated sequentially in the latest print, while the long end has backed up (`10Y 4.29%`, `30Y 4.89%`). That argues for a slower Fed cutting path than a pure disinflation story would imply. For `JPM`, this is a mixed but still net constructive setup: better net interest income and loan pricing from a normal curve, but higher long rates can tighten financial conditions, pressure rate-sensitive activity, and create mark-to-market/duration headwinds if bond volatility rises.
+
+Policy path: the Fed has already delivered meaningful easing from `4.09%` in October 2025 to `3.64%` by January 2026, then paused. Given firm labor and sticky inflation, the most likely near-term regime is hold/data dependence rather than rapid additional cuts. That lowers immediate recession risk for `JPM`, but it also means upside probably depends more on execution, loan growth, fee momentum, and credit discipline than on a fresh policy tailwind.
+
+Cross-asset implications for `JPM`: supportive for financials versus long-duration growth, supportive for credit if labor stays intact, and mildly bearish for long Treasuries given the steep curve and inflation persistence. Key risks other analysts should incorporate for `JPM` are: inflation re-acceleration forcing a more hawkish Fed pause, a growth rollover after policy easing has already run its course, and higher term yields hurting issuance/M&A/risk appetite even if bank NII initially benefits.
+
+| Macro Signal | Latest Read | Regime Read | Market Implication | `JPM` Implication |
+| --- | --- | --- | --- | --- |
+| Fed policy | Effective fed funds `3.64%` (unchanged in Feb-Mar 2026) | Fed pause after prior easing | Fewer near-term cuts, policy stays data dependent | Stable funding backdrop; less new easing tailwind |
+| Inflation | CPI `330.29` and PPI `274.10`, both up sequentially | Inflation still sticky | Higher long-end rate risk, cuts delayed | Good for asset yields/NII, but raises volatility and activity risk |
+| Labor | Unemployment `4.3%`, payrolls `+178k` | Labor market still resilient | Supports credit and consumption | Positive for credit quality and loan demand |
+| Yield curve | `2Y-10Y +0.53%`, upward sloping | Normal / non-recessionary curve | Better signal for banks than inversion | Positive for margin structure and lending economics |
+| Long rates | `10Y 4.29%`, `30Y 4.89%` | Term premium elevated | Pressure on duration assets and rate-sensitive sectors | Mixed: helps lending spreads, can weigh on capital markets/duration |
+| Volatility | VIX `18.17` | Contained risk sentiment | Risk assets still functional | Supportive for trading/IB if volatility stays orderly |
+| Growth signal | GDP level still rising; recession signal absent from curve | Soft landing / late cycle | Cyclicals and financials favored over defensives/long duration | Net constructive macro setup for `JPM` |
+| Key risk | Sticky inflation plus tighter financial conditions | Reflation scare / delayed cuts | Bonds pressured, equity leadership narrows | Watch credit normalization, issuance slowdown, valuation sensitivity |

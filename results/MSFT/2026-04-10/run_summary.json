@@ -1,0 +1,20 @@
+{
+  "analysis_date": "2026-04-10",
+  "backend_url": "https://api.itgpt.chat/v1",
+  "catalysts": [],
+  "chief_rating": "Buy",
+  "chief_summary": "",
+  "chief_thesis": "",
+  "decision": "BUY",
+  "deep_think_llm": "gpt-5.4",
+  "ended_at": "2026-04-10T00:18:10.381141",
+  "error": null,
+  "openai_reasoning_effort": "high",
+  "provider": "openai",
+  "quick_think_llm": "gpt-5-mini",
+  "results_dir": "results/MSFT/2026-04-10",
+  "risk_summary": "",
+  "started_at": "2026-04-10T00:18:10.380659",
+  "status": "completed",
+  "ticker": "MSFT"
+}

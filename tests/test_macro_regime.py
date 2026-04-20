@@ -32,6 +32,10 @@ def _mock_download_for_risk_on(symbols, **_kwargs):
     return pd.concat({"Close": frame}, axis=1)
 
 
+def _mock_fetch_download_frame(symbols, timeout_seconds=30, **kwargs):
+    return _mock_download_for_risk_on(symbols, **kwargs)
+
+
 def test_signal_vix_level_thresholds():
     from tradingagents.dataflows.macro_regime import _signal_vix_level
 
@@ -41,7 +45,10 @@ def test_signal_vix_level_thresholds():
 
 
 def test_classify_macro_regime_returns_risk_on_for_mocked_risk_on_data():
-    with patch("yfinance.download", side_effect=_mock_download_for_risk_on):
+    with patch(
+        "tradingagents.dataflows.macro_regime.fetch_download_frame",
+        side_effect=_mock_fetch_download_frame,
+    ):
         from tradingagents.dataflows.macro_regime import classify_macro_regime
 
         regime = classify_macro_regime()
@@ -51,7 +58,10 @@ def test_classify_macro_regime_returns_risk_on_for_mocked_risk_on_data():
 
 
 def test_classify_macro_regime_returns_required_keys_and_six_signals():
-    with patch("yfinance.download", side_effect=_mock_download_for_risk_on):
+    with patch(
+        "tradingagents.dataflows.macro_regime.fetch_download_frame",
+        side_effect=_mock_fetch_download_frame,
+    ):
         from tradingagents.dataflows.macro_regime import classify_macro_regime
 
         regime = classify_macro_regime()
@@ -63,11 +73,14 @@ def test_classify_macro_regime_returns_required_keys_and_six_signals():
 def test_classify_macro_regime_uses_curr_date_for_download_window():
     calls = []
 
-    def fake_download(symbols, **kwargs):
+    def fake_download(symbols, timeout_seconds=30, **kwargs):
         calls.append(kwargs)
-        return _mock_download_for_risk_on(symbols, **kwargs)
+        return _mock_fetch_download_frame(symbols, timeout_seconds=timeout_seconds, **kwargs)
 
-    with patch("yfinance.download", side_effect=fake_download):
+    with patch(
+        "tradingagents.dataflows.macro_regime.fetch_download_frame",
+        side_effect=fake_download,
+    ):
         from tradingagents.dataflows.macro_regime import classify_macro_regime
 
         classify_macro_regime("2026-03-17")

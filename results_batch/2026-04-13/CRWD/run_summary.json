@@ -1,0 +1,52 @@
+{
+  "analysis_date": "2026-04-13",
+  "anthropic_effort": null,
+  "backend_url": "claude://local",
+  "catalysts": [
+    {
+      "catalyst": "Q1 FY2026 Earnings",
+      "date_or_window": "Late April / Early May 2026",
+      "expected_impact": "High \u2013 will validate/invalidate profitability trajectory"
+    },
+    {
+      "catalyst": "Project Glasswing Product Reveal",
+      "date_or_window": "Q2 2026 (May\u2013July)",
+      "expected_impact": "Medium \u2013 AI-security differentiation"
+    },
+    {
+      "catalyst": "Next FOMC Meeting",
+      "date_or_window": "May 6\u20137, 2026",
+      "expected_impact": "Low-Medium \u2013 rate stability supports growth stocks"
+    },
+    {
+      "catalyst": "Cybersecurity Sector Conference (RSA)",
+      "date_or_window": "Late April 2026",
+      "expected_impact": "Low \u2013 competitive positioning updates"
+    },
+    {
+      "catalyst": "Debt Refinancing Window",
+      "date_or_window": "H2 2026",
+      "expected_impact": "Medium if rates rise further"
+    },
+    {
+      "catalyst": "Q2 FY2026 Earnings",
+      "date_or_window": "Late July / Early August 2026",
+      "expected_impact": "High \u2013 confirms sustainability of margin expansion"
+    }
+  ],
+  "chief_rating": "",
+  "chief_summary": "",
+  "chief_thesis": "",
+  "decision": "BUY",
+  "deep_think_llm": "claude-sonnet-4-6",
+  "ended_at": "2026-04-13T11:16:38.394530",
+  "error": null,
+  "openai_reasoning_effort": null,
+  "provider": "claude_code",
+  "quick_think_llm": "claude-sonnet-4-6",
+  "results_dir": "results_batch/2026-04-13/CRWD",
+  "risk_summary": "```json\n{\n  \"rating\": \"Overweight\",\n  \"executive_summary\": \"Enter 1.75% position at current levels (~$402) with stop at $380 (1x ATR buffer, not $395) to avoid volatility whipsaw. Scale to 3.5% target weight only if Q1 earnings (late April) confirms operating margin >3% AND revenue growth >20%. Exit immediately if 10Y yield >4.5%, customer churn >6%, or competitive share loss evident in earnings commentary. Time horizon: 3-6 months with active management around Q1/Q2 earnings catalysts. This is a staged entry on MODERATE conviction, not a strong conviction buy.\",\n  \"investment_thesis\": \"The neutral analyst has the clearest read: both bull and bear cases are partially correct, which is exactly why the structured data assigns MODERATE conviction and recommends staged entry.\\n\\n**What the Aggressive Analyst Gets Right:**\\n- Deferred revenue +25-34% YoY is genuine customer commitment, not accounting noise\\n- Revenue growth accelerating from 4.2% to 23.3% over four consecutive quarters\\n- FCF margin at 33% ($1.6B on $4.8B revenue) proves unit economics work\\n- Stock down 39.5% from highs while Wall Street sees 15% upside creates asymmetry\\n- Technical setup: price reclaimed 10 EMA at $399.88 after RSI divergence\\n\\n**What the Conservative Analyst Gets Right:**\\n- One quarter at 1.1% operating margin is not a profitability track record\\n- 65x forward P/E leaves zero room for execution stumbles\\n- The $395 stop is fatally flawed: with ATR at $21.59 (up 21% in 7 days), a stop 1.7% away will get hit by normal volatility, not thesis invalidation\\n- Macro fragility: 10Y at 4.29%, PPI at 2.08%, only 21 bps to the 4.5% exit trigger\\n- Competitive pressure from PANW and MSFT is ongoing with vague measurement\\n\\n**The Critical Insight from Neutral Analyst:**\\nThe trader's plan has the right structure but two flaws: (1) $395 stop is too tight for $21.59 ATR, and (2) scaling conditions need to be tied to Q1 earnings fundamentals, not just technical levels. A 1x ATR buffer puts the stop at $380 (5.5% downside). At 1.75% position size, that's 9.6 basis points of portfolio risk\u2014acceptable for MODERATE conviction.\\n\\n**Why This Trade Works:**\\n\\nThe structured scenario analysis shows:\\n- Base case (50%): $420-480 = 4-19% upside\\n- Bull case (30%): $550-600 = 37-49% upside\\n- Bear case (20%): $320-360 = 20-30% downside\\n- Expected value: ~13.65%\\n\\nThis is positive but not overwhelming, which is why we stage the position. The 1.75% initial size captures the current dislocation (stock down 39.5%, deferred revenue growing 25-34%, FCF at 33%) while respecting the reality that one quarter of 1.1% operating margin doesn't prove sustainability.\\n\\n**The Q1 Earnings Gate (Late April/Early May):**\\n\\nThis is the binary catalyst that resolves the bull vs. bear debate. The structured catalyst map rates it \\\"High confidence\\\" and \\\"High impact.\\\" If operating margin expands to >3% AND revenue growth sustains >20%, that validates the profitability inflection and justifies scaling to 3.5%. If either metric disappoints, exit immediately\u2014no questions asked.\\n\\nThe deferred revenue growth is the key leading indicator. If it's sustained above 20% in Q1, that confirms organic demand rather than recovery-driven pull-forward from the July 2024 outage. Combined with operating margin >3%, that would prove the business model is scaling profitably.\\n\\n**Risk Management Framework:**\\n\\n1. **Stop at $380 (not $395)**: 1x ATR buffer prevents getting shaken out by noise while still limiting downside to 5.5%\\n2. **10Y yield >4.5%**: Macro exit trigger regardless of fundamentals\u2014duration risk overwhelms the thesis\\n3. **Customer churn >6%**: Current retention is 95%; any deterioration to 94% invalidates the thesis\\n4. **Competitive share loss**: Watch Q1 earnings call for defensive commentary on win rates or deal cycles\\n5. **Q2 earnings (late July)**: If Q1 confirms the inflection, Q2 must show sustained margin expansion >3% to justify holding full 3.5% weight\\n\\n**Profit-Taking Discipline:**\\n- $420-430 (first resistance): Take 25% off to lock in 4-7% gain\\n- $480 (second resistance): Reduce back to 1.75% if Q2 guidance is soft\\n- $550-600 (bull target): Only hold for this if profitability proves sustainable over 2+ quarters\\n\\n**Why OVERWEIGHT, Not BUY:**\\n\\nThe rating scale defines Buy as \\\"strong conviction to enter or add\\\" and Overweight as \\\"favorable outlook, gradually increase exposure.\\\" The structured data assigns MODERATE conviction, not strong. We have one quarter of profitability, elevated volatility (ATR up 21%), and a 65x forward P/E that assumes perfection. This is a favorable setup with asymmetric risk-reward, but it requires staged entry with Q1 confirmation before committing full target weight.\\n\\n**What Would Make Me Wrong:**\\n- Q1 earnings shows operating margin <3% or revenue growth <20%\\n- Deferred revenue growth decelerates below 20%\\n- Customer churn disclosed >6%\\n- Competitive share loss evident in earnings commentary\\n- 10Y yield breaks 4.5%\\n- Project Glasswing delayed or security incident tied to AI models\\n\\n**Bottom Line:**\\n\\nThe trader's core thesis is sound: deferred revenue growth, FCF generation, and operating leverage are moving in the right direction, and the 39.5% drawdown has created a dislocation. But the execution needs refinement. Enter at 1.75% with a $380 stop (not $395), demand Q1 earnings proof before scaling to 3.5%, and manage actively around the Q1/Q2 catalysts. This is a conditional overweight with strict risk management\u2014not a leap of faith, but not a wait-and-see either. The structured position sizing framework already told us 1.75% initial weight is appropriate for MODERATE conviction. We're following that guidance while tightening the risk controls.\"\n}\n```",
+  "started_at": "2026-04-13T10:52:11.009252",
+  "status": "completed",
+  "ticker": "CRWD"
+}

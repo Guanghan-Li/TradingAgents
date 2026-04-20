@@ -1,3 +1,6 @@
+from tradingagents.agents.utils.agent_utils import add_educational_use_context
+
+
 def create_pm_risk_manager(llm, memory):
     def risk_manager_node(state) -> dict:
         market_question = state["market_question"]
@@ -20,7 +23,7 @@ def create_pm_risk_manager(llm, memory):
         else:
             past_memory_str = "No past memories found."
 
-        prompt = f"""As the Risk Management Judge for prediction markets, your goal is to evaluate the debate between three risk analysts -- Aggressive, Neutral, and Conservative -- and determine the best course of action for the trader's proposed position on:
+        prompt = add_educational_use_context(f"""As the Risk Management Judge for prediction markets, your goal is to evaluate the debate between three risk analysts -- Aggressive, Neutral, and Conservative -- and determine the best course of action for the trader's proposed position on:
 
 MARKET QUESTION: {market_question}
 
@@ -59,7 +62,7 @@ Deliverables:
 
 Focus on actionable insights and continuous improvement. Build on past lessons, critically evaluate all perspectives, and ensure each decision advances better outcomes.
 
-Always conclude your response with 'FINAL TRADE DECISION: **BUY_YES/BUY_NO/PASS**' to confirm your recommendation."""
+Always conclude your response with 'FINAL TRADE DECISION: **BUY_YES/BUY_NO/PASS**' to confirm your recommendation.""")
 
         response = llm.invoke(prompt)
 

@@ -1,4 +1,5 @@
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from tradingagents.agents.utils.agent_utils import add_educational_use_context
 
 from tradingagents.prediction_market.agents.utils.pm_agent_utils import (
     get_news,
@@ -33,6 +34,7 @@ def create_information_analyst(llm):
             "and insights that may help traders make decisions."
             """ Make sure to append a Markdown table at the end of the report to organize key points in the report, organized and easy to read."""
         )
+        system_message = add_educational_use_context(system_message)
 
         prompt = ChatPromptTemplate.from_messages(
             [

@@ -1,0 +1,7 @@
+GLD merits a selective `BUY`, not an aggressive chase. The strongest evidence is that `GLD` remains well above its 200-day trend, has recovered above its 10-day EMA, RSI has normalized near neutral, ATR is cooling, inflation remains sticky, and gold is holding firm even in a broader risk-on environment. That combination supports initiating exposure because the long-term trend is still intact and the macro backdrop is mildly favorable for a gold hedge.
+
+The main reason not to upgrade this to a full-size aggressive buy is that `GLD` is still below its 50-day area near `450`, MACD is still negative, and rebound volume has lagged the March liquidation volume. That means confirmation is incomplete. The practical move is staged accumulation: start with a partial position now, add only if `GLD` reclaims and holds the `445` to `450` zone, and reduce exposure if it loses the `435` to `436` support area, especially if accompanied by a stronger dollar or rising real-yield pressure.
+
+On balance, the committee evidence favors acting rather than waiting. Technicals are improving, macro is neutral-to-supportive, sentiment is modestly bullish, and the world-affairs overlay adds a live geopolitical hedge bid. The correct posture is a controlled entry with disciplined scaling, not a passive hold.
+
+FINAL TRANSACTION PROPOSAL: **BUY**

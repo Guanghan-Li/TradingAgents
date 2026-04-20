@@ -1,6 +1,7 @@
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 from tradingagents.agents.utils.agent_utils import (
+    add_educational_use_context,
     build_instrument_context,
     get_economic_indicators,
     get_fed_calendar,
@@ -12,6 +13,7 @@ def create_macro_analyst(llm):
     def macro_analyst_node(state):
         current_date = state["trade_date"]
         instrument_context = build_instrument_context(state["company_of_interest"])
+        prefetched_context = (state.get("prefetched_context") or {}).get("macro", "").strip()
 
         tools = [
             get_economic_indicators,
@@ -30,6 +32,7 @@ def create_macro_analyst(llm):
             " Append a Markdown table that summarizes the major macro signals and their "
             "market implications."
         )
+        system_message = add_educational_use_context(system_message)
 
         prompt = ChatPromptTemplate.from_messages(
             [
@@ -53,7 +56,14 @@ def create_macro_analyst(llm):
         prompt = prompt.partial(current_date=current_date)
         prompt = prompt.partial(instrument_context=instrument_context)
 
-        chain = prompt | llm.bind_tools(tools)
+        if prefetched_context:
+            prompt = prompt.partial(
+                system_message=system_message
+                + f"\n\nUse this prefetched live macro context as your primary evidence.\n\n{prefetched_context}"
+            )
+            chain = prompt | llm
+        else:
+            chain = prompt | llm.bind_tools(tools)
         result = chain.invoke(state["messages"])
 
         report = ""

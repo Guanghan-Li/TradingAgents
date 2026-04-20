@@ -1,0 +1,7 @@
+High-conviction signals are split. The strongest bullish rule is AI capex acceleration: it is high weight and would support a positive view if NOW is seeing rising backlog and stable margins while investment increases. The strongest bearish rule is valuation stretch under slowing growth: it is also high weight and becomes the key risk if forward growth guidance is cut or if the multiple has run ahead of earnings revisions.
+
+The neutral balance sheet resilience rule is an important secondary offset. Strong cash generation and a solid balance sheet would not make the name outright bullish on their own, but they can reduce drawdown risk if macro conditions tighten.
+
+What matters most is that the two highest-weight rules directly conflict. The rule set does not provide current evidence on whether NOW actually has rising backlog, stable margins under higher capex, lower forward guidance, or valuation expansion versus earnings. It also does not confirm how directly NOW benefits from AI infrastructure demand, which is a key applicability question for the bullish rule.
+
+Practical guidance for downstream analysts: verify four items before taking a directional view: backlog trend, capex versus margin stability, any change in forward growth guidance, and whether valuation has outpaced earnings revisions. Until those checks are resolved, the factor read is balanced, with resilience as a cushion but valuation risk as the main reason not to lean aggressively bullish.

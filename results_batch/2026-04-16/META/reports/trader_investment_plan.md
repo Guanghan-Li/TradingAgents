@@ -1,0 +1,7 @@
+META merits a tactical `BUY`, but only as a staged entry. The core underwriting is stronger than the near-term chart: META has elite profitability, strong cash generation, improving relative performance, constructive AI/ad narrative, and a more reasonable forward valuation than the trailing P/E suggests after the tax-distorted 2025-09 quarter. The bullish case is not clean enough for an aggressive full-size entry because price is stretched into the `680-683` resistance zone near the 200-day SMA, RSI is elevated, and oil/inflation/rates risk can still compress multiples into earnings on `2026-04-29`.
+
+Best implementation is to start partial exposure now rather than chase size. Initiate around the modeled `4.0%` weight, then add only if META either closes decisively above `680-683` with volume confirmation or pulls back toward the reclaimed `629-634` support zone and holds. Do not go straight to the `8.0%` target before earnings. If META loses the 50-day area or earnings show weaker ad growth, worse margins, or capex escalation without credible monetization, reduce exposure instead of averaging down.
+
+Net: fundamentals and scenario skew justify ownership, while the technical and macro setup argue for disciplined sizing rather than a passive HOLD or an aggressive chase.
+
+FINAL TRANSACTION PROPOSAL: **BUY**

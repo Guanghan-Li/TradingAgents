@@ -1,0 +1,9 @@
+For the simulated investment committee, my decision for DELL is a controlled BUY, not an aggressive chase. The strongest reason to lean positive is that the bullish thesis is supported by operating evidence: latest-quarter revenue growth, EPS acceleration, strong free cash flow, buyback-driven share-count reduction, and continued AI infrastructure relevance. The forward valuation is still defensible if DELL delivers the expected earnings acceleration, and the macro backdrop remains supportive enough for enterprise IT spending.
+
+The risk control matters because the near-term chart is no longer cleanly bullish. DELL closed below its 10-day EMA, RSI has cooled sharply from overbought, MACD momentum is fading, and the stock has already run significantly over the last three months. Sentiment is also noisier than usual because part of the recent volatility came from takeover speculation rather than confirmed fundamentals. Gross-margin pressure, leverage, working-capital quality, and elevated long rates remain real constraints.
+
+Action plan: initiate or maintain a modest 2.0% DELL position, with room to scale only toward 4.0% if price action and fundamentals confirm. Prefer adding on either a controlled pullback into the 172.83 to 170 support area that stabilizes, or on confirmation above 178.75 and then 184.51. Do not add on rumor-driven spikes. Stop adding and reduce exposure if DELL breaks decisively below 169, loses the 164 to 166 repair zone, or if the next earnings update shows weaker AI server conversion, worsening gross margins, or poor free-cash-flow quality. Portfolio-level max loss should remain capped near 0.75%.
+
+The committee should avoid the mistake of treating DELL as a pure momentum breakout after a stretched run, but the evidence is still strong enough to favor ownership over passivity. The best decision is staged accumulation with strict risk limits.
+
+FINAL TRANSACTION PROPOSAL: **BUY**

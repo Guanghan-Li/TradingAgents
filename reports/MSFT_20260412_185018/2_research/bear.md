@@ -1,0 +1,2 @@
+
+Bear Analyst: Bear Analyst Statement: Microsoft presents a riskier investment thesis than the bull acknowledges. While fundamentals remain strong, the stock faces headwinds from unproven AI monetization claims, deteriorating technicals suggesting downside continuation, elevated capex with uncertain ROI, regulatory overhang, fragile macro conditions, and valuation that is fair at best—not cheap. The smart entry point remains below support levels, not at current prices.

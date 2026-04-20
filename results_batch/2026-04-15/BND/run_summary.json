@@ -1,0 +1,49 @@
+{
+  "analysis_date": "2026-04-15",
+  "anthropic_effort": null,
+  "backend_url": "codex://local",
+  "catalysts": [
+    {
+      "catalyst": "U.S. inflation data releases",
+      "date_or_window": "Late Apr to May 2026",
+      "expected_impact": "Cooler inflation supports BND via lower yields; hotter inflation pressures BND via higher long-end rates."
+    },
+    {
+      "catalyst": "U.S. labor market releases",
+      "date_or_window": "Late Apr to early May 2026",
+      "expected_impact": "Softer jobs data favors the bull case; persistent labor strength supports the base-to-bear path."
+    },
+    {
+      "catalyst": "Next Fed communication / policy window",
+      "date_or_window": "Late Apr to early May 2026",
+      "expected_impact": "A dovish shift would help BND; explicit higher-for-longer messaging would weigh on duration."
+    },
+    {
+      "catalyst": "Treasury supply and long-end auction tone",
+      "date_or_window": "Late Apr to May 2026",
+      "expected_impact": "Heavy supply or weak demand can lift long-end yields and pressure BND."
+    },
+    {
+      "catalyst": "Bond ETF flow and sentiment follow-through",
+      "date_or_window": "Ongoing",
+      "expected_impact": "Positive retail and allocator interest may support BND, but the effect is secondary to macro rates."
+    }
+  ],
+  "chief_action": "Hold",
+  "chief_rating": "Neutral",
+  "chief_relative_stance": "Neutral",
+  "chief_summary": "For BND, maintain existing core exposure but do not chase new exposure at 73.88. Keep sizing near the structured 5.0% initial weight and do not move toward the 10.0% target weight unless BND either pulls back into the 73.70-73.80 support zone and holds, or breaks above 74.10 and then clears 74.69 with confirmation from cooler inflation, softer labor data, a lower 10Y Treasury yield versus 4.26%, or a more dovish Fed tone. Use 73.33 as the key risk-review and cutback level, and reassess over the next 2-6 weeks as late-April to early-May inflation, labor, Fed, and auction catalysts arrive.",
+  "chief_thesis": "The highest-probability outcome for BND is still the 50% base case, and that base case is range-bound carry rather than a clean duration rally. That is why the correct committee decision is Hold, not Buy. The supportive evidence is still meaningful: the bull case is 30% versus only 20% bear, BND yields 3.91%, volatility is low with ATR around 0.27, and the tape has repaired technically with price at 73.88 above the 10 EMA at 73.69, above the 50 SMA at 73.80, above the 200 SMA at 72.92, MACD positive at 0.043, and RSI at 58.8. That supports keeping existing exposure because BND is not broken.\n\nWhat prevents an Overweight stance is the macro ceiling. CPI and PPI have reaccelerated, payrolls remain firm at +178k with unemployment at 4.3%, the 2Y-10Y curve is +50 bp, the 10Y Treasury is 4.26%, and the 30Y is 4.87%. That is a higher-for-longer and term-premium-sensitive backdrop that can pressure BND even if the ETF continues to earn carry. The technicals also argue against chasing: BND is near the upper end of its recent range, near Bollinger resistance, still below the late-February high around 74.69, and only modestly above the 50-day trend. So the aggressive analyst is right that the setup supports staying involved, but the conservative analyst is right that the upside is not yet strong enough to add size here.\n\nThe structured sizing output resolves the debate cleanly: medium conviction, 5.0% initial weight, 10.0% target weight, and a defined loss budget mean BND should be treated as a core ballast position, not an aggressive duration expression. The factor-rule pack is also misaligned for BND as a bond ETF, so the committee should defer to rates, duration, carry, and macro catalysts rather than equity-style factor narratives. Final decision for BND: Hold with a Neutral stance. Hold existing exposure near 5.0%, wait on fresh capital, and let the next inflation, labor, and Fed signals determine whether BND graduates to a Buy later or needs to be trimmed if yields reprice higher.",
+  "decision": "HOLD",
+  "deep_think_llm": "gpt-5.4",
+  "ended_at": "2026-04-15T15:23:11.022953",
+  "error": null,
+  "openai_reasoning_effort": "high",
+  "provider": "codex_cli",
+  "quick_think_llm": "gpt-5.4",
+  "results_dir": "results_batch/2026-04-15/BND",
+  "risk_summary": "Absolute Action: Hold\nRelative Stance: Neutral\n\nExecutive Summary: For BND, maintain existing core exposure but do not chase new exposure at 73.88. Keep sizing near the structured 5.0% initial weight and do not move toward the 10.0% target weight unless BND either pulls back into the 73.70-73.80 support zone and holds, or breaks above 74.10 and then clears 74.69 with confirmation from cooler inflation, softer labor data, a lower 10Y Treasury yield versus 4.26%, or a more dovish Fed tone. Use 73.33 as the key risk-review and cutback level, and reassess over the next 2-6 weeks as late-April to early-May inflation, labor, Fed, and auction catalysts arrive.\n\nInvestment Thesis: The highest-probability outcome for BND is still the 50% base case, and that base case is range-bound carry rather than a clean duration rally. That is why the correct committee decision is Hold, not Buy. The supportive evidence is still meaningful: the bull case is 30% versus only 20% bear, BND yields 3.91%, volatility is low with ATR around 0.27, and the tape has repaired technically with price at 73.88 above the 10 EMA at 73.69, above the 50 SMA at 73.80, above the 200 SMA at 72.92, MACD positive at 0.043, and RSI at 58.8. That supports keeping existing exposure because BND is not broken.\n\nWhat prevents an Overweight stance is the macro ceiling. CPI and PPI have reaccelerated, payrolls remain firm at +178k with unemployment at 4.3%, the 2Y-10Y curve is +50 bp, the 10Y Treasury is 4.26%, and the 30Y is 4.87%. That is a higher-for-longer and term-premium-sensitive backdrop that can pressure BND even if the ETF continues to earn carry. The technicals also argue against chasing: BND is near the upper end of its recent range, near Bollinger resistance, still below the late-February high around 74.69, and only modestly above the 50-day trend. So the aggressive analyst is right that the setup supports staying involved, but the conservative analyst is right that the upside is not yet strong enough to add size here.\n\nThe structured sizing output resolves the debate cleanly: medium conviction, 5.0% initial weight, 10.0% target weight, and a defined loss budget mean BND should be treated as a core ballast position, not an aggressive duration expression. The factor-rule pack is also misaligned for BND as a bond ETF, so the committee should defer to rates, duration, carry, and macro catalysts rather than equity-style factor narratives. Final decision for BND: Hold with a Neutral stance. Hold existing exposure near 5.0%, wait on fresh capital, and let the next inflation, labor, and Fed signals determine whether BND graduates to a Buy later or needs to be trimmed if yields reprice higher.",
+  "started_at": "2026-04-15T15:09:35.319178",
+  "status": "completed",
+  "ticker": "BND"
+}

@@ -1,15 +1,42 @@
 import time
 import logging
+import signal
+import threading
 
 import pandas as pd
-import yfinance as yf
 from yfinance.exceptions import YFRateLimitError
 from stockstats import wrap
 from typing import Annotated
 import os
 from .config import get_config
+from .yfinance_subprocess import fetch_download_frame
 
 logger = logging.getLogger(__name__)
+YFINANCE_TIMEOUT_SECONDS = 30
+STOCKSTATS_HISTORY_YEARS = 3
+
+
+class YFinanceTimeoutError(TimeoutError):
+    """Raised when a yfinance call exceeds the allotted wall-clock time."""
+
+
+def _alarm_timeout_handler(_signum, _frame):
+    raise YFinanceTimeoutError("Yahoo Finance request timed out.")
+
+
+def yf_timeout_call(func, timeout_seconds: int = YFINANCE_TIMEOUT_SECONDS):
+    """Execute a potentially blocking yfinance call with a wall-clock timeout."""
+    if threading.current_thread() is not threading.main_thread():
+        return func()
+
+    previous_handler = signal.getsignal(signal.SIGALRM)
+    signal.signal(signal.SIGALRM, _alarm_timeout_handler)
+    signal.setitimer(signal.ITIMER_REAL, timeout_seconds)
+    try:
+        return func()
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, 0)
+        signal.signal(signal.SIGALRM, previous_handler)
 
 
 def to_yfinance_exclusive_end(date_value) -> str:
@@ -68,7 +95,7 @@ class StockstatsUtils:
         curr_date_dt = pd.to_datetime(curr_date)
 
         end_date = today_date
-        start_date = today_date - pd.DateOffset(years=15)
+        start_date = today_date - pd.DateOffset(years=STOCKSTATS_HISTORY_YEARS)
         start_date_str = start_date.strftime("%Y-%m-%d")
         end_date_str = to_yfinance_exclusive_end(end_date)
 
@@ -83,14 +110,15 @@ class StockstatsUtils:
         if os.path.exists(data_file):
             data = pd.read_csv(data_file, on_bad_lines="skip")
         else:
-            data = yf_retry(lambda: yf.download(
+            data = fetch_download_frame(
                 symbol,
                 start=start_date_str,
                 end=end_date_str,
                 multi_level_index=False,
                 progress=False,
                 auto_adjust=True,
-            ))
+                timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
+            )
             data = data.reset_index()
             data.to_csv(data_file, index=False)
 

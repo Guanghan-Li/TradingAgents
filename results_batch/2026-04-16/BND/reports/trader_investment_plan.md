@@ -1,0 +1,7 @@
+BND remains a HOLD. The combined evidence points to stabilization, not a high-conviction directional breakout: price at 73.77 is sitting around the 10-day EMA (73.71), still just under the 50-day trend pivot (73.80), and below the upper Bollinger band/resistance near 74.13, while remaining above the 200-day average (72.93). MACD has repaired and RSI at 53.34 confirms neutral-positive momentum, but not enough thrust to justify chasing BND higher from the middle-to-upper part of its recent range.
+
+Macro also argues against an aggressive BUY. BND benefits from carry and diversification, with a 3.91% yield and no fund-specific stress, but sticky CPI/PPI, a 10-year yield around 4.29%, and a Fed on hold keep duration upside capped. News and sentiment are constructive, but mostly long-horizon and allocation-driven rather than catalytic. That supports holding existing BND exposure for ballast and income, while waiting for either a confirmed breakout above 74.13 or a more attractive pullback toward 73.20 to 72.76 before adding.
+
+Decision: keep existing BND exposure, do not add aggressively at current levels, and do not sell unless BND loses the lower support zone and macro rate pressure worsens.
+
+FINAL TRANSACTION PROPOSAL: **HOLD**
