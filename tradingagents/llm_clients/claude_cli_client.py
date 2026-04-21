@@ -2,6 +2,7 @@ import json
 import os
 import subprocess
 import tempfile
+import time
 from typing import Any, Optional
 from uuid import uuid4
 
@@ -12,6 +13,7 @@ from langchain_core.utils.function_calling import convert_to_openai_tool
 from pydantic import Field
 
 from .base_client import BaseLLMClient
+from .request_tracker import log_llm_request, record_llm_request
 from .validators import validate_model
 
 _CLAUDE_ISOLATED_CWD = tempfile.gettempdir()
@@ -166,10 +168,25 @@ class ClaudeCodeChatModel(BaseChatModel):
         return self.model_copy(update={"bound_tools": list(tools)})
 
     def _generate(self, messages: list[BaseMessage], stop=None, run_manager=None, **kwargs: Any) -> ChatResult:
-        del stop, run_manager, kwargs
-        payload = self._invoke_claude(messages)
-        message = self._payload_to_ai_message(payload)
-        return ChatResult(generations=[ChatGeneration(message=message)])
+        del stop, kwargs
+        start = time.time()
+        error: Optional[str] = None
+        try:
+            payload = self._invoke_claude(messages)
+            message = self._payload_to_ai_message(payload)
+            return ChatResult(generations=[ChatGeneration(message=message)])
+        except BaseException as exc:
+            error = f"{type(exc).__name__}: {exc}"
+            raise
+        finally:
+            log_llm_request(
+                "claude_code",
+                model=getattr(self, "model", None),
+                messages=messages,
+                run_manager=run_manager,
+                duration_s=time.time() - start,
+                error=error,
+            )
 
     def _invoke_claude(self, messages: list[BaseMessage]) -> dict[str, Any]:
         try:
@@ -229,6 +246,7 @@ class ClaudeCodeChatModel(BaseChatModel):
 
         timeout = timeout_override if timeout_override is not None else self.timeout
         with tempfile.TemporaryDirectory(prefix="tradingagents-claude-cli-") as tmpdir:
+            record_llm_request("claude_code")
             return subprocess.run(
                 command,
                 input=self._build_prompt(messages, structured=structured),

@@ -1,4 +1,5 @@
 import os
+import time
 from functools import cached_property
 from typing import Any, Optional
 
@@ -8,6 +9,7 @@ from pydantic import Field, SecretStr
 from langchain_core.utils.utils import secret_from_env
 
 from .base_client import BaseLLMClient, normalize_content
+from .request_tracker import log_llm_request, record_llm_request
 from .validators import validate_model
 
 _PASSTHROUGH_KWARGS = (
@@ -62,6 +64,83 @@ class NormalizedChatAnthropic(ChatAnthropic):
 
     def invoke(self, input, config=None, **kwargs):
         return normalize_content(super().invoke(input, config, **kwargs))
+
+    def _generate(self, messages, stop=None, run_manager=None, **kwargs):
+        record_llm_request("anthropic")
+        start = time.time()
+        error: Optional[str] = None
+        try:
+            return super()._generate(messages, stop=stop, run_manager=run_manager, **kwargs)
+        except BaseException as exc:
+            error = f"{type(exc).__name__}: {exc}"
+            raise
+        finally:
+            log_llm_request(
+                "anthropic",
+                model=getattr(self, "model", None),
+                messages=messages,
+                run_manager=run_manager,
+                duration_s=time.time() - start,
+                error=error,
+            )
+
+    async def _agenerate(self, messages, stop=None, run_manager=None, **kwargs):
+        record_llm_request("anthropic")
+        start = time.time()
+        error: Optional[str] = None
+        try:
+            return await super()._agenerate(messages, stop=stop, run_manager=run_manager, **kwargs)
+        except BaseException as exc:
+            error = f"{type(exc).__name__}: {exc}"
+            raise
+        finally:
+            log_llm_request(
+                "anthropic",
+                model=getattr(self, "model", None),
+                messages=messages,
+                run_manager=run_manager,
+                duration_s=time.time() - start,
+                error=error,
+            )
+
+    def _stream(self, messages, stop=None, run_manager=None, **kwargs):
+        record_llm_request("anthropic")
+        start = time.time()
+        error: Optional[str] = None
+        try:
+            yield from super()._stream(messages, stop=stop, run_manager=run_manager, **kwargs)
+        except BaseException as exc:
+            error = f"{type(exc).__name__}: {exc}"
+            raise
+        finally:
+            log_llm_request(
+                "anthropic",
+                model=getattr(self, "model", None),
+                messages=messages,
+                run_manager=run_manager,
+                duration_s=time.time() - start,
+                error=error,
+            )
+
+    async def _astream(self, messages, stop=None, run_manager=None, **kwargs):
+        record_llm_request("anthropic")
+        start = time.time()
+        error: Optional[str] = None
+        try:
+            async for chunk in super()._astream(messages, stop=stop, run_manager=run_manager, **kwargs):
+                yield chunk
+        except BaseException as exc:
+            error = f"{type(exc).__name__}: {exc}"
+            raise
+        finally:
+            log_llm_request(
+                "anthropic",
+                model=getattr(self, "model", None),
+                messages=messages,
+                run_manager=run_manager,
+                duration_s=time.time() - start,
+                error=error,
+            )
 
 
 class AnthropicClient(BaseLLMClient):
