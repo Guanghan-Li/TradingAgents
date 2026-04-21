@@ -1,6 +1,7 @@
 import json
 import subprocess
 import tempfile
+import time
 from pathlib import Path
 from typing import Any, Optional
 from uuid import uuid4
@@ -13,6 +14,7 @@ from pydantic import Field
 
 from .base_client import BaseLLMClient
 from .claude_cli_client import _format_message
+from .request_tracker import log_llm_request, record_llm_request
 from .validators import validate_model
 
 _CODEX_ISOLATED_CWD = tempfile.gettempdir()
@@ -67,9 +69,24 @@ class CodexCLIChatModel(BaseChatModel):
         return self.model_copy(update={"bound_tools": list(tools)})
 
     def _generate(self, messages: list[BaseMessage], stop=None, run_manager=None, **kwargs: Any) -> ChatResult:
-        del stop, run_manager, kwargs
-        payload = self._invoke_codex(messages)
-        return ChatResult(generations=[ChatGeneration(message=self._payload_to_ai_message(payload))])
+        del stop, kwargs
+        start = time.time()
+        error: Optional[str] = None
+        try:
+            payload = self._invoke_codex(messages)
+            return ChatResult(generations=[ChatGeneration(message=self._payload_to_ai_message(payload))])
+        except BaseException as exc:
+            error = f"{type(exc).__name__}: {exc}"
+            raise
+        finally:
+            log_llm_request(
+                "codex_cli",
+                model=getattr(self, "model", None),
+                messages=messages,
+                run_manager=run_manager,
+                duration_s=time.time() - start,
+                error=error,
+            )
 
     def _invoke_codex(self, messages: list[BaseMessage]) -> dict[str, Any]:
         try:
@@ -122,6 +139,7 @@ class CodexCLIChatModel(BaseChatModel):
             command.append("-")
 
             timeout = timeout_override if timeout_override is not None else self.timeout
+            record_llm_request("codex_cli")
             completed = subprocess.run(
                 command,
                 input=self._build_prompt(messages, structured=structured),

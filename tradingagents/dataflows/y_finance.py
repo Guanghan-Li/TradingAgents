@@ -6,6 +6,8 @@ from .stockstats_utils import (
     StockstatsUtils,
     _clean_dataframe,
     to_yfinance_exclusive_end,
+    load_ohlcv,
+    filter_financials_by_date,
 )
 from .yfinance_subprocess import (
     fetch_download_frame,
@@ -239,7 +241,7 @@ def _get_stock_stats_bulk(
     
     config = get_config()
     online = config["data_vendors"]["technical_indicators"] != "local"
-    
+
     if not online:
         # Local data path
         try:
@@ -252,38 +254,12 @@ def _get_stock_stats_bulk(
             )
         except FileNotFoundError:
             raise Exception("Stockstats fail: Yahoo Finance data not fetched yet!")
+        data = _clean_dataframe(data)
+        curr_date_dt = pd.to_datetime(curr_date)
+        data = data[data["Date"] <= curr_date_dt]
     else:
-        # Online data fetching with caching
-        today_date = pd.Timestamp.today()
+        data = load_ohlcv(symbol, curr_date)
 
-        end_date = today_date
-        start_date = today_date - pd.DateOffset(years=TECHNICAL_HISTORY_YEARS)
-        start_date_str = start_date.strftime("%Y-%m-%d")
-        end_date_str = to_yfinance_exclusive_end(end_date)
-
-        os.makedirs(config["data_cache_dir"], exist_ok=True)
-
-        data_file = os.path.join(
-            config["data_cache_dir"],
-            f"{symbol}-YFin-data-{start_date_str}-{end_date_str}.csv",
-        )
-
-        if os.path.exists(data_file):
-            data = pd.read_csv(data_file, on_bad_lines="skip")
-        else:
-            data = fetch_download_frame(
-                symbol,
-                start=start_date_str,
-                end=end_date_str,
-                multi_level_index=False,
-                progress=False,
-                auto_adjust=True,
-                timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
-            )
-            data = data.reset_index()
-            data.to_csv(data_file, index=False)
-
-    data = _clean_dataframe(data)
     df = wrap(data)
     df["Date"] = df["Date"].dt.strftime("%Y-%m-%d")
     
@@ -390,7 +366,7 @@ def get_fundamentals(
 def get_balance_sheet(
     ticker: Annotated[str, "ticker symbol of the company"],
     freq: Annotated[str, "frequency of data: 'annual' or 'quarterly'"] = "quarterly",
-    curr_date: Annotated[str, "current date (not used for yfinance)"] = None
+    curr_date: Annotated[str, "current date in YYYY-MM-DD format"] = None
 ):
     """Get balance sheet data from yfinance."""
     try:
@@ -406,7 +382,9 @@ def get_balance_sheet(
                 "balance_sheet",
                 timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
             )
-            
+
+        data = filter_financials_by_date(data, curr_date)
+
         if data.empty:
             return f"No balance sheet data found for symbol '{ticker}'"
             
@@ -426,7 +404,7 @@ def get_balance_sheet(
 def get_cashflow(
     ticker: Annotated[str, "ticker symbol of the company"],
     freq: Annotated[str, "frequency of data: 'annual' or 'quarterly'"] = "quarterly",
-    curr_date: Annotated[str, "current date (not used for yfinance)"] = None
+    curr_date: Annotated[str, "current date in YYYY-MM-DD format"] = None
 ):
     """Get cash flow data from yfinance."""
     try:
@@ -442,7 +420,9 @@ def get_cashflow(
                 "cashflow",
                 timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
             )
-            
+
+        data = filter_financials_by_date(data, curr_date)
+
         if data.empty:
             return f"No cash flow data found for symbol '{ticker}'"
             
@@ -462,7 +442,7 @@ def get_cashflow(
 def get_income_statement(
     ticker: Annotated[str, "ticker symbol of the company"],
     freq: Annotated[str, "frequency of data: 'annual' or 'quarterly'"] = "quarterly",
-    curr_date: Annotated[str, "current date (not used for yfinance)"] = None
+    curr_date: Annotated[str, "current date in YYYY-MM-DD format"] = None
 ):
     """Get income statement data from yfinance."""
     try:
@@ -478,7 +458,9 @@ def get_income_statement(
                 "income_stmt",
                 timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
             )
-            
+
+        data = filter_financials_by_date(data, curr_date)
+
         if data.empty:
             return f"No income statement data found for symbol '{ticker}'"
             
@@ -496,7 +478,8 @@ def get_income_statement(
 
 
 def get_insider_transactions(
-    ticker: Annotated[str, "ticker symbol of the company"]
+    ticker: Annotated[str, "ticker symbol of the company"],
+    curr_date: Annotated[str, "current date in YYYY-MM-DD format"] = None,
 ):
     """Get insider transactions data from yfinance."""
     try:
@@ -505,10 +488,23 @@ def get_insider_transactions(
             "insider_transactions",
             timeout_seconds=YFINANCE_TIMEOUT_SECONDS,
         )
-        
+
         if data is None or data.empty:
             return f"No insider transactions data found for symbol '{ticker}'"
-            
+
+        if curr_date:
+            import pandas as pd
+            cutoff = pd.Timestamp(curr_date)
+            date_col = next(
+                (c for c in ("Start Date", "Date", "Transaction Date") if c in data.columns),
+                None,
+            )
+            if date_col is not None:
+                data = data[pd.to_datetime(data[date_col], errors="coerce") <= cutoff]
+
+        if data.empty:
+            return f"No insider transactions for '{ticker}' on or before {curr_date}"
+
         # Convert to CSV string for consistency with other functions
         csv_string = data.to_csv()
         

@@ -7,6 +7,7 @@ import openai
 from langchain_openai import ChatOpenAI
 
 from .base_client import BaseLLMClient, normalize_content
+from .request_tracker import log_llm_request, record_llm_request
 from .validators import validate_model
 
 
@@ -63,6 +64,83 @@ class NormalizedChatOpenAI(ChatOpenAI):
                 if not _is_retryable_openai_error(exc, getattr(self, "openai_api_base", None)) or attempt >= _TRANSIENT_RETRY_ATTEMPTS:
                     raise
                 time.sleep(_TRANSIENT_RETRY_BASE_DELAY_SECONDS * (2 ** attempt))
+
+    def _generate(self, messages, stop=None, run_manager=None, **kwargs):
+        record_llm_request("openai")
+        start = time.time()
+        error = None
+        try:
+            return super()._generate(messages, stop=stop, run_manager=run_manager, **kwargs)
+        except BaseException as exc:
+            error = f"{type(exc).__name__}: {exc}"
+            raise
+        finally:
+            log_llm_request(
+                "openai",
+                model=getattr(self, "model_name", None) or getattr(self, "model", None),
+                messages=messages,
+                run_manager=run_manager,
+                duration_s=time.time() - start,
+                error=error,
+            )
+
+    async def _agenerate(self, messages, stop=None, run_manager=None, **kwargs):
+        record_llm_request("openai")
+        start = time.time()
+        error = None
+        try:
+            return await super()._agenerate(messages, stop=stop, run_manager=run_manager, **kwargs)
+        except BaseException as exc:
+            error = f"{type(exc).__name__}: {exc}"
+            raise
+        finally:
+            log_llm_request(
+                "openai",
+                model=getattr(self, "model_name", None) or getattr(self, "model", None),
+                messages=messages,
+                run_manager=run_manager,
+                duration_s=time.time() - start,
+                error=error,
+            )
+
+    def _stream(self, messages, stop=None, run_manager=None, **kwargs):
+        record_llm_request("openai")
+        start = time.time()
+        error = None
+        try:
+            yield from super()._stream(messages, stop=stop, run_manager=run_manager, **kwargs)
+        except BaseException as exc:
+            error = f"{type(exc).__name__}: {exc}"
+            raise
+        finally:
+            log_llm_request(
+                "openai",
+                model=getattr(self, "model_name", None) or getattr(self, "model", None),
+                messages=messages,
+                run_manager=run_manager,
+                duration_s=time.time() - start,
+                error=error,
+            )
+
+    async def _astream(self, messages, stop=None, run_manager=None, **kwargs):
+        record_llm_request("openai")
+        start = time.time()
+        error = None
+        try:
+            async for chunk in super()._astream(messages, stop=stop, run_manager=run_manager, **kwargs):
+                yield chunk
+        except BaseException as exc:
+            error = f"{type(exc).__name__}: {exc}"
+            raise
+        finally:
+            log_llm_request(
+                "openai",
+                model=getattr(self, "model_name", None) or getattr(self, "model", None),
+                messages=messages,
+                run_manager=run_manager,
+                duration_s=time.time() - start,
+                error=error,
+            )
 
 # Kwargs forwarded from user config to ChatOpenAI
 _PASSTHROUGH_KWARGS = (

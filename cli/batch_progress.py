@@ -73,6 +73,7 @@ class BatchProgressEvent:
     total_milestones: int | None = None
     completed_milestones: int | None = None
     error: str | None = None
+    provider: str | None = None
 
 
 @dataclass
@@ -86,6 +87,7 @@ class BatchWorkerSlot:
     progress_file: str | None = None
     progress_offset: int = 0
     error: str | None = None
+    request_count: int = 0
 
     def assign(self, *, ticker: str, progress_file: str | None = None) -> None:
         self.ticker = ticker
@@ -96,6 +98,7 @@ class BatchWorkerSlot:
         self.progress_file = progress_file
         self.progress_offset = 0
         self.error = None
+        self.request_count = 0
 
     def snapshot(self) -> dict:
         return {
@@ -107,6 +110,7 @@ class BatchWorkerSlot:
             "completed_agents": sorted(self.completed_agents),
             "progress_fraction": compute_progress_fraction(self),
             "error": self.error,
+            "request_count": self.request_count,
         }
 
 
@@ -116,6 +120,7 @@ class BatchDashboardState:
     slots: list[BatchWorkerSlot]
     completed_jobs: int = 0
     failed_jobs: int = 0
+    total_requests: int = 0
 
     def snapshot(self) -> dict:
         active_jobs = sum(
@@ -133,6 +138,7 @@ class BatchDashboardState:
                 self.total_jobs - self.completed_jobs - self.failed_jobs - active_jobs,
                 0,
             ),
+            "total_requests": self.total_requests,
             "slots": [slot.snapshot() for slot in self.slots],
         }
 
@@ -264,6 +270,7 @@ def parse_progress_events(text: str) -> list[BatchProgressEvent]:
                 total_milestones=payload.get("total_milestones"),
                 completed_milestones=payload.get("completed_milestones"),
                 error=payload.get("error"),
+                provider=payload.get("provider"),
             )
         )
     return events
@@ -298,9 +305,19 @@ def read_progress_events(path: str | Path, offset: int = 0) -> tuple[list[BatchP
     return parse_progress_events(chunk), new_offset
 
 
-def apply_progress_event(slot: BatchWorkerSlot, event: BatchProgressEvent) -> None:
+def apply_progress_event(
+    slot: BatchWorkerSlot,
+    event: BatchProgressEvent,
+    dashboard: "BatchDashboardState | None" = None,
+) -> None:
     if event.total_milestones:
         slot.total_milestones = event.total_milestones
+
+    if event.event == "llm_request":
+        slot.request_count += 1
+        if dashboard is not None:
+            dashboard.total_requests += 1
+        return
 
     if event.event == "run_started":
         slot.status = "running"
@@ -343,6 +360,7 @@ def render_batch_dashboard(state: BatchDashboardState):
                     f"Failed {snapshot['failed_jobs']}",
                     f"Active {snapshot['active_jobs']}",
                     f"Queued {snapshot['queued_jobs']}",
+                    f"LLM reqs {snapshot['total_requests']}",
                 ]
             ),
             style="bold cyan",
@@ -390,6 +408,12 @@ def render_worker_slot(slot_snapshot: dict) -> Panel:
     body.add_row(
         Text(
             f"Milestones: {completed}/{slot_snapshot['total_milestones'] or 0}",
+            style="dim",
+        )
+    )
+    body.add_row(
+        Text(
+            f"LLM reqs: {slot_snapshot.get('request_count', 0)}",
             style="dim",
         )
     )

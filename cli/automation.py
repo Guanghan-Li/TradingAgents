@@ -43,6 +43,7 @@ from tradingagents.default_config import DEFAULT_CONFIG
 from tradingagents.env import load_project_dotenv
 from tradingagents.graph.trading_graph import TradingAgentsGraph
 from tradingagents.llm_clients import create_llm_client
+from tradingagents.llm_clients.request_tracker import get_count as get_llm_request_count, reset as reset_llm_request_count
 from tradingagents.agents.utils.analyst_resilience import build_degraded_stock_final_state
 from tradingagents.prefetch.stock_prefetch import build_prefetched_stock_context
 
@@ -263,6 +264,16 @@ def run_cli_stock_job(job: dict) -> dict:
 
     env = os.environ.copy()
     env.setdefault("PYTHONUNBUFFERED", "1")
+    if job.get("progress_file"):
+        env["TRADINGAGENTS_PROGRESS_FILE"] = str(job["progress_file"])
+    if job.get("ticker"):
+        env["TRADINGAGENTS_TICKER"] = str(job["ticker"])
+    llm_log_path = build_job_run_dir(job) / "llm_requests.jsonl"
+    try:
+        llm_log_path.parent.mkdir(parents=True, exist_ok=True)
+    except OSError:
+        pass
+    env["TRADINGAGENTS_LLM_LOG_FILE"] = str(llm_log_path)
 
     with stdout_path.open("w", buffering=1) as out_f, stderr_path.open("w", buffering=1) as err_f:
         completed = subprocess.run(
@@ -423,7 +434,7 @@ def run_batch_command(
                 )
                 slot.progress_offset = new_offset
                 for event in events:
-                    apply_progress_event(slot, event)
+                    apply_progress_event(slot, event, dashboard_state)
 
         def submit_next_job(slot: BatchWorkerSlot):
             if not pending_jobs:
@@ -639,6 +650,7 @@ def build_run_summary(
     ended_at: str,
     status: str = "completed",
     error: Optional[str] = None,
+    request_count: int = 0,
 ) -> dict:
     chief_data = final_state.get("chief_analyst_data", {})
     verdict = chief_data.get("verdict", {})
@@ -666,6 +678,7 @@ def build_run_summary(
         "anthropic_effort": config.get("anthropic_effort"),
         "results_dir": str(build_run_dir(config=config, ticker=ticker, analysis_date=analysis_date)),
         "error": error,
+        "request_count": request_count,
     }
 
 
@@ -680,6 +693,7 @@ def write_run_artifacts(
     ended_at: str,
     status: str = "completed",
     error: Optional[str] = None,
+    request_count: int = 0,
 ) -> dict:
     run_dir = build_run_dir(config=config, ticker=ticker, analysis_date=analysis_date)
     report_dir = run_dir / "reports"
@@ -709,6 +723,7 @@ def write_run_artifacts(
         ended_at=ended_at,
         status=status,
         error=error,
+        request_count=request_count,
     )
     (run_dir / "run_summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True))
     return summary
@@ -2222,6 +2237,7 @@ def run_stock_command(
 ) -> dict:
     resolved_analysis_date = resolve_analysis_date(analysis_date)
     resolved_analysts = resolve_selected_analysts(analysts)
+    reset_llm_request_count()
     config = build_batch_config(
         provider=provider,
         backend_url=backend_url,
@@ -2313,6 +2329,7 @@ def run_stock_command(
         config=config,
         started_at=started_at,
         ended_at=datetime.now().isoformat(),
+        request_count=get_llm_request_count(),
     )
     return {
         "ticker": ticker,

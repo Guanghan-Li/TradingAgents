@@ -1,8 +1,11 @@
 from typing import Any, Optional
 
+import time
+
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 from .base_client import BaseLLMClient, normalize_content
+from .request_tracker import log_llm_request, record_llm_request
 from .validators import validate_model
 
 
@@ -15,6 +18,83 @@ class NormalizedChatGoogleGenerativeAI(ChatGoogleGenerativeAI):
 
     def invoke(self, input, config=None, **kwargs):
         return normalize_content(super().invoke(input, config, **kwargs))
+
+    def _generate(self, messages, stop=None, run_manager=None, **kwargs):
+        record_llm_request("google")
+        start = time.time()
+        error = None
+        try:
+            return super()._generate(messages, stop=stop, run_manager=run_manager, **kwargs)
+        except BaseException as exc:
+            error = f"{type(exc).__name__}: {exc}"
+            raise
+        finally:
+            log_llm_request(
+                "google",
+                model=getattr(self, "model", None),
+                messages=messages,
+                run_manager=run_manager,
+                duration_s=time.time() - start,
+                error=error,
+            )
+
+    async def _agenerate(self, messages, stop=None, run_manager=None, **kwargs):
+        record_llm_request("google")
+        start = time.time()
+        error = None
+        try:
+            return await super()._agenerate(messages, stop=stop, run_manager=run_manager, **kwargs)
+        except BaseException as exc:
+            error = f"{type(exc).__name__}: {exc}"
+            raise
+        finally:
+            log_llm_request(
+                "google",
+                model=getattr(self, "model", None),
+                messages=messages,
+                run_manager=run_manager,
+                duration_s=time.time() - start,
+                error=error,
+            )
+
+    def _stream(self, messages, stop=None, run_manager=None, **kwargs):
+        record_llm_request("google")
+        start = time.time()
+        error = None
+        try:
+            yield from super()._stream(messages, stop=stop, run_manager=run_manager, **kwargs)
+        except BaseException as exc:
+            error = f"{type(exc).__name__}: {exc}"
+            raise
+        finally:
+            log_llm_request(
+                "google",
+                model=getattr(self, "model", None),
+                messages=messages,
+                run_manager=run_manager,
+                duration_s=time.time() - start,
+                error=error,
+            )
+
+    async def _astream(self, messages, stop=None, run_manager=None, **kwargs):
+        record_llm_request("google")
+        start = time.time()
+        error = None
+        try:
+            async for chunk in super()._astream(messages, stop=stop, run_manager=run_manager, **kwargs):
+                yield chunk
+        except BaseException as exc:
+            error = f"{type(exc).__name__}: {exc}"
+            raise
+        finally:
+            log_llm_request(
+                "google",
+                model=getattr(self, "model", None),
+                messages=messages,
+                run_manager=run_manager,
+                duration_s=time.time() - start,
+                error=error,
+            )
 
 
 class GoogleClient(BaseLLMClient):

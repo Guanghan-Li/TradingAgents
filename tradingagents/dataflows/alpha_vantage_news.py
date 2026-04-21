@@ -52,13 +52,15 @@ def get_global_news(curr_date, look_back_days: int = 7, limit: int = 50) -> dict
     return _make_api_request("NEWS_SENTIMENT", params)
 
 
-def get_insider_transactions(symbol: str) -> dict[str, str] | str:
+def get_insider_transactions(symbol: str, curr_date: str = None) -> dict[str, str] | str:
     """Returns latest and historical insider transactions by key stakeholders.
 
     Covers transactions by founders, executives, board members, etc.
 
     Args:
         symbol: Ticker symbol. Example: "IBM".
+        curr_date: Current date in yyyy-mm-dd. Transactions after this are
+            filtered out to prevent look-ahead bias.
 
     Returns:
         Dictionary containing insider transaction data or JSON string.
@@ -68,4 +70,12 @@ def get_insider_transactions(symbol: str) -> dict[str, str] | str:
         "symbol": symbol,
     }
 
-    return _make_api_request("INSIDER_TRANSACTIONS", params)
+    result = _make_api_request("INSIDER_TRANSACTIONS", params)
+
+    if curr_date and isinstance(result, dict) and isinstance(result.get("data"), list):
+        result["data"] = [
+            r for r in result["data"]
+            if r.get("transaction_date", "") <= curr_date
+        ]
+
+    return result
