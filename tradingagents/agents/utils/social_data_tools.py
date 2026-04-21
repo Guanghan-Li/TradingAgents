@@ -11,9 +11,19 @@ RECENT_WINDOW_LOOKBACK_DAYS = 4
 RECENT_WINDOW_FORWARD_DAYS = 1
 
 
+def _select_adanos_api_key(today: date | None = None) -> str | None:
+    """Pick the Adanos API key by day-of-month: days 1–15 use the primary key,
+    days 16+ use ADANOS_API_KEY_NEXT. Falls back to whichever key is set."""
+    primary = os.getenv("ADANOS_API_KEY")
+    secondary = os.getenv("ADANOS_API_KEY_NEXT")
+    day = (today or date.today()).day
+    preferred = primary if day <= 15 else secondary
+    return preferred or primary or secondary
+
+
 def has_social_sentiment_support() -> bool:
     """Return whether the optional Adanos-backed social sentiment tool is available."""
-    return bool(os.getenv("ADANOS_API_KEY"))
+    return bool(_select_adanos_api_key())
 
 
 def _supports_recent_social_window(requested_date: date, today: date) -> bool:
@@ -112,7 +122,7 @@ def get_social_sentiment(
     This tool is intended for current/live workflows. Historical trade dates are not supported because
     the upstream sentiment API exposes rolling windows ending today rather than point-in-time snapshots.
     """
-    api_key = os.getenv("ADANOS_API_KEY")
+    api_key = _select_adanos_api_key()
     if not api_key:
         return "Social sentiment tool unavailable: ADANOS_API_KEY is not configured."
 
