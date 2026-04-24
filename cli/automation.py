@@ -82,6 +82,73 @@ BATCH_CLAUDE_CARD_MODEL = "claude-sonnet-4-6"
 BATCH_CLAUDE_CARD_REASONING_EFFORT = "medium"
 BATCH_CLAUDE_COMMITTEE_MODEL = "claude-opus-4-7"
 BATCH_CLAUDE_COMMITTEE_REASONING_EFFORT = "high"
+
+# Fields persisted to the run checkpoint so a retry can resume instead of
+# restarting from scratch. Deliberately excludes `messages` / `prefetched_context`
+# because they are either non-JSON-serializable (LangChain message objects)
+# or rebuilt deterministically at the top of `run_stock_command`.
+_CHECKPOINT_FIELDS = (
+    "company_of_interest",
+    "trade_date",
+    "market_report",
+    "sentiment_report",
+    "news_report",
+    "macro_report",
+    "fundamentals_report",
+    "factor_rules_report",
+    "segment_report",
+    "scenario_catalyst_report",
+    "position_sizing_report",
+    "chief_analyst_report",
+    "investment_plan",
+    "trader_investment_plan",
+    "final_trade_decision",
+    "valuation_data",
+    "segment_data",
+    "scenario_catalyst_data",
+    "position_sizing_data",
+    "chief_analyst_data",
+    "investment_debate_state",
+    "risk_debate_state",
+)
+
+
+def _checkpoint_path(run_dir: Path) -> Path:
+    return run_dir / "_run_checkpoint.json"
+
+
+def _load_run_checkpoint(run_dir: Path) -> dict | None:
+    path = _checkpoint_path(run_dir)
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            return json.load(handle)
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
+def _write_run_checkpoint(run_dir: Path, state: dict) -> None:
+    try:
+        run_dir.mkdir(parents=True, exist_ok=True)
+    except OSError:
+        return
+    snapshot = {k: state[k] for k in _CHECKPOINT_FIELDS if k in state}
+    tmp_path = _checkpoint_path(run_dir).with_suffix(".json.tmp")
+    try:
+        with tmp_path.open("w", encoding="utf-8") as handle:
+            json.dump(snapshot, handle, default=str)
+        os.replace(tmp_path, _checkpoint_path(run_dir))
+    except (OSError, TypeError):
+        try:
+            tmp_path.unlink(missing_ok=True)
+        except OSError:
+            pass
+
+
+def _clear_run_checkpoint(run_dir: Path) -> None:
+    try:
+        _checkpoint_path(run_dir).unlink(missing_ok=True)
+    except OSError:
+        pass
 BATCH_DECISION_CARD_TIMEOUT_SECONDS = 180
 BATCH_DECISION_CARD_MAX_WORKERS = 8
 BATCH_DECISION_CARD_SOURCE_CHAR_LIMIT = 14000
@@ -319,7 +386,13 @@ def write_batch_attempt_logs(job: dict, *, attempt: int, result: dict) -> None:
     (log_dir / f"attempt_{attempt}.stderr.log").write_text(result.get("stderr") or "")
 
 
-def run_cli_stock_job_with_retry(job: dict, *, max_attempts: int = 2) -> dict:
+def run_cli_stock_job_with_retry(job: dict, *, max_attempts: int | None = None) -> dict:
+    if max_attempts is None:
+        try:
+            max_attempts = int(os.environ.get("TRADINGAGENTS_MAX_ATTEMPTS", "2"))
+        except ValueError:
+            max_attempts = 2
+        max_attempts = max(1, max_attempts)
     last_result = None
     for attempt in range(1, max_attempts + 1):
         job["_attempt"] = attempt
@@ -2288,6 +2361,12 @@ def run_stock_command(
         debug=debug,
         config=config,
     )
+    run_dir = build_run_dir(
+        config=config,
+        ticker=ticker,
+        analysis_date=resolved_analysis_date,
+    )
+    checkpoint = _load_run_checkpoint(run_dir)
     started_at = datetime.now().isoformat()
     if progress_file:
         tracker = RunProgressTracker(
@@ -2302,12 +2381,18 @@ def run_stock_command(
             resolved_analysis_date,
         )
         init_agent_state["prefetched_context"] = prefetched_context
+        if checkpoint:
+            for key, value in checkpoint.items():
+                if key in ("company_of_interest", "trade_date"):
+                    continue
+                init_agent_state[key] = value
         args = graph.propagator.get_graph_args()
         final_state = init_agent_state
 
         try:
             for chunk in graph.graph.stream(init_agent_state, **args):
                 final_state = chunk
+                _write_run_checkpoint(run_dir, chunk)
                 for event in tracker.update_from_chunk(chunk):
                     append_progress_event(progress_file, event)
             decision = graph.process_signal(final_state["final_trade_decision"])
@@ -2320,6 +2405,7 @@ def run_stock_command(
             ticker,
             resolved_analysis_date,
             prefetched_context=prefetched_context,
+            resume_state=checkpoint,
         )
     summary = write_run_artifacts(
         final_state=final_state,
@@ -2331,6 +2417,7 @@ def run_stock_command(
         ended_at=datetime.now().isoformat(),
         request_count=get_llm_request_count(),
     )
+    _clear_run_checkpoint(run_dir)
     return {
         "ticker": ticker,
         "analysis_date": resolved_analysis_date,

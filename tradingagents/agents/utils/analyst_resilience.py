@@ -142,11 +142,30 @@ def wrap_quick_analyst_node(
     analyst_name: str,
     report_key: str | None = None,
     extra_state_factory: Optional[Callable[[dict[str, Any], str], dict[str, Any]]] = None,
+    skip_if: Optional[Callable[[dict[str, Any]], bool]] = None,
 ):
     if not callable(node):
         return node
 
     def wrapped(state: dict[str, Any]) -> dict[str, Any]:
+        # Resume short-circuit: if the state loaded from a checkpoint already
+        # contains this stage's output, skip the LLM call entirely.
+        should_skip = False
+        if skip_if is not None:
+            try:
+                should_skip = bool(skip_if(state))
+            except Exception:
+                should_skip = False
+        elif report_key:
+            existing = state.get(report_key)
+            should_skip = bool(
+                isinstance(existing, str)
+                and existing.strip()
+                and "degraded backend fallback" not in existing
+            )
+        if should_skip:
+            return {"messages": []}
+
         try:
             payload = node(state)
         except Exception as exc:

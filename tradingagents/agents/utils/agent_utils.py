@@ -149,6 +149,37 @@ def build_instrument_context(ticker: str) -> str:
     )
 
 
+NO_TOOL_WHEN_PREFETCHED_RULE = (
+    "\n\n"
+    "HARD RULE — NO TOOL CALLS: The prefetched context above is your complete "
+    "primary evidence for this analysis. Do NOT emit any tool calls. Even if "
+    "tool names appear earlier in this prompt, ignore them. Produce the final "
+    "analyst report directly from the prefetched evidence. A tool call is a "
+    "failure mode and wastes budget — if information is missing, say so "
+    "explicitly in the report instead of attempting to fetch it."
+)
+
+
+def apply_prefetched_context(
+    system_message: str,
+    prefetched_context: str,
+    *,
+    label: str,
+) -> str:
+    """Append prefetched-context evidence + the no-tool hard rule to a system prompt.
+
+    Use only when the analyst's chain is bound without tools
+    (`chain = prompt | llm`); pairing this rule with tool-bound chains will
+    send conflicting signals to the model.
+    """
+    return (
+        f"{system_message}\n\n"
+        f"Use this prefetched live {label} context as your primary evidence."
+        f"\n\n{prefetched_context}"
+        + NO_TOOL_WHEN_PREFETCHED_RULE
+    )
+
+
 def build_analyst_report_context(state: Mapping[str, Any]) -> str:
     """Build a stable analyst context block for downstream prompts and memory."""
     sections = [

@@ -1,6 +1,7 @@
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from tradingagents.agents.utils.agent_utils import (
     add_educational_use_context,
+    apply_prefetched_context,
     build_social_tools,
     build_instrument_context,
     has_social_sentiment_support,
@@ -56,8 +57,9 @@ def create_social_media_analyst(llm, social_sentiment_available: bool | None = N
 
         if prefetched_context:
             prompt = prompt.partial(
-                system_message=system_message
-                + f"\n\nUse this prefetched live social/news context as your primary evidence.\n\n{prefetched_context}"
+                system_message=apply_prefetched_context(
+                    system_message, prefetched_context, label="social/news"
+                )
             )
             chain = prompt | llm
             result = chain.invoke(state["messages"])

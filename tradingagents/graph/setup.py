@@ -101,6 +101,9 @@ class GraphSetup:
         },
         "bull_researcher": {
             "analyst_name": "Bull Researcher",
+            "skip_if": lambda s: bool(
+                (s.get("investment_debate_state") or {}).get("judge_decision")
+            ),
             "extra_state_factory": lambda state, report: {
                 "investment_debate_state": {
                     **state["investment_debate_state"],
@@ -113,6 +116,9 @@ class GraphSetup:
         },
         "bear_researcher": {
             "analyst_name": "Bear Researcher",
+            "skip_if": lambda s: bool(
+                (s.get("investment_debate_state") or {}).get("judge_decision")
+            ),
             "extra_state_factory": lambda state, report: {
                 "investment_debate_state": {
                     **state["investment_debate_state"],
@@ -141,6 +147,9 @@ class GraphSetup:
         },
         "aggressive_analyst": {
             "analyst_name": "Aggressive Analyst",
+            "skip_if": lambda s: bool(
+                (s.get("risk_debate_state") or {}).get("judge_decision")
+            ),
             "extra_state_factory": lambda state, report: {
                 "risk_debate_state": {
                     **state["risk_debate_state"],
@@ -154,6 +163,9 @@ class GraphSetup:
         },
         "neutral_analyst": {
             "analyst_name": "Neutral Analyst",
+            "skip_if": lambda s: bool(
+                (s.get("risk_debate_state") or {}).get("judge_decision")
+            ),
             "extra_state_factory": lambda state, report: {
                 "risk_debate_state": {
                     **state["risk_debate_state"],
@@ -167,6 +179,9 @@ class GraphSetup:
         },
         "conservative_analyst": {
             "analyst_name": "Conservative Analyst",
+            "skip_if": lambda s: bool(
+                (s.get("risk_debate_state") or {}).get("judge_decision")
+            ),
             "extra_state_factory": lambda state, report: {
                 "risk_debate_state": {
                     **state["risk_debate_state"],
@@ -275,21 +290,33 @@ class GraphSetup:
     def _get_role_llm(self, role: str, fallback_llm: ChatOpenAI):
         return self.role_llms.get(role, fallback_llm)
 
-    def _get_continue_handler(self, analyst_type: str):
+    def _get_continue_handler(self, analyst_type: str, has_tool_node: bool = True):
+        clear_dest = f"Msg Clear {analyst_type.capitalize()}"
+        tool_dest = f"tools_{analyst_type}"
+
         specific_handler = getattr(
             self.conditional_logic,
             f"should_continue_{analyst_type}",
             None,
         )
         if specific_handler is not None:
-            return specific_handler
+            if has_tool_node:
+                return specific_handler
+
+            def guarded_handler(state: AgentState):
+                result = specific_handler(state)
+                if isinstance(result, str) and result == tool_dest:
+                    return clear_dest
+                return result
+
+            return guarded_handler
 
         def default_handler(state: AgentState):
             messages = state["messages"]
-            last_message = messages[-1]
-            if getattr(last_message, "tool_calls", None):
-                return f"tools_{analyst_type}"
-            return f"Msg Clear {analyst_type.capitalize()}"
+            last_message = messages[-1] if messages else None
+            if has_tool_node and getattr(last_message, "tool_calls", None):
+                return tool_dest
+            return clear_dest
 
         return default_handler
 
@@ -395,6 +422,7 @@ class GraphSetup:
                         analyst_name=resilience["analyst_name"],
                         report_key=resilience.get("report_key"),
                         extra_state_factory=resilience.get("extra_state_factory"),
+                        skip_if=resilience.get("skip_if"),
                     )
 
         # Create researcher and manager nodes
@@ -425,11 +453,13 @@ class GraphSetup:
                 bull_researcher_node,
                 analyst_name=self.QUICK_ANALYST_RESILIENCE["bull_researcher"]["analyst_name"],
                 extra_state_factory=self.QUICK_ANALYST_RESILIENCE["bull_researcher"]["extra_state_factory"],
+                skip_if=self.QUICK_ANALYST_RESILIENCE["bull_researcher"].get("skip_if"),
             )
             bear_researcher_node = wrap_quick_analyst_node(
                 bear_researcher_node,
                 analyst_name=self.QUICK_ANALYST_RESILIENCE["bear_researcher"]["analyst_name"],
                 extra_state_factory=self.QUICK_ANALYST_RESILIENCE["bear_researcher"]["extra_state_factory"],
+                skip_if=self.QUICK_ANALYST_RESILIENCE["bear_researcher"].get("skip_if"),
             )
             research_manager_node = wrap_quick_analyst_node(
                 research_manager_node,
@@ -447,22 +477,30 @@ class GraphSetup:
                 aggressive_analyst,
                 analyst_name=self.QUICK_ANALYST_RESILIENCE["aggressive_analyst"]["analyst_name"],
                 extra_state_factory=self.QUICK_ANALYST_RESILIENCE["aggressive_analyst"]["extra_state_factory"],
+                skip_if=self.QUICK_ANALYST_RESILIENCE["aggressive_analyst"].get("skip_if"),
             )
             neutral_analyst = wrap_quick_analyst_node(
                 neutral_analyst,
                 analyst_name=self.QUICK_ANALYST_RESILIENCE["neutral_analyst"]["analyst_name"],
                 extra_state_factory=self.QUICK_ANALYST_RESILIENCE["neutral_analyst"]["extra_state_factory"],
+                skip_if=self.QUICK_ANALYST_RESILIENCE["neutral_analyst"].get("skip_if"),
             )
             conservative_analyst = wrap_quick_analyst_node(
                 conservative_analyst,
                 analyst_name=self.QUICK_ANALYST_RESILIENCE["conservative_analyst"]["analyst_name"],
                 extra_state_factory=self.QUICK_ANALYST_RESILIENCE["conservative_analyst"]["extra_state_factory"],
+                skip_if=self.QUICK_ANALYST_RESILIENCE["conservative_analyst"].get("skip_if"),
             )
             portfolio_manager_node = wrap_quick_analyst_node(
                 portfolio_manager_node,
                 analyst_name=self.QUICK_ANALYST_RESILIENCE["portfolio_manager"]["analyst_name"],
                 report_key=self.QUICK_ANALYST_RESILIENCE["portfolio_manager"]["report_key"],
                 extra_state_factory=self.QUICK_ANALYST_RESILIENCE["portfolio_manager"]["extra_state_factory"],
+            )
+            chief_analyst_node = wrap_quick_analyst_node(
+                chief_analyst_node,
+                analyst_name="Chief Analyst",
+                report_key="chief_analyst_report",
             )
 
         # Create workflow
@@ -502,7 +540,10 @@ class GraphSetup:
             # Add conditional edges for current analyst
             workflow.add_conditional_edges(
                 current_analyst,
-                self._get_continue_handler(analyst_type),
+                self._get_continue_handler(
+                    analyst_type,
+                    has_tool_node=analyst_type in tool_nodes,
+                ),
                 [current_tools, current_clear]
                 if analyst_type in tool_nodes
                 else [current_clear],
