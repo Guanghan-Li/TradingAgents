@@ -1,6 +1,7 @@
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from tradingagents.agents.utils.agent_utils import (
     add_educational_use_context,
+    apply_prefetched_context,
     build_instrument_context,
     get_balance_sheet,
     get_cashflow,
@@ -101,8 +102,9 @@ def create_fundamentals_analyst(llm):
 
         if prefetched_context:
             prompt = prompt.partial(
-                system_message=system_message
-                + f"\n\nUse this prefetched live fundamentals context as your primary evidence.\n\n{prefetched_context}"
+                system_message=apply_prefetched_context(
+                    system_message, prefetched_context, label="fundamentals"
+                )
             )
             chain = prompt | llm
         else:
