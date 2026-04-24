@@ -406,6 +406,7 @@ def select_deep_thinking_agent(provider) -> str:
             ("GPT-5.4 - Codex CLI local", "gpt-5.4"),
         ],
         "claude_code": [
+            ("Claude Opus 4.7 - Newest flagship, top-tier reasoning", "claude-opus-4-7"),
             ("Claude Opus 4.6 - Most intelligent, agents and coding", "claude-opus-4-6"),
             ("Claude Opus 4.5 - Premium, max intelligence", "claude-opus-4-5"),
             ("Claude Sonnet 4.6 - Best speed and intelligence balance", "claude-sonnet-4-6"),
@@ -418,6 +419,7 @@ def select_deep_thinking_agent(provider) -> str:
             ("GPT-5.4 Pro - Most capable, expensive ($30/$180 per 1M tokens)", "gpt-5.4-pro"),
         ],
         "anthropic": [
+            ("Claude Opus 4.7 - Newest flagship, top-tier reasoning", "claude-opus-4-7"),
             ("Claude Opus 4.6 - Most intelligent, agents and coding", "claude-opus-4-6"),
             ("Claude Opus 4.5 - Premium, max intelligence", "claude-opus-4-5"),
             ("Claude Sonnet 4.6 - Best speed and intelligence balance", "claude-sonnet-4-6"),
