@@ -388,7 +388,7 @@ class TradingAgentsGraph:
             ),
         }
 
-    def propagate(self, company_name, trade_date, prefetched_context=None):
+    def propagate(self, company_name, trade_date, prefetched_context=None, resume_state=None):
         """Run the trading agents graph for a company on a specific date."""
 
         self.ticker = company_name
@@ -399,6 +399,11 @@ class TradingAgentsGraph:
         )
         if prefetched_context:
             init_agent_state["prefetched_context"] = prefetched_context
+        if resume_state:
+            for key, value in resume_state.items():
+                if key in ("company_of_interest", "trade_date"):
+                    continue
+                init_agent_state[key] = value
         args = self.propagator.get_graph_args()
 
         if self.debug:
