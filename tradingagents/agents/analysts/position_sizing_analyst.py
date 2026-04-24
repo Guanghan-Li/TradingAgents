@@ -6,6 +6,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 from tradingagents.agents.utils.agent_utils import (
     add_educational_use_context,
+    apply_prefetched_context,
     build_instrument_context,
     get_sizing_fundamentals,
     get_sizing_indicator,
@@ -132,8 +133,9 @@ def create_position_sizing_analyst(llm):
 
         if prefetched_context:
             prompt = prompt.partial(
-                system_message=system_message
-                + f"\n\nUse this prefetched live position sizing context as your primary evidence.\n\n{prefetched_context}"
+                system_message=apply_prefetched_context(
+                    system_message, prefetched_context, label="position sizing"
+                )
             )
             chain = prompt | llm
         else:
